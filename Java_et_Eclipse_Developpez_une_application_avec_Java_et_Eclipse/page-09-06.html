@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_f989ff9c-8fca-4d24-9db5-bdb4e76052d6" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Diagramme de classes</h1>
+  <p>Le diagramme de <strong>classes</strong> est utilisé pour modéliser l’aspect <strong>statique</strong> d’un système. Il met en évidence  les classes et les relations qu’elles entretiennent entre elles  : dépendance, association, généralisation… Selon  l’importance du système à modéliser,  des diagrammes de classes intermédiaires peuvent être utilisés  notamment les diagrammes des classes participantes qui décrivent pour  chaque cas d’utilisation, les trois principales classes  d’analyse et leurs relations (cf. section  Démarche).</p>
+  <p>Selon la démarche retenue, il est  (enfin) possible à ce stade de produire le diagramme des  classes. Il doit comporter les classes mises en évidence  par les objets présents dans les diagrammes de séquence  et de communication ainsi que celles éventuellement manquantes,  nécessaires au fonctionnement des maquettes (cf. chapitre  Maquettes).</p>
+  <div>
+    <p> Effectuez un clic droit depuis la vue <strong>Model Explorer</strong>, et choisissez l’option <strong>Create a new UML Class Diagram</strong>.</p>
+  </div>
+  <div>
+    <p> Nommez le diagramme <strong>ClassesClients</strong>.</p>
+  </div>
+  <p>En fonction des besoins, d’autres classes  peuvent apparaître dès l’analyse et/ou  lors de l’élaboration du premier jeu de maquettes. Par  exemple il serait possible d’ajouter une classe graphique supplémentaire  issue des maquettes si on désire afficher le jeu d’enregistrements  d’une requête SQL dans une nouvelle fenêtre. Maquettes  et diagrammes peuvent ainsi interagir pour aboutir très tôt à l’essentiel des  classes du projet.</p>
+  <p>Le diagramme de classes proposé découle  des diagrammes de séquence et de communication du cas d’utilisation <strong>Lire tous les clients</strong>.</p>
+  <div>
+    <div><img alt="images/07-16.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C07-16.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2F72N2Q%2bRvTiAsA"></div>
+  </div>
+  <p>Dans ce diagramme, la classe <strong>VueClients</strong> a un accès direct à la classe <strong>ControleClient</strong>, et un accès indirect à la classe <strong>ModeleClients</strong>. Il s’agit en fait du patron d’architecture  MVC, qui est étudié et mis en œuvre au  chapitre Modèle MVC.</p>
+  <p>Ce diagramme basé sur les trois types  de classes d’analyse présentés précédemment  propose donc un découpage semblable à celui décrit  par le modèle MVC (Modèle Vue Contrôleur).  MVC, créé en 1980 par Xerox Parc pour le langage Smalltalk,  est un patron d’architecture ou design pattern qui introduit en outre  le concept de synchronisation. L’idée est de mettre à jour  automatiquement toutes les vues présentant les mêmes  données en fonction des modifications apportées à la  base de données et réciproquement. Cette mise à jour  peut ne concerner que des vues suite à des actions de l’utilisateur.  C’est ce qui différencie fondamentalement MVC  de l’approche qui a été mise en œuvre, celle-ci  visant essentiellement à la séparation des données  de l’interface homme-machine via une couche chargée  de la transmission des demandes et des résultats.</p>
+  <p>MVC ne présente toutefois pas que  des avantages. Pour que la synchronisation puisse être  réalisée, il faut créer de nouvelles  interfaces et classes de type écouteur et gestionnaire  d’événements puis les ajouter aux modèles  afin qu’ils puissent écouter et notifier les changements  qui les concernent. Les contrôleurs doivent être écrits  de sorte qu’ils puissent être informés des changements afin  de procéder à la synchronisation et à la  mise à jour des vues ou des modèles. Cette  architecture apporte donc un niveau de complexité plus élevé impliquant  un important travail de conception et une augmentation conséquente  du code. Par ailleurs, la synchronisation peut être tributaire  de nombreuses conditions, ce qui alourdit d’autant sa mise  en œuvre. Ces éléments seront vus en  détail au chapitre Modèle MVC.</p>
+  <p>Le losange blanc sur la relation VueClients  - ControleClients est une relation d’<strong>agrégation</strong> : les instances de la classe VueClients contiennent  une instance (et une seule car cela est spécifié dans  le nombre à côté de la relation) de la classe  ControleClients.</p>
+  <p>Le losange noir sur la relation ControleClient  - ClientCrud est une relation de <strong>composition</strong>, qui est une relation d’agrégation avec des  contraintes supplémentaires, elle spécifie notamment  qu’une instance de ClientCrud ne peut être associée  qu’avec une et une seule instance de la classe ControleClient, et que  si une instance de la classe ControleClient est supprimée  du système, l’instance liée de ClientCrud  est également supprimée.</p>
+  <p>Il est également possible de remarquer  une relation d’héritage entre la classe VueClients et la  classe JPanel.</p>
+  <p>Voyons comment bâtir ce diagramme.</p>
+  <div>
+    <p> Sélectionnez le package dialogue depuis  la vue <strong>Model Explorer</strong> et faites-le glisser dans le diagramme.</p>
+  </div>
+  <div>
+    <p> Faites de même avec la classe <strong>VueClients</strong>.</p>
+  </div>
+  <div>
+    <p> Répétez l’opération  avec les autres packages et les autres classes.</p>
+  </div>
+  <div>
+    <p> Pour créer la classe Adresse, sélectionnez  l’élément <strong>Class</strong> dans la palette à la section <strong>Nodes</strong> et faites-le glisser dans le diagramme à l’intérieur  du package <strong>entite</strong>. Nommez cette nouvelle classe Adresse.</p>
+  </div>
+  <div>
+    <p>La classe apparaît également  dans la vue <strong>Model Explorer</strong>.</p>
+  </div>
+  <div>
+    <p> Répétez l’opération  pour les classe FenetreClients et JPanel et glissez-les dans le  package <strong>dialogue</strong>.</p>
+  </div>
+  <div>
+    <p> Matérialisez la relation d’héritage  entre JPanel et VueClients en choisissant le lien <strong>Generalization</strong> dans la section <strong>Edges</strong> de la palette.</p>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>La flèche symbolisant cette  relation d’héritage a une direction. Faites attention à ne  pas inverser le sens de cette relation.</p>
+    </div>
+  </div>
+  <div>
+    <p> Matérialisez la relation entre Client  et Adresse en choisissant le lien <strong>Association</strong> dans la section <strong>Edges</strong> de la palette.</p>
+  </div>
+  <div>
+    <p> Sélectionnez cette nouvelle relation  dans la vue <strong>Properties</strong>, à la section <strong>UML</strong>, et dans le détail <strong>Member end</strong> nommé adresse. Sélectionnez <strong>composite</strong> à la propriété <strong>Aggregation</strong>. La propriété <strong>Multiplicity</strong> est positionnée à <strong>0..1</strong>.</p>
+  </div>
+  <p>La relation VueClients - ControleClient a  une propriété <strong>Aggregation</strong> positionnée à <strong>shared</strong> dans le <strong>Member end</strong> du ControleClient.</p>
+  <p>La poursuite de l’analyse pour les entités  Article et Commande suit une démarche similaire à celle  de l’entité Client. Il est possible bien sûr d’affiner l’analyse  pour des traitements particuliers de l’application, l’idée étant  de couvrir en premier lieu les besoins généraux  avant de s’attarder sur les détails.</p>
+  <p>Le plug-in Papyrus ne permet pas de faire  de la génération automatique de code. À ce  stade, il est inutile de pousser la modélisation en rajoutant  des attributs aux classes.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>D’autres plug-ins ou d’autres logiciels  permettent cette génération automatique. À vous  de décider si cela en vaut le coût pour votre  projet, sachant qu’il est parfois (très) consommateur de  temps de générer un projet entièrement à partir  d’une modélisation UML. Ce choix peut se faire si par exemple  l’application ou certaines de ses parties ont vocation à être écrites  en différents langages objet, comme Java ou C++.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

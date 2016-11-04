@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_526c9298-8449-4a41-b745-e08dcb53ec7a" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Première classe</h1>
+  <div>
+    <p> Sélectionnez le package qui a été créé.</p>
+  </div>
+  <div>
+    <p> Passez par le menu <strong>File - New - Class</strong> ou effectuez un clic droit puis <strong>New - Class</strong>.</p>
+  </div>
+  <div>
+    <p>La boîte de dialogue de création  de classe s’ouvre.</p>
+  </div>
+  <div>
+    <p> Nommez la classe <strong>MonPremierProgramme</strong> en commençant le nom par une majuscule (pour  respecter les conventions de nommage de Java) et cochez l’option <strong>public static void main(String[] args)</strong>. Cette option permet de créer la méthode  servant de point d’entrée à l’exécution  du programme.</p>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Dans les conventions de Java, seules  les classes commencent par une majuscule. Les packages, attributs,  méthodes et variables commencent par une minuscule. </p>
+      <p>Les caractères spéciaux  (%, ?…) et les chiffres ne peuvent pas être  utilisés en tant que premier caractère.</p>
+    </div>
+  </div>
+  <div>
+    <div><img alt="images/02-08.png" src="images/images_02-08.png"></div>
+  </div>
+  <div>
+    <p> Cliquez sur le bouton <strong>Finish</strong>.</p>
+  </div>
+  <div>
+    <p>La classe a été ajoutée  au package et le code généré automatiquement  par Eclipse est maintenant visible dans l’éditeur de code.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-09.png" src="images/images_02-09.png"></div>
+  </div>
+  <div>
+    <p> Ajoutez une propriété (appelée  aussi attribut) privée à la classe.</p>
+  </div>
+  <pre>package priseEnMain.premier;
+
+public class MonPremierProgramme {
+
+	<strong>private String prenom;
+
+	</strong>public static void main(String[] args){
+			// TODO Auto-generated method stub
+	}
+}</pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Une des petites règles de  programmation de l’auteur de ces lignes est de toujours commencer  par déclarer les propriétés ou les méthodes  comme <strong>privées</strong>. S’il est nécessaire de pouvoir y accéder  depuis l’extérieur de la classe, la visibilité est  modifiée. Cela permet d’<strong>améliorer l’encapsulation</strong> des données et peut se résumer par  l’adage « d’abord interdire, puis autoriser  ».</p>
+    </div>
+  </div>
+  <p>Il s’agit ensuite d’ajouter des accesseurs  et mutateurs de cette propriété dans la classe.</p>
+  <div>
+    <p> Choisissez dans le menu clic droit <strong>Source - Generate Getters and Setters…</strong>. Cochez ensuite la case <strong>prenom</strong> (les autres cases sous la variable prenom se cochent  alors automatiquement) puis validez.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-10.png" src="images/images_02-10.png"></div>
+  </div>
+  <p>Les accesseurs et mutateurs sont générés.</p>
+  <pre>public String getPrenom() {
+	return prenom;
+}
+
+public void setPrenom(String prenom){
+	this.prenom = prenom;
+}</pre>
+  <div>
+    <p> Ajoutez un constructeur dans cette classe en  faisant à nouveau un clic droit dans l’éditeur  de code et en sélectionnant l’option <strong>Source - Generate Constructor using Fields…</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-11.png" src="images/images_02-11.png"></div>
+  </div>
+  <div>
+    <p> Cliquez sur <strong>OK</strong> pour valider. Le constructeur est généré.</p>
+  </div>
+  <pre>public MonPremierProgramme(String prenom) {
+<strong>	super();
+	this.</strong>prenom = prenom;
+}  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>L’instruction <strong>super()</strong> appellera le constructeur de la super-classe, ici <strong>java.lang.Object</strong>. </p>
+    </div>
+  </div>
+  <p>Eclipse initialise automatiquement la propriété <strong>prenom</strong> parce que la case équivalente était  cochée dans la boîte de dialogue précédente.  Les noms de la propriété et de la variable sont  les mêmes : pour les différencier, la  propriété de la classe est préfixée  par <strong>this</strong> suivi d’un point.</p>
+  <p>Pour ajouter des commentaires dans la classe,  ajoutez deux slashes (/) au début de  la ligne ou là où vous voulez commenter le reste  de la ligne. Tout ce qui est en commentaire ne sera pas traité par  le compilateur.</p>
+  <p>Pour créer des commentaires sur plusieurs  lignes, encadrez-les par <strong>/*</strong> et <strong>*/</strong>.</p>
+  <div>
+    <div><img alt="images/02-12.png" src="images/images_02-08.png"></div>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Si les mots <strong>TODO</strong> ou <strong>FIXME</strong> sont écrits dans un commentaire, la ligne sera indexée dans  Eclipse. C’est un moyen pratique pour laisser des indications sur ce  qui reste à faire ou à corriger, à la  fin d’une dure journée de labeur.</p>
+      <p>La ligne <strong>TODO Auto-generated method stub</strong> est ajoutée par Eclipse quand une méthode  est générée automatiquement. Il est préférable  de l’enlever ou d’y substituer vos propres commentaires.</p>
+    </div>
+  </div>
+  <p>Il est possible d’ajouter des commentaires  particuliers commençant par <strong>/**</strong> et finissant par <strong>**/</strong>. Ces commentaires dits <strong>javadoc</strong> seront utilisés pour générer la  documentation de l’application.</p>
+  <div>
+    <p> Tapez <strong>/**</strong> au-dessus de la méthode <strong>main</strong> et appuyez sur [Entrée]. </p>
+  </div>
+  <div>
+    <div><img alt="images/02-13.png" src="images/images_02-13.png"></div>
+  </div>
+  <p>Le patron de commentaire javadoc est automatiquement  créé par Eclipse.</p>
+  <div>
+    <p> Complétez la méthode <strong>main()</strong>.</p>
+  </div>
+  <pre>public static void main(String[] args) {
+	MonPremierProgramme programme = new MonPremierProgramme("Moi");
+	System.out.println("C’est " +programme.prenom +"!");
+}  </pre>
+  <p>Il s’agit ensuite de tester ce qui vient d’être  programmé.</p>
+  <p>Pour tester ce programme, il est possible  de procéder de plusieurs manières :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Effectuez un clic  droit puis choisissez <strong>Run As - Java Application</strong>.</p>
+      </li>
+      <li>
+        <p>La classe étant ouverte  dans l’éditeur, appuyez sur les touches [Ctrl][F11]. </p>
+      </li>
+      <li>
+        <div>Cliquez sur l’icône <img alt="images/02-14.png" src="images/images_02-14.png"> dans la barre d’outils d’Eclipse.</div>
+      </li>
+    </ul>
+  </div>
+  <p>Le programme s’exécute alors et la  sortie est affichée dans la vue console.</p>
+  <div>
+    <div><img alt="images/02-15.png" src="images/images_02-15.png"></div>
+  </div>
+  <p>De nombreuses notions propres à la  programmation orientée objet (POO) sont déjà présentes  dans ces quelques lignes : package, propriété,  constructeur, getter, setter…</p>
+  <p>Ces notions seront revues au chapitre Concepts  de base de la POO et lors de la réalisation du projet.</p>
+  <p>À ce stade, retenez les points suivants :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Un programme comporte  au moins une classe.</p>
+      </li>
+      <li>
+        <p>La classe doit porter le même  nom que le fichier dans laquelle elle se trouve.</p>
+      </li>
+      <li>
+        <p>Les minuscules et majuscules sont  considérées comme des caractères différents :  Java est sensible à la casse.</p>
+      </li>
+      <li>
+        <p>Toute classe doit se trouver dans  un package. Un package peut contenir d’autres packages.</p>
+      </li>
+      <li>
+        <p>Le plus souvent, la classe possède  un constructeur explicite. Ce constructeur permet de créer  des instances (on parle d’instanciation) de la classe, ces instances étant également  appelées objets.</p>
+      </li>
+      <li>
+        <p>Toutes les méthodes proviennent  obligatoirement d’une classe : soit une classe créée  par le développeur, soit une classe fournie par l’API Java,  soit une classe fournie par une librairie créée  par d’autres développeurs. </p>
+      </li>
+      <li>
+        <p>La méthode principale <strong>main()</strong> permet d’exécuter la classe. Il s’agit du point d’entrée  de l’application : elle est toujours appelée en  premier.</p>
+      </li>
+      <li>
+        <p>Une classe commence par une majuscule,  une variable commence par une minuscule.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Rien n’interdit de créer plusieurs  classes disposant de la méthode <strong>main()</strong>. Il devient alors nécessaire de désigner  celle dont la méthode <strong>main()</strong> sera exécutée, les autres étant  alors ignorées.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Essayez de ne créer qu’une  seule méthode <strong>main()</strong> par projet. Cela permet d’éviter les ambiguïtés. </p>
+    </div>
+  </div>
+  <p>Afin de mieux comprendre l’organisation des  packages et de leurs classes, il est possible d’accéder  aux sources de Java en naviguant vers le dossier du JDK sur le disque  dur.</p>
+  <p>Voici par exemple une partie des classes du  package <strong>java.lang</strong> :</p>
+  <div>
+    <div><img alt="images/02-16.png" src="images/images_02-16.png"></div>
+  </div>
+  <p>Il est possible de visualiser la même  organisation à l’intérieur d’Eclipse, mais cette  fois-ci avec les fichiers binaires.</p>
+  <div>
+    <div><img alt="images/02-17.png" src="images/images_02-17.png"></div>
+  </div>
+</div>
+</body>
+</html>

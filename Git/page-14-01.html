@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_24a54523-2591-4ac2-a465-470798e435fc" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Les références</h1>
+  <p>Les références sont beaucoup  utilisées dans un système de version. Une référence  est un nom auquel est associé un commit. C’est un raccourci.  Par exemple, il est plus simple de nommer une branche page_a_propos que de la nommer 2f1eaabf11daa32ae274b2775d2fb3b7a28c842f.</p>
+  <div>
+    <h2>1. HEAD</h2>
+    <p>Cette référence pointe vers  le commit le plus récent de la branche courante. C’est-à-dire  qu’à chaque nouveau commit et à chaque changement  de branche cette référence est mise à jour  pour pointer vers le commit le plus récent. Cette référence  est omniprésente dans l’utilisation de Git.</p>
+  </div>
+  <div>
+    <h2>2. Les branches</h2>
+    <p>Les branches ne sont en réalité rien  d’autre que des références. En d’autres termes,  une branche est un nom qui pointe vers le commit le plus récent  de la branche. Ce que de nombreux développeurs appellent  "être sur une branche" signifie que le pointeur de la branche  pointe vers le même commit que HEAD. Cela signifie également qu’après  avoir effectué un nouveau commit, le pointeur de la branche  pointera sur le nouveau commit.</p>
+  </div>
+  <div>
+    <h2>3. Les tags</h2>
+    <p>Les tags sont des références  statiques, c’est-à-dire qu’un tag sera ajouté par  un développeur pour servir de raccourci dans le but de  pointer vers un commit particulier. La principale différence  que les tags ont avec les branches est leur immuabilité.  Si un développeur ne modifie pas explicitement le tag,  celui-ci pointera toujours vers le même commit sans que  les modifications apportées à l’historique aient  le moindre effet sur ce tag.</p>
+  </div>
+  <div>
+    <h2>4. Référence des ancêtres</h2>
+    <p>Il existe deux moyens pour appeler les ancêtres  d’un commit. Ces deux moyens sont utilisés dans des cas  différents :</p>
+    <div>
+      <ul>
+        <li>
+          <p>commitˆn :  ce caractère clé accolé à un  commit permet de spécifier le n parent direct  où n est le niveau de parenté. Si le niveau de  parenté n’est pas spécifié, c’est le  parent direct qui sera sélectionné. En d’autres  termes, HEADˆ va pointer sur le  commit parent de HEAD de la même manière que la référence HEADˆ1. HEADˆ5 va  pointer vers le cinquième commit parent de HEAD.</p>
+        </li>
+        <li>
+          <p>commit~n :  ce caractère clé accolé à un  commit est utilisé lorsque dans l’historique il  existe plusieurs parents pour un commit. Ce cas arrive systématiquement  lors de merges. Ce caractère clé ne permet de  remonter que d’un seul niveau dans la parenté. Si HEAD est issu d’un merge, alors HEAD~1 pointera  vers son premier parent alors que HEAD~2 pointera  sur son deuxième parent. Dans le cas d’un octopus  merge (merge de plus de deux branches), il est possible que n soit  supérieur à 2.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

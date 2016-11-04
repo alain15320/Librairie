@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Recevoir les modifications</h1>
+<p>Savoir envoyer les modifications au dépôt  distant est utile, mais tout l’intérêt d’un  tel dépôt réside également dans  le fait que les autres collaborateurs d’un projet peuvent  récupérer les commits contenus dans ce dépôt.</p>
+<p>La commande suivante permet de mettre à jour  la branche courante avec les commits contenus dans le dépôt  distant : </p>
+<pre>git pull</pre>
+<p>Exécutée à partir  du dépôt local2, cette commande affiche la sortie suivante :</p>
+<pre>remote: Counting objects: 3, done.    remote: Total 3 (delta 0), reused 0 (delta 0)    Unpacking objects: 100% (3/3), done.    From /Volumes/JedemaKey/Livre/Git/Repo/07/test_echange/distant    * [new branch]      master     -&gt; origin/master  </pre>
+<p>En réalité, la commande git pull est un raccourci de deux  commandes Git exécutées successivement : </p>
+<pre>git fetch    git merge FETCH_HEAD</pre>
+<p>La commande git fetch va  télécharger les commits contenus sur le dépôt distant  pour la branche concernée. Ces commits seront intégrés  dans la branche distante suivie.</p>
+<p>La commande git merge  FETCH_HEAD va ensuite merger les modifications contenues  sur la branche distante suivie pour les intégrer dans la  branche locale. </p>
+<p>Pour illustrer l’utilisation de ces  deux commandes, il convient de modifier le fichier README du dépôt local1 puis de commiter :</p>
+<pre>cd local1    vi README    git add README    git commit -m "README : Ajout lien site"    git push  </pre>
+<p>La commande git log  --pretty=oneline affiche la sortie suivante :</p>
+<pre>898f3fc README : Ajout lien site    cc6bb2a README : initial  </pre>
+<p>À partir de ce moment, les deux commits  sont présents sur les dépôts distant et local1. Le dépôt local2 ne connaît pas le commit 898f3fc mais connaît le cc6bb2a. Pour la suite de l’exemple, il convient de  se placer dans le dépôt local2 :</p>
+<pre>cd local2  </pre>
+<p>Pour obtenir la liste de toutes les branches  (locales et distantes suivies), il faut utiliser la commande suivante :</p>
+<pre>git branch --all  </pre>
+<p>Cette commande affiche les deux branches suivantes :</p>
+<pre>* master      remotes/origin/master  </pre>
+<p>La première branche master est la branche locale liée à la deuxième  branche. La deuxième branche remotes/origin/master est la branche distante suivie et servira d’intermédiaire  avec le dépôt distant.</p>
+<p>La commande git show sert à afficher  des informations sur plusieurs types d’objets. Par exemple,  cette commande permet d’afficher les informations d’un  commit en entrant en paramètre son identifiant sous forme  de hash ou alors sous forme de référence (tag,  branches, HEAD, etc.).</p>
+<p>Voici une liste de références  et le commit vers lesquelles elles pointent :</p>
+<div>
+  <ul>
+    <li>
+      <p>master : cc6b</p>
+    </li>
+    <li>
+      <p>remotes/origin/master : cc6b</p>
+    </li>
+    <li>
+      <p>FETCH_HEAD : cc6b</p>
+    </li>
+  </ul>
+</div>
+<p>Les références remotes/origin/master et FETCH_HEAD seront toujours identiques car elles pointent sur le  commit le plus récent de la branche distante suivie.</p>
+<p>Pour montrer les effets de git fetch, il faut à présent  lancer cette commande : </p>
+<pre>git fetch  </pre>
+<p>Cette commande affiche la sortie suivante :</p>
+<pre>remote: Counting objects: 3, done.    remote: Compressing objects: 100% (2/2), done.    remote: Total 3 (delta 0), reused 0 (delta 0)    Unpacking objects: 100% (3/3), done.    From /Volumes/JedemaKey/Livre/Git/Repo/07/test_echange/distant       cc6bb2a..898f3fc  master     -&gt; origin/master  </pre>
+<p>Lorsqu’aucun nouveau commit ne se  trouve sur le dépôt distant, la sortie de cette  commande est vide. </p>
+<p>En vérifiant à nouveau les  commits sur lesquels pointent les références,  la liste devient : </p>
+<div>
+  <ul>
+    <li>
+      <p>master : cc6b</p>
+    </li>
+    <li>
+      <p>remotes/origin/master : 898f</p>
+    </li>
+    <li>
+      <p>FETCH_HEAD : 898f</p>
+    </li>
+  </ul>
+</div>
+<p>Dans cette liste, les références remotes/origin/master et FETCH_HEAD ont été mises à jour. En  effet, la branche distante suivie a reçu les modifications  contenues sur le dépôt distant.</p>
+<p>Maintenant que la branche distante suivie  a reçu le nouveau commit, il faut utiliser la commande  suivante : </p>
+<pre>git merge FETCH_HEAD  </pre>
+<p>Cette commande affiche la sortie suivante : </p>
+<pre>Updating cc6bb2a. 898F3fc    Fast-forward     README | 1 +     1 file changed, 1 insertion(+)  </pre>
+<p>Cette sortie confirme que la branche courante  a été mise à jour avec le commit 898f  en mode avance rapide (Fast-forward).</p>
+<p>La référence master a correctement été modifiée  pour pointer vers le commit 898f.</p>
+<p>Le schéma ci-dessous récapitule  le cheminement d’un commit entre deux dépôts locaux  en passant par le dépôt distant : </p>
+<div>
+  <div><img alt="IMAGES/07E03.png" src="images/07E03.png"></div>
+</div>
+<p>Voici les étapes que le commit 898f  a empruntées pour passer du dépôt local1 au dépôt local2 :</p>
+<div>
+  <ul>
+    <li>
+      <p>Le commit 898f a été ajouté sur  la branche master du dépôt local1.</p>
+    </li>
+    <li>
+      <p>La commande git  push applique le commit sur la branche distante suivie remotes/origin/master.</p>
+    </li>
+    <li>
+      <p>Cette même commande git push va envoyer le commit du dépôt local1 vers le dépôt distant qui va les ajouter  dans sa branche master.</p>
+    </li>
+    <li>
+      <p>En utilisant la commande git pull à partir du dépôt local2, la commande git fetch (sous-commande  de git pull) va télécharger  le commit contenu sur le dépôt distant. Le commit sera ajouté à la branche  distante suivie remotes/origin/master du dépôt local2. La référence FETCH_HEAD sera modifiée pour pointer sur le HEAD (commit  le plus récent) de la branche distante suivie.</p>
+    </li>
+    <li>
+      <p>La commande git  merge FETCH_HEAD (sous-commande de git pull) termine la récupération  du commit en le mergeant dans la branche master du dépôt local2.</p>
+    </li>
+  </ul>
+</div>
+<p>En fonction des situations, un développeur  peut souhaiter effectuer un rebase lors de l’utilisation  de git pull. Pour cela, il doit  exécuter la commande suivante : </p>
+<div id="AU_6da6d4f3-bfb2-4546-b303-427ade14ff84" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <pre>git pull --rebase  </pre>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

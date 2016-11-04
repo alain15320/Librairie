@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Gestion avancée des événements</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_7b61c034-b5d7-40a5-9eaf-fe15c05f3ffb" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Gestion avancée des événements</h1>
+  <p>Les maquettes des principales fenêtres  de l’application ont été créées.  Dans cette section, ces maquettes sont rendues en partie opérationnelles  en prenant en compte les actions que l’utilisateur peut mener à partir  du clavier ou de la souris.</p>
+  <p>Il faut auparavant approfondir le concept  d’événements abordé au chapitre La boîte à outils  de Java.</p>
+  <p>En Java, hormis les types primitifs, tout  est objet. Les événements eux-mêmes sont  des objets. Plus précisément, ce sont des instances  de classes dont les noms se terminent par <strong>Event</strong>, par exemple <strong>ActionEvent</strong>, <strong>FocusEvent</strong>, <strong>HyperlinkEvent</strong>, <strong>MenuEvent</strong>, etc. Java prend en compte de nombreux événements,  qui sont répartis pour des raisons historiques entre le  package <strong>java.awt.event</strong> et <strong>javax.swing.event</strong>.</p>
+  <p>Mais qui génère l’objet événement ?  Autrement dit, quelle est la source qui crée cet objet événement ?  Une première réponse serait l’utilisateur, qui  le crée à partir d’un clic de souris ou d’une  touche de clavier. C’est en partie vrai dans le sens où l’événement  a besoin de cette action utilisateur pour être créé.</p>
+  <p>D’un point de vue programmation, c’est en  fait le composant graphique qui crée lui-même  l’objet événement suite à une sollicitation  externe. Une fois l’événement créé,  il est envoyé à un ou plusieurs objets spécialisés  dans l’écoute de cet événement particulier.  Pour cette raison, on nomme ces objets <strong>écouteurs</strong>, ou <strong>listeners</strong> dans la terminologie Java.</p>
+  <p>Chaque composant peut générer  différents types d’événements, mais tous  les événements ne sont pas générés  par tous les composants. Par exemple, les fenêtres comme <strong>Window</strong>, <strong>JFrame</strong> ou <strong>JDialog</strong> vont pouvoir générer des objets <strong>WindowEvent</strong> (pour l’ouverture, la fermeture…). Un <strong>JButton</strong> n’a aucune utilité de ce type d’événement,  par contre il pourra générer des événements d’action,  de type <strong>ActionEvent</strong>, quand il sera pressé. Ces ActionEvent seront également  générés par les instances de classe <strong>JList</strong> ou <strong>JMenuItem</strong>.</p>
+  <p>Pour chaque type d’événement,  il existe une interface d’écouteur (comportant au moins  une méthode, et le plus souvent plusieurs). Java standardise  les noms de ces écouteurs et ils sont donc facilement identifiables.  Par exemple, le nom de l’interface de l’écouteur d’un événement <strong>ActionEvent</strong> s’appelle <strong>ActionListener</strong> ; le listener d’un <strong>WindowEvent</strong> s’appelle un <strong>WindowListener</strong>.</p>
+  <p>Concrètement, un écouteur  est donc une instance d’une classe implémentant l’interface  voulue. Ces écouteurs et leurs classes doivent être  créés par vos soins.</p>
+  <p>Il reste à ajouter les écouteurs  aux composants graphiques. Pour cette raison, ceux-ci possèdent  des méthodes nommées addXXXListener et removeXXXListener.  Ainsi, un JButton a des méthodes <strong>addActionListener(ActionListener)</strong> et <strong>removeActionListener(ActionListener)</strong> pour permettre d’ajouter et d’enlever un écouteur  sur les événements de type <strong>ActionEvent</strong>. Vous les avez déjà utilisés  de manière implicite lors de la création d’interfaces graphiques  avec <strong>WindowBuilder</strong>.</p>
+  <p>Passons maintenant aux traitements de ces événements.  Au plus bas niveau, il faut donc créer une classe implémentant  l’interface voulue, mais cela nécessite de redéfinir  toutes ses méthodes (toutes n’étant pas forcément  utiles pour l’application).</p>
+  <p>Voici l’exemple d’une classe implémentant  l’interface <strong>WindowListener</strong>, interface qui possède sept méthodes.</p>
+  <pre>
+    class EcouteurFenetre implements WindowListener { 
+        @Override 
+        public void windowOpened(WindowEvent evt) { 
+            System.out.println("Fenêtre ouverte"); 
+        } 
+ 
+        @Override 
+        public void windowIconified(WindowEvent evt) { 
+        } 
+ 
+        @Override 
+        public void windowDeiconified(WindowEvent evt) { 
+        } 
+ 
+        @Override 
+        public void windowDeactivated(WindowEvent evt) { 
+        } 
+ 
+        @Override 
+        public void windowClosing(WindowEvent evt) { 
+        } 
+ 
+        @Override 
+        public void windowClosed(WindowEvent evt) { 
+        } 
+ 
+        @Override 
+        public void windowActivated(WindowEvent evt) { 
+        } 
+    }  
+  </pre>
+  <p>Afin d’éviter d’implémenter  les méthodes n’ayant pas d’intérêt pour  l’application, il est possible de recourir aux adaptateurs. Ce sont  des classes particulières nommées <strong>XXXAdapter</strong>, qui ont déjà redéfini avec  une définition vide toutes les méthodes des interfaces <strong>XXXListener</strong>. Ainsi, aux interfaces <strong>ActionListener</strong> et <strong>WindowListener</strong> correspondent les classes adaptées <strong>ActionAdapter</strong> et <strong>WindowAdapter</strong>.</p>
+  <p>En reprenant l’exemple précédent,  il n’y a ainsi plus qu’une seule méthode à redéfinir.</p>
+  <pre>
+    class EcouteurFenetre extends WindowAdapter { 
+        @Override 
+        public void windowOpened(WindowEvent evt) { 
+            System.out.println("Fenêtre ouverte"); 
+        } 
+    }
+  </pre>
+  <p>Au lieu de créer une classe dans  un fichier séparé, il est également possible  de créer ce que l’on appelle une classe interne anonyme étendant  l’interface voulue puis procéder à leur  enregistrement auprès du composant graphique.</p>
+  <pre>
+    bouton.addActionListener(new ActionListener() { 
+        public void actionPerformed(ActionEvent evt) { 
+            System.out.println("Bouton actionné"); 
+        }                 
+    });
+  </pre>
+  <p>La dernière possibilité est  d’utiliser les lambdas afin d’alléger la syntaxe de création  de ces classes internes anonymes.</p>
+  <pre>
+    bouton.addActionListener(evt -> { 
+        System.out.println("Bouton actionné"); 
+    });   
+  </pre>
+  <p>Pour finir cette introduction aux événements,  il est important de retenir que :</p>
+  <div>
+    <ul>
+      <li>
+        <p>les composants graphiques  sont les sources des événements.</p>
+      </li>
+      <li>
+        <p>les événements  sont transférés à des écouteurs.</p>
+      </li>
+      <li>
+        <p>les traitements sont réalisés  au sein des écouteurs.</p>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_79c93133-f684-430f-911e-5531066657f8" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Classes graphiques</h1>
+  <p>Java fournit plusieurs composants graphiques  de base, grâce aux packages <strong>java.awt</strong> et <strong>javax.swing</strong>. Les composants AWT sont historiquement les premiers à être  apparus et ont été enrichis plus tard avec les  composants Swing.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>D’une manière générale,  préférez les composants Swing. Ils ont plus de  possibilités d’interaction et d’enrichissement graphique.</p>
+    </div>
+  </div>
+  <p>Ces composants sont mis en évidence  dans leur version par défaut : l’habillage graphique  n’est peut-être pas le plus plaisant, mais Java propose  un mécanisme de changement de rendu graphique par le système  Look and Feel, qui sera expliqué un peu plus loin.</p>
+  <p>Les sections suivantes font un petit tour  guidé des composants les plus usuels : ceux que  l’on retrouve dans pratiquement chaque application.</p>
+  <p>Sachez tout d’abord que tous les composants  graphiques présentés ici ont un statut activé ou  non (en anglais : enabled). Il n’est pas possible d’interagir avec un composant  désactivé.</p>
+  <div>
+    <h2>1. Boutons</h2>
+    <p>Les boutons permettent à l’utilisateur  d’effectuer des actions ou de faire des choix.</p>
+    <p>Chaque type de bouton a un état :  sélectionné ou non (en anglais : selected).</p>
+    <div>
+      <h3>a. JButton</h3>
+      <p>La classe <strong>JButton</strong> permet d’afficher un bouton très simple avec  un texte et éventuellement une icône.</p>
+      <p>Il s’agit d’un des types les plus simples  de composant graphique d’interaction avec l’utilisateur :  il clique sur le bouton (c’est-à-dire qu’il le sélectionne),  une action est effectuée, le bouton revient à son état  initial (non sélectionné).</p>
+      <div>
+        <div><img alt="images/04-02.png" src="images/images_04-02.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JCheckBox</h3>
+      <p>La classe <strong>JCheckBox</strong> permet à l’utilisateur d’effectuer un choix  binaire, c’est-à-dire un choix entre deux options mutuellement  exclusives : oui ou non, vrai ou faux, chaud ou froid…</p>
+      <div>
+        <div><img alt="images/04-03.png" src="images/images_04-03.png"></div>
+      </div>
+      <p>La case à cocher reste dans l’état  dans lequel l’utilisateur l’a sélectionnée. Elle a  un effet mémoire, comme les boutons radio.</p>
+    </div>
+    <div>
+      <h3>c. JRadioButton</h3>
+      <p>La classe <strong>JRadioButton</strong> permet à l’utilisateur de choisir parmi des  options multiples (donc potentiellement plus de deux) mutuellement  exclusives : choisir une couleur parmi rouge, vert ou bleu,  choisir entre le lecteur CD et la radio Internet, choisir entre  la tarte, le gâteau ou la crème brûlée...</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Le nom de ces boutons vient des anciennes  radios : quand un bouton était enfoncé,  les autres boutons se relevaient. De la même manière,  dans un groupe de JRadioButton, quand l’un est sélectionné,  les autres sont désélectionnés.</p>
+        </div>
+      </div>
+      <div>
+        <div><img alt="images/04-04.png" src="images/images_04-04.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Un radio-bouton n’a d’intérêt  que s’il est associé à d’autres radio-boutons, à l’aide  d’un groupe formalisé par la classe <strong>ButtonGroup</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>d. JToggleButton</h3>
+      <p>La classe <strong>JToggleButton</strong> est une combinaison des classes <strong>JButton</strong> et <strong>JCheckBox</strong>. Elle est peu utilisée.</p>
+      <div>
+        <div><img alt="images/04-05.png" src="images/images_04-05.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Saisies textuelles</h2>
+    <p>Ces composants graphiques permettent à l’utilisateur  de saisir du texte.</p>
+    <p>Le texte peut être saisi dans toutes  les langues et toutes les écritures, Java utilisant l’Unicode  pour toutes les chaînes de caractères. Il est  possible également de changer le sens de lecture et d’écriture  de ces composants pour s’adapter au farsi (et les langues arabes  en général), au japonais...</p>
+    <div>
+      <h3>a. JTextField</h3>
+      <p>La classe <strong>JTextField</strong> permet à l’utilisateur de saisir une seule  ligne de texte. </p>
+      <div>
+        <div><img alt="images/04-06.png" src="images/images_04-06.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JPasswordField</h3>
+      <p>La classe <strong>JPasswordField</strong> permet à l’utilisateur de saisir du texte tout  en cachant sa valeur. Un usage typique de cette classe est la saisie  d’un mot de passe.</p>
+      <div>
+        <div><img alt="images/04-07.png" src="images/images_04-07.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>c. JFormattedTextField</h3>
+      <p>La classe <strong>JFormattedTextField</strong> permet à l’utilisateur de saisir et à l’application  d’afficher des données complexes de manière textuelle.</p>
+      <p>Cette classe se charge par exemple de convertir  une chaîne de caractères en date et de convertir  une date en chaîne de caractères, ou bien de formater  des nombres avec trois décimales exactement.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Java ne propose pas de composant graphique  pour saisir et afficher des dates par défaut. Des développeurs  proposent des librairies pour fournir leur propre composant graphique.  Essayez JCalendar (<a href="http://toedter.com/jcalendar/" target="_blank">http://toedter.com/jcalendar/</a>), JDatePicker (<a href="http://jdatepicker.org/" target="_blank">http://jdatepicker.org/</a>), JXDatePicker (<a href="https://swingx.java.net/" target="_blank">https://swingx.java.net/</a>), ou toute autre librairie qui vous semble attractive !</p>
+        </div>
+      </div>
+      <p>Le rendu graphique est le même que  celui de la classe <strong>JTextField</strong>.</p>
+    </div>
+    <div>
+      <h3>d. JTextArea</h3>
+      <p>La classe <strong>JTextArea</strong> permet de saisir plusieurs lignes de texte brut (sans  décoration, ni style de caractères :  pas de gras ni d’italique par exemple).</p>
+      <div>
+        <div><img alt="images/04-08.png" src="images/images_04-08.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>e. JEditorPane et JTextPane</h3>
+      <p>La classe <strong>JEditorPane</strong> permet d’afficher du texte stylé :  c’est-à-dire des caractères en gras, en surligné jaune…</p>
+      <p>Cette classe permet même d’afficher  des pages web au format <strong>HTML</strong>, ou des documents au format <strong>RTF</strong> (Rich Text Format) ! Il est également possible de créer  ses propres formats à l’aide d’un objet <strong>EditorKit</strong>.</p>
+      <p><strong>JTextPane</strong> est une spécialisation de la classe <strong>JEditorPane</strong> qui permet de créer et d’afficher ses propres  documents stylés.</p>
+      <p>Ces deux classes sont relativement complexes à utiliser,  elles ne seront pas plus explicitées dans ce livre.</p>
+      <div>
+        <div><img alt="images/04-09.png" src="images/images_04-09.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>3. Saisie de nombres</h2>
+    <p>Plutôt que d’utiliser des champs  textes simples pour saisir des nombres entiers, Java propose  deux composants graphiques dédiés.</p>
+    <div>
+      <h3>a. JSpinner</h3>
+      <p>La classe <strong>JSpinner</strong> permet de saisir des nombres entiers, soit par la saisie directe avec  le clavier dans un champ texte, soit en manipulant des petites flèches  situées à côté du champ texte  pour diminuer ou augmenter la valeur saisie.</p>
+      <div>
+        <div><img alt="images/04-10.png" src="images/images_04-10.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JSlider</h3>
+      <p>La classe <strong>JSlider</strong> fournit un curseur graphique permettant de saisir un nombre.  Ce composant graphique ne possède pas d’affichage de la  valeur saisie.</p>
+      <div>
+        <div><img alt="images/04-11.png" src="images/images_04-11.png"></div>
+      </div>
+      <p>Il est néanmoins capable d’afficher  le minimum et le maximum des valeurs possibles, ainsi que les valeurs  intermédiaires (les <strong>ticks</strong>).</p>
+      <div>
+        <div><img alt="images/04-12.png" src="images/images_04-12.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>4. Affichage d’informations</h2>
+    <p>Il est important dans une application graphique  de pouvoir afficher des informations non modifiables à destination  de l’utilisateur, par exemple le total d’une commande, un petit  texte à côté d’un champ texte décrivant  ce qui doit être saisi ou un pourcentage.</p>
+    <div>
+      <h3>a. JLabel</h3>
+      <p>La classe <strong>JLabel</strong> permet d’afficher un texte et/ou une image.</p>
+      <div>
+        <div><img alt="images/04-13.png" src="images/images_04-13.png"></div>
+      </div>
+      <p>Il est possible de choisir les positions relatives  du texte et de l’image, ainsi que la couleur du texte.</p>
+      <div>
+        <div><img alt="images/04-14.png" src="images/images_04-14.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Un JLabel peut également être  utilisé pour afficher une image sans texte associé. </p>
+        </div>
+      </div>
+      <p>En alignant un JLabel à côté d’un  JTextField et en changeant la police de caractères en  gras, il est possible de créer une entrée de formulaire  comme ceci :</p>
+      <div>
+        <div><img alt="images/04-15.png" src="images/images_04-15.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JProgressBar</h3>
+      <p>La classe <strong>JProgressBar</strong> permet d’afficher un pourcentage sous forme graphique,  avec une barre qui se remplit en fonction du pourcentage.</p>
+      <p>Cette barre peut afficher le pourcentage,  dans une orientation horizontale ou verticale. Cette barre peut également être  indéterminée : une animation apparaît  alors.</p>
+      <p>Ce composant est très utile pour  signifier à l’utilisateur l’avancement d’une opération  potentiellement longue.</p>
+      <div>
+        <div><img alt="images/04-16.png" src="images/images_04-16.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>c. JSeparator</h3>
+      <p>La classe <strong>JSeparator</strong> permet de tracer des traits fins horizontaux ou verticaux dans  l’application, pour séparer visuellement les différents  composants graphiques.</p>
+      <p>Un séparateur permet d’aérer  l’affichage.</p>
+      <div>
+        <div><img alt="images/04-17.png" src="images/images_04-17.png"></div>
+      </div>
+      <p>Si un séparateur est placé entre  un bouton <strong>Rechercher</strong> et un bouton <strong>Supprimer</strong>, une division logique et graphique est créée  entre les deux fonctionnalités : l’utilisateur  sera un peu moins enclin à confondre les deux et à cliquer  sur le mauvais bouton.</p>
+      <div>
+        <div><img alt="images/04-18.png" src="images/images_04-18.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Un séparateur peut être  vertical ou horizontal. Il est le plus souvent utilisé dans les  menus ou les barres d’outils avec sa version horizontale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>5. Affichage et sélection d’objets</h2>
+    <p>Les composants graphiques vus précédemment  permettent d’afficher et de saisir du texte ou des nombres.  Il est courant dans une application de pouvoir afficher et saisir  des objets plus complexes tout en fournissant un ensemble restreint  de choix à l’utilisateur.</p>
+    <p>Les composants qui vont être présentés  dans cette section sont plus complexes dans leur codage :  ils nécessitent des objets annexes dont l’un va fournir les  données à afficher (on parle de <strong>modèle</strong>) et l’autre va fournir le rendu graphique (on parle  de <strong>renderer</strong>).</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Ces composants sont basés  sur une variante de l’architecture MVC (Modèle-Vue-Contrôleur),  qui sera explicitée lors du chapitre Modèle MVC.</p>
+      </div>
+    </div>
+    <div>
+      <h3>a. JComboBox</h3>
+      <p>La classe <strong>JComboBox</strong> permet d’afficher une liste déroulante de choix possibles. L’utilisateur  peut alors modifier ce choix, qui sera affiché en conséquence.</p>
+      <div>
+        <div><img alt="images/04-19-2.png" src="images/images_04-19-2.png"></div>
+      </div>
+      <p>Il est possible de rendre cette liste déroulante éditable,  cela permet alors à l’utilisateur de pouvoir effectuer  une saisie libre, qui n’est pas restreinte aux choix de la combo  box, ceux-ci permettant alors d’aiguiller et de faciliter la saisie.</p>
+      <div>
+        <div><img alt="images/04-21.png" src="images/images_04-21.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JList</h3>
+      <p>À l’instar de la classe <strong>JComboBox</strong>, la classe <strong>JList</strong> permet d’afficher une liste de choix ou d’informations  et de pouvoir effectuer une sélection à l’intérieur de  cette liste.</p>
+      <p>Par contre, une JList permet d’effectuer des  sélections multiples, ce qui n’est pas possible avec une  JComboBox. De plus, une JComboBox nécessite deux clics  pour sélectionner un objet : un clic pour dérouler  la liste, un clic pour sélectionner. Une JList permet cette  sélection en un seul clic.</p>
+      <div>
+        <div><img alt="images/04-22.png" src="images/images_04-22.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>6. Données structurées</h2>
+    <p>Il est souvent important dans une application  de pouvoir afficher des données structurées avec  leur détail.</p>
+    <p>Prenez l’exemple de l’explorateur de fichiers  de votre système d’exploitation (favori ou non). Il s’y  trouve classiquement deux types de données : la  liste des répertoires et de leurs sous-répertoires  qui sont des données arborescentes (on parle d’un <strong>arbre</strong>) et la liste des fichiers dans un répertoire  avec leur nom, leur type, leur date de modification… qui  sont des données tabulées (on parle d’une <strong>table</strong>).</p>
+    <div>
+      <div><img alt="images/04-23.png" src="images/images_04-23.png"></div>
+    </div>
+    <p>Java fournit des composants graphiques permettant  de visualiser et d’interagir avec ces deux grands types de données  structurées.</p>
+    <p>Il est ainsi tout à fait possible  de construire son propre explorateur de fichiers multiplateforme, à titre  d’exercice.</p>
+    <div>
+      <h3>a. JTree</h3>
+      <p>La classe <strong>JTree</strong> permet d’afficher des données sous forme arborescente.</p>
+      <div>
+        <div><img alt="images/04-24.png" src="images/images_04-24.png"></div>
+      </div>
+      <p>Chaque élément de l’arbre  s’appelle un nœud (un <strong>node</strong> en Java), et chaque élément terminal  (n’ayant pas de sous-élément) s’appelle une feuille  (une <strong>leaf</strong> en Java).</p>
+    </div>
+    <div>
+      <h3>b. JTable</h3>
+      <p>La classe <strong>JTable</strong> permet d’afficher des données de manière  tabulée, en lignes et en colonnes : chaque ligne  représente une donnée, chaque colonne représente  un détail de cette donnée.</p>
+      <p>Il est possible de spécifier un en-tête à cette  table, qui va fournir les noms des colonnes par exemple.</p>
+      <div>
+        <div><img alt="images/04-25.png" src="images/images_04-25.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>7. Conteneurs</h2>
+    <p>Le tour d’horizon des composants élémentaires  est presque terminé. Il est maintenant temps de s’intéresser  au placement de ces composants.</p>
+    <p>En effet, une application ne se compose jamais  d’un seul élément graphique, mais plutôt  d’une multitude de composants. Ces composants doivent être organisés entre  eux afin de fournir une utilisation intuitive de l’application.</p>
+    <p>Pour cela, on peut utiliser des panneaux,  qui permettent de lier graphiquement des composants entre eux.</p>
+    <div>
+      <h3>a. JPanel</h3>
+      <p>Un <strong>JPanel</strong> est un des conteneurs les plus simples de Java. Il est  tellement simple qu’il est généralement invisible  pour l’utilisateur !</p>
+      <p>Il est néanmoins possible de fournir  une bordure ou une couleur de fond à ce panneau, afin de  le mettre en exergue.</p>
+      <div>
+        <div><img alt="images/04-26.png" src="images/images_04-26.png"></div>
+      </div>
+      <p>Un panneau va donc accueillir des composants  graphiques. Pour savoir où les afficher, ce panneau a besoin  d’un système permettant de spécifier la disposition  de ces composants entre eux. Cette disposition s’appelle le <strong>layout</strong>, et un JPanel a besoin d’un gestionnaire de disposition,  le <strong>LayoutManager</strong>. </p>
+      <p>La première fenêtre qui  a été créée utilisait un JPanel  avec un layout absolu, c’est-à-dire que les composants étaient  placés au pixel près. Le seul problème avec  cette manière de faire est si la fenêtre est redimensionnée  :  les composants restent à leur place et ne s’adaptent pas à l’espace  disponible.</p>
+      <p>Les différents layouts disponibles  seront présentés un peu plus loin dans ce chapitre.</p>
+    </div>
+    <div>
+      <h3>b. JScrollPane</h3>
+      <p>Il peut arriver qu’un composant graphique  n’ait pas la place nécessaire pour s’afficher entièrement  dans l’espace qui lui a été dévolu par  le LayoutManager.</p>
+      <p>Il devient alors nécessaire de fournir à l’utilisateur  un moyen graphique pour faire défiler le contenu afin qu’il  accède à tout le composant.</p>
+      <p>La classe <strong>JScrollPane</strong> permet ce défilement. Il peut être  horizontal, vertical, ou les deux à la fois, ce qui est  le cas le plus fréquent.</p>
+      <p>Graphiquement, deux barres apparaissent à droite  et en bas du composant, avec des ascenseurs permettant ce défilement.</p>
+      <div>
+        <div><img alt="images/04-27.png" src="images/images_04-27.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>c. JSplitPane</h3>
+      <p>La classe <strong>JSplitPane</strong> permet d’afficher deux composants graphiques côte à côte.</p>
+      <div>
+        <div><img alt="images/04-28.png" src="images/images_04-28.png"></div>
+      </div>
+      <p>Ces deux composants peuvent être  présentés soit horizontalement soit verticalement.  Une barre de séparation permet de faire varier leurs tailles  respectives.</p>
+      <div>
+        <div><img alt="images/04-29.png" src="images/images_04-29.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Notez les deux petites flèches  sur la gauche de la barre de séparation. Il est possible  de spécifier des boutons permettant de masquer et d’afficher  un des composants avec un seul clic de souris.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>d. JTabbedPane</h3>
+      <p>La classe <strong>JTabbedPane</strong> permet d’afficher plusieurs composants de manière séparée,  chacun dans un onglet dédié. Quand l’utilisateur  clique sur un onglet, le composant associé est affiché,  les autres composants sont cachés.</p>
+      <div>
+        <div><img alt="images/04-30.png" src="images/images_04-30.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>e. JToolbar</h3>
+      <p>La classe <strong>JToolbar</strong> permet d’afficher des composants (le plus souvent des boutons) dans  une barre d’outils pour permettre un accès rapide à des  actions courantes par exemple.</p>
+      <div>
+        <div><img alt="images/04-31.png" src="images/images_04-31.png"></div>
+      </div>
+      <p>Cette barre d’outils peut être repositionnée  dans l’application ou bien détachée dans une petite  fenêtre annexe.</p>
+    </div>
+  </div>
+  <div>
+    <h2>8. Fenêtres</h2>
+    <p>Tous ces composants graphiques doivent obligatoirement  s’insérer dans le système de fenêtrage  du système d’exploitation. Une fenêtre est composée d’une  bordure, d’un titre, d’une icône et de petits boutons de  minimisation, maximisation et de fermeture. Cette bordure et la  police de caractère du titre (on parle de décoration  de la fenêtre) sont le plus souvent déterminées  par le système d’exploitation : il est néanmoins  possible de les modifier depuis Java.</p>
+    <p>Chaque fenêtre a également  une taille et une position dans l’écran. Ces paramètres  sont modifiables depuis Java. Il est aussi possible d’empêcher  le redimensionnement d’une fenêtre, même si ce  n’est généralement pas la meilleure idée.</p>
+    <div>
+      <h3>a. JFrame</h3>
+      <p>Une <strong>JFrame</strong> est une fenêtre de haut niveau, qui constitue  le plus souvent le point de départ d’une application classique.</p>
+      <div>
+        <div><img alt="images/04-32.png" src="images/images_04-32.png"></div>
+      </div>
+      <p>Il est possible de spécifier les  actions du bouton fermer (en haut à droite de la bordure  sur Windows) : ne rien faire, cacher la fenêtre,  terminer l’application ou relâcher les ressources graphiques  de la JFrame (la fenêtre est alors supprimée de  l’écran).</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Le relâchement des ressources  graphiques d’une JFrame ne signifie pas forcément que l’application  va se terminer !</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JDialog</h3>
+      <p>Une boîte de dialogue, ou plus communément  dialogue, est une fenêtre indépendante, liée  généralement à une fenêtre principale.  La plupart des boîtes de dialogue consistent en la présentation  de messages d’erreur, d’information ou d’avertissement, mais elles  peuvent également afficher des images ou des composants  graphiques.</p>
+      <div>
+        <div><img alt="images/04-33.png" src="images/images_04-33.png"></div>
+      </div>
+      <p>Une boîte de dialogue ne propose  pas de bouton de maximisation ou minimisation sur la bordure.</p>
+      <p>Un dialogue peut être déclaré <strong>modal</strong> : dans ce cas, l’exécution du code  du thread graphique est mise en suspens jusqu’à ce que  la boîte de dialogue soit fermée.</p>
+      <pre>    JDialog dialog = new Jdialog();        dialog.setTitle("Dialogue vide");       dialog.setIconImage(new ImageIcon(             getClass().getResource("Moon-32.png")).getImage());<strong>          dialog.setModalityType(ModalityType.APPLICATION_MODAL);           // le dialogue est affiché à la ligne suivante</strong>       dialog.setVisible(true);<strong>       // le reste du code est exécuté quand le dialogue est fermé</strong></pre>
+    </div>
+    <div>
+      <h3>c. JOptionPane</h3>
+      <p>La classe <strong>JOptionPane</strong> est un moyen pratique pour créer des boîtes  de dialogues standards et simples.</p>
+      <div>
+        <div><img alt="images/04-34.png" src="images/images_04-34.png"></div>
+      </div>
+      <p>Voici le code pour créer ces boîtes  de dialogue :</p>
+      <pre>JOptionPane.<strong>showMessageDialog</strong>(null,                     "Message à destination de l’utilisateur");       JOptionPane.showMessageDialog(null,                     "Avertissement à destination de l’utilisateur",                     "Attention!",<strong>                     JoptionPane.WARNING_MESSAGE</strong>);      JoptionPane.showMessageDialog(null,                    "Une erreur a eu lieu",                    "Erreur!!",<strong>                     JoptionPane.ERROR_MESSAGE</strong>);      JoptionPane.showMessageDialog(null,                    "Pouvez-vous répondre?",                    "question ?",<strong>                     JoptionPane.QUESTION_MESSAGE</strong>);      JoptionPane.showMessageDialog(null,                    "Un dialogue très standard",                    "Standard",<strong>                     JoptionPane.PLAIN_MESSAGE</strong>);  </pre>
+      <p>JOptionPane permet aussi de créer  des boîtes de dialogue de confirmation avec un code de  retour permettant de connaître la décision de  l’utilisateur.</p>
+      <pre>int confirmation = JoptionPane.<strong>showConfirmDialog</strong>(null,                                  "Confirmez l’action",                                  "Confirmation requise",<strong>                                  JoptionPane.YES_NO_OPTION</strong>);   if( <strong>confirmation == JOptionPane.YES_OPTION</strong>) {   }   if( <strong>confirmation == JOptionPane.NO_OPTION</strong>) {   }       confirmation = JoptionPane.showConfirmDialog(null,                                 "Confirmez l’action",                                 "Confirmation requise",<strong>                                  JoptionPane.YES_NO_CANCEL_OPTION</strong>);  </pre>
+      <pre>if( confirmation == <strong>JOptionPane.CANCEL_OPTION</strong>) {   }   confirmation = JoptionPane.showConfirmDialog(null,                                 "Confirmez l’action",                                 "Confirmation requise",<strong>                                  JOptionPane.OK_CANCEL_OPTION</strong>);  </pre>
+      <p>Ce code permet de créer les boîtes  de dialogue suivantes :</p>
+      <div>
+        <div><img alt="images/04-35.png" src="images/images_04-35.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>d. JFileChooser</h3>
+      <p>La classe <strong>JFileChooser</strong> fournit une boîte de dialogue pour sélectionner  des fichiers ou des répertoires.</p>
+      <div>
+        <div><img alt="images/04-36.png" src="images/images_04-36.png"></div>
+      </div>
+      <pre>JFileChooser chooser = new <strong>JfileChooser</strong>();    int resultat = chooser.<strong>showOpenDialog</strong>(null);    if( <strong>resultat == JFileChooser.APPROVE_OPTION</strong>) {        File fichierSelectionne = chooser.<strong>getSelectedFile</strong>();        ...     }  </pre>
+    </div>
+    <div>
+      <h3>e. JColorChooser</h3>
+      <p>La classe <strong>JColorChooser</strong> permet à l’utilisateur de sélectionner  des couleurs.</p>
+      <div>
+        <div><img alt="images/04-37.png" src="images/images_04-37.png"></div>
+      </div>
+      <pre><strong>Color couleur</strong> = JcolorChooser.<strong>showDialog</strong>(null,                                  "Choisir une couleur",                                 Color.BLUE);  </pre>
+    </div>
+  </div>
+  <div>
+    <h2>9. Menus</h2>
+    <p>Les menus sont omniprésents dans  une application moderne et permettent d’accéder à différentes  parties de l’application, à déclencher diverses  actions…</p>
+    <p>Tout part ici de la barre de menus.</p>
+    <div>
+      <div><img alt="images/04-38.png" src="images/images_04-38.png"></div>
+    </div>
+    <p>Dans une application, la barre de menus est  présente tout en haut de la fenêtre principale.  Regardez sur votre ordinateur, par exemple dans Eclipse. Vous pouvez  voir les mots File, Edit, Source… Project, Run, Window,  Help. Ces mots correspondent à des menus qui sont rattachés à la  barre de menus principale.</p>
+    <p>Si vous cliquez sur le mot <strong>Help</strong> par exemple, le menu spécifique à l’aide  apparaît.</p>
+    <div>
+      <div><img alt="images/04-39.png" src="images/images_04-39.png"></div>
+    </div>
+    <p>Ce menu consiste en des items de menu, comme <strong>Welcome</strong>, <strong>Help Contents</strong>, <strong>Install New Software</strong>...</p>
+    <p>Cliquer sur un de ces items provoque une action,  le plus souvent l’ouverture d’une fenêtre ou d’une boîte  de dialogue qui permet de faire des actions, effectuer des réglages,  etc.</p>
+    <div>
+      <h3>a. JMenuBar</h3>
+      <p>La classe <strong>JMenuBar</strong> est le composant graphique de la barre de menus. Si  cette barre est vide, il n’y a aucun rendu graphique.</p>
+      <div>
+        <div><img alt="images/04-40.png" src="images/images_04-40.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>b. JMenu</h3>
+      <p>La classe <strong>JMenu</strong> est le composant graphique du menu et du bouton permettant  d’ouvrir ce menu.</p>
+      <p>Un menu sans éléments</p>
+      <div>
+        <div><img alt="images/04-41.png" src="images/images_04-41.png"></div>
+      </div>
+      <p>Un menu avec un item</p>
+      <div>
+        <div><img alt="images/04-42.png" src="images/images_04-42.png"></div>
+      </div>
+      <p>Les menus sont peuplés avec des sous-menus  (qui sont des JMenu) et des items de menu, qui lanceront leur action  associée.</p>
+      <p>Un menu avec son sous-menu</p>
+      <div>
+        <div><img alt="images/04-43.png" src="images/images_04-43.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>c. JMenuItem</h3>
+      <p>La classe <strong>JMenuItem</strong> correspond à un élément terminal  dans le menu. Si l’on clique sur cet item, une action est exécutée,  comme l’affichage d’une autre fenêtre, l’ouverture  d’un navigateur web, la sauvegarde d’un fichier…</p>
+      <div>
+        <div><img alt="images/04-44.png" src="images/images_04-44.png"></div>
+      </div>
+      <p>Dans l’exemple ci-dessus, un item de menu  a été créé, qui s’appelle « Une action ».</p>
+      <p>Un examen attentif permet de constater que  la lettre a est soulignée. Il s’agit d’une touche <strong>mnémonique</strong>, qui permet de sélectionner rapidement l’item  de menu associé.</p>
+      <p>Dans Eclipse, appuyez sur la touche [Alt],  puis appuyez sur la touche <strong>F</strong>. La combinaison [Alt] <strong>F</strong> est ainsi créée.</p>
+      <p>Cette combinaison ouvre le menu de premier  niveau associé avec <strong>F</strong>, soit File. L’association est visible car la lettre  F est soulignée dans le mot File présent dans  le menu.</p>
+      <div>
+        <p> Appuyez sur la touche <strong>P</strong>.</p>
+      </div>
+      <div>
+        <p>La boîte de dialogue d’impression  s’ouvre.</p>
+      </div>
+      <p>En revenant à l’exemple ci-dessus,  un autre élément caractéristique est  la présence du texte « Maj-A ».  Il s’agit d’un <strong>accélérateur</strong>.</p>
+      <p>Un accélérateur est une  combinaison de touches qui permet d’effectuer rapidement une action.</p>
+      <p>Par exemple [Ctrl] <strong>S</strong> sert classiquement à sauvegarder quelque chose  dans pratiquement toutes les applications. [Ctrl] <strong>C</strong> sert à copier, [Ctrl] <strong>V</strong> sert à coller… </p>
+      <p>Java permet d’assigner ces accélérateurs  aux actions de l’application.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Les combinaisons [Ctrl] <strong>+</strong>... ne sont pas dans les habitudes des utilisateurs Mac. Java  permet de prendre en compte ces spécificités.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>d. JPopupMenu</h3>
+      <p>Il existe un autre type de menu que l’on retrouve  quasiment dans toutes les applications. Il s’agit du menu contextuel,  que l’on obtient en faisant un clic droit. Il peut aussi s’appeler  le menu pop-up.</p>
+      <p>La classe <strong>JPopupMenu</strong> permet de créer un menu contextuel. Il suffit  ensuite de lui rajouter des JMenu et des JMenuItem.</p>
+      <div>
+        <div><img alt="images/04-45.png" src="images/images_04-45.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>L’exemple ci-dessus illustre le fait  qu’il est tout à fait possible d’insérer des cases à cocher  et des boutons radio dans les menus, à l’aide des classes <strong>JCheckBoxMenuItem</strong> et <strong>JradioButtonMenuItem</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>10. Layouts</h2>
+    <p>Les layouts permettent d’organiser les composants  graphiques à l’intérieur d’un JPanel. Voici les  plus courants, fournis par Java.</p>
+    <div>
+      <h3>a. FlowLayout</h3>
+      <p>La classe <strong>FlowLayout</strong> permet de disposer les composants sur une ligne, dimensionnés selon  leur taille préférée. Si le panneau est  trop petit pour les afficher sur une seule ligne, ce layout  utilise plusieurs lignes.</p>
+      <div>
+        <div><img alt="images/04-46.png" src="images/images_04-46.png"></div>
+      </div>
+      <p>Il s’agit d’un des layouts les plus simples.</p>
+    </div>
+    <div>
+      <h3>b. BoxLayout</h3>
+      <p>Le <strong>BoxLayout</strong> place les composants sur une seule ligne ou une seule  colonne. Les composants sont dimensionnés selon leur taille  préférée.</p>
+      <div>
+        <div><img alt="images/04-47.png" src="images/images_04-47.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>c. BorderLayout</h3>
+      <p>Le <strong>BorderLayout</strong> ne peut placer que cinq composants à la fois,  l’un au centre, les autres sur les pourtours. </p>
+      <p>Les composants occupent toute la place disponible.</p>
+      <div>
+        <div><img alt="images/04-48.png" src="images/images_04-48.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>d. GridLayout</h3>
+      <p>Le <strong>GridLayout</strong> place les composants sur une grille. Ils sont donc organisés  en lignes et en colonnes. Toutes les lignes ont la même  hauteur, toutes les colonnes ont la même largeur,  et les composants occupent toute la taille disponible dans  leur cellule.</p>
+      <div>
+        <div><img alt="images/04-49.png" src="images/images_04-49.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>e. GridBagLayout</h3>
+      <p>Le <strong>GridBagLayout</strong> est un des layouts les plus sophistiqués. Les  composants sont placés suivant des lignes et des colonnes,  mais certains peuvent occuper plusieurs lignes ou plusieurs colonnes,  ils peuvent occuper toute la place disponible ou se dimensionner à leur  taille préférée.</p>
+      <p>Chaque composant peut en plus avoir une marge  (un espace vide) sur son pourtour.</p>
+      <div>
+        <div><img alt="images/04-50.png" src="images/images_04-50.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>11. Look and Feel</h2>
+    <p>Le système Look and Feel de Java  permet de modifier l’apparence des composants graphiques (le Look)  et la manière dont ceux-ci se comportent (le Feel).</p>
+    <p>De ce point de vue, chaque type de composant  graphique est divisé en deux parties : les J (JButton,  JList…) et les UI (ButtonUI, ListUI). Les UI sont des objets à qui  les J délèguent les opérations d’habillage  graphique.</p>
+    <p>Java propose plusieurs Look and Feel de base :  tout d’abord le Look and Feel système qui correspond à l’habillage  graphique du système d’exploitation (avec quelques variantes),  ensuite le Look and Feel multiplateforme (communément appelé Metal)  qui donne un rendu uniforme sur Windows, Apple ou Linux. Il existe également  le Look and Feel Synth, qui permet aux développeurs de  créer leur propre habillage via des fichiers de configuration  XML ou Nimbus, qui ont été introduits lors de  la sortie de Java 6.</p>
+    <p>Pour spécifier un Look and Feel précis,  il est possible d’utiliser une des lignes de code suivantes :</p>
+    <pre>// Look and Feel multi-plateforme<strong>    UIManager.setLookAndFeel</strong>(                UIManager.<strong>getCrossPlatformLookAndFeelClassName</strong>());      // Look and Feel système    UIManager.setLookAndFeel(                UIManager.<strong>getSystemLookAndFeelClassName</strong>());  </pre>
+    <p>Vous pouvez également utiliser la  version qui utilise des chaînes de caractères :</p>
+    <pre>// Look and Feel multi-plateforme    UIManager.setLookAndFeel(                           "javax.swing.plaf.metal.MetalLookAndFeel");      // Look and Feel Motif (pas très joli)    UIManager.setLookAndFeel(                 "com.sun.java.swing.plaf.motif.MotifLookAndFeel");     // Look and Feel Nimbus   UIManager.setLookAndFeel(                 "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");  </pre>
+    <p>Ces lignes doivent être utilisées  avant que la première fenêtre graphique s’affiche. </p>
+    <p>Si votre application graphique est déjà visible,  il est nécessaire d’utiliser la ligne :</p>
+    <pre>    SwingUtilities.<strong>updateComponentTreeUI</strong>(fenetreOuComposant);  </pre>
+    <p>Pour être sûr d’avoir de  jolies décorations sur la fenêtre, utilisez le  code :</p>
+    <pre>    <strong>JFrame.setDefaultLookAndFeelDecorated</strong>(true);  </pre>
+    <p>Heureusement, les Look and Feel ne se limitent  pas à ceux de Java. Comme il est tout à fait possible  de créer le sien, plusieurs développeurs ont suivi  ce chemin et proposent gratuitement le leur. Et certains les vendent !</p>
+    <p>Essayez par exemple :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Synthetica disponible à l’adresse : <a href="http://www.javasoft.de/synthetica/screenshots/" target="_blank">http://www.javasoft.de/synthetica/screenshots/</a> en incorporant le .jar téléchargé avec  la ligne :</p>
+        </li>
+      </ul>
+    </div>
+    <pre>UIManager.setLookAndFeel(        "de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel");  </pre>
+    <div>
+      <ul>
+        <li>
+          <p>Alloy (payant), disponible  ici : <a href="http://lookandfeel.incors.com/" target="_blank">http://lookandfeel.incors.com/</a></p>
+        </li>
+        <li>
+          <p>JGoodies Looks (<a href="http://www.jgoodies.com/freeware/libraries/looks/" target="_blank">http://www.jgoodies.com/freeware/libraries/looks/</a>), avec la ligne :</p>
+        </li>
+      </ul>
+    </div>
+    <pre>UIManager.setLookAndFeel(              new com.jgoodies.looks.plastic.Plastic3DLookAndFeel());      UIManager.setLookAndFeel(              new com.jgoodies.looks.plastic.PlasticLookAndFeel());  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Beaucoup d’autres Look and Feels existent,  en choisir un est une affaire de goûts, de couleurs et  de compatibilité graphique avec un système d’exploitation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

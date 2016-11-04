@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_4f1ca9a1-a3ed-4d54-8f62-4b25b64898f0" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Principes SOLID</h1>
+  <p>Afin d’obtenir une modélisation et  un développement plus fiables et plus robustes en  programmation orientée objet, il est possible de mettre  en œuvre cinq principes de base rassemblés sous  l’acronyme SOLID (en anglais). Ces principes liés entre  eux permettent de démarrer un développement sur  de bases saines qui permettront de faciliter des modifications ultérieures.</p>
+  <div>
+    <h2>1. Single Responsibility</h2>
+    <p>Le principe de <strong>responsabilité unique</strong> postule que toutes les classes d’une application doivent être  responsables d’une des fonctionnalités de la modélisation,  et que cette fonctionnalité doit être contenue  dans la classe. De cette manière, chaque classe n’a qu’une  seule raison de changer, ce qui permet de garder le contrôle  de sa complexité, d’améliorer sa lisibilité et  d’obtenir un meilleur travail en équipe comme  premiers avantages immédiats.</p>
+    <p>Un contre-exemple de ce principe est une classe  rassemblant plusieurs fonctionnalités, comme une classe  Commande qui modélise les données, permet l’accès  direct à la base de données et gère elle-même  l’impression. Cela crée une classe complexe, dont les différentes  fonctionnalités se retrouvent liées entre elles,  et qui sera sensible à tout changement, car il n’est alors  pas possible de garantir qu’une modification de la partie d’impression  n’impactera pas l’accès aux données.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Plutôt que d’utiliser un  outil multifonctions dont chaque élément est moyen  en termes d’utilisation, il est préférable d’avoir  une trousse avec différents outils, chacun dédié à un  usage spécifique.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Open/Closed</h2>
+    <p>Le principe d’<strong>ouvert/fermé</strong> énonce qu’un logiciel doit être ouvert à l’extension  mais fermé à la modification. L’objectif de ce  principe est d’arriver à une modélisation dont  on pourra ajouter de nouveaux comportements sans en modifier la  mécanique interne.</p>
+    <p>Un contre-exemple de ce principe est un module  de génération de rapport sous différents  formats : PDF, image… En supposant qu’une méthode  d’impression soit de la forme :</p>
+    <pre>if (format == PDF) {        // générer un PDF   }   if (format == JPEG) {       // générer une image JEG   }  </pre>
+    <p>Le jour où un nouveau format d’impression  est demandé par les utilisateurs, il faudra modifier cette  méthode pour y ajouter un nouveau test sur la variable de  format (et il est très vraisemblable qu’il faille ajouter  ce nouveau test dans d’autres méthodes). </p>
+    <p>Une des approches respectant le principe ouvert/fermé est  de créer une classe modélisant le format, contenant  une méthode <strong>générer()</strong>. Le jour où un nouveau format doit être  créé, il suffit d’étendre la classe,  sans modifier la mécanique interne de génération.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il n’est pas nécessaire de  passer par la case chirurgie le jour où on enfile une nouvelle  chemise.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>3. Liskov Substitution</h2>
+    <p>Le principe de <strong>substitution de Liskov</strong> postule que tout code manipulant une classe parente  doit pouvoir utiliser une de ses classes dérivées  sans avoir la connaissance de son utilisation : la classe  de base définit un contrat que toute sous-classe doit obligatoirement  respecter. Le principe réciproque est que les classes dérivées  doivent pouvoir être remplacées par leur classe  de base.</p>
+    <p>Un exemple classique de violation de ce principe  est une méthode effectuant un test sur le type (la classe)  d’un objet pour effectuer des opérations dessus, comme  dans le pseudo-code ci-dessous :</p>
+    <pre>si le fichier est de la classe FichierPDF        alors on manipule un fichier PDF   si le fichier est de la classe FichierTexte        alors on manipule un fichier Texte    ...  </pre>
+    <p>Une des clés pour comprendre ce principe  est que la relation d’héritage (A <strong>est</strong> une sorte de B) est liée à un <strong>comportement externe</strong> et non un comportement ou des attributs internes.</p>
+    <p>Par exemple, une première approche  pour modéliser un carré est d’exprimer cette notion  comme un cas particulier d’un rectangle avec largeur et hauteur égales :  une classe Carré est alors créée, qui  hérite d’une classe Rectangle. Les méthodes de  mutateurs sont modifiées pour exprimer la contrainte supplémentaire.</p>
+    <p>Si un test générique des  rectangles est créé pour vérifier que  les attributs hauteur et largeur sont correctement modifiés,  le test ne passera pas pour la classe Carré !  Contrairement à l’acceptation populaire, en termes de modélisation  objet un carré ne se <strong>comporte</strong> pas comme un rectangle.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Si cela ressemble à un canard,  caquette comme un canard, mais a besoin de piles électriques  pour fonctionner, ce n’est peut-être pas un canard.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>4. Interface Segregation</h2>
+    <p>Le principe de <strong>ségrégation des interfaces</strong> énonce qu’un logiciel ne doit pas dépendre  de méthodes qu’il n’utilise pas. Dans une modélisation  par contrat, ce contrat doit pouvoir être découpé en  de petites interfaces.</p>
+    <p>Ce principe permet également de contribuer  au premier principe de responsabilité unique.</p>
+    <p>À l’inverse, si une fonctionnalité a  quantité de méthodes dans son contrat, comme générer(),  imprimer(), faxer()…, elle apporte beaucoup trop de connaissances.  Un utilisateur de la fonction d’impression a-t-il vraiment besoin de  connaître la fonction de fax ? De plus, le jour  où il faudra créer un nouveau système  d’impression, est-il nécessaire de devoir recréer  le mécanisme de fax ?</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il est moins coûteux de remplacer  un tournevis que de racheter un outil multifonctions dont on n’utilise  que le tournevis.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>5. Dependency Inversion</h2>
+    <p>Le principe d’<strong>inversion des dépendances</strong> postule qu’un module de haut niveau ne doit  pas dépendre de l’implémentation d’un module de  bas niveau mais que les deux niveaux doivent être liés  par une abstraction. De plus, une abstraction ne doit pas dépendre  des détails, mais les détails doivent dépendre des  abstractions, une abstraction pouvant être une classe de  base ou une interface.</p>
+    <p>Un contre-exemple est un client dépendant  des classes d’un serveur pour le traitement de la communication  entre les deux.</p>
+    <div>
+      <div><img alt="images/03-01.png" src="images/images_03-01.png"></div>
+    </div>
+    <p>Le jour où le protocole de données  du serveur change, il faudra changer le client avec tous les risques  d’incompatibilité qui s’ensuivent.</p>
+    <p>Une meilleure conception selon le principe  d’inversion de dépendances consisterait à intercaler  entre les deux une notion de protocole (via une interface ou une  classe abstraite), protocole implémenté dans une  classe distincte.</p>
+    <div>
+      <div><img alt="images/03-02.png" src="images/images_03-02.png"></div>
+    </div>
+    <p>Ce changement de conception permet de minimiser  les impacts dus à un changement de protocole, et permet  potentiellement au système de pouvoir gérer plusieurs  protocoles à la fois.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Souder une lampe sur une prise électrique  n’est généralement pas une bonne idée.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

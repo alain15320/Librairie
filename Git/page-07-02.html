@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_42015388-73d6-449d-b7d6-f479dfbaff14" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Afficher les différences de contenu</h1>
+  <p>Il est intéressant d’être  en mesure de récupérer des commits, mais parfois  ce que le développeur cherche se trouve dans le contenu  même des modifications ajoutées par le commit,  le répertoire de travail ou encore l’index. Pour cela,  il doit utiliser la commande git diff.</p>
+  <p>La commande git diff affiche  une liste des ajouts et des suppressions de lignes entre deux commits  ou alors entre les différentes zones (répertoire  de travail, index).</p>
+  <p>Pour que les exemples prennent du sens, il  faut modifier au moins un fichier du dépôt. Les  données avec lesquelles le fichier sera modifié ne  sont pas importantes, elles serviront juste à l’affichage  des exemples. Dans le cas du dépôt de Django,  il est possible de modifier le fichier README.rst pour y ajouter une ligne à la fin (ligne d’exemple à ajouter  : Je teste la commande git diff). Il faut ajouter ensuite cette modification à l’index.</p>
+  <pre>git add README.rst  </pre>
+  <p>Il faut remodifier ce fichier en modifiant  cette dernière ligne (ligne d’exemple : Je teste la commande diff de git).</p>
+  <div>
+    <h2>1. Différences en cours dans le répertoire</h2>
+    <p>L’un des cas où git  diff est très utilisé est celui où le  développeur veut visualiser les modifications présentes  dans son répertoire de travail par rapport à son  index. Prendre connaissance de ces modifications lui permet de ne  pas ajouter dans l’index celles qu’il ne souhaite pas. Pour afficher  les différences entre le répertoire de travail  et l’index, il faut utiliser la commande suivante : </p>
+    <pre>git diff  </pre>
+    <p>Cette commande affiche la sortie suivante  : </p>
+    <pre>diff --git a/README.rst b/README.rst    index 6e9bc5f..9f4dcc9 100644    --- a/README.rst    +++ b/README.rst    @@ -41,4 +41,4 @@ To run Django’s test suite:     * Follow the instructions in the "Unit tests" section of       docs/internals/contributing/writing-code/unit-tests.txt,     published online at https://docs.djangoproject.com/en/dev/internals   /contributing/writing-code/unit-tests/#running-the-unit-tests    -Je teste la commande git diff    +Je teste la commande diff de git  </pre>
+    <p>Les utilisateurs de systèmes UNIX  en ligne de commande sont habitués à ce genre  d’affichage. Il correspond à l’exécution de la  commande diff effectuée entre  deux fichiers en ligne de commande. </p>
+    <p>La première ligne indique qu’on  effectue la différence entre les versions du répertoire  de travail et de l’index. La deuxième ligne identifie  les deux fichiers dont on veut obtenir les modifications. L’affichage  qui importe réellement commence à la ligne 5,  où le contenu du fichier est affiché. Les lignes  qui ne sont ni préfixées du signe - ni préfixées  du signe + sont des lignes qui n’ont pas été modifiées.  Elles servent principalement à prendre connaissance des lignes  qui définissent le contexte du code modifié. Les  lignes préfixées par le signe + sont  les lignes qui ont été ajoutées dans  le répertoire de travail. Les lignes préfixées  par le signe - sont des lignes qui ont été supprimées  dans le répertoire de travail.</p>
+    <p>Selon la configuration de Git, la sortie de  cette commande colore les lignes ajoutées en vert et les  lignes supprimées en rouge pour faciliter la lecture.</p>
+  </div>
+  <div>
+    <h2>2. Différences entre l’index et HEAD</h2>
+    <p>Une autre situation où git diff est très utilisé est  juste avant que le développeur commite les modifications  contenues dans l’index. Pour les valider et ne pas commiter des  erreurs, il va comparer les différences entre l’index et HEAD  (pour rappel, HEAD est le commit le plus récent de la branche  courante).</p>
+    <pre>git diff --cached  </pre>
+    <p>Cette commande affiche la sortie suivante  (tronquée pour garder la partie utile) :</p>
+    <pre>@@ -41,3 +41,4 @@ To run Django’s test suite:     * Follow the instructions in the "Unit tests" section of       docs/internals/contributing/writing-code/unit-tests.txt,     published online at https://docs.djangoproject.com/en/dev/internals   /contributing/writing-code/unit-tests/#running-the-unit-tests    +Je teste la commande git diff  </pre>
+    <p>Cette commande permet de vérifier  tout ce qui sera commité juste avant d’utiliser la commande git commit. Il est très important  de ne commiter que ce qui est nécessaire. L’étape  de vérification des modifications avant le commit ne doit  pas être oubliée et doit faire partie intégrante  du processus de commit.</p>
+  </div>
+  <div>
+    <h2>3. Différences entre le répertoire  de travail et HEAD</h2>
+    <p>Pour consulter les différences entre  la dernière version du dépôt (pointée  par HEAD) et la version courante dans le répertoire de  travail, il faut utiliser la commande suivante : </p>
+    <pre>git diff HEAD  </pre>
+    <p>Cette commande est utile lorsque le développeur  souhaite comparer ces deux zones sans se soucier de l’index.</p>
+  </div>
+  <div>
+    <h2>4. Différences introduites par un ou plusieurs  commits</h2>
+    <p>La commande git diff permet également  d’afficher les différences introduites par un nouveau commit.  En effet, il arrive régulièrement qu’un développeur  souhaite visualiser les modifications apportées par un  commit. Cela peut servir pour corriger un bug existant ou encore  pour écrire une revue de code qui validera ou non le code  du commit.</p>
+    <p>Pour cela, il faut donc comparer deux versions  : la version du commit dont on veut obtenir les modifications et  la version de son ancêtre (c’est-à-dire la version  du commit précédent).</p>
+    <p>Pour identifier le commit parent d’un commit,  il faut utiliser la commande suivante :</p>
+    <pre>git log --pretty=%P -1  </pre>
+    <p>Cette commande affiche le hash suivant : </p>
+    <pre>f8cc464452f495fce2a3d6f7494396c8f798a1e6  </pre>
+    <p>Ensuite, il suffit d’utiliser la commande git diff avec la syntaxe suivante (où commit1 et commit2 sont  des hashs de commits ou des références de commits  comme HEAD) :</p>
+    <pre>git diff commit1..commit2  </pre>
+    <p>Par exemple, pour voir les modifications introduites  par le dernier commit, il faut utiliser la commande suivante : </p>
+    <pre>git diff F8cc464..HEAD  </pre>
+    <p>Il est également possible d’utiliser  la syntaxe suivante : </p>
+    <pre>git diff HEADˆ1..HEAD  </pre>
+    <p>Le raccourci HEADˆ1 permet  de demander à Git le commit parent de HEAD. La syntaxe  composée de deux points à la suite correspond à une  plage de commits. Il est possible de spécifier  une plage de commits beaucoup plus large composée de nombreux  commits.</p>
+  </div>
+  <div>
+    <h2>5. Différences de mots</h2>
+    <p>Par défaut, lorsqu’un caractère  a été modifié, Git considère  que toute la ligne a été modifiée. Il  est possible de demander à Git d’afficher les différences  non pas par ligne, mais par mot. Dans ce cas-là, si un  caractère a été modifié, Git n’affichera  plus une ligne rouge et une verte, il affichera un mot vert (pour  le mot ajouté avec le caractère modifié)  et un mot rouge (pour le mot avec l’ancien caractère).</p>
+    <p>Cependant, un code n’a pas la même  définition de ce qu’est un mot qu’un texte rédactionnel.  En effet, dans un texte rédactionnel ou littéraire  les mots sont séparés par des espaces. Dans un  code, une seule ligne peut présenter plusieurs éléments  qui ne seront pas séparés par un espace. Il faut  spécifier à Git les séparateurs que nous  désirons pour séparer les mots dans git diff. Il faut donc utiliser une  expression régulière pour préciser à Git  ce qui est un mot dans un code à l’aide de l’argument --color-words :</p>
+    <pre>git diff --color-words=.</pre>
+    <p>Cette commande indique à Git qu’un  mot doit être considéré comme un caractère. En  effet, un signe point est interprété comme définissant  n’importe quel caractère par une expression régulière.  Cette commande demande donc à Git de considérer  chaque caractère comme un mot. La commande précédente affiche  la sortie suivante : </p>
+    <pre>Je teste la commande git diff de git  </pre>
+    <p>La sortie est colorée dans le terminal  et indique que le mot « git » (coloré en rouge)  a été supprimé et que les mots « de  git » (colorés en vert) ont été ajoutés à la  fin de la ligne. Cet affichage est beaucoup plus clair que la sortie  envoyée par git diff sans  autre argument. Bien évidemment, tous les développeurs ne  trouvent pas ce mode pratique et certains préfèrent  une différence affichée par ligne. C’est à chaque  développeur de choisir le mode qu’il trouve plus pratique.</p>
+    <p>Lorsque les couleurs ne sont pas disponibles  sur l’interface en ligne de commande, il est possible d’utiliser  la commande suivante : </p>
+    <pre>git diff --word-diff  </pre>
+    <p>Cette commande va afficher la sortie suivante  : </p>
+    <pre>Je teste la commande[-git-] diff {+de git+}  </pre>
+    <p>Cette sortie permet de mieux visualiser les  modifications lorsque les couleurs ne sont pas disponibles (comme  dans ce livre). Dans le chapitre Création d’un dépôt,  une section (Les options de configuration avancées - Séparateur  de mots) traite de la configuration de ce que Git doit considérer  comme un mot. Cette option de configuration permet de ne pas devoir  spécifier à chaque fois ce qu’est un mot.</p>
+  </div>
+</div>
+
+</body>
+</html>

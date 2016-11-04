@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Lecture des enregistrements</h1>
+<p>À ce stade, il est temps de faire  quelques tests d’écriture et de lecture des données dans  la base, à l’aide de la classe <strong>TestJPA</strong>.</p>
+<div>
+  <p> Ajoutez d’abord une méthode <strong>toString()</strong> à cette classe en utilisant l’option <strong>Source - Generate toString()…</strong> du menu contextuel. Elle permettra d’avoir plus de confort  dans l’affichage des données.</p>
+</div>
+<pre>@Override   public String toString() {       return "TestJPA [clePrimaire=" + clePrimaire                    + ", message=" + message               + "]";   }  </pre>
+<div>
+  <p> Modifiez ensuite la méthode <strong>main()</strong> de la classe <strong>TestJPA</strong> comme ceci :</p>
+</div>
+<pre>public static void main(String[] args) {       Connexion connexion = Connexion.getConnexion();          // création de données de test               TestJPA test1 = new TestJPA();       test1.clePrimaire = 1;       test1.message = "message 1";              TestJPA test2 = new TestJPA();       test2.clePrimaire = 2;       test2.message = "message 2";          TestJPA test3 = new TestJPA();       test3.clePrimaire = 3;       test3.message = "message 3";          // démarrer une transaction<strong>        EntityTransaction transaction = em.getTransaction();</strong>       transaction<strong>.begin();</strong>              // persister les éléments dans le gestionnaire d’entités       em.<strong>persist</strong>(test1);       em.persist(test2);       em.persist(test3);              // synchroniser le gestionnaire avec la base       em.<strong>flush</strong>();          em.<strong>remove</strong>(test3);          // finaliser la transaction       transaction.<strong>commit</strong>();              // les données sont maintenant en base   }   </pre>
+<p>Pour effectuer une opération d’écriture  vers la base, JPA doit obligatoirement être dans une transaction  active. Cette transaction se récupère par la méthode <strong>getTransaction()</strong> de la classe <strong>EntityManager</strong>. </p>
+<p>Une transaction représente un ensemble  d’opérations liées qui fonctionnent atomiquement :  si l’une des opérations est impossible et lève  une erreur, l’ensemble des opérations de la transaction  est considéré comme échoué.  Il est alors possible de revenir en arrière et effacer  les opérations de la transaction comme si rien ne s’était  passé : on parle dans ce cas de <strong>rollback</strong>.</p>
+<p>Pour effectuer des opérations d’écriture,  on démarre la transaction par la méthode <strong>begin()</strong>, et l’on déclare au gestionnaire d’entités  qu’il faut sauvegarder de nouvelles données grâce à la  méthode <strong>persist()</strong>. Ces données ne sont alors pas encore écrites  en base. Plusieurs opérations peuvent ainsi être  effectuées lors d’une même transaction :  modifier d’autres données, en effacer…</p>
+<p>Une fois que toutes les opérations  voulues ont été effectuées, la méthode <strong>flush()</strong> demande au gestionnaire d’entités d’envoyer  toutes les données modifiées vers la base. La  transaction courante est ensuite commitée et fermée à l’aide  de l’opération <strong>commit()</strong>.</p>
+<p>Ces deux dernières méthodes  effectuent à peu près la même chose.  Leur différence est que <strong>commit()</strong> envoie tous les changements et ferme la transaction alors  que <strong>flush()</strong> envoie les changements mais garde la transaction courante : il  est quelquefois avantageux de commencer à écrire  des données en base au cours de la transaction, qui sera  commitée plus tard.</p>
+<p>Une fois que des données sont écrites  en base, il s’agit de les lire.</p>
+<div>
+  <p> Complétez la méthode main  avec le code suivant :</p>
+</div>
+<pre>   ...    // les données sont maintenant en base   TestJPA trouvé = em.<strong>find</strong>(TestJPA.class, Long.valueOf(1));   System.out.println("trouvé: " +trouvé);<strong>           Query</strong> requete = em.<strong>createQuery("SELECT test FROM TestJPA test")</strong>;   List&lt;?&gt; resultats = requete.<strong>getResultList</strong>();   System.out.println("trouvés: " +resultats);  </pre>
+<p>La première ligne permet de retrouver  directement un enregistrement en base si son identifiant (ou clé primaire)  est connu. Le gestionnaire d’entités de JPA permet alors  de retrouver directement cet enregistrement avec un objet métier à l’aide  de la méthode <strong>find()</strong>.</p>
+<p>Pour retrouver plusieurs données  avec des critères arbitraires, il est possible d’effectuer  une requête vers la base. Pour cela il suffit de créer  un objet <strong>Query</strong> à partir du gestionnaire d’entités  avec l’appel de la méthode <strong>createQuery()</strong> en prenant comme paramètre une requête  au format textuel, et d’appeler les résultats depuis la  requête à l’aide de la méthode <strong>getResultList()</strong>.</p>
+<p>En se basant sur ce qui a été appris  de la classe <strong>TestJPA</strong> pour l’accès aux données, la  classe <strong>Connexion</strong> va être modifiée pour y introduire  de bonnes pratiques de codage.</p>
+<p>La classe <strong>Connexion</strong> ne peut pas connaître toutes les opérations à effectuer. À un  certain stade d’avancement dans le codage des fonctionnalités,  elle deviendrait de plus en plus dure à maintenir  et à faire évoluer. À la place, il est possible  de faire en sorte que le code appelant se charge des spécificités (requêtes, modifications…)  tout en permettant de s’assurer que les règles d’accès à l’EntityManager  soient bien respectées (fermeture, démarrage et commit  des transactions notamment).</p>
+<p>Pour cela, deux méthodes publiques  sont créées, ces deux méthodes résumant les  principales actions qui seront effectuées dans les données :  l’application les cherchera et les modifiera. Ce sera également  l’occasion de mettre en œuvre certaines des techniques  décrites dans les chapitres précédents.</p>
+<div>
+  <p> Créez le squelette de la méthode  publique <strong>chercher()</strong> dans la classe <strong>Connexion</strong>.</p>
+</div>
+<pre>    public void chercher() {           EntityManager gerant = fabrique.<strong>createEntityManager</strong>();<strong>            try {           } finally {</strong>               gerant.close();<strong>            }</strong>       }  </pre>
+<p>Cette méthode crée un gestionnaire  d’entité à partir de la fabrique, et le ferme à la  fin de l’opération de recherche. Pour cela, un bloc <strong>finally</strong> est ajouté dans le bloc <strong>try-catch</strong> : il signifie que quel que soit le déroulé des  opérations, le code à l’intérieur du  bloc finally sera exécuté. Il est alors certain  que les ressources du gestionnaire seront relâchées  proprement. Si une exception est levée pendant l’exécution,  le code appelant la récupérera et ce sera à lui  de la gérer.</p>
+<p>Pourquoi cette manière de faire ?  En furetant un peu sur Internet, et en lisant la documentation des  classes <strong>EntityManagerFactory</strong> et <strong>EntityManager</strong>, il est possible de s’apercevoir que la classe <strong>EntityManagerFactory</strong> est thread-safe, alors que la classe <strong>EntityManager</strong> ne l’est pas. Il n’est donc pas raisonnable d’avoir  un attribut de type <strong>EntityManager</strong> dans la classe <strong>Connexion</strong> : les risques de corruption ou d’incohérence  des données sont trop grands.</p>
+<p>Il faut rationaliser les accès aux  EntityManager. Le moyen le plus simple est de n’avoir que des variables  locales de ce type : une fois que la méthode est  exécutée, l’objet <strong>EntityManager</strong> n’est plus accessible. De plus, les objets de ce type  sont légers : les créer n’est pas très  lourd en termes de ressources et de temps d’exécution.</p>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Cette manière de faire a  une conséquence directe : une fois que le gestionnaire  d’entités est fermé, les entités lues  sont considérées comme détachées ; elles  ne sont plus connectées à la base et ne seront  plus mises à jour en cas de modification. Ces entités  deviennent alors de simples structures contenant les données  lues.</p>
+  </div>
+</div>
+<p>Il faut utiliser cet <strong>EntityManager</strong>, et cela ne peut se faire qu’à l’intérieur  du bloc <strong>try</strong>.</p>
+<p>Pour rappel, il ne s’agit pas de créer  toutes les manières possibles de chercher des données  dans la classe <strong>Connexion</strong>. Le nombre de possibilités est déjà conséquent  avec cette application, et ne peut que se démultiplier.</p>
+<p>Une manière générique  de faire va être créée : le  problème est d’exécuter du code dans le bloc try,  avec comme paramètre l’EntityManager et de retourner des  résultats vers le code appelant. L’interface <strong>java.util.function.Function</strong> répond exactement à cette problématique :  il s’agit d’une interface fonctionnelle comprenant une seule méthode <strong>apply()</strong>, qui prend un objet en paramètre, et retourne  un objet en résultat.</p>
+<div>
+  <p> Modifiez la méthode <strong>chercher()</strong> pour introduire un paramètre de type <strong>Function</strong> et retourner un résultat.</p>
+</div>
+<pre>public Object chercher(<strong>Function&lt;EntityManager, Object&gt; fonction</strong>) {      EntityManager gerant = fabrique.createEntityManager();       try {           Object resultat = <strong>fonction.apply(gerant)</strong>;           return resultat;       } finally {           gerant.close();       }   }  </pre>
+<p>L’interface <strong>Function</strong> est générique : il est possible  de déclarer les types du paramètre et  du résultat.</p>
+<p>Comme le type de résultat n’est pas  encore connu à ce stade, il est rendu générique à son  tour.</p>
+<div>
+  <p> Modifiez la méthode <strong>chercher()</strong> pour rendre son résultat générique  :</p>
+</div>
+<pre>    public <strong>&lt;R&gt; R</strong> chercher(Function&lt;EntityManager, <strong>R</strong>&gt; fonction) {           EntityManager gerant = fabrique.createEntityManager();           try {               <strong>R</strong> resultat = fonction.apply(gerant);               return resultat;           } finally {               gerant.close();           }       }  </pre>
+<div>
+  <p>Pour l’utiliser, il suffira par exemple  d’écrire le code suivant en utilisant les lambdas : </p>
+</div>
+<pre>List&lt;Client&gt; clients = laConnexion.chercher(                   (gerant) -&gt; {                       Query query = gerant.createQuery(                           "SELECT c FROM Client c");                       return query.getResultList();       });  </pre>
+<div>
+  <p>ou :</p>
+</div>
+<pre>Client client = laConnexion.chercher(                   (gerant) -&gt; {       // l’objet requete est la chaîne de caractères correspondante       Query query = gerant.createQuery(requete.toString());                      return (Client) query.getSingleResult();   });  </pre>
+<div>
+  <p> Créez la méthode <strong>modifier()</strong> avec le code suivant :</p>
+</div>
+<pre>public &lt;R&gt; R modifier(Function&lt;EntityManager, R&gt; fonction) {       EntityManager gerant = fabrique.createEntityManager();       try {<strong>            EntityTransaction transaction = gerant.getTransaction();           transaction.begin();</strong>              R resultat = fonction.apply(gerant);<strong>               transaction.commit();</strong>           return resultat;       } finally {           gerant.close();       }   }  </pre>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Les rollbacks ne sont pas gérés  dans cet exemple. Un <strong>rollback</strong> est une opération de la transaction qui consiste à revenir  en arrière pour obtenir de nouveau un jeu de données  cohérent si la transaction a échoué.</p>
+  </div>
+</div>
+<p>Et c’est presque tout ! JPA simplifie énormément  les accès à la base. Précédemment,  il était nécessaire d’écrire beaucoup  de code pour créer une connexion avec JDBC, charger les  classes du driver MySQL, configurer cet accès programmatiquement… JPA  se charge de toutes ces étapes pourvu que le fichier de persistance  correct soit fourni. </p>
+<p>La technique de codage de la classe <strong>Connexion</strong> a permis de masquer les détails techniques  d’accès à la base : seule cette classe  peut créer des objets de type <strong>EntityManager</strong> ou <strong>EntityManagerFactory</strong>.</p>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Cette manière de faire évite  au développeur de penser à la transaction. Par contre,  cela implique qu’il fasse attention à l’utilisation du  paramètre <strong>EntityManager</strong>. À ce stade, il peut être intéressant  de commencer à utiliser un framework spécialisé,  comme <strong>Spring</strong>, <strong>PicoContainer</strong> ou <strong>Guice</strong>.</p>
+  </div>
+</div>
+<p>Vous pouvez maintenant effacer la classe <strong>TestJPA</strong>, son rôle de contrôle d’accès à la  base est terminé, elle ne servira plus dans le reste de  notre projet.</p>
+</body>
+</html>

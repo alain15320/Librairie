@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_48bea451-dc72-470e-b42c-cb30a1adbbda" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Mise en service de la fenêtre de connexion</h1>
+  <p>La fenêtre <strong>FConnexion</strong> va passer ici du statut de maquette à celle  de fenêtre opérationnelle.</p>
+  <div>
+    <p> Commencez par rajouter un package nommé « dialogue ».</p>
+  </div>
+  <div>
+    <p> Recopiez dans ce package toutes les classes  maquette.</p>
+  </div>
+  <p>La classe <strong>FConnexion</strong> est une IHM. Elle se contente de transmettre la demande de  l’utilisateur à la classe <strong>Connexion</strong> pour la connexion à la base de données.</p>
+  <div>
+    <p> Ouvrez la classe graphique <strong>FConnexion</strong> avec <strong>WindowBuilder Editor</strong>.</p>
+  </div>
+  <div>
+    <p> Complétez les imports.</p>
+  </div>
+  <pre>import controle.connection.Connexion;  </pre>
+  <div>
+    <p> Allez dans la méthode <strong>valider()</strong> et remplacez le code suivant :</p>
+  </div>
+  <pre>    boolean valide = true; // ce code sera remplacé plus tard  </pre>
+  <p>par :</p>
+  <pre>    String leNom = txtSaisieUtilisateur.getText();       String leMotDePasse = <strong>String.valueOf</strong>(                           pwdMotDePasse.getPassword());       Connexion connexion = Connexion.getConnexion();       boolean valide = connexion.<strong>controle</strong>(leNom, leMotDePasse);  </pre>
+  <p>Le contrôle de saisie s’effectue  avec la méthode <strong>controle()</strong> de la classe <strong>Connexion</strong>.</p>
+  <p>L’expression <strong>pwdMotDePasse.getPassword()</strong> renvoie un tableau de caractères. </p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pour des raisons de sécurité à l’utilisation  de la classe <strong>JPasswordField</strong>, Java fait une distinction entre les chaînes  de caractères déclarées avec la classe <strong>String</strong> et les tableaux de caractères.</p>
+    </div>
+  </div>
+  <pre> // accepté   char[] vChar = pwdMotDePasse.getPassword();      // refusé   String leMotDePasse = pwdMotDePasse.getPassword();  </pre>
+  <p>Il faut convertir le tableau de caractères  en chaîne de caractères, conversion réalisée  avec la méthode statique <strong>valueOf()</strong> de la classe <strong>String</strong>.</p>
+  <pre>leMotDePasse = <strong>String.valueOf</strong>(pwdMotDePasse.<strong>getPassword()</strong>);  </pre>
+  <p>Ces contrôles s’effectuent de deux  manières : si la saisie du login/mot  de passe est incorrecte, la méthode <strong>controle()</strong> de la classe <strong>Connexion</strong> retournera <strong>false</strong>. Il s’agit d’une erreur somme toute assez courante,  qui peut donc être gérée simplement  par un booléen. Par contre, si des problèmes de  connexion à la base de données apparaissent, ces  problèmes doivent rester exceptionnels. Le recours à un  traitement de ces erreurs par exception est une manière élégante  d’y arriver.</p>
+  <p>Pour cela, Java permet d’encapsuler les phases  critiques du programme à l’aide d’un bloc <strong>try/catch</strong>.</p>
+  <pre>private void valider() {       String leNom = txtSaisieUtilisateur.getText();       String leMotDePasse =                String.valueOf(pwdMotDePasse.getPassword());<strong>        try {</strong>           Connexion connexion = Connexion.getConnexion();           boolean valide =                    connexion.controle(leNom, leMotDePasse);           if (valide) {               &lt;traitement de la saisie correcte&gt;           } else {               &lt;traitement de l’erreur de saisie&gt;           }<strong>       } catch (Exception e) {</strong>           JoptionPane.showMessageDialog(null,                   Messages.getString("FConnexion.2"),                   Messages.getString("FConnexion.32"),                    JOptionPane.ERROR_MESSAGE); //$NON-NLS<strong>        }</strong>   }  </pre>
+  <p>Le mot-clé <strong>try</strong> est toujours suivi d’un bloc d’instructions qui définit  le traitement à exécuter. Si celui-ci devait échouer,  une erreur ou exception est créée ou « levée ».  Dans ce cas, l’exception est prise en considération ou « attrapée » et  traitée dans le bloc du <strong>catch</strong> qui doit toujours être placé immédiatement après  le bloc <strong>try</strong>.</p>
+  <p>Des variantes de la gestion des exceptions  existent. Par exemple, on peut indiquer qu’un traitement est susceptible  de lancer une exception en utilisant le mot-clé <strong>throws</strong> dans la déclaration de la méthode  de traitement.</p>
+  <div>
+    <div><img alt="images/08so08.png" src="images/images_08so08.png"></div>
+  </div>
+  <p>La gestion des erreurs est faite ici en deux  temps. On se soucie d’abord du pilote pour le  SGBDR MySQL. Si aucune exception n’est rencontrée,  une variable booléenne indique que le deuxième traitement  peut être effectué. Cette écriture permet  de proposer des messages personnalisés en fonction  de l’exception levée. </p>
+  <pre>private void valider() {       String leNom = txtSaisieUtilisateur.getText();       String leMotDePasse =                String.valueOf(pwdMotDePasse.getPassword());<strong>        try {</strong>           Connexion connexion = Connexion.getConnexion();           boolean valide =                    connexion.controle(leNom, leMotDePasse);           if (valide) {               &lt;traitement de la saisie correcte&gt;           } else {               &lt;traitement de l’erreur de saisie&gt;           }           <strong>        } catch (DatabaseException e) {       // impossible de se connecter à la base</strong>           JoptionPane.showMessageDialog(null,                   Messages.getString("FConnexion.2"),                   Messages.getString("FConnexion.32"),                    JOptionPane.ERROR_MESSAGE); //$NON-NLS<strong>        } catch (Exception e) {           // une exception totalement inconnue est arrivée</strong>           JoptionPane.showMessageDialog(null,                   "Erreur inconnue " +e.getMessage(),                   Messages.getString("FConnexion.32"),                    JOptionPane.ERROR_MESSAGE); //$NON-NLS<strong>        }</strong>   }  </pre>
+  <p>Il reste à créer la méthode <strong>controle()</strong> de la classe <strong>Connexion</strong>.</p>
+  <div>
+    <p> Ouvrez la classe <strong>Connexion</strong> dans l’éditeur Eclipse et complétez  celle-ci avec :</p>
+  </div>
+  <pre>public boolean controle(String nom, String motDePasse) {       boolean verificationSaisie = false;<strong>        EntityManager gerant = fabrique.createEntityManager();</strong>          Object nomUtilisateurCorrect =       gerant.getProperties().get(                       "javax.persistence.jdbc.user");       Object motDePasseCorrect =        gerant.getProperties().get(                      "javax.persistence.jdbc.password");       verificationSaisie =                       nom.equals(nomUtilisateurCorrect)               &amp;&amp;     motDePasse.equals(motDePasseCorrect);<strong>            gerant.close();</strong>          return verificationSaisie;   }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Vous pouvez encore affiner le contrôle  de la saisie en vérifiant si l’utilisateur a au moins renseigné les  champs nécessaires et en précisant si l’erreur  vient du nom ou du mot de passe. Cet affinage devrait plus probablement  se situer dans la classe <strong>FConnexion</strong>.</p>
+    </div>
+  </div>
+  <p>Il reste maintenant à s’occuper de  la sortie de l’application et fermer proprement la connexion à la  base de données.</p>
+  <div>
+    <p> Créez la méthode qui permettra  de fermer la connexion dans la classe <strong>Connexion</strong> :</p>
+  </div>
+  <pre>public void fermeture() {<strong>        fabrique.close();</strong>   }  </pre>
+  <div>
+    <p> Complétez ensuite la méthode <strong>quitter()</strong> de la classe <strong>FConnexion</strong>.</p>
+  </div>
+  <pre>private void quitter() {<strong>        Connexion.getConnexion().fermeture();</strong>       dispose();   }  </pre>
+  <div>
+    <p>La fenêtre de connexion est  opérationnelle. Testez l’application en modifiant les paramètres  pour provoquer volontairement des erreurs. Par exemple, vous pouvez  enlever temporairement la librairie du connecteur MySQL du Build  Path, ou changer l’adresse du serveur ou le nom de la base de données.  Le métier d’un développeur informatique est principalement  de gérer toutes ces erreurs pour créer des logiciels  robustes !</p>
+  </div>
+</div>
+</body>
+</html>

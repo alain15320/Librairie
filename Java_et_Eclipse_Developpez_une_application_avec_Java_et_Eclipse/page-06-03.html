@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_e6d9aff3-b3b0-45ec-8e32-de9e04a9ed7f" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Gestion des erreurs</h1>
+  <p>Le quotidien d’un programme et de ses développeurs  est de gérer les erreurs. Il est même correct  de dire que dans un contexte industriel, la gestion des erreurs représente  plus de temps et de code que le fonctionnement nominal.</p>
+  <p>Il faut donc dans tout programme apprendre à gérer  les mauvaises données saisies par un utilisateur (il rentre  des lettres à la place de chiffres pour un prix), à gérer  les erreurs techniques (la connexion à la base de données  ne se fait plus ou le réseau est tombé), à créer  des stratégies de compensation (retenter une connexion  au maximum trois fois avant d’abandonner...).</p>
+  <p>Afin de gagner en clarté, Java propose  un mécanisme de gestion des erreurs par exception. Il s’agit  d’exécuter une partie de code susceptible de remonter des exceptions  (donc des erreurs) en l’entourant et en fournissant des instructions alternatives  si une exception est levée. Une connexion peut alors être  retentée, des valeurs par défaut sont fournies…</p>
+  <p>Une exception est donc un événement  qui interrompt la séquence normale de l’application et  qui permet d’exécuter un code alternatif.</p>
+  <p>Ceci se fait à l’aide de blocs <strong>try-catch-finally</strong>, comme dans l’exemple ci-dessous :</p>
+  <pre><strong>try</strong> {        // faire un accès réseau       // traiter les données récupérées   } <strong>catch</strong> (IOException e) {       // l’accès réseau n’a pas pu aboutir       // le traitement des données ne sera pas effectué          // proposer un traitement alternatif   } <strong>finally</strong> {       // le code sera exécuté dans le cas nominal        // ET dans le cas d’erreur   }</pre>
+  <p>Un des intérêts de la gestion  des erreurs par exception est que si une portion de code est fautive,  le reste du code dans le bloc <strong>try</strong> ne sera pas exécuté. Un autre de ses  intérêts est de clairement séparer le  fonctionnement nominal d’un code et le traitement des erreurs.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Les exceptions sont proposées  par beaucoup de langages de programmation différents. Avant  leur création, les développeurs se basaient sur  des codes de retour, dont il fallait surveiller toutes les valeurs  possibles et acter en fonction. Cela aboutissait à créer  des pyramides de if … else, dont la lecture était … laborieuse. Et  si un développeur oubliait de vérifier une valeur  de retour, des trous dans la gestion des erreurs apparaissaient. </p>
+    </div>
+  </div>
+  <p>Java définit une hiérarchie  d’objets décrivant les erreurs possibles survenant dans  un programme, dont la classe de base est <strong>Throwable</strong>.</p>
+  <p>Cette classe est spécialisée  en deux sous-classes : <strong>Error</strong> et <strong>Exception</strong>. <strong>Error</strong> concerne des problèmes très rares,  comme une classe ne pouvant être lue, ou moins rares comme  un débordement de pile (en anglais : stack overflow), tandis qu’<strong>Exception</strong> concerne les problèmes plus typiques de l’exécution  d’un programme, comme l’absence d’une classe, une absence de réseau  ou une variable utilisée alors qu’elle n’est pas initialisée.</p>
+  <p>Les exceptions sont ensuite subdivisées  en deux catégories : les exceptions vérifiées (checked)  et non vérifiées (unchecked). Ces dernières  héritent toutes de la classe <strong>RuntimeException</strong>.</p>
+  <p>La différence principale entre ces  deux types d’exceptions est liée à leur déclaration :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Si une méthode  est susceptible de lever une exception vérifiée,  il n’existe que deux manières de la traiter : </p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>soit avec un bloc <strong>try-catch-finally</strong> dans la méthode,</p>
+      </li>
+      <li>
+        <p>soit en déclarant la méthode  comme susceptible de lever cette exception avec le mot-clé <strong>throws</strong> dans sa signature. À charge alors aux méthodes situées plus  haut dans la pile d’appels de traiter cette exception.</p>
+      </li>
+    </ul>
+  </div>
+  <pre>    void methodeAvecException() throws MonException {               }              void appelAvecException() <strong>throws MonException</strong> {             methodeAvecException();       }              void appel() {<strong>              try {</strong>                    methodeAvecException();<strong>             } catch (MonException e) {                    // ... gérer l’exception             }</strong>       }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il est tentant de traiter tout de  suite une exception. Il est souvent plus intéressant de  laisser le code appelant le faire, notamment dans le cas de création d’une  librairie.</p>
+    </div>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>Si une méthode  peut lever une exception non vérifiée, il n’est  pas obligatoire de la traiter. Elle peut néanmoins apparaître,  comme beaucoup de développeurs le vérifient tous  les jours. Des exemples de ce type d’exception sont les <strong>NullPointerException</strong>, <strong>UnsupportedOperationException</strong>, <strong>ArithmeticException</strong>...</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Error et ses sous-classes sont considérées  par le compilateur Java comme non vérifiées.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

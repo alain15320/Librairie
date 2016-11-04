@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_bc65659c-8d63-47de-bcff-40ae9a59bda6" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Threads</h1>
+  <p>Un programme est codé pour que des  instructions soient exécutées séquentiellement.</p>
+  <div>
+    <p> Créez le code suivant :</p>
+  </div>
+  <pre>public class Sequentiel {       public static void main(String[] args) {              System.out.println("1ere ligne");             System.out.println("2eme ligne");             System.out.println("3eme ligne");       }   }  </pre>
+  <p>Dans ce code, la première ligne sera  toujours affichée avant la seconde. La troisième ligne  sera toujours exécutée en dernier.</p>
+  <p>Ceci est garanti par Java car il exécute  ces instructions dans une file d’exécution, un <strong>Thread</strong>.</p>
+  <div>
+    <p> Placez un point d’arrêt (un <strong>breakpoint</strong>) en double cliquant sur la marge gauche de l’éditeur à la  deuxième ligne de la méthode <strong>main()</strong>. Un point bleu doit apparaître. Sinon, placez  le curseur sur cette ligne et faites la combinaison de touches [Ctrl][Shift] <strong>B</strong>.</p>
+  </div>
+  <div>
+    <p> Lancez le programme en mode débogage  en appuyant sur la touche [F11]. La perspective  de débogage s’affiche.</p>
+  </div>
+  <div>
+    <div><img alt="images/04-51.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C04-51.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ftq0yJ1BnTiAsA"></div>
+  </div>
+  <p>La file d’exécution principale de  ce programme est visualisée dans la vue <strong>Debug</strong>. Cette file, ou thread, a un nom :  main.</p>
+  <p>À l’intérieur de cette file,  les instructions sont exécutées séquentiellement,  les unes après les autres.</p>
+  <p>Néanmoins, ce n’est généralement  pas ce qu’un utilisateur attend d’une application : il  veut souvent pouvoir télécharger des fichiers  en même temps qu’il imprime un document tout en écoutant  sa chanson préférée…</p>
+  <p>Grâce à Java, il est possible  de créer de telles applications : chaque partie  de l’application aura un thread dédié, hors de  la file d’exécution principale, qui exécutera  ses propres instructions séquentiellement. Cela donnera  au final à l’utilisateur la possibilité d’effectuer  des tâches en parallèle. </p>
+  <p>Il existe plusieurs manières de lancer  des files parallèles. Elles impliquent pour la plupart  d’encapsuler le code à exécuter à l’intérieur  d’un objet implémentant l’interface <strong>Runnable</strong>.</p>
+  <pre><strong>    Runnable</strong> run = new Runnable() {                  @Override<strong>              public void run()</strong> {                    System.out.println("ligne indépendante");             }       };       Thread fil = <strong>new Thread</strong>(run, "parallèle");       fil.<strong>start</strong>();  </pre>
+  <p>Les choses se compliquent alors…</p>
+  <p>Pour que le code fonctionne correctement,  il est alors nécessaire de s’assurer de la bonne synchronisation  de ces files d’exécution : l’impression ne se  lance que quand le fichier est bien téléchargé…</p>
+  <p>Par exemple, le code précédent  illustrant le concept du thread parallèle a peu de chances  de s’exécuter si vous le rajoutez dans la méthode <strong>main</strong> de la classe <strong>Sequentiel</strong> : le programme s’interrompra souvent avant  que le thread secondaire soit exécuté !</p>
+  <p>Afin d’obtenir un comportement correct avec  l’exécution complète des deux files d’exécution,  il faut attendre que le thread parallèle soit terminé avant  de terminer le programme : cela se fait avec l’appel de  la méthode <strong>join()</strong>.</p>
+  <pre>public class Sequentiel {        public static void main(String[] args) {             System.out.println("1ere ligne");             System.out.println("2eme ligne");             System.out.println("3eme ligne");                 Runnable run = new Runnable() {                        @Override                    public void run() {                           System.out.println("ligne indépendante");                        }             };             Thread fil = new Thread(run, "parallèle");             fil.start();             try {                    fil.<strong>join</strong>();             } catch (<strong>InterruptedException</strong> e) {<strong>                    Thread.currentThread().interrupt();</strong>                    e.printStackTrace();             }       }   }  </pre>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ftq0yJ1BnTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Quand un développeur commence à coder  des applications avec des threads, l’exception <strong>InterruptedException</strong> est souvent rencontrée. Il ne faut jamais ignorer  le traitement de cette exception, et au minimum utiliser l’instruction <strong>Thread.currentThread().interrupt() </strong>afin de donner une chance au fil d’exécution  de se terminer proprement. Les ouvrages et articles de Brian Goetz  sont des lectures essentielles pour de tels développeurs.</p>
+    </div>
+  </div>
+  <p>Créer trop de threads peut ralentir  l’exécution globale du programme, donnant une  impression (et pas qu’une impression !) de lenteur.</p>
+  <p>Une version plus sophistiquée serait  d’utiliser un <strong>ExecutorService</strong> du package <strong>java.util.concurrent</strong>.</p>
+  <pre>import java.util.concurrent.ExecutorService;    import java.util.concurrent.Executors;           ...          ExecutorService executor = <strong>Executors.newSingleThreadExecutor</strong>();   //  ExecutorService executor = Executors.newCachedThreadPool();   //  ExecutorService executor = Executors.newScheduledThreadPool(4);      executor.<strong>execute</strong>(run);       ...        executor.<strong>shutdown</strong>(); </pre>
+  <p>Les threads ont la capacité d’avoir  accès à l’espace mémoire de l’application.  Il leur est donc possible de partager des variables, à la  différence des processus qui ont chacun leur propre espace  mémoire.</p>
+  <p>Si plusieurs threads sont exécutés  et qu’ils manipulent les mêmes objets, des problèmes  de synchronisation apparaissent : un thread peut modifier  la valeur d’une donnée entre deux lectures de cette donnée  par un autre thread, ce qui amène à des comportements  aberrants et aléatoires.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ftq0yJ1BnTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Il s’agit d’une des pires espèces  de bugs dans une application : le bug apparaît… de  temps en temps.</p>
+    </div>
+  </div>
+  <p>Pour synchroniser plusieurs threads, il existe  plusieurs techniques, dont :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Utiliser le mot-clé <strong>synchronized</strong>. </p>
+      </li>
+      <li>
+        <p>Utiliser les classes du package <strong>java.util.concurrent</strong>.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ftq0yJ1BnTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Les problématiques de synchronisation  et de concurrence sont des aspects avancés de Java, qui  ne seront pas plus évoqués dans ce livre.</p>
+    </div>
+  </div>
+  <p>Un aspect spécifique des threads  doit être géré par les applications graphiques.</p>
+  <p>Quand une application graphique est lancée,  la machine virtuelle de Java crée un thread spécifique,  appelé l’Event Dispatch Thread (abrégé en EDT), qui a pour vocation  d’exécuter <strong>toutes</strong> les instructions liées à l’affichage  graphique d’une application, comme les événements  de clic de souris, l’affichage d’un bouton…</p>
+  <p>C’est pour cela que WindowBuilder crée  une méthode main comme ceci :</p>
+  <pre>public static void main(String[] args) {<strong>        EventQueue.invokeLater</strong>(new Runnable() {             public void run() {                    try {                         PremiereFenetre frame = new PremiereFenetre();                        frame.setVisible(true);                    } catch (Exception e) {                           e.printStackTrace();                    }             }       });   }  </pre>
+  <p>La fenêtre graphique ne devrait jamais être  affichée depuis un thread non graphique. La méthode  statique <strong>invokeLater</strong> de la classe <strong>EventQueue</strong> permet d’exécuter un code arbitraire dans l’EDT.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ftq0yJ1BnTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>La méthode statique <strong>invokeLater</strong> de la classe <strong>SwingUtilities</strong> permet de faire exactement la même chose.</p>
+    </div>
+  </div>
+  <p>Avez-vous déjà utilisé une  application qui semble figée quand vous cliquez sur un  bouton ? La fenêtre ne se rafraîchit  pas si elle est minimisée ou une couleur grise s’affiche  si une autre fenêtre est positionnée au-dessus,  et soudainement tout revient à la normale ?</p>
+  <p>C’est parce que les développeurs  de l’application ont créé un code long en termes  d’exécutions à l’intérieur de la file  de l’EDT. Tant que ce code n’est pas terminé, les autres  opérations graphiques sont mises en attente.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ftq0yJ1BnTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Pour programmer une application graphique  qui donne une opération de rapidité, il  est essentiel de ne jamais faire exécuter un code long  dans l’EDT !</p>
+    </div>
+  </div>
+  <p>Afin de simplifier le travail des développeurs,  Java fournit une classe appelée <strong>SwingWorker</strong>, qui permet d’effectuer un tel code en tâche  de fond et, quand le code est terminé, d’exécuter  un autre code dans l’EDT.</p>
+  <p>Par exemple, il est courant, quand un utilisateur  clique sur un bouton d’impression, de désactiver  celui-ci (afin d’éviter 42 impressions de la même page  par exemple), de lancer l’impression en tâche de fond,  et de réactiver le bouton quand l’impression est terminée.</p>
+  <pre>private void impression(JButton bouton) {        // dans le thread graphique       // initialiser une barre de progression              // désactiver le bouton pour éviter les impressions multiples       bouton.<strong>setEnabled</strong>(false);       SwingWorker&lt;?,?&gt; travailleur                          = new SwingWorker&lt;List&lt;Object&gt;, Integer&gt;() {                    @Override             protected List&lt;Object&gt; <strong>doInBackground</strong>()                                               throws Exception {                    // dans le thread d’arrière-plan                           // ... opération longue ...                    // ... opération très longue ...                           // une page a été imprimée,                    // alerter le thread graphique<strong>                     publish</strong>(Integer.valueOf(1));                           // ... opération longue ...                           return new ArrayList&lt;Object&gt;();             }                    @Override             protected void <strong>done</strong>() {                    // la tâche de fond est terminée,                    // de retour dans le thread graphique                           try {                           // récupérer la liste des pages imprimées                           List&lt;Object&gt; list = <strong>get</strong>();                           // afficher quelque chose avec                    } catch (InterruptedException e) {                           // interruption : <strong>il faut gérer</strong>                           e.printStackTrace();                    } catch (<strong>ExecutionException</strong> e) {                           // erreur durant l’exécution                           // <strong>il faut gérer                           Throwable cause = e.getCause();</strong>                           e.printStackTrace();                    }                    // réactiver le boutn                    bouton.<strong>setEnabled</strong>(true);             }                    @Override             protected void <strong>process</strong>(List&lt;Integer&gt; chunks) {                    // les valeurs issues de l’appel de la méthode                    // <strong>publish()</strong> sont récupérées                    // dans le thread graphique                           // mettre à jour une barre de progression             }       }       travailleur.<strong>execute</strong>();   }  </pre>
+  <p>En résumé :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Toutes les opérations  sur les composants graphiques doivent se faire dans l’EDT !</p>
+      </li>
+      <li>
+        <p>Toutes les opérations faites  dans l’EDT doivent se terminer <strong>rapidement</strong> !</p>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

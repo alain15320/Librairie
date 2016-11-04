@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Aller plus loin</h1>
+<p>L’application Luna est maintenant fonctionnelle  pour un utilisateur.</p>
+<p>Il reste néanmoins encore beaucoup  d’axes de travail possibles :</p>
+<div>
+  <ul>
+    <li>
+      <p>Il doit être  possible à plusieurs utilisateurs de travailler simultanément  sur les mêmes données.</p>
+    </li>
+    <li>
+      <p>Les interfaces graphiques des utilisateurs  doivent se mettre à jour quand une donnée est  modifiée par quelqu’un.</p>
+    </li>
+    <li>
+      <p>Un utilisateur doit pouvoir créer, éditer  et supprimer des catégories et des fournisseurs.</p>
+    </li>
+    <li>
+      <p>La récompense principale  d’une application belle et agréable à utiliser  est encore plus de travail, car elle procure des idées  aux utilisateurs ! Attendez-vous à recevoir des  demandes...</p>
+    </li>
+  </ul>
+</div>
+<p>Relativement au premier point listé,  l’application doit pouvoir gérer plusieurs utilisateurs,  ces utilisateurs pouvant se trouver en n’importe quel point du globe.</p>
+<p>Au-delà de la modification consistant à s’authentifier  avec des couples login/mot de passe différents  (via une table dédiée, un annuaire LDAP…),  il est important que chaque utilisateur récupère  les bonnes informations, notamment temporelles.</p>
+<p>Or, un utilisateur basé à Buenos  Aires ou Katmandou ne verra pas les mêmes dates de commande  qu’un utilisateur basé à Paris !</p>
+<p>Cela est dû au fait que les informations  temporelles stockées dans la base de données ne  prennent pas en compte le fuseau horaire. La date de la commande est  stockée au format 2015-05-25 21:26:33. Et lors du rapatriement  des données par JPA, cet horodatage est combiné avec  le fuseau horaire local de l’utilisateur !</p>
+<p>Comment résoudre ce problème ?  Plusieurs alternatives sont possibles :</p>
+<div>
+  <ul>
+    <li>
+      <p>Changer dans la base  de données le format de la date et de l’heure en un long, qui  représentera le nombre de millisecondes (ou de secondes) écoulées depuis le  1er janvier 1970 à minuit UTC.</p>
+      <p>Cette solution n’est pas convenable car  il sera alors impossible de créer simplement le graphique  des statistiques. Il faut pour cela garder le format SQL TIMESTAMP.</p>
+    </li>
+  </ul>
+</div>
+<div>
+  <ul>
+    <li>
+      <p>Stocker l’information  du fuseau horaire dans une colonne supplémentaire et recombiner  les informations pour obtenir une date uniforme.</p>
+      <p>Cette solution n’est pas non plus convenable  car cela impose également une gymnastique algorithmique  lors de la génération du rapport des statistiques.</p>
+    </li>
+  </ul>
+</div>
+<p>À ce stade, on peut constater que  l’horodatage stocké en base est en fait un <strong>LocalDateTime</strong> selon Java 8 : une information temporelle sans  fuseau horaire. Il est donc possible de faire évoluer la  classe Client pour tirer parti de cet état de fait et faire  stocker la date de la commande en prenant par défaut le  fuseau horaire UTC (puisqu’il faut de toutes les manières  choisir un fuseau horaire, autant prendre celui qui est normalisé).</p>
+<div>
+  <p> Transformez l’attribut <strong>date</strong> de la classe <strong>Commande</strong> :</p>
+</div>
+<pre>...        private <strong>LocalDateTime</strong> date;   ...        public Instant getInstant() {           return <strong>ZonedDateTime.of(date,                        ZoneId.of("UTC")).toInstant()</strong>;       }          void setDate(<strong>LocalDateTime</strong> date) {           this.date = date;       }              public void initDate() {           setDate(<strong>LocalDateTime.now(ZoneId.of("UTC"))</strong>);       }   ...   </pre>
+<p>JPA ne permet pas nativement de convertir  un objet de type <strong>LocalDateTime</strong>. Il faut utiliser un convertisseur.</p>
+<div>
+  <p> Créez la classe <strong>ConvertisseurLocalDateTime</strong> dans le package <strong>controle.utilitaires</strong> :</p>
+</div>
+<pre>package controle.utilitaires;      import <strong>java.sql.Timestamp</strong>;   import java.time.LocalDateTime;      import javax.persistence.AttributeConverter;   import javax.persistence.Converter;<strong>       @Converter(autoApply = true)</strong>   public class ConvertisseurLocalDateTime <strong>implements           AttributeConverter&lt;LocalDateTime, Timestamp&gt;</strong> {       @Override       public Timestamp <strong>convertToDatabaseColumn</strong>(                           LocalDateTime entityValue) {           return <strong>Timestamp.valueOf</strong>(entityValue);       }          @Override       public LocalDateTime <strong>convertToEntityAttribute</strong>(                           Timestamp databaseValue) {           return databaseValue.<strong>toLocalDateTime</strong>();       }   }  </pre>
+<p>Ce convertisseur implémente l’interface <strong>javax.persistence.AttributeConverter</strong>. Cette interface est composée de deux méthodes : <strong>convertToDatabaseColumn</strong> convertit un attribut en un format compréhensible  pour le stockage en base de données, <strong>convertToEntityAttribute</strong> effectue l’opération inverse et permet de retrouver  la valeur de l’attribut lors de la récupération  des informations depuis la base de données.</p>
+<p>Cette classe est ensuite annotée  avec <strong>@Converter</strong> pour que JPA en tienne compte. Le paramètre <strong>autoApply</strong> permet d’utiliser ce convertisseur pour tous les attributs  de type <strong>LocalDateTime</strong> dans l’application.</p>
+<p>Enfin, la classe du convertisseur est ajoutée  dans le fichier <strong>persistence.xml</strong>.</p>
+<pre>...        &lt;class&gt;entite.Ligne&lt;/class&gt;<strong>        &lt;class&gt;controle.utilitaires.ConvertisseurLocalDateTime&lt;/class&gt;</strong>   ...   </pre>
+<p>S’il n’est pas possible de convertir automatiquement  tous les types automatiquement, les propriétés  peuvent être annotées avec <strong>@Convert</strong>.</p>
+<p>Par exemple, la propriété <strong>date</strong> de la classe <strong>Commande</strong> peut être annotée comme ceci :</p>
+<pre><strong>    @Convert(converter=ConvertisseurLocalDateTime.class)</strong>       private LocalDateTime date;  </pre>
+<p>Les classes <strong>Article</strong> et <strong>Client</strong> doivent également être modifiées  afin de contenir un attribut de type <strong>LocalDate</strong>.</p>
+<div>
+  <p> Modifiez la classe <strong>Article</strong> :</p>
+</div>
+<pre>...        private LocalDate date;   ...        public Instant getDate() {           return ZonedDateTime.of(                           date.atStartOfDay(),                           ZoneId.<strong>of("UTC")</strong>)                       .toInstant();       }   ...            public void setDate(Instant date) {           this.date = LocalDateTime.ofInstant(date,                            ZoneId.<strong>of("UTC")</strong>)                       .toLocalDate();       }   ...        @Deprecated       public Date getCreation() {           return Date.from(getDateCreation());       }  </pre>
+<div>
+  <p> Modifiez la classe <strong>Client</strong> :</p>
+</div>
+<pre>...        private LocalDate date;   ...        public Instant getDateCreation() {           return <strong>ZonedDateTime.of</strong>(                           date.<strong>atStartOfDay</strong>(),                           ZoneId.of("UTC"))                       .<strong>toInstant</strong>();       }   ...            public void setDateCreation(Instant date) {           this.date = <strong>LocalDateTime.ofInstant</strong>(date,                            ZoneId.of("UTC"))                       .<strong>toLocalDate</strong>();       }   ...        @Deprecated       public Date getCreation() {           return Date.from(getDateCreation());       }  </pre>
+<p>Un convertisseur doit également être  créé et référencé dans  le fichier <strong>persistence.xml</strong>.</p>
+<div>
+  <p> Créez la classe <strong>ConvertisseurLocalDate</strong> dans le package <strong>controle.utilitaires</strong> :</p>
+</div>
+<pre>package controle.utilitaires;      import <strong>java.sql.Date</strong>;   import java.time.LocalDate;      import javax.persistence.AttributeConverter;   import javax.persistence.Converter;      @Converter(autoApply = true)   public class ConvertisseurLocalDate implements           AttributeConverter&lt;LocalDate, Date&gt; {       @Override       public Date convertToDatabaseColumn(LocalDate entityValue) {           return <strong>Date.valueOf</strong>(entityValue);       }          @Override       public LocalDate convertToEntityAttribute(Date databaseValue) {          return databaseValue.<strong>toLocalDate()</strong>;       }   }  </pre>
+<p>Référencez la classe <strong>ConvertisseurLocalDate</strong> dans le fichier <strong>persistence.xml</strong> :</p>
+<pre>...        &lt;class&gt;entite.Ligne&lt;/class&gt;<strong>        &lt;class&gt;controle.utilitaires.ConvertisseurLocalDate&lt;/class&gt;</strong>   ...   </pre>
+<p>Cette itération pour créer  une nouvelle fonctionnalité (ou corriger un bug, suivant la  dénomination retenue) a nécessité la  modification de trois classes et la création de deux nouvelles  classes. Le reste du code de l’application a été inchangé et  cela grâce aux choix de conception retenus lors de la création  du code source.</p>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_ddd8c97e-a3e3-434c-be6b-305e2308f6e0" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Cloner le dépôt distant</h1>
+  <p>Pendant quelques jours, Raphaël va  partir en vacances. Il ne compte pas abandonner son projet pour  autant et va emmener un petit ordinateur pour le continuer tranquillement.  Pour avoir un dépôt propre et fonctionnel, il  va cloner son dépôt sur son PC portable.  Pour cela, il lui faut Git sur son PC portable. Il faut également  qu’il récupère l’URL de clonage sur Bitbucket.  Cette URL se trouve sur la page principale du dépôt,  après avoir cliqué sur le lien <strong>Clone</strong> du menu comme le montre la capture ci-dessous : </p>
+  <div>
+    <div><img alt="images/10E05.png" src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/10E05.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GUlmnvSuzTiAsA"></div>
+  </div>
+  <p>Ensuite, il va utiliser l’interface en ligne  de commande pour se placer dans le dossier qui contiendra le projet  et utiliser la commande :</p>
+  <pre>git clone https://rdauzon@bitbucket.org/rdauzon/  anniversaireliste.git anniversaireVacances  </pre>
+  <p>Cette commande aura pour effet de copier le  dépôt dans un nouveau dossier anniversaireVacances. Cela signifie que Raphaël a accès à tous  les précédents commits et aux modifications qu’ils  contiennent. Cloner un dépôt ne revient pas uniquement à copier  le répertoire de travail, mais à copier l’ensemble  des éléments d’un dépôt.</p>
+  <p>D’ailleurs, les fichiers configurés  dans .gitignore n’ont pas été copiés. En  effet, ils sont totalement ignorés par Git. Il faudra donc  les copier manuellement pour le moment. Ce comportement peut ne  pas sembler très pratique étant donné qu’il  est malgré tout nécessaire de copier manuellement  une liste de fichiers pour avoir un dépôt  fonctionnel. Pourtant, cette limitation est très pratique  lorsque .gitignore doit ignorer des fichiers sensibles comme ceux contenant  des mots de passe d’API. D’ailleurs, Git est un système  de gestion de versions, pas un système de déploiement.  Il n’a donc pas pour vocation de déployer une application  pour la rendre fonctionnelle.</p>
+</div>
+</body>
+</html>

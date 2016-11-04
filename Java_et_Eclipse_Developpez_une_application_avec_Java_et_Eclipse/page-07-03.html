@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_c93d41d2-39ae-45de-80e0-2f3ac0dfa822" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Internationalisation</h1>
+  <p>L’internationalisation d’un logiciel consiste à l’adapter à plusieurs  pays.</p>
+  <p>Du point de vue du développement  d’une application, les points importants à considérer  quand on veut distribuer son logiciel dans plusieurs pays sont :</p>
+  <div>
+    <ul>
+      <li>
+        <p>La langue :  tout le monde ne comprend pas le français ou l’anglais.</p>
+      </li>
+      <li>
+        <p>Les unités de mesure :  cela va du poids (pour une application gérant des articles au  poids) à la monnaie.</p>
+      </li>
+      <li>
+        <p>Le sens de lecture : si  une application est distribuée dans des pays du monde arabe,  en Israël, ou au Japon, elle aura des utilisateurs avec  d’autres habitudes de lecture. Par exemple le monde hébreu  et le monde arabe lisent horizontalement mais de la droite  vers la gauche (sauf pour les mots anglais ou français...).</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le sens de lecture a aussi un impact  sur la disposition graphique des composants d’une application.</p>
+    </div>
+  </div>
+  <div>
+    <h2>1. Traduction des chaînes de caractères</h2>
+    <p>Reprenons la classe <strong>MonPremierProgramme</strong>.</p>
+    <p>Il existe deux chaînes de caractères à traduire  pour l’instant.</p>
+    <p>Ces chaînes posent un problème :  elles ont pour vocation de créer un message à partir  d’une variable, qui est le prénom. Rien ne permet d’affirmer  que la structure de la traduction sera toujours la même.  De plus, le traducteur devra savoir que les mots à traduire  font partie d’une phrase plus grande.</p>
+    <p>Pour faciliter la tâche de traduction,  la technique de concaténation des chaînes de caractères  est transformée en utilisant la méthode statique <strong>format()</strong> de <strong>String</strong> pour obtenir l’effet voulu.</p>
+    <p>Remplacez le code de la méthode <strong>moi()</strong> par :</p>
+    <pre>    public String moi() {              return <strong>String.format</strong>("C’est <strong>%s</strong>!", prenom);       }  </pre>
+    <p>Le code <strong>%s</strong> permet de faire la substitution textuelle d’un objet  (la méthode <strong>toString()</strong> de l’objet est appelée, et <strong>%s</strong> est remplacé par la valeur de retour de l’appel à cette  méthode, ici la valeur du prénom).</p>
+    <p>La méthode <strong>String.format</strong> est très puissante et accepte un paramètre  avec une syntaxe très riche. Sa documentation est accessible  ici : <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax</a></p>
+    <p>Il ne reste dorénavant plus qu’une  seule chaîne de caractères à traduire.</p>
+    <p>Eclipse propose un mécanisme de traduction  des chaînes de caractères, basé sur les  API Java.</p>
+    <div>
+      <p> Sélectionnez la classe <strong>MonPremierProgramme</strong> dans l’explorateur de packages (en anglais,  Package Explorer), faites un clic droit et choisissez l’option <strong>Source - Externalize Strings</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/05-11.png" src="images/images_05-11.png"></div>
+    </div>
+    <p>Une boîte de dialogue permettant  de choisir les chaînes de caractères à traduire s’affiche.</p>
+    <div>
+      <div><img alt="images/05-12.png" src="images/images_05-12.png"></div>
+    </div>
+    <div>
+      <p> Vérifiez que la partie <strong>Accessor class</strong> pointe bien vers <strong>priseEnMain.premier.Messages</strong>.</p>
+    </div>
+    <div>
+      <p> Cliquez sur <strong>Next</strong>.</p>
+    </div>
+    <div>
+      <p>Une information s’affiche :  des fichiers vont être créés.</p>
+    </div>
+    <div>
+      <div><img alt="images/05-13.png" src="images/images_05-13.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur <strong>Next</strong>.</p>
+    </div>
+    <p>Une confirmation des actions qui vont être  effectuées s’affiche.</p>
+    <div>
+      <div><img alt="images/05-14.png" src="images/images_05-14.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur <strong>Finish</strong>.</p>
+    </div>
+    <p>Eclipse a créé deux fichiers :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Un fichier texte <strong>messages.properties</strong>, contenant les traductions. C’est ce fichier qui pourra être  envoyé aux traducteurs.</p>
+        </li>
+        <li>
+          <p>Une classe <strong>Messages</strong>. Cette classe rassemble la petite mécanique  utilisée pour lire le fichier de traduction.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div><img alt="images/05-15.png" src="images/images_05-15.png"></div>
+    </div>
+    <p>Eclipse a également modifié la  classe <strong>MonPremierProgramme</strong> pour accéder à la traduction.</p>
+    <pre>public String moi() {       return String.format(<strong>            Messages.getString("MonPremierProgramme.0"),//$NON-NLS-1$</strong>           prenom);   }  </pre>
+  </div>
+  <div>
+    <h2>2. Tests des traductions</h2>
+    <p>Il est temps de tester ces changements.</p>
+    <div>
+      <p> Relancez les tests JUnit. Le test unitaire  doit continuer à s’afficher en vert.</p>
+    </div>
+    <p>Jusqu’ici, les modifications n’ont pas impacté le  code, tout continue à marcher comme avant.</p>
+    <div>
+      <p> Créez un dossier source avec l’option <strong>New - Source Folder</strong> et choisissez <strong>src/main/resources</strong> comme nom de dossier.</p>
+    </div>
+    <p>Toutes les ressources, c’est-à-dire  les images et les fichiers de traduction se trouveront dans ce dossier.</p>
+    <p>Cette organisation de projet permettra de  pouvoir facilement retrouver les quelques fichiers à envoyer  aux traducteurs.</p>
+    <div>
+      <p> Créez ensuite un nouveau package nommé <strong>priseEnMain.premier</strong> dans ce nouveau dossier source, et déplacez  le fichier <strong>messages.properties</strong> dans ce package.</p>
+    </div>
+    <div>
+      <p> Copiez le fichier <strong>messages.properties</strong> et collez-le dans le même dossier avec le nom <strong>messages_en.properties</strong>.</p>
+    </div>
+    <div>
+      <p>Vous devriez aboutir à cette  arborescence :</p>
+    </div>
+    <div>
+      <div><img alt="images/05-16.png" src="images/images_05-16.png"></div>
+    </div>
+    <p>Ceci permet de créer un fichier de  traduction spécifique pour la langue anglaise. La  classe <strong>Messages</strong> trouvera les traductions en fonction des fichiers <strong>messages_&lt;quelquechose&gt;.properties</strong>.</p>
+    <p>Ce quelque chose correspond au code international à deux  lettres des langues.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Si vous voulez rajouter des traductions  spécifiques pour l’Angleterre, créez le fichier <strong>messages_en_GB.properties</strong>. Si vous voulez créer une traduction pour les  Belges francophones, créez un fichier <strong>messages_fr_BE.properties</strong>. Pour les Suisses francophones, créez le fichier <strong>messages_fr_CH.properties</strong>. Selon la javadoc de la classe Locale (<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html" target="_blank">http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html</a>), les premières lettres désignant  le langage sont issues de la norme ISO 639, les lettres désignant  le pays provenant de la norme ISO 3166.</p>
+      </div>
+    </div>
+    <div>
+      <p> Ouvrez le fichier <strong>messages_en.properties</strong> et modifiez la traduction en :</p>
+    </div>
+    <pre>MonPremierProgramme.0=<strong>It’s</strong> %s\!  </pre>
+    <div>
+      <p> Rajoutez la méthode suivante dans  la classe de test :</p>
+    </div>
+    <pre>@Test   public void testMonPremierProgrammeAnglais() {<strong>       Locale.setDefault(Locale.ENGLISH);</strong>       MonPremierProgramme test = new MonPremierProgramme("John");                  String affichage = test.moi();                  Assert.assertEquals("Ce n’est pas John!",                           "John", test.getPrenom());       Assert.assertEquals("L’affichage est mauvais",                           "It’s John!", affichage);                  test.afficher();   }  </pre>
+    <p>L’appel de la méthode statique <strong>setDefault</strong> de la classe <strong>java.util.Locale</strong> permet de forcer le programme à utiliser l’anglais.</p>
+    <div>
+      <p> Relancez le test.</p>
+    </div>
+    <p>Un des deux tests va échouer. Cela  est dû au fait que les messages (les traductions) sont  chargés au démarrage de l’application, et ne peuvent  plus varier par la suite.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>L’implémentation des traductions  par Eclipse ne propose pas de mécanisme dynamique de changement  de langue. Il vous faudra le créer par vous-même  ou vous tourner vers d’autres mécanismes de traduction.</p>
+      </div>
+    </div>
+    <p>Ce mécanisme va être transformé pour  qu’il puisse supporter le changement dynamique de langage. Voici  la classe <strong>Messages</strong> :</p>
+    <pre>package priseEnMain.premier;      import java.util.MissingResourceException;   import java.util.ResourceBundle;      public class Messages {       private static final String BUNDLE_NAME =                         "priseEnMain.premier.messages"; //$NON-NLS-1$          private static final ResourceBundle               RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);          private Messages() {       }          public static String getString(String key) {              try {                    return RESOURCE_BUNDLE.getString(key);              } catch (MissingResourceException e) {                    return ’!’ + key + ’!’;              }       }   }  </pre>
+    <p>Pour retrouver une traduction liée à une  clé, la classe <strong>Messages</strong> interroge un objet de type <strong>ResourceBundle</strong>, grâce à un attribut nommé <strong>RESOURCE_BUNDLE</strong>.</p>
+    <p>Cet attribut est défini statiquement  et initialisé uniquement quand la classe <strong>Messages</strong> est chargée par la JVM : c’est la  cause principale du problème.</p>
+    <div>
+      <p> Transformez la classe <strong>Messages</strong> en supprimant l’attribut RESOURCE_BUNDLE et  en ajoutant le code :</p>
+    </div>
+    <pre>    private static final Map&lt;Locale, ResourceBundle&gt; BUNDLES                                                = new HashMap&lt;&gt;();<strong>       static {</strong>             charge(Locale.FRENCH);             charge(Locale.ENGLISH);<strong>       }</strong>          private static void charge(Locale locale) {             BUNDLES.put(locale,                      ResourceBundle.getBundle(BUNDLE_NAME, locale));       }</pre>
+    <p>Une propriété statique de  type <strong>Map&lt;Locale, ResourceBundle&gt;</strong> a ainsi été créée,  qui va stocker les bundles de traduction chacun avec la clé de  la langue associée. Le type <strong>Map</strong> est une <strong>inferface</strong>, et la propriété est initialisée  avec un objet de type <strong>HashMap</strong>, qui est une classe implémentant l’interface <strong>Map</strong>.</p>
+    <p>Le contenu de cette propriété est  initialisé avec le bloc <strong>static { … }</strong>, qui appelle la méthode <strong>charge()</strong>, cette dernière stockant effectivement les  traductions dans la Map.</p>
+    <div>
+      <p> Transformez ensuite la méthode <strong>getString()</strong> en :</p>
+    </div>
+    <pre>    public static String getString(String key) {              try {                    return getString(key, Locale.getDefault());              } catch (MissingResourceException e) {                    return ’!’ + key + ’!’;              }       }  </pre>
+    <p>Cette méthode appelle une autre méthode  qui va maintenant être créée.</p>
+    <div>
+      <p> Ajoutez dans la classe <strong>Messages</strong> la méthode <strong>getString(String, Locale)</strong>.</p>
+    </div>
+    <pre>public static String getString(String key, Locale locale) {                  ResourceBundle bundle = BUNDLES.get(locale);<strong>        Optional</strong>&lt;ResourceBundle&gt; opt = Optional.<strong>ofNullable</strong>(bundle);       bundle = opt.<strong>orElse</strong>(BUNDLES.get(Locale.FRENCH));<strong>       Stream</strong>&lt;ResourceBundle&gt; flux = <strong>Stream.of</strong>(bundle);       Stream&lt;String&gt; trad = flux.<strong>map</strong>(rsc -&gt; rsc.getString(key));       return trad.<strong>findFirst().get()</strong>;   }  </pre>
+    <p>Cette méthode fait appel à deux  nouveautés de Java 8, les <strong>Optional</strong> et les <strong>Stream</strong>.</p>
+    <p><strong>Optional</strong> est une classe permettant de prendre en compte le potentiel  d’une variable nulle.</p>
+    <p>Les lignes suivantes : </p>
+    <pre>    <strong>Optional</strong>&lt;ResourceBundle&gt; opt = Optional.<strong>ofNullable</strong>(bundle);       bundle = opt.<strong>orElse</strong>(BUNDLES.get(Locale.FRENCH));  </pre>
+    <p>sont équivalentes à :</p>
+    <pre>    if (bundle == null) {           bundle = BUNDLES.get(Locale.FRENCH);       }  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>La complexité d’une méthode  se compte au nombre de if, else, for qui la compose. Une méthode  trop complexe est difficilement maintenable et peu lisible. La classe <strong>Optional</strong> permet de réduire cette complexité.</p>
+      </div>
+    </div>
+    <p>Une fois le bundle obtenu, il s’agit d’en  récupérer la traduction.</p>
+    <p>Pour cela, les streams sont utilisés.  Un <strong>stream</strong> est un flux de données, qui peut être  transformé en d’autres flux, avec des filtrages intermédiaires.</p>
+    <p>Le flux concerne ici une seule donnée,  le bundle. Il est créé avec la méthode statique <strong>of()</strong> de l’interface <strong>Stream</strong>.</p>
+    <pre><strong>Stream</strong>&lt;ResourceBundle&gt; flux = <strong>Stream.of</strong>(bundle);  </pre>
+    <p>Ce flux est ensuite transformé (mappé)  en une chaîne de caractères.</p>
+    <pre>Stream&lt;String&gt; trad = flux.<strong>map</strong>(rsc -&gt; rsc.getString(key));  </pre>
+    <p>Ce qui est équivalent à :</p>
+    <pre>String traduction = bundle.getString(key);  </pre>
+    <p>La première traduction est récupérée  par la méthode <strong>findFirst()</strong>, qui retourne un <strong>Optional</strong> de cette chaîne de caractères. La  valeur de l’optionnel est ensuite récupérée  par l’appel à <strong>get()</strong>.</p>
+    <p>Cette manière de coder permet de  diminuer la complexité d’une méthode :  il n’y a plus de <strong>if</strong> pour tester les valeurs, les boucles <strong>for</strong> ou <strong>while</strong> sont supprimées… Un des objectifs  est de gagner en lisibilité.</p>
+    <div>
+      <p> Testez la classe.</p>
+    </div>
+    <p>Il y a encore des erreurs, cela est dû au  fait que la classe <strong>ResourceBundle</strong> ne trouve pas de traduction pour la langue française  (il n’y a pas de fichier <strong>messages_fr.properties</strong>), et propose comme alternative les traductions de la langue  par défaut, c’est-à-dire le résultat  de l’appel à <strong>Locale.getDefault()</strong>.</p>
+    <div>
+      <p> Créez un fichier <strong>messages_fr.properties</strong>, à partir de messages.properties, et relancez  les tests.</p>
+    </div>
+    <p>La ligne suivante :</p>
+    <pre>    bundle = opt.orElse(BUNDLES.get(Locale.FRENCH));  </pre>
+    <p>permet de fournir la traduction française  si une langue est inconnue dans le système, par exemple  l’italien.</p>
+    <div>
+      <p> Rajoutez la méthode suivante dans  la classe de tests :</p>
+    </div>
+    <pre>@Test   public void testMessages() {       String string = null;       try {             string = Messages.getString("inexistant",                                              Locale.FRENCH);             Assert.fail("Message inconnu récupéré");       } catch(MissingResourceException e) {             Assert.assertNotNull(e);       }       string = Messages.getString("MonPremierProgramme.0",                                              Locale.FRENCH);       Assert.assertEquals("Mauvais format en Français",                           "C’est %s!", string);                  string = Messages.getString("MonPremierProgramme.0",                                              Locale.ENGLISH);       Assert.assertEquals("Mauvais format en Anglais",                           "It’s %s!", string);                  string = Messages.getString("MonPremierProgramme.0",                                              Locale.ITALIAN);       Assert.assertEquals("Mauvais format en Italien",                           "C’est %s!", string);   }  </pre>
+    <p>D’autres versions de la méthode <strong>getString(String, Locale)</strong> sont possibles, comme par exemple :</p>
+    <pre>public static String getString(String key, Locale locale) {       return Stream.of(BUNDLES)                    .map(bundles -&gt; bundles.get(locale))                    .map(Optional::ofNullable)                    .map(o -&gt; o.orElse(BUNDLES.get(Locale.FRENCH)))                    .map(rsc -&gt; rsc.getString(key))                    .findFirst()                    .orElse("?" + key + "?");   }  </pre>
+  </div>
+</div>
+</body>
+</html>

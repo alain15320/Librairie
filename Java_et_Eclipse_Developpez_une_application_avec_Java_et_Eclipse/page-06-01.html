@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Génériques</h1>
+<p>Java a introduit un autre type de polymorphisme  depuis Java 1.5, dit paramétrique, qui permet de typer  et contraindre les classes. Ces contraintes s’expriment au moyen  d’une notation entre chevrons.</p>
+<p>En reprenant l’exemple des animaux, et en  supposant que l’application concerne un zoo, la modélisation  inclura des enclos regroupant différents animaux. Dans  ces enclos, il s’agit d’absolument éviter de mélanger  des carnivores et des herbivores. Les génériques  permettent de mettre en place une telle sécurité.</p>
+<p>Exemple</p>
+<pre>public class Enclos<strong>&lt;T extends Animal&gt;</strong> {        private <strong>T[]</strong> animaux;       ...         public ajouter(<strong>T</strong> animal) {             ...       }    }</pre>
+<p>L’exemple précédent définit  une notion d’enclos pour toutes sortes d’animaux, grâce à la  notation entre chevrons (&lt; &gt;). Cette notation définit  un type particulier, avec l’alias T qui sera utilisé pour  tous les objets étendant la classe Animal. Cet alias peut  alors être utilisé à l’intérieur  de la classe en substitution du type.</p>
+<p>La classe Enclos peut ensuite être  instanciée avec l’opérateur diamant depuis Java  1.7 comme ceci :</p>
+<p>Exemple d’utilisation avec Java 1.8</p>
+<pre><strong>Enclos&lt;Tigre&gt;</strong> enclosDesTrigres = new Enclos<strong>&lt;&gt;</strong>();  </pre>
+<p>ou dans Java 1.5 comme cela :</p>
+<p>Exemple d’utilisation avec Java 1.5</p>
+<pre><strong>Enclos&lt;Singe&gt;</strong> enclosDesSinges = new Enclos<strong>&lt;Singe&gt;</strong>();   </pre>
+<p>Des enclos plus particuliers peuvent également être  créés :</p>
+<pre>class EnclosHerbivore&lt;T <strong>extends</strong> Herbivore&gt; extends <strong>Enclos&lt;T&gt;</strong> {        ...    }  </pre>
+<p>Les génériques fournissent  une protection à la compilation. Si une partie du code  tente de lier un objet n’ayant pas le type requis, une erreur est  levée.</p>
+<pre>Enclos&lt;Tigre&gt; enclosDesTigres = new Enclos&lt;&gt;();       enclosDesTrigres.add(new Singe()) ; <strong>// erreur à la compilation</strong></pre>
+<p>Les méthodes peuvent également être  déclarées génériques :</p>
+<pre><strong>&lt;T extends Animal, P&gt; T</strong> resultat(<strong>P</strong> parametre) {        return new Tigre();    }</pre>
+</body>
+</html>

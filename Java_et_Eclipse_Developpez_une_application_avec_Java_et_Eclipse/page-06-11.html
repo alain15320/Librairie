@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_cfc80935-3aa1-4fdb-9aa0-e9ff23d3ed3d" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Annotations</h1>
+  <p>Les annotations sont des métadonnées  qui peuvent être ajoutées directement dans le  code d’une application Java, à quasiment tous les niveaux :  sur les packages, les classes, les méthodes, les  attributs, les paramètres et les variables locales.</p>
+  <p>Les annotations sont toujours déclarées  en commençant par le caractère <strong>@</strong>.</p>
+  <p>Des exemples d’annotations ont déjà été vus,  notamment @Override sur certaines méthodes.</p>
+  <p><strong>@Override</strong> est une annotation d’aide au compilateur pour indiquer  que la méthode annotée surcharge une méthode  de la super-classe ou d’une interface. Si le développeur  fait une erreur de typographie dans le nom de la classe, le compilateur  signalera une erreur.</p>
+  <p>Pour annoter un code, il faut écrire  l’annotation immédiatement avant la partie du  code concerné.</p>
+  <p>Par exemple, si vous voulez noter une méthode  comme <strong>@Deprecated</strong> (elle apparaîtra alors barrée lors  de toute utilisation), faites comme ceci :</p>
+  <pre><strong>@Deprecated</strong>    public void methodePasTerrible() {        ...    }  </pre>
+  <p>Les annotations sont utiles lors de deux phases  distinctes du logiciel : lors de sa compilation et lors  de son exécution.</p>
+  <p>Lors de sa compilation, le compilateur peut émettre  des avertissements ou directement arrêter la compilation.  Il est possible aussi pour des outils externes d’utiliser les annotations  afin de générer automatiquement d’autres classes.  Il s’agit d’une technique couramment utilisée dans certains  frameworks, par exemple RESTX (<a href="http://restx.io" target="_blank">http://restx.io</a>) ou AndroidAnnotations (<a href="http://androidannotations.org/" target="_blank">http://androidannotations.org/</a>).</p>
+  <p>Lors de son utilisation, des librairies externes  peuvent « récupérer » les  classes annotées pour permettre des comportements non prévus  par Java. C’est le cas par exemple de JPA (Java Persistence API) qui permet de créer des objets métier persistés  en base de données, ou de JUnit qui permet de créer  des méthodes testant certaines parties de l’application.</p>
+  <p>Les annotations peuvent être paramétrées  par des objets comme des chaînes de caractères  ou par d’autres annotations, comme cela sera vu au chapitre Classes  entités.</p>
+  <p>Il est tout à fait possible d’écrire  ses propres annotations ainsi que des outils de génération  de classes supplémentaires. Cet aspect ne sera pas plus  approfondi dans ce livre.</p>
+</div>
+</body>
+</html>

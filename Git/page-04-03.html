@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_933498af-6a41-407b-a6cb-82c5061b0760" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Installation sous Windows</h1>
+  <p>Git n’a pas été conçu à l’origine  pour fonctionner sur Windows. Pour utiliser Git efficacement sous  Windows il faut l’utiliser au travers d’une interface  en ligne de commande simulant un environnement UNIX. Cette interface  se nomme Cygwin, elle est développée par RedHat  et fournie directement avec l’installateur de Git.</p>
+  <p>Pour télécharger l’exécutable  d’installation, il faut aller sur le site officiel : <a href="https://git-scm.com" target="_blank">https://git-scm.com</a>. Là encore, à l’aide des  informations envoyées par le navigateur, git-scm.com nous  propose de télécharger l’exécutable  qui correspond à notre système :</p>
+  <div>
+    <div><img alt="images/02E01.png" src="images/images_02E01.png"></div>
+  </div>
+  <p>En double cliquant ensuite sur l’exécutable,  la fenêtre d’installation s’affiche. Il  faut suivre les étapes par défaut. À un  moment, une fenêtre intitulée <strong>Adjusting your PATH environment</strong> se présente comme ci-dessous :</p>
+  <div>
+    <div><img alt="images/02E03.png" src="images/images_02E03.png"></div>
+  </div>
+  <p>Cette fenêtre permet d’indiquer à Git  que l’utilisateur utilisera Cygwin pour appeler Git à partir  d’un mode bash. Sur cette fenêtre il faut également  laisser le choix par défaut car Cygwin fournit des outils  très pratiques pour utiliser Git.</p>
+  <p>Ensuite l’exécutable affiche  une fenêtre permettant de configurer la gestion des sauts  de ligne (capture ci-dessous). Il faut savoir que les systèmes  UNIX et les systèmes Windows n’utilisent pas les  mêmes caractères pour effectuer un saut de ligne.  En effet, Windows utilise le mode CRLF (Carriage Return Line Feed), c’est-à-dire que dans un fichier  de texte brut, Windows insère entre deux lignes un retour  chariot puis un saut de ligne. Les systèmes UNIX utilisent  le mode LF, c’est-à-dire qu’ils utilisent  uniquement un saut de ligne entre deux lignes. </p>
+  <p>Git permet d’effectuer certaines  actions sur les sauts de ligne. En effet, si un utilisateur travaillant  sur UNIX crée un fichier et l’ajoute au dépôt,  puis qu’un utilisateur Windows ouvre le fichier, le fichier  sera perçu comme ayant été entièrement  modifié étant donné que chaque saut de  ligne aura été converti par Windows. Git va donc  proposer plusieurs modes pour permettre aux différents  systèmes d’être interopérables  avec Git.</p>
+  <div>
+    <ul>
+      <li>
+        <p>Le premier mode est  le mode défini par défaut. Lorsque Git enregistrera  des fichiers sur votre système Windows il convertira les  sauts de ligne UNIX (LF) en sauts de ligne Windows (CRLF). Git fera  l’inverse lorsqu’il enregistrera le contenu des  fichiers dans le dépôt. C’est le mode  recommandé pour les utilisateurs de Windows.</p>
+      </li>
+      <li>
+        <p>Dans le deuxième mode,  Git ne modifie pas les sauts de ligne des fichiers qu’il  enregistre sur le système de fichiers. Inversement, lorsque  l’utilisateur commitera des fichiers sur le dépôt,  les sauts de ligne de type Windows seront convertis en  sauts de ligne UNIX.</p>
+      </li>
+      <li>
+        <p>Le dernier mode n’effectue  aucune conversion de saut de ligne. Normalement, si tous les utilisateurs  de Git utilisent le même système d’exploitation ce  type ne pose pas de problème particulier. C’est  tout de même se priver de nombreuses possibilités  que de restreindre l’utilisation du dépôt à un  seul type de système. C’est la raison pour laquelle  cette option est fortement déconseillée lorsqu’on  gère un projet développé sur des systèmes  Windows et Unix.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div><img alt="images/02E04.png" src="images/images_02E04.png"></div>
+  </div>
+  <p>Une fois que Git a été installé,  deux raccourcis ont été créés  dans la liste des programmes. Un raccourci appelé <strong>Git Bash</strong> redirige vers une interface en ligne de commande gérée  par Cygwin. Un autre appelé <strong>Git GUI</strong> redirige vers une interface permettant d’utiliser Git.</p>
+  <p>Pour toute la suite de ce livre, il faudra  utiliser <strong>Git Bash</strong> qui permet d’effectuer beaucoup plus d’actions et qui  permet également de mieux comprendre le fonctionnement  de Git.</p>
+  <p>Après avoir cliqué sur le  raccourci <strong>Git Bash</strong>, une interface en ligne de commande s’affiche.  Cette interface permet d’utiliser Git ainsi qu’un  nombre important de commandes bash.</p>
+  <p>Par exemple, lorsque l’on utilise la commande pwd, qui sous UNIX permet d’obtenir  le chemin courant, l’interface affiche la sortie suivante : </p>
+  <pre>/c/Users/Dauzon  </pre>
+  <p>Le chemin est converti automatiquement en  chemin de type UNIX avec des slashs au lieu des antislashs. Par  exemple, pour changer de disque, il faut utiliser la commande :</p>
+  <pre>cd /e  </pre>
+  <p>au lieu de la commande :</p>
+  <pre>cd E:  </pre>
+  <p>Le site officiel du projet contient une documentation  plus précise des fonctionnalités incluses dans  Cygwin : <a href="https://cygwin.com" target="_blank">https://cygwin.com</a></p>
+  <p>Pour vérifier l’installation  de Git il est possible d’utiliser la commande suivante : </p>
+  <pre>git --version  </pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>git version 1.9.5.msysgit.1  </pre>
+  <p>Cette version n’est pas très  récente. Il existe des versions plus à jour de  Git sur des dépôts non officiels. L’installation  est très simple et similaire à celle que nous  venons d’effectuer. Le dépôt git-for-windows  contient de nombreuses versions de Git pour Windows et propose même  des versions portables (ne nécessitant pas d’installation).  Les versions de Git installables sont disponibles sur l’adresse  suivante : <a href="https://github.com/git-for-windows/git/releases" target="_blank">https://github.com/git-for-windows/git/releases</a>. </p>
+</div>
+<div id="AU_933498af-6a41-407b-a6cb-82c5061b0760" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\"> </div>
+<div id="CFooter"> </div>
+</body>
+</html>

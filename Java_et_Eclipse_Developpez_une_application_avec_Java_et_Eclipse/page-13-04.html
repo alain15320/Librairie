@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_ebd2c545-5b69-4165-8805-62130f41776f" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>CRUD de la classe ModeReglements</h1>
+  <p>La classe CRUD du mode de règlement  s’appelle <strong>ModeReglementsCrud</strong> dans ce projet.</p>
+  <div>
+    <p> Créez un package <strong>crud</strong> dans le package <strong>entite</strong>.</p>
+  </div>
+  <div>
+    <p> Créez la classe <strong>ModeReglementsCrud</strong> dans ce package.</p>
+  </div>
+  <pre>package entite.crud;      import java.util.Collections;   import java.util.List;      import javax.persistence.EntityManager;   import javax.persistence.Query;   import javax.swing.JOptionPane;      import controle.connection.Connexion;   import entite.ModeReglements;      public class ModeReglementsCrud {          /**        *         */       private final Connexion laConnexion;          /**        * Constructeur        */       public ModeReglementsCrud(<strong>Connexion uneConnexion</strong>) {           laConnexion = uneConnexion;       }   }  </pre>
+  <p>Cette classe comporte un constructeur avec  un paramètre : l’instance de <strong>Connexion</strong>. Cela évite de faire appel à des méthodes  statiques au cours du cycle de vie de l’application et améliore  les possibilités de tests unitaires de cette classe.</p>
+  <p>Le CRUD doit pouvoir créer, lire,  modifier et supprimer une ligne de données. Une possibilité de  recherche sera ajoutée à ce corpus de fonctionnalités.</p>
+  <div>
+    <h2>1. Créer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Ajout d’un nouvel item dans la base.    *     * @param type    *            le nom textuel du mode de règlement.    * @return le mode de règlement créé    * ou null si il est impossible de le créer.    */   public ModeReglements creer(String type) {       return laConnexion.<strong>modifier</strong>((gerant) -&gt; {            if ("".equals(type)) {              throw new IllegalArgumentException(               "Le nom du mode de reglement est obligatoire");           } else {<strong>               ModeReglements reglements = new ModeReglements(type);             gerant.persist(reglements);</strong>              return reglements;           }       });   }  </pre>
+    <p>Cette méthode utilise la classe <strong>Connexion</strong> et ses méthodes. </p>
+    <p>Son rôle principal est de créer  un objet métier <strong>ModeReglements</strong> avec les informations données en paramètre.  La classe <strong>Connexion</strong> se charge de créer le gestionnaire d’entités,  de démarrer la transaction, d’appeler la fonction en paramètre  et de finir la transaction.</p>
+    <p>Cette méthode vérifie également  la valeur du paramètre à l’aide de l’instruction  suivante :</p>
+    <pre>if ("".equals(type)) {       ...    } else {        ...    }  </pre>
+    <p>et lance une exception spécifique  pour prévenir l’appelant de cette méthode d’une  valeur non conforme.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Le test est inversé par rapport à ce  que vous pouvez généralement observer : type.equals("").  Cette inversion permet de ne pas se soucier du cas éventuel d’un  paramètre type non initialisé et donc d’éviter  les <strong>NullPointerException</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Lire</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Lecture des enregistrements.    *     * @return la liste des modes de règlement     * ou une liste vide si aucun n’existe.    */   public List&lt;ModeReglements&gt; lire() {       return laConnexion.<strong>chercher</strong>(                   (gerant) -&gt; {<strong>            Query requete = gerant.createQuery(                         "SELECT m FROM ModeReglements m");           return requete.getResultList();</strong>       });   }  </pre>
+    <p>Dans le cas d’une lecture, il n’y a pas besoin  de faire intervenir une transaction, la méthode appelle  donc simplement <strong>chercher()</strong> de la classe <strong>Connexion</strong>.</p>
+    <p>Une requête est ensuite créée à partir  de ce gestionnaire, avec une description textuelle de cette requête.</p>
+    <p>Cette description n’est pas écrite  en SQL mais en JPQL, qui est la version Objet de SQL. Au lieu d’écrire <strong>"SELECT * FROM modereglements"</strong>, qui est la version SQL « classique »,  on récupère des objets en JPQL à partir  de la classe : dans <strong>"SELECT m FROM ModeReglements m"</strong>, ModeReglements correspond à la classe que  l’on veut obtenir.</p>
+  </div>
+  <div>
+    <h2>3. Modifier</h2>
+    <div>
+      <p> Créez deux nouvelles méthodes  dans la classe.</p>
+    </div>
+    <pre>/**    * Modification d’une entrée.    *     * @param code    *            la clé primaire du mode de règlement.    * @param type    *            la nouvelle description du mode de règlement.    * @return true si le mode a été modifié, sinon false.    */   public boolean modifier(int code, String type) {       return laConnexion.<strong>modifier</strong>((gerant) -&gt; {            boolean modifié = false;           if ("".equals(type)) {              throw new IllegalArgumentException(                    "Le nom du mode de reglement est obligatoire");           } else {              ModeReglements mode = <strong>chercher</strong>(code);              if (mode != null) {               mode.setType(type);               modifié = true;              }           }           return modifié;       });   }      /**    * Cherche un mode de règlement spécifique.    *     * @param code    *            la clé primaire du mode de règlement.    * @return le mode de règlement.    */   private ModeReglements chercher(int code) {       return laConnexion.<strong>chercher</strong>((gerant) -&gt; {              ModeReglements mode = gerant.<strong>find(ModeReglements.class</strong>, code);          return mode;       });   }  </pre>
+    <p>Après avoir contrôlé les  paramètres en entrée, la méthode <strong>modifier</strong> va chercher en base le mode de règlement  correspondant au code donné. Si l’objet retourné est  non nul, cela veut dire que le mode existe, il est alors modifié à l’intérieur  de la transaction. Quand la transaction est finie, la donnée  correspondante en base a été modifiée.</p>
+    <p>La méthode <strong>chercher</strong> va utiliser la méthode <strong>find</strong> de la classe <strong>EntityManager</strong> pour retrouver directement l’objet correspondant à la  clé primaire en paramètre.</p>
+  </div>
+  <div>
+    <h2>4. Rechercher</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Recherche d’une commande.    *     * @param recherche    *            une partie du type de mode de règlement à chercher.    * @return la liste des modes de règlement    * ou une liste vide si aucun n’existe.    */   public List&lt;ModeReglements&gt; chercher(String recherche) {       return laConnexion.<strong>chercher</strong>((gerant) -&gt; {                          String requete = "";           requete += "SELECT m ";           requete += "FROM ModeReglements m ";           requete += "WHERE m.type LIKE ’%" <strong>+ recherche +</strong> "%’";                          Query query = gerant.createQuery(requete);           return query.getResultList();       });   }  </pre>
+    <p>La recherche consiste à créer  une requête globale avec des paramètres et à en retourner  les résultats.</p>
+    <p>Si aucun enregistrement ne correspond à la  requête, une liste vide est retournée comme résultat  par JPA.</p>
+    <p>La requête textuelle est construite  simplement par concaténation de chaînes de caractères  pour obtenir une requête paramétrée.  Plusieurs techniques seront vues plus loin dans le chapitre  pour alléger cette construction.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>N’utilisez jamais l’opérateur <strong>+=</strong> pour construire une chaîne de caractères :  il s’agit d’une des techniques de construction les moins efficaces !</p>
+      </div>
+    </div>
+    <p>Cette requête est une requête  de sélection, comme celle qui a été codée  pour la lecture, mais avec une clause <strong>WHERE</strong> qui indique que des critères supplémentaires  doivent être appliqués. Dans cette clause WHERE,  un critère <strong>LIKE</strong> permet d’effectuer cette recherche sur un modèle  particulier. </p>
+    <p>Lors de la construction de cette requête,  le formatage du paramètre est important : il doit être  encadré par deux simples guillemets ou apostrophes (’) et  par deux signes pourcentage (%). Les simples guillemets  sont obligatoires pour faire comprendre à la base que le  paramètre est une chaîne de caractères. Le  pourcentage est là pour remplacer tous les autres caractères.</p>
+    <div>
+      <ul>
+        <li>
+          <p>Si le paramètre  du critère LIKE est ’%a’, la requête  cherche tous les types se terminant par la lettre a.</p>
+        </li>
+        <li>
+          <p>Si le paramètre du critère  LIKE est ’a%’, la requête cherche tous les types commençant  par la lettre a.</p>
+        </li>
+        <li>
+          <p>Si le paramètre du critère  LIKE est ’%a%’, la requête cherche tous  les types contenant la lettre a.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <h2>5. Supprimer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Suppression d’un enregistrement.    *     * @param code    *            la clé primaire du mode de règlement.    * @return true si le mode a été supprimé, sinon false.    */   public boolean supprimer(int code) {       return laConnexion.<strong>modifier</strong>((gerant) -&gt; {           boolean modif = false;                       ModeReglements mode = chercher(code);           if (mode != null) {               gerant.<strong>remove</strong>(mode);                                  modif = true;           }           return modif;       });   }  </pre>
+    <p>La méthode <strong>supprimer</strong> va chercher en base l’enregistrement correspondant au  code à l’aide de la méthode <strong>chercher</strong> vue précédemment.</p>
+    <p>Si le mode de règlement existe, la  méthode remove de la classe <strong>EntityManager</strong> est appelée. À la fin de la transaction,  la ligne correspondante est effacée de la base de données.</p>
+  </div>
+</div>
+</body>
+</html>

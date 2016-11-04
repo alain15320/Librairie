@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Installation des pilotes</h1>
+<div>
+  <h2>1. Connector/ODBC</h2>
+  <p><strong>ODBC</strong> (Open Database Connectivity) gère de nombreux pilotes permettant d’établir  la communication entre des applications clientes et des SGBD. Ce n’est  pas la solution la plus performante mais elle présente  l’avantage de la simplicité. Elle est par ailleurs disponible  gratuitement sur pratiquement toutes les plateformes.</p>
+  <p>La procédure d’installation est très  simple.</p>
+  <div>
+    <p> Téléchargez le driver <strong>mysql-connector-odbc</strong> sur le site MySQL : <a href="http://dev.mysql.com/downloads/connector/odbc/" target="_blank">http://dev.mysql.com/downloads/connector/odbc/</a></p>
+  </div>
+  <div>
+    <p> Double cliquez sur le fichier et suivez les  instructions d’installation.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-21.png" src="images/images_08-21.png"></div>
+  </div>
+  <div>
+    <div><img alt="images/08-22.png" src="images/images_08-22.png"></div>
+  </div>
+  <div>
+    <p> Lancez le programme ODBC de Windows (<strong>Panneau de configuration - Outils d’administration</strong>).</p>
+  </div>
+  <div>
+    <p> Cliquez sur l’onglet <strong>Source de données ODBC</strong> puis sur le bouton <strong>Ajouter…</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-23.png" src="images/images_08-23.png"></div>
+  </div>
+  <div>
+    <p> Choisissez le driver pour MySQL que vous venez  d’installer.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-24.png" src="images/images_08-24.png"></div>
+  </div>
+  <div>
+    <p> Configurez les paramètres de la source  de données :</p>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>Le nom donné au <strong>Data Source Name</strong> doit être explicite et ne pas comporter d’espaces.  Par commodité pour le développement Java qui est réalisé,  conservez le même nom proposé ci-après.</p>
+      </li>
+      <li>
+        <p>Pour le serveur, saisissez <strong>127.0.0.1</strong> ou <strong>localhost</strong> dans le champ <strong>TCP/IP Server</strong>. Le DNS établit la correspondance entre le  nom et l’adresse IP du serveur.</p>
+      </li>
+      <li>
+        <p>Pour le <strong>User</strong> et le <strong>Password</strong>, il faut reporter ce qui a été retenu  lors de l’installation de XAMPP : <strong>eni</strong> et <strong>java</strong>.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <p> Assurez-vous que XAMPP est actif puis testez  la connexion.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-25.png" src="images/images_08-25.png"></div>
+  </div>
+</div>
+<div>
+  <h2>2. Connector/J</h2>
+  <p>Comme indiqué sur le site MySQL,  il s’agit du type de driver JDBC officiel pour les bases  de données MySQL. C’est un driver JDBC  de type 4.</p>
+  <p>Il sera utilisé pour le projet Luna.</p>
+  <div>
+    <p> Sur le site MySQL, seule l’installation par  exécutable est disponible pour la version 5.1.35. Téléchargez-la  depuis l’adresse <a href="https://dev.mysql.com/downloads/connector/j" target="_blank">https://dev.mysql.com/downloads/connector/j</a>, et installez-la.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-26.png" src="images/images_08-26.png"></div>
+  </div>
+  <div>
+    <p> Allez dans dans le dossier C:\Program  Files (x86)\MySQL\MySQL Connector J pour obtenir  le driver JDBC.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-27.png" src="images/images_08-27.png"></div>
+  </div>
+  <p>La documentation et les sources des classes  du driver sont également disponibles dans ce dossier.</p>
+  <p>Les tests avec ce pilote se feront à partir  de l’application Java.</p>
+  <p>Pour éviter d’avoir des liens cassés,  vous pouvez copier le driver dans un dossier du projet (par exemple  lib/).</p>
+  <p>Voici la procédure d’installation  sous Eclipse :</p>
+  <div>
+    <p> Sous Eclipse, effectuez un clic droit sur votre  projet et choisissez <strong>Properties</strong>.</p>
+  </div>
+  <div>
+    <p> Sélectionnez ensuite <strong>Java Build Path</strong> et l’onglet <strong>Libraries</strong>.</p>
+  </div>
+  <div>
+    <p> Cliquez sur le bouton <strong>Add External JARs</strong>, allez dans le dossier contenant le driver et procédez à l’ajout.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-28.png" src="images/images_08-28.png"></div>
+  </div>
+  <div>
+    <p> Cliquez ensuite sur l’onglet <strong>Order and Export</strong>, cochez la case du driver puis validez.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-29.png" src="images/images_08-29.png"></div>
+  </div>
+  <p>Drivers de type 2 et 3</p>
+  <p>Pour installer un driver de type 2 ou 3, téléchargez  et décompressez le fichier jar. Suivez ensuite la même  démarche que pour le driver de type 4.</p>
+</div>
+<div>
+  <h2>3. EclipseLink</h2>
+  <p>EclipseLink est une des implémentations  disponibles de JPA. Vous pouvez télécharger les  binaires à l’adresse <a href="http://eclipse.org/eclipselink/downloads/" target="_blank">http://eclipse.org/eclipselink/downloads/</a>.</p>
+  <p>À l’heure d’écriture de  ce livre, la version 2.6.0 est la dernière disponible.</p>
+  <div>
+    <p> Téléchargez l’installateur  zip depuis le site web.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-30.png" src="images/images_08-30.png"></div>
+  </div>
+  <div>
+    <p> Décompressez l’archive et copiez le  contenu du dossier <strong>eclipselink/jlib</strong> dans le dossier lib/eclipselink du projet.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-31.png" src="images/images_08-31.png"></div>
+  </div>
+  <p>Vous obtenez un ensemble de fichiers comme  suit.</p>
+  <div>
+    <p> Ajoutez les fichiers <strong>eclipselink.jar</strong> et <strong>jpa/javax.persistence_2.1.0.v201304241213.jar</strong> dans le <strong>Build Path</strong> du projet, comme vu précédemment.  Ajoutez également ces fichiers .jar dans l’onglet <strong>Order and Export</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/08-32.png" src="images/images_08-32.png"></div>
+  </div>
+  <p>Le projet contient maintenant toutes les briques  nécessaires pour accéder à la base de  données.</p>
+  <p>Il reste néanmoins à configurer  le projet pour qu’il sache à quelle base de données accéder.</p>
+  <div>
+    <p> Créez un dossier META-INF dans le  répertoire src/main/resources en faisant un  clic droit après avoir sélectionné le  dossier <strong>src/main/resources</strong>, et sélectionnez <strong>New - Folder</strong>. Dans <strong>Folder Name</strong>, tapez « META-INF » (sans  guillemets). Cliquez sur <strong>Finish</strong>.</p>
+  </div>
+  <div>
+    <p> Dans ce dossier, créez un nouveau  fichier nommé « persistence.xml » (sans les  guillemets), en le sélectionnant dans l’explorateur. Faites  ensuite un clic droit et sélectionnez <strong>New - File</strong>. Tapez ensuite « persistence.xml » (toujours sans  guillemets) dans <strong>File Name</strong>. Cliquez ensuite sur <strong>Finish</strong>.</p>
+  </div>
+  <div>
+    <p>Le fichier s’ouvre alors dans la zone  de code.</p>
+  </div>
+  <div>
+    <p> Dans cette zone, tapez le contenu suivant,  et sauvegardez le fichier en appuyant sur [Ctrl] <strong>S</strong> :</p>
+  </div>
+  <div>
+    <div><img alt="images/08-33a.png" src="images/images_08-33a.png"></div>
+  </div>
+  <p>Dans cette configuration, JPA utilise le pilote  JDBC qui vient d’être installé.</p>
+  <p>La propriété <strong>eclipselink.ddl-generation</strong> configure JPA pour supprimer et recréer les  tables à chaque lancement. C’est une propriété très  utile pendant la phase de développement. Il est néanmoins  primordial de l’enlever quand l’application sera en production !</p>
+  <p>Afin de tester l’accès à la  base avec JPA, il reste à créer une classe <strong>TestJPA</strong> dans le package <strong>test</strong>.</p>
+  <div>
+    <p> Créez une classe nommée <strong>TestJPA</strong> dans le package <strong>test</strong>. Cette classe aura le contenu suivant :</p>
+  </div>
+  <pre>
+package test; 
+ 
+import javax.persistence.Basic; 
+import javax.persistence.Entity; 
+import javax.persistence.EntityManager; 
+import javax.persistence.EntityManagerFactory; 
+import javax.persistence.Id; 
+import javax.persistence.Persistence; 
+ 
+@Entity 
+public class TestJPA { 
+    @Id 
+    private long clePrimaire; 
+     
+    @Basic 
+    private String message; 
+     
+    public static void main(String[] args) { 
+          EntityManagerFactory fabrique = 
+Persistence.createEntityManagerFactory("eni-acces"); 
+     
+          EntityManager em = fabrique.createEntityManager(); 
+          System.out.println(em.getProperties()); 
+    } 
+}  
+  </pre>
+  <div>
+    <p> Exécutez ensuite cette classe, en  la sélectionnant et en utilisant le raccourci-clavier [Ctrl][F11].</p>
+  </div>
+  <div>
+    <p>Vous devez obtenir le résultat  suivant sur la console :</p>
+  </div>
+  <pre>
+[EL Info]: server: 2015-05-15 15:14:03.537—ServerSession(451111351)--
+Detected server platform:  
+org.eclipse.persistence.platform.server.NoServerPlatform.  
+[EL Info]: server: 2015-05-15 15:14:03.74—ServerSession(451111351)-- 
+Detected server platform:  
+org.eclipse.persistence.platform.server.NoServerPlatform.  
+[EL Info]: 2015-05-15 15:14:04.14--ServerSession(451111351)--EclipseLink,
+version: Eclipse Persistence Services - 2.6.0.v20150309-bf26070 
+[EL Info]: connection: 2015-05-15 15:14:04.421-- 
+ServerSession(451111351)--/file:/D:/workspace-luna/git/luna/target/classes/_eni-acces login successful 
+{eclipselink.ddl-generation=drop-and-create-tables,  
+eclipselink.logging.level=INFO,  
+javax.persistence.jdbc.url=jdbc:mysql://localhost:3306/luna,  
+javax.persistence.jdbc.user=eni,  
+javax.persistence.jdbc.driver=com.mysql.jdbc.Driver,  
+javax.persistence.jdbc.password=java}  
+  </pre>
+  <div>
+    <p> Ouvrez un navigateur web avec l’adresse http://localhost/phpmyadmin. Vous  pouvez voir dans la base « luna »  :</p>
+  </div>
+  <div>
+    <div><img alt="images/08-34a.png" src="images/images_08-34a.png"></div>
+  </div>
+  <div>
+    <p> En cliquant sur le lien <strong>Structure</strong> de la table <strong>testjpa</strong>, vous pouvez voir que JPA a bien créé les  colonnes :</p>
+  </div>
+  <div>
+    <div><img alt="images/08-35a.png" src="images/images_08-35a.png"></div>
+  </div>
+  <p>En résumé, JPA vous a permis  de créer une table avec ses colonnes sans avoir à effectuer  directement de requête SQL !</p>
+  <p>Même si JPA permet de s’affranchir  du codage de la plupart des requêtes INSERT, UPDATE  ou DELETE, il restera néanmoins nécessaire de  coder des requêtes de type SELECT.</p>
+  <p>Ce comportement de JPA est intéressant  dans le cas de la création ex nihilo d’une application.  Dans le cas de l’accès à une base existante, JPA  permet de lier les propriétés d’un objet métier à des  colonnes précises, mais ce cas ne sera pas abordé dans  ce livre.</p>
+</div>
+</body>
+</html>

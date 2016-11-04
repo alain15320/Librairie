@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_d1a9fb02-f61d-4ca7-8a97-7ce36fb37c12" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Intégrer un nouveau développement</h1>
+  <p>Suite aux demandes de son client, Raphael  va devoir modifier l’application. En effet, le client souhaite pouvoir  ajouter une couleur de son choix pour chaque anniversaire. Le client  veut payer le moins possible et demande donc la solution la moins  onéreuse et la plus simple.</p>
+  <p>Raphaël modifie donc le fichier anniversaire.html de la sorte :</p>
+  <div>
+    <ul>
+      <li>
+        <p>En dessous du champ  date, il ajoute un champ pour définir la couleur :</p>
+      </li>
+    </ul>
+  </div>
+  <pre>&lt;br /&gt;Couleur (ex : 0F0): &lt;input type="text" id="couleur" /&gt;  </pre>
+  <div>
+    <ul>
+      <li>
+        <p>Il modifie ensuite  les fonctions anniv_ajout() et anniv_liste() du fichier static/js/anniversaire.js :</p>
+      </li>
+    </ul>
+  </div>
+  <pre>function anniv_ajout() {       anniv_personne = document.querySelector(’#anniv_personne’).value;       anniv_date = document.querySelector(’#anniv_date’).value;       couleur = document.querySelector(’#couleur’).value;       anniversaire = {           ’anniv_personne’: anniv_personne,           ’anniv_date’: anniv_date,           ’couleur’: couleur       };       nb_anniv = anniv_get_nb_anniv();       localStorage.setItem(nb_anniv.toString(), JSON.stringify(anniversaire));       nb_anniv++;       localStorage.setItem(’nb_anniv’, JSON.stringify(nb_anniv));       document.querySelector(’#anniv_personne’).value = "";       document.querySelector(’#anniv_date’).value = "";       document.querySelector(’#couleur’).value = "";       anniv_liste();   }      /* Cette fonction affiche sur la page la liste des anniversaires   stockés dans le localstorage du navigateur */   function anniv_liste() {       nb_anniv = anniv_get_nb_anniv();       result = "";       if (nb_anniv == 0) {           result = ’&lt;h3&gt;Aucun anniversaire enregistré&lt;h3&gt;’;       }       for (i=0;i&lt;nb_anniv;i++) {           anniversaire = JSON.parse(localStorage.getItem(i.toString()));           result+=’&lt;br /&gt;           &lt;span style="background-color:#’+anniversaire.couleur+’"&gt;           ’+anniversaire.anniv_date+’ :            ’+anniversaire.anniv_personne+’&lt;/span&gt;’;       }       document.querySelector(’#anniv_liste’).innerHTML = result;       return nb_anniv;   }  </pre>
+  <div>
+    <h2>1. Vérifier son code avant l’indexation</h2>
+    <p>Maintenant qu’il a effectué ces modifications,  Raphaël peut commiter. Il a cependant un doute  sur les modifications effectuées. Il va donc regarder les modifications  entre son répertoire de travail et ce qui est présent  dans la dernière version du dépôt. Il  va utiliser git diff pour cela.</p>
+    <p>La sortie d’écran de cette commande  affiche toutes les lignes qui ont été ajoutées  et supprimées. La coloration de la console permet de facilement  repérer les lignes qui ont été ajoutées  et les lignes qui ont été supprimées.  C’est une bonne pratique de relire le code ajouté ou  supprimé avant de commiter. Cela permet de déceler  certaines erreurs ou certains oublis.</p>
+    <p>Raphaël a vérifié les  modifications et va donc ajouter ces deux fichiers à l’index : </p>
+    <pre>git add anniversaire.html    git add static/js/anniversaire.js</pre>
+  </div>
+  <div>
+    <h2>2. Commiter le nouveau développement</h2>
+    <p>Avant de commiter quoi que ce soit, il est  conseillé de vérifier les fichiers qui vont être  intégrés dans le commit. Cette vérification  peut sembler superflue étant donné que Raphaël  vient d’ajouter uniquement deux fichiers à l’index, mais  elle s’avère d’autant plus utile que le développement  est complexe et implique un nombre important de fichiers.  Raphaël va donc vérifier les fichiers présents  dans l’index et, après validation des fichiers, il va exécuter  la commande suivante :</p>
+    <pre>git commit -m "Ajout d’une couleur pour chaque anniversaire"</pre>
+    <p>Pour vérifier que le commit a été ajouté au  dépôt, Raphaël peut effectuer un git log -1 qui va afficher les détails  du dernier commit. En effectuant un git  status, Raphaël peut remarquer que l’index est vide,  ce qui est tout à fait normal car la version du dépôt  est à présent la même que celle de l’index.</p>
+  </div>
+</div>
+<div id="AU_d1a9fb02-f61d-4ca7-8a97-7ce36fb37c12" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div> </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

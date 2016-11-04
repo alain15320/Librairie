@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Lambdas</h1>
+<p>Les expressions lambdas sont un des autres  grands ajouts de Java 8.</p>
+<p>Dans une application et surtout dans sa partie  graphique, il est très habituel de programmer des petites  classes dites internes anonymes (car elles sont tellement petites  qu’elles ne prennent pas de nom, et elles sont codées à l’intérieur  d’une classe).</p>
+<p>En reprenant l’exemple de l’écouteur  d’événements :</p>
+<pre>JButton btnValider = new Jbutton("Valider");<strong>   btnValider.addActionListener(new ActionListener() {       public void actionPerformed(ActionEvent e) {</strong>             System.out.println("Action!");<strong>       }   });</strong></pre>
+<p>Vous aviez en fait créé une  classe anonyme héritant de l’interface <strong>ActionListener</strong> et codé l’action résultant du clic  du bouton à l’intérieur de la méthode <strong>actionPerformed</strong>.</p>
+<p>Cette interface <strong>ActionListener</strong> est très simple : elle n’a qu’une  seule méthode à implémenter. Elle est  ce que l’on appelle une <strong>interface fonctionnelle</strong>.</p>
+<p>L’écriture peut alors être  simplifiée grâce aux lambdas comme ceci :</p>
+<pre>    btnValider.addActionListener(<strong>             (ActionEvent e) -&gt; {</strong>                     System.out.println("Action!");<strong>              }</strong>        );  </pre>
+<p>Les lambdas permettent un confort d’écriture  et de lecture de ces interfaces fonctionnelles.</p>
+<p>Comme la méthode <strong>actionPerformed()</strong> n’a qu’un seul paramètre, l’écriture peut être  allégée en omettant le type du paramètre  et les parenthèses autour :</p>
+<pre>    btnValider.addActionListener(<strong>             e -&gt; {</strong>                     System.out.println("Action!");<strong>             }</strong>        );  </pre>
+<p>Et comme le code de l’action ne contient qu’une  seule ligne, il est possible de continuer cet allègement  de syntaxe en enlevant les accolades :</p>
+<pre>btnValider.addActionListener(<strong>        e -&gt;</strong> System.out.println("Action!") <strong>// pas de point-virgule !</strong>    );  </pre>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>WindowBuilder ne prend pas (encore)  en compte les lambdas lors de la génération du  code de l’interface graphique.</p>
+  </div>
+</div>
+</body>
+</html>

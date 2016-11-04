@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_74bba6f3-68b1-4aae-84e5-73f6353247d8" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Classe Article</h1>
+  <p>Continuons en créant la classe <strong>Article</strong> dans le package <strong>entite</strong>.</p>
+  <pre>package entite;      import java.io.Serializable;   import java.time.Instant;   import java.util.Date;   import java.util.HashSet;   import java.util.Set;      import javax.persistence.Basic;   import javax.persistence.CascadeType;   import javax.persistence.Column;   import javax.persistence.Entity;   import javax.persistence.FetchType;   import javax.persistence.Id;   import javax.persistence.ManyToMany;   import javax.persistence.ManyToOne;   import javax.persistence.Temporal;   import javax.persistence.TemporalType;<strong>       @Entity</strong>   public class Article implements Serializable {          private static final long serialVersionUID = 1L;          @Id       private String code;<strong>           @ManyToOne(cascade = { CascadeType.PERSIST })</strong>       private Categorie categorie;<strong>           @ManyToMany(fetch = FetchType.EAGER)</strong>       private Set&lt;Fournisseur&gt; fournisseurs = new HashSet&lt;&gt;();              private String designation;          private int quantite;<strong>           @Column(name="prix_unitaire")</strong>       private double prixUnitaire;          @Temporal(TemporalType.DATE)       private Date date;          /*        * Constructeur        */       public Article(String code, String codeCategorie,               String designation,               int quantite, double prixUnitaire,               Instant date) {           this(code, <strong>                    new Categorie().setCode(codeCategorie)</strong>,                   designation,                    quantite, prixUnitaire,                   date);       }              public Article(String code, Categorie categorie,               String designation,               int quantite, double prixUnitaire,               Instant date) {           this.code = code;           this.categorie = categorie;           this.designation = designation;           this.quantite = quantite;           this.prixUnitaire = prixUnitaire;           this.date = Date.from(date);       }          /*        * Constructeur 2        */       public Article() {       }          /*        * Accesseurs        */       public String getCode() {           return code;       }          public Categorie getCategorie() {           return categorie;       }          public String getDesignation() {           return designation;       }          public int getQuantite() {           return quantite;       }          public double getPrixUnitaire() {           return prixUnitaire;       }          public Instant getDate() {           return date.toInstant();       }              public Set&lt;Fournisseur&gt; getFournisseurs() {           return this.fournisseurs;       }          /*        * Mutateurs        */       public void setCode(String code) {           this.code = code;       }          public void setReference(Categorie categorie) {           this.categorie = categorie;       }          public void setDesignation(String designation) {           this.designation = designation;       }          public void setQuantite(int quantite) {           this.quantite = quantite;       }          public void setPrixUnitaire(double prix_unitaire) {           this.prixUnitaire = prix_unitaire;       }          public void setFournisseurs(Set&lt;Fournisseur&gt; fournisseurs) {           this.fournisseurs = fournisseurs;       }              public void setDate(Instant date) {           this.date = Date.from(date);       }   }  </pre>
+  <p>Cette classe introduit un nouveau type d’annotation <strong>@ManyToOne</strong>.</p>
+  <p>Cette notation signifie qu’un article ne peut être  lié qu’à une seule catégorie, et qu’à l’inverse  une catégorie peut être liée à plusieurs  articles, ce qui correspond à l’esprit de l’application.</p>
+  <p>Il s’agit d’un des types standard de relations  entre objets définis par JPA. Les autres sont @OneToOne, @OneToMany  (la relation inverse de @ManyToOne) et @ManyToMany.</p>
+  <p>Notée ainsi, la relation Article-Catégorie  est <strong>unidirectionnelle</strong>. Un article connaît sa catégorie mais  on ne peut pas retrouver simplement les articles à partir  d’une catégorie. Il s’agit ici d’une caractéristique  de navigation pour cette relation.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GYzdnyqSHTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Pour transformer cette relation en  navigation <strong>bidirectionnelle</strong>, il serait nécessaire d’annoter la classe Categorie.  La classe Commande implémentera cette navigation bidirectionnelle.</p>
+    </div>
+  </div>
+  <p>Dans la base de données, cette relation  se matérialisera dans la table ARTICLE, avec l’introduction  d’une colonne contenant le code de la catégorie pour chaque  article. Par défaut cette colonne aura pour nom CATEGORIE_CODE,  soit le nom de la classe référencée concaténée  avec un underscore ou tiret bas ( _ ) suivi du nom de la  propriété de l’identifiant ou clé primaire.</p>
+  <p>En d’autres termes, la table ARTICLE contient  l’information relative à la relation, la table CATEGORIE  ne contenant rien de relatif à cette relation.</p>
+  <p>La propriété <strong>fournisseurs</strong> est également annotée, cette fois  avec <strong>@ManyToMany</strong>. Cette annotation formalise que chaque article puisse être  acheté depuis plusieurs fournisseurs et que chaque fournisseur  est capable de vendre plusieurs articles.</p>
+  <p>Dans la base de données, cette relation  sera stockée dans une table intermédiaire, dite  table d’association, composée de deux colonnes :  une colonne stocke la clé primaire de l’article, l’autre  colonne stocke la clé primaire du fournisseur.</p>
+  <p>L’annotation @ManyToMany est paramétrée  par <strong>fetch = FetchType.EAGER</strong>. En effet, les relations de type @ManyToMany  sont lazy (paresseuses en français) par défaut :  la propriété correspondante n’est peuplée  (fetchée) que lors de son premier accès. Afin  de faciliter l’utilisation et en considérant qu’il n’y  a que peu de fournisseurs pour chaque article, la propriété fournisseurs  sera ainsi peuplée directement lors de la récupération  de l’article en base.</p>
+  <p>Enfin, la propriété <strong>prixUnitaire</strong> est annotée avec <strong>@Column</strong>, qui permet de spécifier des informations spécifiques :  ici, les données de prix seront stockées dans  la colonne <strong>prix_unitaire</strong>, et non dans la colonne PRIXUNITAIRE.</p>
+  <div>
+    <p> Notez la partie spécifique du premier  constructeur pour le paramètre catégorie.</p>
+  </div>
+  <pre>new Categorie().setCode(code_categorie)  </pre>
+  <p>Comment cela peut-il fonctionner ? </p>
+  <p>La classe <strong>Categorie</strong> utilise ce que l’on appelle une interface fluide (en  anglais : fluent interface). Il s’agit d’une technique de programmation qui permet  de chaîner les appels de méthodes, notamment celles  de type <strong>set</strong>XXX, en retournant l’instance. Ainsi le code suivant  se retrouvera dans la classe Categorie :</p>
+  <pre>public <strong>Categorie</strong> setCode(String code) {       this.code = code;<strong>        return this;</strong>   }  </pre>
+  <p>Cela permet de créer un objet, de  lui affecter une propriété et de continuer à travailler  avec.</p>
+  <p>Cette manière de coder permet d’augmenter  la lisibilité du code et est très en vogue depuis  quelques années, elle se retrouve par exemple dans le principe  du builder pattern, dans les classes du package <strong>java.time</strong>, et dans beaucoup d’autres librairies.</p>
+  <pre>LocalDate aujourdhui = LocalDate.now();      LocalDate avantDernierJourDuMois =    aujourdhui.with(TemporalAdjusters.lastDayOfMonth()).minusDays(1);  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Dans ce dernier exemple, les objets  retournés par les méthodes <strong>with</strong> et <strong>minusDays</strong> sont des copies modifiées de l’objet original,  la plupart des classes du package <strong>java.time</strong> étant immuables (en anglais : immutable).</p>
+    </div>
+  </div>
+  <p>Les classes <strong>Catégorie</strong> et <strong>Fournisseur</strong> ne sont pas explicitées dans ce livre, leur  codage est laissé à votre libre initiative en  tant qu’exercice.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_1738f6d1-3887-4bef-b7dc-73279da0e284" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Identifier l’auteur d’une ligne  de code</h1>
+  <p>Lorsqu’un développeur travaille sur  un code, il peut parfois se demander lequel de ses collègues  a retravaillé sur le code en question ou lequel a modifié en  dernier une ligne particulière. Le fait de savoir qui a  modifié une ligne permettra de savoir qui interroger pour  avoir plus de détails concernant la partie sur laquelle le  développeur travaille.</p>
+  <p>Par exemple, il arrive très régulièrement  de se demander quand, par qui et pourquoi une ligne de code a été ajoutée  ou modifiée dans un fichier. Toutes ces informations sont  centralisées dans le commit, la seule complication étant de  retrouver le commit ayant modifié cette ligne particulière.</p>
+  <p>Pour utiliser git  blame sur un fichier, il faut utiliser la syntaxe suivante  : </p>
+  <pre>git blame nom_fichier</pre>
+  <p>Par exemple, en prenant le fichier README.rst de Django il faut utiliser la commande suivante : </p>
+  <pre>git blame README.rst  </pre>
+  <p>Cette commande affiche la sortie suivante  tronquée (les deux premières lignes sont affichées)  : </p>
+  <pre>b2cb66bf README   (Adrian Holovaty   2005-07-21 01:37:28 +0000  ==&gt; Ligne   226acf35 README   (Adrian Holovaty   2012-04-27 22:25:08 -0500  ==&gt; Ligne  </pre>
+  <p>La sortie précédente est  tronquée car elle n’était pas très lisible.  Les textes ==&gt; Ligne remplacent  en réalité les deux premières lignes  du fichier README.rst. Comme la capture le laisse supposer, la capture de git blame va afficher toutes les lignes  du fichier avec les informations suivantes avant chacune d’entre  elles :</p>
+  <div>
+    <ul>
+      <li>
+        <p>le hash du commit  qui a introduit ou modifié la ligne.</p>
+      </li>
+      <li>
+        <p>le fichier dans lequel la ligne  a été introduite ou modifiée. Dans cet  exemple, le fichier README.rst s’appelait vraisemblablement README lors de ce commit.</p>
+      </li>
+      <li>
+        <p>le commiteur qui a introduit ou  modifié la ligne.</p>
+      </li>
+      <li>
+        <p>la date du commit.</p>
+      </li>
+    </ul>
+  </div>
+  <p>La commande git blame possède  plusieurs arguments pratiques qui permettent notamment de ne pas  prendre en compte les lignes blanches ou encore de tenir compte  des copies de fichiers. L’aide de cette commande permet de mieux  se rendre compte de ses autres possibilités.</p>
+  <p>Cette commande est très pratique  et représente une vraie plus-value dans l’utilisation d’un  système de gestion de versions.</p>
+</div>
+
+</body>
+</html>

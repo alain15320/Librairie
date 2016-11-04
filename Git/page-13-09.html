@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_16c7ae35-a247-4509-8bc8-ba59a7386300" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Mise en ligne du dépôt sur GitHub</h1>
+  <p>Pour que les lecteurs de ce livre puissent  télécharger facilement un dépôt exploitable et  suivre l’évolution de ce projet, il est préférable  d’héberger également ce dépôt  sur GitHub. Dans un scénario plus réaliste, cette  partie pourrait expliquer comment une entreprise peut libérer  le code source d’un de ses projets. Cette partie  va expliquer les étapes pour mettre en ligne un projet  sur GitHub en tenant compte des bonnes pratiques.</p>
+  <div>
+    <h2>1. Création d’un compte GitHub</h2>
+    <p>Pour publier un dépôt sur  GitHub, il faut un compte GitHub. Pour cela, il faut se rendre sur  le site <a href="http://github.com" target="_blank">http://github.com</a> et cliquer sur le lien <strong>Sign up</strong> en haut de la page. Un formulaire s’affiche alors qui  demande un nom d’utilisateur <strong>Username</strong>, une adresse e-mail <strong>Email Address</strong> et un mot de passe <strong>Password</strong>.</p>
+    <div>
+      <div><img alt="IMAGES/11E04.png" src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/11E04.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2E2kbZcUezTiAsA"></div>
+    </div>
+    <p>Après avoir rempli ces informations  et cliqué sur le bouton <strong>Create an account</strong>, il faut choisir le type de compte à enregistrer  (le plan gratuit ne permettant de mettre en ligne que des dépôts  publics) puis cliquer sur <strong>Finish sign up</strong>.</p>
+    <p>Une fois connecté sur le compte GitHub,  il est possible d’accéder à son profil en cliquant  en haut à droite sur son avatar puis en cliquant sur <strong>Your Profile</strong>.</p>
+  </div>
+  <div>
+    <h2>2. Création d’un dépôt</h2>
+    <p>À partir de la page de profil, il  est possible d’afficher la liste des dépôts de  l’utilisateur (vide au début) en cliquant sur l’onglet <strong>Repositories</strong>. Cette nouvelle vue permet de créer un nouveau  dépôt en cliquant sur le bouton vert <strong>New</strong>.</p>
+    <div>
+      <div><img alt="IMAGES/11E05.png" src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/11E05.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2E2kbZcUezTiAsA"></div>
+    </div>
+    <p>Un formulaire s’affiche et demande plusieurs  informations. L’information <strong>Owner</strong> est utile pour les utilisateurs qui possèdent  un compte avec plusieurs profils. Dans <strong>Repository name</strong> il faut définir le nom du dépôt,  ici <strong>Improllow-up</strong>.</p>
+    <p>Il est ensuite possible de définir  une description du dépôt en quelques mots, ici <strong>Logiciel de suivi de projet et dépôt d’exemple du chapitre 11 du livre Git - Maîtriser la gestion de vos versions</strong>.</p>
+    <p>Il faut ensuite définir la visibilité du  projet, ici <strong>Public</strong>.</p>
+    <p>Les champs restants permettent de créer  automatiquement un fichier README pour le projet, un fichier .gitignore ou un fichier LICENSE. Cette fonctionnalité permet ensuite de cloner  le dépôt créé car ces fichiers  seront stockés dans un premier commit. Dans cet exemple,  aucun fichier ne sera ajouté, car le but est d’importer  un dépôt existant.</p>
+    <p>Le dépôt est ensuite créé après  avoir cliqué sur le bouton <strong>Create Repository</strong>. Pour le moment, le dépôt est vide.</p>
+  </div>
+  <div>
+    <h2>3. Ajout du remote au dépôt local</h2>
+    <p>Le dépôt créé sur  le compte GitHub est vide. Il va falloir lui envoyer les données du  dépôt local. Pour cela, un développeur,  Raphaël par exemple, doit se placer sur un dépôt  local à jour. Il récupère l’URL de son  dépôt GitHub, à savoir <a href="https://github.com/SamuelDauzon/Improllow-up.git" target="_blank">https://github.com/SamuelDauzon/Improllow-up.git</a>.</p>
+    <p>Cette URL va lui permettre d’ajouter un remote à son  dépôt avec la commande suivante : </p>
+    <pre>git remote add github https://github.com/SamuelDauzon/Improllow-up.git  </pre>
+  </div>
+  <div>
+    <h2>4. Envoi des branches</h2>
+    <p>Une fois le remote ajouté, Raphaël  peut l’utiliser pour envoyer les données de ses branches master et develop avec les commandes suivantes : </p>
+    <pre>git push -u github master    git push -u github develop    git push github --tags  </pre>
+  </div>
+  <div>
+    <h2>5. Le fichier LICENSE</h2>
+    <p>Lorsqu’un projet est mis en ligne sur GitHub,  il convient de choisir une licence libre qui permettra de limiter  ou de libérer les droits des utilisateurs à utiliser, modifier  ou vendre le logiciel. Les licences sont caractérisées  par leur permissivité ou encore par la clause de copyleft.  Par exemple, la licence GPL contient la clause copyleft, ce qui  signifie qu’un logiciel incluant du code GPL devient forcément  lui aussi GPL. Au contraire, du code sous licence MIT (non copyleft) peut être  utilisé dans du code propriétaire.</p>
+    <p>Raphaël ajoute donc le fichier LICENSE au dépôt en utilisant la licence MIT.</p>
+  </div>
+  <div>
+    <h2>6. Le fichier README</h2>
+    <p>Lorsqu’un projet est hébergé sur  GitHub, il est consultable par beaucoup d’internautes. Certains  ne sont pas forcément familiers avec la technologie utilisée  (ici Django), mais veulent malgré tout tester le logiciel.  D’autres voudront participer au projet, mais ne sauront pas comment  faire. La rédaction du fichier README permettra de répondre à ces différentes  questions.</p>
+    <p>Le début d’un fichier README doit présenter le projet. Lorsqu’une personne consultera  la page GitHub du projet, le premier contenu qu’il lira sera le  contenu du fichier README. Il faut donc y expliquer le projet et son utilité.</p>
+    <p>Le début du fichier README sera donc le suivant :</p>
+    <pre># Improllow-up    ## Présentation   Ce logiciel permet de **suivre les tâches des membres d’une   équipe**. Ces tâches sont groupées par projets, eux-mêmes groupés   par client.   Ce projet permet de **savoir facilement les projets sur lesquels   a travaillé un collaborateur** sur une période donnée. Un export   CSV des tâches est également présent.   ## Technologie   Ce projet utilise le framework Django (Python) pour la partie   serveur. Par défaut, les données sont stockées dans une base de   données SQLite. Il est possible d’utiliser un autre système de   bases de données en personnalisant la configuration du projet   Django.  </pre>
+    <p>Dans la suite du fichier, il s’agit  d’expliquer comment utiliser l’application. </p>
+    <p>Pour ne pas dupliquer de contenu, les actions  permettant d’utiliser Improllow-up ne seront pas réécrites,  car elles sont présentes dans ce chapitre à la  section Aperçu du projet.</p>
+    <p>La dernière partie figurant dans  un fichier README permet de définir des règles simples  de participation au projet. Certains projets comme Bower adoptent  des règles particulièrement strictes qui permettent  de mieux gérer les demandes de contributions : <a href="https://github.com/bower/bower/blob/master/CONTRIBUTING.md" target="_blank">https://github.com/bower/bower/blob/master/CONTRIBUTING.md</a>.</p>
+    <p>Il est possible de s’inspirer des règles  de contributions des dépôts populaires pour mettre  en place ses propres normes. Pour les projets très simples  et peu populaires, il n’est pas forcément nécessaire  d’ériger une liste de règles strictes. Parfois,  toutes les contributions sont bonnes à prendre.</p>
+  </div>
+</div>
+
+<div></div>
+</body>
+</html>

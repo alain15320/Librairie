@@ -1,0 +1,433 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Activation des fenêtres</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Activation des fenêtres</h1>
+<p>La partie construction de l’interface graphique étant  terminée, il est temps de commencer la partie interactive,  où le code va pouvoir répondre aux actions de  l’utilisateur, notamment les clics sur des boutons. Passons maintenant à cette  mise en œuvre avec Eclipse et WindowBuilder en commençant  par la fenêtre de connexion.</p>
+<div>
+  <h2>1. Connexion</h2>
+  <div>
+    <p> Ouvrez la classe <strong>FConnexion</strong>.</p>
+  </div>
+  <div>
+    <p> Sélectionnez le bouton <strong>Paramètres</strong>, faites un clic droit et choisissez l’option <strong>Add event handler - mouse - mouseClicked</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/09-20.png" src="images/images_09-20.png"></div>
+  </div>
+  <div>
+    <p> Dans le code créé automatiquement  par WindowBuilder, ajoutez l’appel à une méthode  comme ceci :</p>
+  </div>
+  <pre>    btnParamtres.addMouseListener(new MouseAdapter() { 
+        @Override 
+        public void mouseClicked(MouseEvent e) { 
+           <strong> parametres();</strong> 
+        } 
+    });</pre>
+  <p>Le compilateur signale une erreur ; c’est  normal, la méthode <strong>parametres()</strong> n’existe pas encore.</p>
+  <p>Il existe deux manières rapides pour  créer cette méthode :</p>
+  <div>
+    <p> Survolez la ligne en erreur : un message  sur fond jaune apparaît alors vous proposant différentes  solutions. Choisissez la dernière option <strong>Create method ’parametres()’ in type ’FConnexion’</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/09-21.png" src="images/images_09-21.png"></div>
+  </div>
+  <div>
+    <p> Positionnez le curseur sur la ligne en erreur,  et appuyez sur [Ctrl] <strong>1</strong>. Il s’agit du Quick-Fix d’Eclipse qui propose les mêmes  corrections. Choisissez l’option <strong>Create method ’parametres()’ in type ’FConnexion’</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/09-22.png" src="images/images_09-22.png"></div>
+  </div>
+  <div>
+    <p> Répétez la procédure  avec le bouton <strong>Quitter</strong>, cette fois en appelant et en créant une méthode  appelée <strong>quitter()</strong>.</p>
+  </div>
+  <div>
+    <p>Le bouton <strong>Valider</strong> a une procédure différente pour gérer  le clic. </p>
+  </div>
+  <div>
+    <p> Sélectionnez celui-ci, faites un clic  droit et choisissez l’option <strong>Set Action - New</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/09-23.png" src="images/images_09-23.png"></div>
+  </div>
+  <p>Le libellé du bouton change. C’est  encore normal. Tout sera remis en place dans quelques instants.</p>
+  <p>WindowBuilder a modifié le code :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Il a créé une  classe interne dans la classe FConnexion qui s’appelle <strong>SwingAction</strong>.</p>
+      </li>
+      <li>
+        <p>Il a créé un attribut  nommé <strong>action</strong> du type de cette classe.</p>
+      </li>
+      <li>
+        <p>Il a ajouté la ligne suivante  dans le traitement de l’action.</p>
+      </li>
+    </ul>
+  </div>
+  <pre>    btnValider.setAction(action);  </pre>
+  <p>Tout ceci permet de créer un système  réagissant au clic du bouton.</p>
+  <div>
+    <p> Renommez la classe <strong>SwingAction</strong> en <strong>ActionValider</strong> à l’aide de la combinaison de touches [Ctrl] <strong>1</strong> après l’avoir sélectionnée  dans le code source. Choisissez l’option <strong>Rename in File</strong>.</p>
+  </div>
+  <div>
+    <p> Modifiez alors cette classe avec le code suivant :</p>
+  </div>
+  <pre>
+private class ActionValider extends AbstractAction { 
+ 
+    private static final long serialVersionUID = 1L; 
+         
+    public ActionValider() {  
+        <strong>putValue(NAME, "Valider"); 
+        putValue(SHORT_DESCRIPTION,  
+                    "Se connecter à l'application"); </strong>
+    } 
+    public void actionPerformed(ActionEvent e) { 
+        valider(); 
+    } 
+}  
+  </pre>
+  <div>
+    <p> Créez enfin la méthode <strong>valider()</strong> dans la classe <strong>FConnexion</strong>.</p>
+  </div>
+  <div>
+    <p> Traduisez les textes de l’interface à l’aide  d’Eclipse. Sélectionnez la classe dans l’explorateur de  packages, faites un clic droit et choisissez l’option <strong>Source - Externalize Strings</strong>. Agissez ensuite comme dans le chapitre La boîte à outils  d’Eclipse pour placer les traductions dans un fichier <strong>messages.properties</strong>. </p>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>La gestion des actions des boutons  par des classes dérivées d’<strong>AbstractAction</strong> est préférable à l’ajout  d’ActionListeners sur ces mêmes boutons.</p>
+    </div>
+  </div>
+  <div>
+    <p> Effacez la méthode <strong>main()</strong> de la classe pour éviter la prolifération  de ces méthodes. </p>
+  </div>
+  <div>
+    <p> Créez une classe <strong>Main</strong> dans le package <strong>depart</strong>, avec une méthode <strong>main()</strong>. Ce sera le point d’entrée principal de l’application.</p>
+  </div>
+  <div>
+    <p> Modifiez le code comme ceci :</p>
+  </div>
+  <pre>
+package depart; 
+ 
+import java.awt.EventQueue; 
+ 
+import dialogue.FConnexion; 
+ 
+/** 
+ * Point de départ de l'application. 
+ */ 
+public class Main <strong>implements Runnable</strong> { 
+ 
+    public static void main(String[] args) { 
+ 
+        System.out.println("Lancement du programme Luna"); 
+ 
+        EventQueue.invokeLater(new Main()); 
+    }  
+  
+    <strong>@Override 
+    public void run()</strong> { 
+        FConnexion frame = new FConnexion(); 
+        frame.setLocationRelativeTo(null); 
+        frame.setVisible(true); 
+ 
+        System.out.println("Fenêtre de Connexion visible"); 
+    } 
+}  
+  </pre>
+  <div>
+    <p>Il reste à écrire le  corps des méthodes <strong>quitter()</strong> et <strong>valider()</strong> dans la classe <strong>FConnexion</strong>.</p>
+  </div>
+  <div>
+    <p> Écrivez le code suivant :</p>
+  </div>
+  <pre>
+    private void quitter() {  
+        dispose(); 
+    }  
+  </pre>
+  <p>La méthode <strong>dispose()</strong> d’une JFrame relâche les ressources graphiques. Comme  il s’agit de la seule fenêtre affichée à ce  moment-là, l’application se termine ensuite.</p>
+  <p>Un double contrôle à la  fois de saisie et de connexion sera placé dans la méthode <strong>valider()</strong>. L’utilisateur est ainsi averti d’un éventuel  problème d’accès à la base de  données. Si la saisie est incorrecte, un nouveau message  apparaît à partir de la classe <strong>FConnexion</strong>.</p>
+  <div>
+    <div><img alt="images/10-08.png" src="images/images_10-08.png"></div>
+  </div>
+  <div>
+    <p> Complétez la méthode <strong>valider()</strong> à l’aide du code suivant.</p>
+  </div>
+  <pre>
+private void valider() { 
+    boolean valide = true; // ce code sera remplacé plus tard 
+    if (valide) {  
+        FConnexion.this.dispose(); 
+        FAccueil laFenetreMenu = new FAccueil(); 
+        laFenetreMenu.setVisible(true); 
+    } else { 
+        JOptionPane.showMessageDialog( 
+            btnValider, 
+            "Message d'alerte à remplir"), 
+            "Titre de l'alerte à modifier", 
+            JOptionPane.ERROR_MESSAGE);  
+    } 
+}  
+  </pre>
+  <p>Ce code effectue les opérations suivantes :  si le couple login/mot de passe est valide, il ferme la  fenêtre de connexion (<strong>FConnexion.this.dispose()</strong> est équivalent à <strong>dispose()</strong>), crée une fenêtre d’accueil, et l’affiche  avec <strong>setVisible(true)</strong>.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>La validation de l’utilisateur sera  abordée au chapitre Connexion.</p>
+    </div>
+  </div>
+  <p>Dans le cas contraire, une boîte  de dialogue d’erreur est affichée à l’utilisateur, et  la fenêtre de connexion reste affichée pour une  tentative ultérieure.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p><strong>NomDeLaClasse.this</strong> est une notation de Java pour retrouver l’instance de  la classe principale dans le cas d’une classe interne.</p>
+    </div>
+  </div>
+</div>
+<div>
+  <h2>2. Clients</h2>
+  <div>
+    <p> Ouvrez la classe <strong>PClients</strong>.</p>
+  </div>
+  <div>
+    <p> Mettez en place des actions pour tous les boutons  du panneau à l’aide de l’option <strong>Set Action</strong> - <strong>New</strong> du menu clic droit.</p>
+  </div>
+  <div>
+    <p> Ajoutez les méthodes suivantes :</p>
+  </div>
+  <pre>
+    public void setFenetre(JDialog fenetre) { 
+        this.fenetre = fenetre; 
+    } 
+     
+    private JDialog getFenetre() { 
+        return fenetre; 
+    } 
+     
+    private void changerPanneau(JPanel panneau, String titre) { 
+        fenetre.setContentPane(panneau); 
+        fenetre.setTitle(titre); 
+        fenetre.revalidate(); 
+    }  
+  </pre>
+  <p>Ces méthodes permettent respectivement  de fixer et de retrouver la fenêtre à laquelle  est rattaché le panneau, et enfin de pouvoir changer le  panneau de contenu principal.</p>
+  <div>
+    <p> Ajoutez une action qui servira pour les panneaux  d’ajout et de recherche à pouvoir afficher de nouveau le  panneau principal.</p>
+  </div>
+  <pre>
+private final Action actionAnnuler = new ActionAnnuler(); 
+ 
+private class ActionAnnuler extends AbstractAction { 
+    private static final long serialVersionUID = 1L; 
+    public ActionAnnuler() { 
+        putValue(NAME, "Annuler"); 
+        putValue(SHORT_DESCRIPTION, 
+                         "Annuler l'action en cours"); 
+    } 
+ 
+    public void actionPerformed(ActionEvent e) {  
+        changerPanneau(PClients.this, "Gestion des Clients"); 
+    } 
+}
+</pre>
+  <div>
+    <p> Complétez la méthode <strong>actionPerformed</strong> de l’écouteur du bouton <strong>Ajouter</strong> par le code suivant :</p>
+  </div>
+  <pre>
+    PClient ajout = new PClient(); 
+    ajout.setActionAnnuler(actionAnnuler); 
+     
+    btnAjouter.setIcon(new ImageIcon( 
+                PClients.class.getResource( 
+                "/images/gestion/Add-New-48.png"))); 
+    changerPanneau(ajout ,"Ajouter un nouveau client");
+  </pre>
+  <p>Ce code permet de changer le panneau de contenu  par celui du panneau d’ajout de client.</p>
+  <div>
+    <p> Créez une méthode <strong>setActionAnnuler</strong> dans les classes <strong>PClient</strong> et <strong>PClientRecherche</strong> et assignez le paramètre au bouton d’annulation.</p>
+  </div>
+  <pre>
+    void setActionAnnuler(Action action) { 
+        btnAccueil.setAction(action); 
+        UI.deshabillerBouton(btnAccueil, "Cancel"); 
+    }  
+  </pre>
+  <div>
+    <p> Complétez la méthode <strong>actionPerformed</strong> de l’écoute du bouton <strong>Rechercher</strong> par le code suivant :</p>
+  </div>
+  <pre>
+public void actionPerformed(ActionEvent e) { 
+ 
+    PClientRecherche recherche = new PClientRecherche(); 
+    recherche.setActionAnnuler(actionAnnuler); 
+ 
+    btnRechercher.setIcon(new ImageIcon( 
+                PClients.class.getResource( 
+                    "/images/gestion/Search-48.png"))); 
+    changerPanneau(recherche, "Recherche de client(s)"); 
+}  
+  </pre>
+</div>
+<div>
+  <h2>3. Accueil</h2>
+  <div>
+    <p> Ouvrez la classe <strong>FAccueil</strong>.</p>
+  </div>
+  <div>
+    <p>Ajoutons des écouteurs d’événements <strong>ActionListener</strong> sur les différents boutons afin de répondre  aux clics des utilisateurs, comme dans la fenêtre de connexion.</p>
+  </div>
+  <div>
+    <p> Pour chacun des boutons, ajoutez un gestionnaire  d’événements (event handler) afin d’afficher  le nom de l’action au survol du bouton par la souris.</p>
+  </div>
+  <div>
+    <div><img alt="images/09-26.png" src="images/images_09-26.png"></div>
+  </div>
+  <p>Par exemple, le code pour le bouton des clients  est le suivant :</p>
+  <pre>
+JButton btnClients = new JButton(); 
+btnClients.setIcon(new ImageIcon( 
+                FAccueil.class.getResource( 
+                "/images/accueil/People-128-actif.png" 
+            ))); 
+UI.deshabillerBouton(btnClients, "accueil", "People", 128); 
+btnClients.addActionListener(new ActionListener() { 
+             
+    @Override 
+    public void actionPerformed(ActionEvent e) { 
+        afficherClients(); 
+    } 
+}); 
+btnClients.addMouseListener(new MouseAdapter() { 
+    @Override 
+    public void mouseEntered(MouseEvent e) { 
+        lblInfos.setText("Clients"); 
+    } 
+     
+    @Override 
+    public void mouseExited(MouseEvent e) { 
+        lblInfos.setText(" "); 
+    } 
+});         
+btnClients.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+panel_principal.add(btnClients, "cell 0 1,alignx center");  
+  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p><strong>lblInfos</strong> est le nom du label dans le panneau de gauche affichant  l’action qui sera effectuée. Ce nom peut être  différent dans votre code.</p>
+    </div>
+  </div>
+  <p>La ligne suivante :</p>
+  <pre>btnClients.setCursor(new Cursor(Cursor.<strong>HAND</strong>_CURSOR));  </pre>
+  <p>permet d’afficher un curseur en forme de main  quand la souris survole le bouton.</p>
+  <div>
+    <p> Gérez les actions depuis les items  de la barre de menu.</p>
+  </div>
+  <p>Cela implique de créer des actions  gérant les clics sur ces items.</p>
+  <div>
+    <p> Créez dans ces actions des accélérateurs  et des mnémoniques pour faciliter leur utilisation.</p>
+  </div>
+  <p>Vous trouverez ci-dessous le code de l’action  gérant l’affichage du module des articles.</p>
+  <pre>
+    private class ActionArticles extends AbstractAction { 
+        private static final long serialVersionUID = 1L; 
+ 
+        public ActionArticles() { 
+            putValue(NAME, "Articles"); 
+            putValue(SHORT_DESCRIPTION, 
+                    "Afficher la liste des articles"); 
+            putValue(ACCELERATOR_KEY, 
+                    KeyStroke.getKeyStroke( 
+                        KeyEvent.VK_A, 
+                        ActionEvent.ALT_MASK)); 
+            putValue(MNEMONIC_KEY, KeyEvent.VK_A); 
+        } 
+         
+        public void actionPerformed(ActionEvent e) { 
+            afficherArticles(); 
+        } 
+    } 
+}  
+  </pre>
+  <div>
+    <p> Créez les méthodes <strong>afficherClients()</strong>, <strong>afficherArticles()</strong>, <strong>afficherCommandes()</strong> et <strong>afficherParametres()</strong> qui sont appelées dans les actions ou les écouteurs  correspondants.</p>
+  </div>
+  <p>Ces méthodes sont pour l’instant  vides.</p>
+  <div>
+    <p> Complétez la méthode <strong>afficherArticles()</strong> par le code suivant :</p>
+  </div>
+  <pre>
+    protected void afficherArticles() { 
+        FArticles laFenetre = new FArticles(this); 
+        laFenetre.setVisible(true); 
+    }
+  </pre>
+  <div>
+    <p> Complétez la méthode <strong>afficherCommandes()</strong> par le code suivant :</p>
+  </div>
+  <pre>    protected void afficherCommandes() { 
+        FCommandes laFenetre = new FCommandes(this); 
+        laFenetre.setVisible(true); 
+    }</pre>
+  <div>
+    <p> Créez une méthode <strong>setFenetre()</strong> dans la classe <strong>PClients</strong>, et ayant comme paramètre un dialogue :</p>
+  </div>
+  <pre>    public void setFenetre(JDialog fenetre) { 
+        this.fenetre = fenetre; 
+    }
+    </pre>
+  <p>Cette méthode implique de créer également  une propriété <strong>fenetre</strong> dans la classe.</p>
+  <div>
+    <p> Complétez la méthode <strong>afficherClients()</strong> par le code suivant :</p>
+  </div>
+  <pre>protected void afficherClients() { 
+    JDialog dialog = new JDialog(this); 
+    PClients clients = new PClients(); 
+    clients.setFenetre(dialog); 
+    dialog.setContentPane(clients); 
+    dialog.setIconImage(UI.getLogo()); 
+    dialog.setTitle("Gestion des Clients"); 
+    dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+    dialog.setBounds(100, 100, 1000, 700); 
+    dialog.setLocationRelativeTo(null); 
+    dialog.setVisible(true); 
+}</pre>
+  <p>Ce code crée une nouvelle boîte  de dialogue ayant comme parent la fenêtre actuelle, place  le panneau des clients dedans, stocke le dialogue dans le panneau des  clients, initialise quelques propriétés comme  le titre et l’icône et affiche ce dialogue.</p>
+  <div>
+    <p> Sélectionnez le bouton <strong>Quitter</strong> et ajoutez une nouvelle action par un clic droit puis  par le choix de l’option <strong>Set Action - New</strong>.</p>
+  </div>
+  <div>
+    <p> Renommez la classe de l’action en <strong>ActionQuitter</strong>.</p>
+  </div>
+</div>
+<div id="AU_d26b7b5b-22ba-4ecd-b12c-6412b4814dee" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <div>
+    <div>
+      <p> Complétez l’action avec le code suivant :</p>
+    </div>
+    <pre>private class ActionQuitter extends AbstractAction { 
+    private static final long serialVersionUID = 1L; 
+ 
+    public ActionQuitter() { 
+        putValue(NAME, "Quitter"); 
+        putValue(SHORT_DESCRIPTION, "Quitter l'application"); 
+    } 
+         
+    public void actionPerformed(ActionEvent e) {  
+        FAccueil.this.dispose(); 
+    } 
+}</pre>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

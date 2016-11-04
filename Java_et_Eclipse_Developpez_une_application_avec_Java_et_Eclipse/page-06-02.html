@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_c3225428-f389-4d9d-bac0-82620909463a" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Collections</h1>
+  <p>Quand un logiciel est modélisé à l’aide  de classes, il est nécessaire de créer des abstractions  de données. Néanmoins, il est tout aussi important  de pouvoir utiliser ces données en tant qu’ensemble.</p>
+  <p>Il est possible d’utiliser des tableaux pour  cela, comme :</p>
+  <pre>Animal[] animaux = new Animal[42];  </pre>
+  <p>Mais les tableaux ne sont pas très  flexibles : ils ne se redimensionnent pas (on dit qu’ils  ont une taille fixe), il n’y a pas de méthode… Pour  bénéficier de toutes ces caractéristiques,  une collection est un outil très puissant.</p>
+  <p>Le concept de collection est simple. Il correspond  aux collections de timbres, de coquillages… Des objets  de même nature sont placés à l’intérieur  d’une collection. Java a créé depuis sa première  version dans le package <strong>java.util</strong> des classes et des interfaces permettant d’aider à modéliser  ces ensembles de données, et met à disposition  plusieurs types de collections qui diffèrent par leurs caractéristiques :  ordonnée ou non, doublons autorisés ou non, valeur  nulle admise ou non, tri par défaut ou non… Toutes  ont la capacité de se redimensionner automatiquement lors  de l’ajout ou de la suppression d’objets.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Une instance d’une collection  est un objet comme toute instance de classe.</p>
+    </div>
+  </div>
+  <p>Java a défini plusieurs interfaces  permettant de spécifier le contrat et le comportement de  ces ensembles de données. On en dénombre beaucoup,  mais traditionnellement deux de base :</p>
+  <div>
+    <ul>
+      <li>
+        <p>L’interface <strong>Map</strong> représente le contrat d’une structure dont  chaque donnée est référencée  par une clé.</p>
+      </li>
+      <li>
+        <p>L’interface <strong>Collection</strong> représente le contrat de base pour toutes les  autres structures de données, dont des spécialisations  dérivées :</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>L’interface <strong>List</strong> représente le contrat fonctionnel pour toutes  les structures de données ordonnées (dont on peut  retrouver un élément particulier grâce à son  ordre d’insertion, c’est-à-dire son index dans la liste).</p>
+      </li>
+      <li>
+        <p>L’interface <strong>Set</strong> représente le contrat d’une structure dont  chaque élément est présent une unique  fois dans la structure. Ces données ne sont pas forcément ordonnées.</p>
+      </li>
+      <li>
+        <p>L’interface <strong>Queue</strong> représente le contrat d’une structure de données ordonnées, mais  dont l’ajout se fait à la fin de la structure et le retrait  en début. Un peu comme une file d’attente au supermarché,  au péage de l’autoroute... </p>
+      </li>
+    </ul>
+  </div>
+  <p>Ces contrats de base sont spécialisés  ensuite avec des interfaces les étendant, comme SortedSet,  Deque, NavigableMap…</p>
+  <p>Java fournit plusieurs implémentations  de base de ces interfaces, qu’il est possible de choisir  en fonction des besoins et des objectifs de la modélisation.</p>
+  <p>L’interface <strong>List</strong> est implémentée avec les classes <strong>ArrayList</strong>, <strong>LinkedList</strong>, <strong>CopyOnWriteArrayList</strong>, <strong>Vector</strong>, <strong>Stack</strong>…</p>
+  <p>L’interface <strong>Map</strong> est implémentée avec les classes <strong>HashMap</strong>, <strong>ConcurrentHashMap</strong>, <strong>Hashtable</strong>…</p>
+  <p>L’interface <strong>Set</strong> est implémentée avec <strong>HashSet</strong>,<strong>TreeSet</strong>, <strong>EnumSet</strong> …</p>
+  <p>L’interface <strong>Queue</strong> est implémentée avec <strong>LinkedList</strong>, <strong>PriorityQueue</strong>, <strong>PriorityBlockingQueue</strong>... </p>
+  <p>Chaque structure de données est générique,  ce qui veut dire qu’il est possible de créer des ensembles  de données ayant tous un contrat commun concernant leur  contenu.</p>
+  <pre>List&lt;Animal&gt; animaux = new ArrayList&lt;&gt;() ;    List&lt;Tigre&gt; tigres = new LinkedList&lt;&gt;() ;   animaux.add(new Tigre()) ;   animaux.add(new Singe()) ;      ...      tigres.add(new Singe()) ; <strong>// provoque une erreur à la compilation</strong></pre>
+  <p>Il est intéressant de ne se lier  dans l’exécution d’un programme qu’à l’interface de  la structure de données, et non à son implémentation.  Si les besoins évoluent, il est alors possible de changer  le type de la structure  sans modifier le reste du programme.</p>
+  <pre>List&lt;Animal&gt; animaux = new <strong>LinkedList</strong>&lt;&gt;() ;    List&lt;Tigre&gt; tigre = new <strong>CopyOnWriteArrayList</strong>&lt;&gt;() ;       // le reste du programme est inchangé  </pre>
+</div>
+</body>
+</html>

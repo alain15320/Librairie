@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_50b3cbef-59d8-4133-8521-3d99495b1297" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Début du développement</h1>
+  <p>Pour l’instant, Raphaël n’a pas besoin  de suivre des fichiers, car il n’en a pas encore. Il va  donc commencer le développement en créant un fichier  HTML intitulé anniversaire.html dans le dossier AnniversaireListe avec le contenu suivant :</p>
+  <pre>&lt;html&gt;    &lt;head&gt;        &lt;title&gt;Liste des anniversaires&lt;/title&gt;        &lt;meta http-equiv="Content-Type" content="text/html;charset=utf-8"&gt;   &lt;/head&gt;    &lt;body&gt;        &lt;h1&gt;Liste des anniversaires&lt;/h1&gt;        &lt;p&gt;            &lt;button onclick="javascript:anniv_liste();"&gt;Générer la liste&lt;/button&gt;           &lt;button onclick="javascript:localStorage.clear();"&gt;Supprimer&lt;/button&gt;       &lt;/p&gt;        &lt;p&gt;            &lt;br /&gt;Ajouter un anniversaire            &lt;br /&gt;Personne : &lt;input type="text" id="anniv_personne" /&gt;            &lt;br /&gt;Date : &lt;input type="text" id="anniv_date" /&gt;            &lt;br /&gt;&lt;button onclick="javascript:anniv_ajout();"&gt;Ajouter&lt;/button&gt;        &lt;/p&gt;        &lt;p id="anniv_liste" style="background-color:#DDD;"&gt;            &lt;/p&gt;        &lt;script type="text/javascript" src="static/js/anniversaire.js"&gt;&lt;/script&gt;        &lt;script type="text/javascript"&gt;            (function() {               anniv_liste();            })();        &lt;/script&gt;    &lt;/body&gt;    &lt;/html&gt;  </pre>
+  <p>Après avoir terminé ce fichier,  Raphaël ne va pas enregistrer ses modifications dans Git  pour le moment. En effet, un commit représente un ensemble  de modifications dépendantes les unes des autres et elles  doivent former un ensemble cohérent et fonctionnel. Or,  s’il exécute son code maintenant, Raphaël obtiendra  des erreurs, car les fonctions JavaScript utilisées n’existent  pas encore. Il va donc ajouter un fichier JavaScript nommé anniversaire.js stocké dans le dossier static/js avant de commiter : </p>
+  <pre>function anniv_ajout() {        anniv_personne = document.querySelector(’#anniv_personne’).value;        anniv_date = document.querySelector(’#anniv_date’).value;        anniversaire = {            ’anniv_personne’: anniv_personne,            ’anniv_date’: anniv_date        };        nb_anniv = anniv_get_nb_anniv();        localStorage.setItem(nb_anniv.toString(), JSON.stringify(anniversaire));       nb_anniv++;        localStorage.setItem(’nb_anniv’, JSON.stringify(nb_anniv));       document.querySelector(’#anniv_personne’).value = "";        document.querySelector(’#anniv_date’).value     = "";        anniv_liste();    }        function anniv_liste() {        nb_anniv = anniv_get_nb_anniv();        result = "";        if (nb_anniv == 0) {            result = ’&lt;h3&gt;Aucun anniversaire enregistré&lt;h3&gt;’;        }        for (i=0;i&lt;nb_anniv;i++) {            anniversaire = JSON.parse(localStorage.getItem(i.toString()));            result+=’&lt;br /&gt;’+anniversaire.anniv_date+’ : ’+            anniversaire.anniv_personne;        }        document.querySelector(’#anniv_liste’).innerHTML = result;        return nb_anniv;    }        function anniv_get_nb_anniv() {        nb_anniv = localStorage.getItem(’nb_anniv’);        if (typeof nb_anniv == "undefined" || nb_anniv == null) {            nb_anniv = 0;        }        return nb_anniv;    }  </pre>
+  <p>Pour que Git prenne en compte ces fichiers,  il va falloir les lui indiquer explicitement. Pour cela, Raphaël  va utiliser la commande git add :</p>
+  <pre>git add anniversaire.html    git add static/js/anniversaire.js  </pre>
+  <p>Ces commandes auront pour effet d’ajouter  les fichiers dans une zone d’attente nommée index avant que les fichiers ne soient réellement  ajoutés au dépôt par un commit.</p>
+  <p>Il est possible de vérifier que les  fichiers ont correctement été ajoutés  dans l’index avec la commande suivante : </p>
+  <pre>git status</pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>On branch master        Initial commit        Changes to be committed:      (use "git rm --cached &lt;file&gt;..." to unstage)            new file:   anniversaire.html        new file:   static/js/anniversaire.js  </pre>
+  <p>Cette sortie indique que les fichiers se trouvent  dans l’index car ils sont prêts à être  commités.</p>
+</div>
+</body>
+</html>

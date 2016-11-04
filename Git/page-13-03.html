@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_e9f6774e-e69a-429f-bf79-845e4e9c5bdb" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Installation de GitLab</h1>
+  <p>GitLab est un logiciel qui se présente  sous la forme d’une interface web qui va permettre de travailler à plusieurs  sur un dépôt et qui va permettre de gérer plus  facilement les équipes de développeurs. GitLab  présente un certain nombre d’avantages comparé à l’utilisation  d’un dépôt partagé local :</p>
+  <div>
+    <ul>
+      <li>
+        <p>L’ergonomie d’une  interface graphique permet d’avoir une prise en main rapide du  logiciel.</p>
+      </li>
+      <li>
+        <p>Il est présent par défaut  chez des hébergeurs comme DigitalOcean.</p>
+      </li>
+      <li>
+        <p>Il est possible d’effectuer certaines  actions directement à partir de GitLab comme éditer  des fichiers et commiter les modifications.</p>
+      </li>
+      <li>
+        <p>GitLab propose des fonctionnalités  complémentaires à la gestion de dépôt comme  des outils d’intégration continue ou encore un  Wiki permettant de centraliser des documentations.</p>
+      </li>
+    </ul>
+  </div>
+  <p>L’installation de GitLab sera expliquée  pour une distribution de GNU/Linux Debian 8. Pour installer  GitLab, il faut tout d’abord se rendre sur la page de téléchargement  du site officiel : <a href="https://about.gitlab.com/downloads/#debian8" target="_blank">https://about.gitlab.com/downloads/#debian8</a>. Sur cette page, GitLab propose des instructions permettant  d’installer GitLab et toutes ses dépendances.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/PUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GkypzaUOzTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Les commandes suivantes peuvent également être  effectuées directement à partir d’un  compte root en supprimant les sudo.  Il convient de rappeler que l’utilisateur est responsable  de la sécurité de son serveur et que l’utilisation  du compte root doit être raisonnée.</p>
+    </div>
+  </div>
+  <p>Tout d’abord, il faut installer les  dépendances de GitLab. L’installation de Postfix  nécessite de valider des étapes en gardant les  valeurs par défaut. </p>
+  <pre>sudo apt-get install curl openssh-server ca-certificates postfix  </pre>
+  <p>Ensuite, il faut référencer  le serveur de paquets de GitLab pour effectuer l’installation avec apt-get.</p>
+  <pre>curl https://packages.gitlab.com/install/repositories/gitlab/  gitlab-ce/script.deb.sh | sudo bash   sudo apt-get install gitlab-ce  </pre>
+  <p>Les commandes suivantes vont permettre de  lancer la configuration automatique de GitLab et de lancer le serveur  web qui permettra d’accéder à l’interface  web.</p>
+  <pre>gitlab-ctl reconfigure  </pre>
+  <p>L’utilisateur peut alors se connecter à l’adresse  http://localhost:80 à partir de son navigateur.  Les identifiants d’origine sont <strong>root</strong> pour le nom d’utilisateur et <strong>5iveL!fe</strong> pour le mot de passe.</p>
+  <p>Après la première connexion,  GitLab invite l’utilisateur à modifier son mot  de passe puis à se reconnecter.</p>
+  <p>Il n’est pas possible d’utiliser  GitLab en français. En effet, l’équipe  estime que les traductions ralentiront la vitesse de développement  de l’application (cf. <a href="https://gitlab.com/gitlab-org/gitlab-ce/issues/1" target="_blank">https://gitlab.com/gitlab-org/gitlab-ce/issues/1</a>). Il est donc peu probable pour l’instant de  voir arriver une version francophone prochainement.</p>
+  <p>Pour paramétrer un serveur SMTP distant  dans GitLab, il faut éditer le fichier /etc/gitlab/gitlab.rb en ajoutant les lignes suivantes en les adaptant au  serveur mail : </p>
+  <pre>gitlab_rails[’gitlab_email_from’] = ’my.email@gmail.com’    gitlab_rails[’gitlab_email_reply_to’] = ’my.email@gmail.com’    gitlab_rails[’smtp_enable’] = true    gitlab_rails[’smtp_address’] = "smtp.gmail.com"    gitlab_rails[’smtp_port’] = 587    gitlab_rails[’smtp_user_name’] = "my.email@gmail.com"    gitlab_rails[’smtp_password’] = "my-gmail-password"    gitlab_rails[’smtp_domain’] = "smtp.gmail.com"    gitlab_rails[’smtp_authentication’] = "login"    gitlab_rails[’smtp_enable_starttls_auto’] = true    gitlab_rails[’smtp_tls’] = false    gitlab_rails[’smtp_openssl_verify_mode’] = ’peer’  </pre>
+  <p>Ces lignes sont tirées de la documentation  officielle qui propose d’autres exemples de configuration  de serveur mail : <a href="http://doc.gitlab.com/omnibus/settings/smtp.html" target="_blank">http://doc.gitlab.com/omnibus/settings/smtp.html</a>.</p>
+</div>
+<div id="AU_e9f6774e-e69a-429f-bf79-845e4e9c5bdb" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\"> </div>
+<div id="CFooter"> </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_6880373e-b073-4bd9-9f65-768101554e67" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Dépôts intégrés  avec submodules</h1>
+  <p>Aujourd’hui, dans un grand nombre de projets,  les développeurs utilisent des bibliothèques.  Par exemple, beaucoup de projets web aujourd’hui intègrent des  bibliothèques comme jQuery, Bootstrap ou encore AngularJS.  Ces bibliothèques sont nécessaires au fonctionnement  du projet, il est donc nécessaire de les avoir dans notre  dépôt principal (à moins d’utiliser les  services d’un CDN qui les héberge).</p>
+  <p>Le problème qui se pose lorsque les  développeurs ajoutent les sources de la bibliothèque  directement dans leur dépôt principal est que  ces codes vont polluer les commits et les statistiques du dépôt  avec du code qui n’a pas été créé par  un développeur interne.</p>
+  <p>En effet, avec les sources directement présentes  dans leur dépôt, à chaque mise à jour  de la bibliothèque les développeurs devront copier  les nouveaux fichiers de la bibliothèque et faire un commit  volumineux avec comme message "Mise à jour vers Bootstrap  3.3.0".</p>
+  <p>Le dépôt contiendrait donc  des commits qui ne correspondent pas du tout au projet et qui ne  sont pas le fruit du travail de l’équipe de développement.  De plus, si des statistiques sont effectuées sur le dépôt,  les ajouts et mises à jour des bibliothèques les  fausseraient.</p>
+  <p>Il existe des solutions à ce problème.  La solution la plus adaptée est d’utiliser un système  de gestion de dépendances versionné. Un tel système  permettra de lister les bibliothèques dont les développeurs  ont besoin et de spécifier la version utilisée  dans le projet.  Par exemple, dans un projet Python, l’outil de gestion  de dépendances nommé PIP permet d’installer et  de mettre à jour les bibliothèques. Une convention,  lorsqu’on utilise PIP, est de créer un fichier requirements.txt à la racine du dépôt.  Ce fichier contiendra la liste des dépendances utilisées  dans le projet. Selon les conventions des autres technologies, le  fichier de dépendances peut s’appeler différemment.  Par exemple, sur des projets PHP utilisés avec l’outil  Composer, le fichier s’appelle composer.json.</p>
+  <p>Voici un exemple de fichier requirements.txt spécifiant les bibliothèques utilisées  dans un projet Python/Django :</p>
+  <pre>Django==1.8.2
+django-bootstrap3==5.4.0
+django-debug-toolbar==1.3.0
+Pillow==2.8.1  </pre>
+  <p>Ce fichier étant versionné,  il est possible d’identifier à n’importe quel moment les  bibliothèques utilisées et leur version.</p>
+  <p>Le seul inconvénient de cette méthode  est que certaines bibliothèques ne sont pas accessibles  avec ce genre d’outils. Certaines technologies ne possèdent  pas de gestionnaire de dépendances qui permette d’utiliser  un fichier de dépendances. C’est pour cette raison que  Git intègre la fonctionnalité des submodules.</p>
+  <p>Il existe une solution au problème  des bibliothèques présentes dans le code source  : les dépôts intégrés (ou submodules  ou encore sous-modules). Le principe de ces dépôts  est de dire à Git : "Bonjour Git, j’ai besoin de stocker  une bibliothèque, mais je ne veux pas qu’elle soit incluse  dans mon historique à part entière, mais je veux  tout de même pouvoir la suivre un petit peu quand même  pour retrouver la version que j’utilisais à un moment précis."</p>
+  <p>Et Git répond parfaitement à ce  besoin, il va permettre aux développeurs d’intégrer des  dépôts dans leur dépôt principal.  Ces dépôts ne vont pas polluer l’historique. Les  développeurs vont pouvoir retrouver la version du dépôt  intégré qu’ils utilisaient à un moment  précis et ils seront en mesure de cloner facilement leur  projet sans devoir réintégrer les dépôts  intégrés les uns après les autres manuellement.</p>
+  <p>Les dépôts intégrés  peuvent également être utiles lorsqu’une équipe  (même unipersonnelle) développe ses propres bibliothèques  et qu’elle a besoin de les inclure dans plusieurs projets. Que ce  soit l’équipe qui code ses bibliothèques ou un  tiers, les dépôts intégrés permettent  aux équipes de se concentrer sur leur projet principal.</p>
+  <p>Pour présenter les dépôts  intégrés, il faut imaginer l’intégration  de la bibliothèque Bootstrap sur un projet vierge. Pour  avoir un dépôt conforme, il faut créer  un nouveau dépôt à l’intérieur  duquel un fichier index.html sera une page HTML simple nécessitant Bootstrap.  Il faut ensuite commiter pour arriver sur un projet très  simple placé dans un dépôt Git.</p>
+  <p>Dans cet exemple, le dépôt  principal désigne le dépôt qui contient  le projet du développeur (celui qui contient le fichier index.html). Et le dépôt intégré (ou sous-module)  désigne le dépôt de Bootstrap, c’est  ce dépôt qui sera intégré dans  le dépôt principal.</p>
+  <div>
+    <h2>1. Ajout du dépôt intégré</h2>
+    <p>Pour ajouter Bootstrap en tant que dépôt  intégré, il faut tout d’abord avoir une URL (ou  un chemin du système de fichiers) qui dirige vers ce projet.  Il est possible de récupérer l’URL du  projet Bootstrap sur sa page GitHub (<a href="https://github.com/twbs/bootstrap" target="_blank">https://github.com/twbs/bootstrap</a>), dans un champ input nommé "HTTPS clone URL"  représenté par la capture ci-dessous :</p>
+    <div>
+      <div><img alt="images/09E01.png" src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/09E01.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Hrn7nvhuvTiAsA"></div>
+    </div>
+    <p>Il convient ensuite de se placer dans le dossier  dans lequel le développeur désire situer ce sous-module.  Pour respecter une certaine architecture, il est utile de créer  un dossier lib à la racine. Ce dossier, contiendra la bibliothèque Bootstrap. Après  avoir créé ce dossier, il faut s’y placer en ligne  de commande puis exécuter la commande suivante :</p>
+    <pre>mkdir lib
+cd lib
+git submodule add https://github.com/twbs/bootstrap.git bootstrap
+cd ../</pre>
+    <p>La commande git sumodule  add affiche la sortie suivante :</p>
+    <pre>Cloning into ’lib/bootstrap’...    remote: Counting objects: 84498, done.    remote: Compressing objects: 100% (49/49), done.    remote: Total 84498 (delta 20), reused 0 (delta 0), pack-reused 84449   Receiving objects: 100% (84498/84498), 92.86 MiB | 782.00 KiB/s, done.   Resolving deltas: 100% (52708/52708), done.    Checking connectivity... done.  </pre>
+    <p>Cette commande va cloner le projet distant  et le placer dans le dossier bootstrap (troisième argument de la commande git submodule). La commande va également  créer deux fichiers qu’il est possible de lister  avec la commande suivante : </p>
+    <pre>git status  </pre>
+    <p>Cette commande affiche la sortie suivante :</p>
+    <pre>Changes to be committed:      (use "git rm --cached &lt;file&gt;..." to unstage)            new file:   .gitmodules        new file:   lib/bootstrap  </pre>
+    <p>Le fichier .gitmodules est utile à Git pour connaître les  dépôts intégrés au dépôt principal.  Il va également permettre à Git de savoir avec  quelle URL il faut synchroniser ce dépôt. Ce fichier  devra être versionné, car il sera utile aux autres  intervenants du projet. La commande git  diff --cached permet de visualiser le contenu de ce fichier :</p>
+    <pre>[submodule "lib/bootstrap"]           path = lib/bootstrap           url = https://github.com/twbs/bootstrap.git  </pre>
+    <p>Le fichier lib/bootstrap est en réalité un dossier (considéré par  Git comme étant un commit à part entière)  qui contient la bibliothèque Bootstrap. Git détecte ce  dossier comme un dépôt intégré et  ne va donc pas du tout prendre en compte son contenu. En utilisant git diff --cached, on obtient le commit  sur lequel est placé le dépôt intégré : </p>
+    <pre>Subproject commit 108173369d29f77645a12038ee3b2ccbfe5bea1c  </pre>
+    <p>Pour vérifier que ce commit est bien  celui sur lequel le dépôt intégré est  positionné, il faut afficher le hash du commit pointé par  HEAD : </p>
+    <pre>cd lib/bootstrap    git show HEAD  </pre>
+    <p>Cette commande affiche la sortie suivante : </p>
+    <pre>commit 1081733
+Merge: 767cbef 697593b
+Author: Chris Rebert &lt;github@rebertia.com&gt;
+Date:   Wed Aug 19 19:30:48 2015 -0700
+
+		Merge pull request #17012 from kkirsche/patch-5
+
+		Have Travis CI use Ruby 2.0.0  </pre>
+    <p>Cette sortie confirme que le commit 1081733  est bien celui pointé par HEAD et le dépôt  intégré.</p>
+    <p>Le dépôt principal ne va  pas suivre le contenu du dépôt intégré,  en revanche il va suivre les commits sur lesquels le dépôt  intégré est configuré. De cette manière,  il est facile de savoir quelle version du dépôt  intégré était configurée sur le  dépôt principal.</p>
+    <pre>git commit -m "Bootstrap ajouté en sous-module"  </pre>
+    <p>Toutes les commandes Git fonctionneront dans  le dépôt principal et dans le dépôt  intégré, mais les commandes de chaque dépôt  auront uniquement une visibilité et une incidence sur leur  dépôt propre, c’est-à-dire qu’une commande sur  le dépôt principal ne prendra pas en compte les  modifications du dépôt intégré.  De la même manière, une commande effectuée  sur le dépôt intégré ne prendra  pas en compte les modifications du dépôt principal.  La seule perméabilité des deux dépôts étant  que lorsque la référence HEAD du dépôt  intégré est modifiée, le commit lib/bootstrap sera modifié dans le dépôt  principal.</p>
+  </div>
+  <div>
+    <h2>2. Cloner un dépôt et ses dépôts  intégrés</h2>
+    <p>Si une équipe ajoute plusieurs dépôts  intégrés pour les bibliothèques qu’elle utilise,  il est important que le clonage du dépôt principal  récupère ces bibliothèques.</p>
+    <pre>git clone submodules submodules_clone  </pre>
+    <p>Le répertoire de travail a été mis à jour  avec le contenu du dépôt, mais le dossier lib/bootstrap est vide. En effet, les sous-modules ne sont pas chargés lorsque  le dépôt principal est cloné. Pour charger  les sous-modules, il est nécessaire d’utiliser  les commandes suivantes :</p>
+    <pre>git submodule init  </pre>
+    <p>Cette commande va permettre d’initialiser  les dépôts intégrés. C’est grâce à ce fichier  que la prochaine commande récupérera le contenu  du sous-module et le positionnera sur le même état  que celui dans lequel il était lors du dernier commit contenant  le fichier lib/bootstrap.</p>
+    <pre>git submodule update  </pre>
+    <p>Cette commande met à jour le contenu  des dépôts intégrés en fonction  du hash contenu dans le fichier lib/bootstrap.</p>
+  </div>
+  <div>
+    <h2>3. Modification des dépôts intégrés</h2>
+    <p>Les dépôts intégrés  ne sont rien d’autre que des dépôts Git présents  dans un autre dépôt. Il est possible d’effectuer  une modification sur un fichier, de l’ajouter à l’index  puis de le commiter. Cette modification sera alors prise en compte  dans le répertoire de travail et dans le dépôt  intégré.</p>
+    <p>Lorsque le dépôt central  du sous-module (ici le dépôt GitHub de Bootstrap) sera  mis à jour, il sera possible de mettre à jour  le dépôt intégré en utilisant  la commande suivante :</p>
+    <pre>git submodule update   </pre>
+    <p>De la même manière que lorsqu’un  développeur clone un dépôt, cette commande  permet de mettre à jour le dépôt intégré en  fonction du hash contenu dans le fichier de configuration.</p>
+  </div>
+  <div>
+    <h2>4. Supprimer un dépôt intégré</h2>
+    <p>Il n’existe pas de commande simple  permettant de supprimer un dépôt intégré.  Pour effectuer correctement cette opération, il faut passer  par plusieurs étapes.</p>
+    <p>Il faut tout d’abord supprimer la section  concernant le sous-module à supprimer dans le fichier .gitmodules dans le cas du dépôt lib/bootstrap. La section se présente de cette façon : </p>
+    <pre>[submodule "lib/bootstrap"]
+		path = lib/bootstrap
+		url = https://github.com/twbs/bootstrap.git  </pre>
+    <p>Il faut ensuite ajouter le fichier .gitmodules à l’index : </p>
+    <pre>git add .gitmodules  </pre>
+    <p>Il faut ensuite supprimer la section correspondant  au dépôt intégré dans le fichier .git/config. Cette section se présente sous la forme suivante : </p>
+    <pre>[submodule "lib/bootstrap"]
+		url = https://github.com/twbs/bootstrap.git  </pre>
+    <p>Il faut ensuite retirer de l’index  le contenu du dépôt intégré avec  la commande suivante : </p>
+    <pre>git rm --cached lib/bootstrap  </pre>
+    <p>Il faut ensuite supprimer les métadonnées  internes du dépôt intégré : </p>
+    <pre>rm -rf .git/modules/lib/bootstrap  </pre>
+    <p>Il faut ensuite commiter la suppression du  dépôt intégré : </p>
+    <pre>git commit -m "Retrait de Bootstrap"  </pre>
+    <p>Le dépôt ne contient dorénavant  plus le dépôt intégré spécifié.  Les fichiers de ce dépôt sont toujours présents  et peuvent être utilisés. Pour supprimer définitivement  les fichiers du dépôt intégré,  il faut effectuer la commande suivante : </p>
+    <pre>rm -rf lib/bootstrap  </pre>
+    <p>À présent, il ne reste plus  de traces (à part dans l’historique) du dépôt  intégré.</p>
+  </div>
+  <div>
+    <h2>5. Inconvénients des dépôts  intégrés</h2>
+    <p>Les dépôts intégrés  permettent de résoudre un certain nombre de problèmes dans  l’architecture du dépôt, mais ils apportent une  dose d’inconvénients qu’il convient de prendre en compte.</p>
+    <p>L’un des problèmes qui se posent  avec les dépôts intégrés est  le changement de branche du dépôt principal. Voyons  un petit scénario simple :</p>
+    <div>
+      <ul>
+        <li>
+          <p>À partir  de la branche principale (master), un développeur crée une branche (feature) pour une nouvelle fonctionnalité.</p>
+        </li>
+        <li>
+          <p>Dans cette branche, le développeur  ajoute une bibliothèque dont il a besoin en sous-module.</p>
+        </li>
+        <li>
+          <p>Il enregistre les modifications  dans sa branche de nouvelle fonctionnalité et il revient  sur la branche master.</p>
+        </li>
+        <li>
+          <p>Problème : le dossier contenant  le dépôt intégré est toujours  dans le répertoire de travail et est considéré comme  inconnu de Git. Il apparaîtra donc dans les commandes de  Git alors qu’il ne concerne pas du tout cette branche.</p>
+        </li>
+        <li>
+          <p>La solution est donc de supprimer  ce dossier du répertoire de travail, ce que le développeur  va faire pour revenir à un état cohérent  du projet.</p>
+        </li>
+        <li>
+          <p>Après avoir effectué d’autres  modifications sur master, il va ensuite se replacer sur sa branche de nouvelle  fonctionnalité.</p>
+        </li>
+        <li>
+          <p>Problème : le développeur  doit remettre à jour ses dépôts intégrés  pour que le répertoire supprimé soit recréé.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Cet exemple montre que cette méthode  complexifie le processus de changement de branche. Les changements  de branche demandent donc plus de temps alors même que  Git est réputé pour avoir un système  très efficace de changement de branche. Néanmoins,  cette méthode permet d’obtenir une gestion cohérente des  bibliothèques et d’éviter une pollution  inutile du dépôt principal.</p>
+  </div>
+</div>
+<div id="AU_6880373e-b073-4bd9-9f65-768101554e67" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div> </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

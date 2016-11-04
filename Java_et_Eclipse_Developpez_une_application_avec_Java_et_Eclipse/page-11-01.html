@@ -1,0 +1,737 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_6f8e9a58-79df-4877-8b60-b2ea9b76dd10" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Création des fenêtres</h1>
+  <p>Les tâches préparatoires  ont été réalisées :  analyse du projet avec l’élaboration des principaux diagrammes  UML, paramétrage du serveur XAMPP. Le développement  peut maintenant commencer.</p>
+  <p>Tel qu’annoncé dans le chapitre Analyse,  les maquettes de l’interface graphique sont produites en premier  lieu. Plusieurs itérations sont ensuite effectuées  sur le projet avant de pouvoir livrer l’application finale.</p>
+  <p>Sept fenêtres principales sont recensées :</p>
+  <div>
+    <ul>
+      <li>
+        <p><strong>Connexion</strong> : saisie de l’identifiant et du mot de passe.</p>
+      </li>
+      <li>
+        <p><strong>Accueil</strong> : fenêtre d’accueil proposant le choix  des principaux modules.</p>
+      </li>
+      <li>
+        <p><strong>Clients</strong> : accès à la gestion complète  des clients.</p>
+      </li>
+      <li>
+        <p><strong>Articles</strong> : accès à la gestion complète  des articles.</p>
+      </li>
+      <li>
+        <p><strong>Commandes</strong> : accès à la gestion complète  des commandes.</p>
+      </li>
+      <li>
+        <p><strong>Statistiques</strong> : visualisation et production de statistiques  sur les données de l’application.</p>
+      </li>
+      <li>
+        <p><strong>Paramètres</strong> : accès aux paramètres de  l’application.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <p> Créez le projet <strong>luna</strong> selon la structure suivante :</p>
+  </div>
+  <div>
+    <div><img alt="images/09-01.png" src="images/images_09-01.png"></div>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>La décoration « git  maquettage » signifie que le système  de gestion de versions git est utilisé et que  la branche active s’appelle « maquettage ».  La gestion des sources en version est introduite succinctement dans  le chapitre La boîte à outils d’Eclipse, elle  est fortement recommandée si vous voulez garder un œil  sur vos développements et pouvoir gérer l’historique  de vos sources. Il s’agit également d’une aide formidable  pour un travail en équipe. </p>
+    </div>
+  </div>
+  <div>
+    <p> Accédez à votre espace de  travail avec l’explorateur de fichiers. Vous avez l’arborescence  suivante sur votre disque dur :</p>
+  </div>
+  <div>
+    <div><img alt="images/09-02.png" src="images/images_09-02.png"></div>
+  </div>
+  <div>
+    <p> Téléchargez le dossier <strong>images</strong> depuis la page Informations générales  et copiez-le dans le dossier <strong>src/main/resources</strong>.</p>
+  </div>
+  <div>
+    <p>Vous devriez maintenant avoir l’arborescence  suivante :</p>
+  </div>
+  <div>
+    <div><img alt="images/09-03.png" src="images/images_09-03.png"></div>
+  </div>
+  <div>
+    <p> Revenez dans Eclipse, sélectionnez  le dossier du projet <strong>luna</strong> et appuyez sur la touche [F5] pour  rafraîchir les ressources.</p>
+  </div>
+  <div>
+    <p>La structure du projet est désormais  la suivante :</p>
+  </div>
+  <div>
+    <div><img alt="images/09-04.png" src="images/images_09-04.png"></div>
+  </div>
+  <p>Voici une vue d’ensemble des six premières  fenêtres qui sont les plus importantes du projet.</p>
+  <div>
+    <div><img alt="images/09-05.png" src="images/images_09-05.png"></div>
+  </div>
+  <p>Commençons par créer les  maquettes de ces fenêtres. La gestion de leur ouverture  et leur fermeture sera ensuite abordée, sans se soucier à ce  stade des traitements sur les données.</p>
+  <p>Le chapitre Prise en main d’Eclipse a expliqué comment  bâtir des fenêtres avec WindowBuilder. Le but  du projet étant avant tout didactique, le code source entier  ne sera pas fourni dans ce livre (car le but est de vous familiariser  avec l’outil WindowBuilder) mais les points importants concernant  la construction de l’interface graphique et le traitement des actions  des utilisateurs seront mis en exergue. La trame des blocs où des  appels de méthodes se produiront sera également  vue.</p>
+  <div>
+    <p> Essayez de construire les interfaces graphiques  en prenant en exemple les copies d’écran jointes.</p>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>De temps en temps, WindowBuilder n’arrive  plus à relire les fichiers source. Ce n’est pas très  grave, il faut juste indiquer à WindowBuilder de relire  les fichiers sources à l’aide du bouton <strong>Reparse</strong>. Cliquez plusieurs fois sur le bouton si nécessaire. </p>
+    </div>
+  </div>
+  <div>
+    <div><img alt="images/09-06.png" src="images/images_09-06.png"></div>
+  </div>
+  <div>
+    <h2>1. Fenêtre de connexion</h2>
+    <div>
+      <div><img alt="images/09-01-connexion.png" src="images/images_09-01-connexion.png"></div>
+    </div>
+    <p>Toutes les images utilisées par cette  fenêtre se trouvent dans le sous-dossier <strong>connection</strong> du dossier <strong>images</strong>.</p>
+    <div>
+      <p> Créez une nouvelle classe <strong>Fconnexion</strong> héritant de JFrame à l’aide de WindowBuilder. Pour  cela, utilisez la combinaison de touches [Ctrl] <strong>N</strong>, et sélectionnez l’option <strong>Window Builder</strong> - <strong>Swing Designer</strong> - <strong>JFrame</strong> dans la boîte de dialogue qui s’ouvre. Placez  cette classe dans le package <strong>dialogue</strong> du dossier de source <strong>maquettes</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/09-08-2.png" src="images/images_09-08-2.png"></div>
+    </div>
+    <p>L’affichage est légèrement  différent dans WindowBuilder, car il ne prend pas encore  en compte les petites améliorations qui seront apportées à l’interface graphique.</p>
+    <div>
+      <div><img alt="images/re09-02.png" src="images/images_re09-02.png"></div>
+    </div>
+    <p>Le contentPane principal utilise le layout  par défaut, c’est-à-dire un <strong>BorderLayout</strong>.</p>
+    <p>Au nord de ce layout (donc en haut) se trouve  un JLabel indiquant la fonction de la fenêtre.</p>
+    <p>Au sud de ce layout (donc en bas) se trouve  un JPanel contenant les boutons servant à effectuer les  actions standards.</p>
+    <div>
+      <div><img alt="images/re09-03.png" src="images/images_re09-03.png"></div>
+    </div>
+    <p>Le panneau des actions a comme layout un <strong>GridBagLayout</strong>. Il s’agit d’un des layouts les plus puissants, permettant  des placements variés.</p>
+    <p>En particulier, le bouton des paramètres  a des contraintes supplémentaires : il prend l’espace  disponible dans le panneau et est ancré au début  de la ligne, c’est-à-dire à gauche pour les Occidentaux.</p>
+    <div>
+      <div><img alt="images/09-11.png" src="images/images_09-11.png"></div>
+    </div>
+    <div>
+      <div><img alt="images/09-12.png" src="images/images_09-12.png"></div>
+    </div>
+    <p>Le bouton <strong>Valider</strong> présente quelques caractéristiques : à la  différence de ses congénères, l’image  est située à droite du texte, et ce texte est écrit  en blanc.</p>
+    <p>WindowBuilder ne propose pas d’action graphique  pour changer la position de l’image relativement au texte, il faut  donc coder des instructions dans l’onglet <strong>Source</strong>.</p>
+    <div>
+      <p> Cliquez sur l’onglet <strong>Source</strong> de l’éditeur. Insérez la ligne suivante  dans le code de déclaration du bouton :</p>
+    </div>
+    <pre>    btnValider.<strong>setHorizontalTextPosition</strong>(<strong>SwingConstants.LEADING</strong>);  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Les noms de vos variables peuvent être  différents de ceux du livre.</p>
+      </div>
+    </div>
+    <p>Au centre du contentPane se trouve le formulaire  de connexion. Il est composé d’un premier JPanel. Ce panneau  n’a qu’un seul intérêt : il fournira  une bordure vide à son contenu, qui consiste en  un unique panneau.</p>
+    <div>
+      <div><img alt="images/re09-04.png" src="images/images_re09-04.png"></div>
+    </div>
+    <div>
+      <div><img alt="images/09-14.png" src="images/images_09-12.png"></div>
+    </div>
+    <p>Cette bordure comporte 14 pixels vides sur  tout son pourtour.</p>
+    <div>
+      <div><img alt="images/09-15.png" src="images/images_09-15.png"></div>
+    </div>
+    <p>À l’intérieur de ce panneau  global se trouve un panneau imbriqué en son centre.</p>
+    <p>Ce panneau a lui une bordure composée  de deux bordures : une bordure en forme de ligne à l’extérieur,  et une bordure vide de 5 pixels à l’intérieur  pour aérer un peu son contenu.</p>
+    <div>
+      <div><img alt="images/09-16.png" src="images/images_09-16.png"></div>
+    </div>
+    <div>
+      <div><img alt="images/09-17.png" src="images/images_09-17.png"></div>
+    </div>
+    <p>Dans ce dernier panneau se trouvent les composants  graphiques servant à la connexion : l’identifiant  est fourni par un JTextField, le mot de passe par un JPasswordField.</p>
+    <p>Afin d’aérer un peu plus ce formulaire,  chacun des composants a dans ses contraintes de placement un objet  de type <strong>Insets</strong>, qui donne des marges de 5 pixels sur le pourtour.</p>
+    <div>Enfin, un composant <strong>JTextPane</strong> fournit un petit message au cas où l’utilisateur  a besoin d’aide pour remplir le formulaire. Ce composant n’est pas éditable,  et contient un texte sur plusieurs lignes, que l’on peut renseigner  en cliquant sur le petit bouton <img alt="images/ic09-18.PNG" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5Cic09-18.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FqlgHB%2fB%2fTiAsA"> en face de la propriété <strong>text</strong>.</div>
+    <div>
+      <div><img alt="images/09-18.png" src="images/images_09-18.png"></div>
+    </div>
+    <div>
+      <div><img alt="images/re09-05.png" src="images/images_re09-05.png"></div>
+    </div>
+    <p>Il est temps de procéder à un  habillage plus agréable de cette fenêtre.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il existe plusieurs manières  pour changer l’habillage d’un composant graphique. Toutes  ces façons impliquent de modifier le code généré par WindowBuilder. Les  plus notables de ces manières sont la gestion manuelle (qui  sera abordée ici), et la création d’un Look and  Feel spécifique.</p>
+      </div>
+    </div>
+    <div>
+      <p> Créez une classe nommée <strong>UI</strong> dans le package <strong>dialogue</strong>.</p>
+    </div>
+    <pre>
+package dialogue; 
+ 
+import java.awt.Color; 
+import java.awt.Image; 
+import java.awt.Toolkit; 
+import java.awt.event.MouseAdapter; 
+import java.awt.event.MouseEvent; 
+ 
+import javax.swing.ImageIcon; 
+import javax.swing.JButton; 
+import javax.swing.JComponent; 
+import javax.swing.SwingConstants; 
+ 
+public class UI { 
+ 
+    private static final String LOGO = "/images/Moon-32.png"; 
+ 
+    public static Image getLogo() { 
+        return Toolkit.getDefaultToolkit().getImage( 
+                        UI.class.getResource(LOGO)); 
+    } 
+ 
+    private static ImageIcon getIcone(String chemin) { 
+        return new ImageIcon(UI.class.getResource(chemin)); 
+    } 
+ 
+    private static void deshabillerBouton(JButton bouton) { 
+        bouton.setOpaque(false); 
+        bouton.setContentAreaFilled(false); 
+        bouton.setBorderPainted(false); 
+    } 
+ 
+    public static void deshabillerBouton(JButton bouton, 
+                            String icone) { 
+        deshabillerBouton(bouton, "gestion", icone); 
+        bouton.setForeground(Color.WHITE); 
+    } 
+ 
+    public static void deshabillerBouton(JButton bouton, 
+                            String dossier, 
+                            String icone) { 
+        deshabillerBouton(bouton, dossier, icone, 48); 
+    } 
+ 
+    public static void deshabillerBouton(JButton bouton, 
+                            String dossier, 
+                            String icone, 
+                            int size) { 
+        deshabillerBouton(bouton); 
+        String nom = "/images/" + dossier + "/" + icone  
+                + "-" + size; 
+        bouton.addMouseListener(new MouseAdapter() { 
+            @Override 
+            public void mouseEntered(MouseEvent e) { 
+                bouton.setIcon(getIcone(nom  
+                                + "-actif.png")); 
+            } 
+ 
+            @Override 
+            public void mouseExited(MouseEvent e) { 
+                bouton.setIcon(getIcone(nom + ".png")); 
+            } 
+        }); 
+        bouton.setHorizontalAlignment(SwingConstants.LEFT); 
+        bouton.setIcon(getIcone(nom +".png")); 
+        bouton.setFont(bouton.getFont().deriveFont(14f)); 
+    } 
+ 
+    public static void habiller(JComponent composant) { 
+        composant.setFont(composant.getFont().deriveFont(17f)); 
+    } 
+}  
+    </pre>
+    <p>Cette classe comporte quelques méthodes  statiques dont les plus intéressantes pour la création  de l’interface sont :</p>
+    <div>
+      <ul>
+        <li>
+          <p>UI.<strong>getLogo()</strong> retourne l’image du logo de l’application.</p>
+        </li>
+        <li>
+          <p>UI.<strong>habiller()</strong> permet de changer la police de caractères de  tous les composants graphiques facilement (la police par défaut  de Java n’est pas très agréable).</p>
+        </li>
+        <li>
+          <p>UI.<strong>deshabiller()</strong> et ses variantes permettent de changer le look par défaut des  boutons pour y appliquer quelques changements : le texte  sera de couleur blanche, il n’y aura pas de dessin d’un bouton et  les images changeront automatiquement quand la souris survolera  le bouton.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Cette classe fonctionne bien parce  que les noms des images des boutons sont normalisés.</p>
+      </div>
+    </div>
+    <div>
+      <p> Utilisez ensuite cette classe dans le code  de la fenêtre de connexion :</p>
+    </div>
+    <pre>
+setIconImage(UI.getLogo()); 
+setTitle("SARL Luna"); 
+... 
+UI.habiller(lblMotDePasse); 
+... 
+UI.habiller(pwdMotDePasse); 
+... 
+UI.habiller(txtpnInfo); 
+ 
+UI.deshabillerBouton(btnParametres, "connection", "Customize-01"); 
+... 
+UI.deshabillerBouton(btnQuitter, "connection", "Stop"); 
+... 
+UI.deshabillerBouton(btnValider, "connection", "Power");
+	</pre>
+  </div>
+  <div>
+    <h2>2. Fenêtre d’accueil de l’application</h2>
+    <div>
+      <div><img alt="images/09-24.png" src="images/images_09-24.png"></div>
+    </div>
+    <div>
+      <p> Créez une nouvelle classe <strong>FAccueil</strong> héritant de <strong>JFrame</strong> avec WindowBuilder.</p>
+    </div>
+    <p>Cette fenêtre a un panneau JPanel  en tant que contenu (un contentPane). Ce panneau a un BorderLayout  comme layout.</p>
+    <p>Dans ce panneau, un panneau JPanel est placé sur  la gauche avec la contrainte WEST.</p>
+    <p>Ce panneau liste les actions possibles, pour  l’instant Quitter.</p>
+    <p>Il contient enfin un JLabel qui donne le nom  de la société, ainsi qu’un petit JLabel qui  indique l’action qui sera effectuée quand la souris survole  les différents boutons de la fenêtre.</p>
+    <p>Une barre de menu est également disponible  pour avoir un accès standardisé aux différents  modules.</p>
+    <p>Au centre du panneau principal (contrainte  CENTER), un panneau contient tous les boutons permettant d’accéder  aux différents modules de l’application.</p>
+    <div>
+      <div><img alt="images/09-25.png" src="images/images_09-25.png"></div>
+    </div>
+    <p>Cette disposition est réalisable  avec des <strong>GridBagLayout</strong> pour les différents JPanel.</p>
+    <div>
+      <p> Exercez-vous à créer cette  disposition à l’aide d’un <strong>GroupLayout</strong> pour le panneau de gauche. WindowBuilder permet de changer  très facilement la disposition de manière graphique.</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Les points importants dans le GroupLayout  sont la disposition relative des éléments et l’espace  qui se trouve entre eux.</p>
+      </div>
+    </div>
+    <div>
+      <p> Utilisez un layout <strong>MigLayout</strong> pour la disposition du panneau central.</p>
+    </div>
+    <p>MigLayout n’est pas une classe disponible  de manière standard dans Java. Elle repose sur une description  textuelle des lignes et des colonnes. Sa syntaxe est relativement  complexe mais WindowBuilder masque au maximum cette complexité,  permettant de réaliser de superbes écrans.</p>
+    <div>
+      <p> Exécutez le code de cette fenêtre,  et essayez de redimensionner la fenêtre. Le contenu doit  pouvoir s’adapter dans pratiquement toutes les tailles, hormis les  plus extrêmes.</p>
+    </div>
+    <div>
+      <p> Ajoutez une barre de menus avec des items permettant  d’accéder rapidement aux modules.</p>
+    </div>
+    <div>
+      <p>Voici le code de la classe sans la gestion  des boutons.</p>
+    </div>
+    <pre>
+package dialogue; 
+ 
+import java.awt.BorderLayout; 
+import java.awt.Cursor; 
+import java.awt.SystemColor; 
+import java.awt.event.ActionEvent; 
+import java.awt.event.ActionListener; 
+import java.awt.event.KeyEvent; 
+import java.awt.event.MouseAdapter; 
+import java.awt.event.MouseEvent; 
+ 
+import javax.swing.AbstractAction; 
+import javax.swing.Action; 
+import javax.swing.GroupLayout; 
+import javax.swing.GroupLayout.Alignment; 
+import javax.swing.ImageIcon; 
+import javax.swing.JButton; 
+import javax.swing.JDialog; 
+import javax.swing.JFrame; 
+import javax.swing.JLabel; 
+import javax.swing.JMenu; 
+import javax.swing.JMenuBar; 
+import javax.swing.JMenuItem; 
+import javax.swing.JPanel; 
+import javax.swing.JSeparator; 
+import javax.swing.KeyStroke; 
+import javax.swing.SwingConstants; 
+import javax.swing.SwingUtilities; 
+import javax.swing.border.EmptyBorder; 
+ 
+import net.miginfocom.swing.MigLayout; 
+import dialogue.article.FArticles; 
+import dialogue.client.PClients; 
+import dialogue.commande.FCommandes; 
+import dialogue.stats.FTableauBord; 
+ 
+public class FAccueil extends JFrame { 
+ 
+    private static final long serialVersionUID = 1L; 
+     
+    private JPanel contentPane; 
+     
+    private final Action actionQuitter = new ActionQuitter(); 
+    private final Action actionClients = new ActionClients(); 
+    private final Action actionArticles = new ActionArticles(); 
+ 
+    /** 
+     * Create the frame. 
+     */ 
+    public FAccueil() { 
+         
+        setIconImage(UI.getLogo()); 
+        setTitle("Accueil"); 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        setBounds(100, 100, 926, 686); 
+        setLocationRelativeTo(null); 
+         
+        JMenuBar menuBar = new JMenuBar(); 
+        setJMenuBar(menuBar); 
+        UI.habiller(menuBar); 
+         
+        JMenu mnFichier = new JMenu("Fichier"); 
+        menuBar.add(mnFichier); 
+        UI.habiller(mnFichier); 
+         
+        JMenuItem mntmParamtres = new JMenuItem("Paramètres"); 
+        mnFichier.add(mntmParamtres); 
+        UI.habiller(mntmParamtres); 
+ 
+        JSeparator separator = new JSeparator(); 
+        mnFichier.add(separator); 
+         
+        JMenuItem mntmQuitter = new JMenuItem("Quitter"); 
+        mnFichier.add(mntmQuitter); 
+        UI.habiller(mntmQuitter); 
+ 
+        JMenu mnVues = new Jmenu("Vues"); 
+        mnVues.setMnemonic(KeyEvent.VK_V); 
+        menuBar.add(mnVues); 
+        UI.habiller(mnVues); 
+ 
+        JMenuItem mntmClients = new JMenuItem("Clients"); 
+        mnVues.add(mntmClients); 
+        UI.habiller(mntmClients); 
+ 
+        JMenuItem mntmArticles = new JMenuItem("Articles"); 
+        mnVues.add(mntmArticles); 
+        UI.habiller(mntmArticles); 
+ 
+        JMenuItem mntmCommandes = new JMenuItem("Commandes"); 
+        mnVues.add(mntmCommandes); 
+ 
+        contentPane = new JPanel(); 
+        contentPane.setBorder(null); 
+        contentPane.setLayout(new BorderLayout(0, 0)); 
+        setContentPane(contentPane); 
+         
+        JPanel panel_menu = new JPanel(); 
+        panel_menu.setBorder(new EmptyBorder(5, 5, 5, 5)); 
+        panel_menu.setBackground(SystemColor.controlShadow); 
+        panel_menu.setBounds(0, 0, 200, 300); 
+        contentPane.add(panel_menu, BorderLayout.WEST); 
+         
+        JLabel lblTitre = new JLabel("SARL Luna"); 
+        lblTitre.setHorizontalAlignment(SwingConstants.CENTER); 
+        lblTitre.setFont(lblTitre.getFont().deriveFont(33f)); 
+         
+        JLabel lblInfos = new JLabel("Affichage option"); 
+        lblInfos.setForeground(SystemColor.control); 
+        lblInfos.setBackground(SystemColor.controlShadow); 
+        lblInfos.setOpaque(true); 
+        lblInfos.setHorizontalAlignment(SwingConstants.CENTER); 
+        lblInfos.setFont(lblInfos.getFont().deriveFont(21f)); 
+ 
+        JButton btnQuitter = new JButton("Quitter"); 
+        btnQuitter.setIcon(new ImageIcon( 
+                    FAccueil.class.getResource( 
+                    "/images/connection/Stop-48.png"))); 
+        UI.deshabillerBouton(btnQuitter, "connection", "Stop"); 
+        btnQuitter.setForeground(SystemColor.control); 
+         
+        GroupLayout glmenu = new GroupLayout(panel_menu); 
+        glmenu.setHorizontalGroup( 
+            glmenu.createParallelGroup(Alignment.LEADING) 
+                .addGroup(glmenu.createSequentialGroup() 
+                    .addContainerGap() 
+                    .addComponent(lblInfos, 
+                        GroupLayout.DEFAULT_SIZE, 
+                        160, Short.MAX_VALUE) 
+                    .addContainerGap()) 
+                .addComponent(btnQuitter, 
+                        GroupLayout.DEFAULT_SIZE, 
+                        190, Short.MAX_VALUE) 
+                .addComponent(lblTitre, 
+                        GroupLayout.DEFAULT_SIZE, 
+                        190, Short.MAX_VALUE) 
+        ); 
+        glmenu.setVerticalGroup( 
+            glmenu.createParallelGroup(Alignment.LEADING) 
+                .addGroup(glmenu.createSequentialGroup() 
+                    .addGap(7) 
+                    .addComponent(lblTitre) 
+                    .addGap(30) 
+                    .addComponent(lblInfos) 
+                    .addGap(348) 
+                    .addComponent(btnQuitter) 
+                    .addContainerGap(81, 
+                                Short.MAX_VALUE)) 
+        ); 
+        panel_menu.setLayout(glmenu); 
+         
+        JPanel panel_principal = new JPanel(); 
+        panel_principal.setBorder(new EmptyBorder(5, 0, 5, 5)); 
+        contentPane.add(panel_principal, BorderLayout.CENTER); 
+        panel_principal.setLayout(new MigLayout("",  
+                "[33%][33%][33%]", "[33%][33%][33%]")); 
+ 
+        JButton btnArticles = new JButton(); 
+        btnArticles.setIcon(new ImageIcon( 
+                FAccueil.class.getResource( 
+                "/images/accueil/Product-128.png"))); 
+        UI.deshabillerBouton(btnArticles, "accueil",  
+                    "Product", 128); 
+         
+        btnArticles.addMouseListener(new MouseAdapter() { 
+            @Override 
+            public void mouseEntered(MouseEvent e) { 
+                lblInfos.setText("Articles"); 
+            } 
+             
+            @Override 
+            public void mouseExited(MouseEvent e) { 
+                lblInfos.setText(" "); 
+            } 
+        });  
+        btnArticles.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+ 
+        panel_principal.add(btnArticles, 
+                    "cell 1 0,alignx center"); 
+         
+        JButton btnClients = new JButton(); 
+        btnClients.setIcon(new ImageIcon( 
+                FAccueil.class.getResource( 
+                "/images/accueil/People-128-actif.png"))); 
+        UI.deshabillerBouton(btnClients, "accueil", 
+                            "People", 128); 
+         
+        btnClients.addMouseListener(new MouseAdapter() { 
+            @Override 
+            public void mouseEntered(MouseEvent e) { 
+                lblInfos.setText("Clients"); 
+            } 
+             
+            @Override 
+            public void mouseExited(MouseEvent e) { 
+                lblInfos.setText(" "); 
+            } 
+        });         
+        btnClients.setCursor(new Cursor(Cursor.HAND_CURSOR));  
+ 
+        panel_principal.add(btnClients,  
+                    "cell 0 1,alignx center"); 
+ 
+        JButton btnStats = new JButton(""); 
+        UI.deshabillerBouton(btnStats, "accueil", 
+                            "Diagram", 128); 
+         
+        btnStats.addMouseListener(new MouseAdapter() { 
+            @Override 
+            public void mouseEntered(MouseEvent e) { 
+                lblInfos.setText("Statistiques"); 
+            } 
+             
+            @Override 
+            public void mouseExited(MouseEvent e) { 
+                lblInfos.setText(" "); 
+            } 
+        }); 
+        btnStats.setIcon(new ImageIcon( 
+                FAccueil.class.getResource( 
+                "/images/accueil/Diagram-128.png"))); 
+        btnStats.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+  
+        panel_principal.add(btnStats, 
+                    "cell 1 1,alignx center"); 
+         
+        JButton btnCommandes = new JButton(""); 
+        UI.deshabillerBouton(btnCommandes, "accueil", 
+                              "Shopping-Bag", 128); 
+        btnCommandes.addMouseListener(new MouseAdapter() { 
+            @Override 
+            public void mouseEntered(MouseEvent e) { 
+                lblInfos.setText("Commandes"); 
+            } 
+             
+            @Override 
+            public void mouseExited(MouseEvent e) { 
+                lblInfos.setText(" "); 
+            } 
+        }); 
+        btnCommandes.setIcon(new ImageIcon( 
+                FAccueil.class.getResource( 
+                "/images/accueil/Shopping-Bag-128.png"))); 
+        btnCommandes.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+  
+        panel_principal.add(btnCommandes, 
+                    "cell 2 1,alignx center"); 
+         
+        JButton btnParametres = new JButton (); 
+        btnParametres.setIcon(new ImageIcon( 
+                FAccueil.class.getResource( 
+                "/images/accueil/Settings-02-128.png"))); 
+        UI.deshabillerBouton(btnParametres, "accueil", 
+                               "Settings-02", 128); 
+        btnCommandes.addMouseListener(new MouseAdapter() { 
+            @Override 
+            public void mouseEntered(MouseEvent e) { 
+                lblInfos.setText("Paramètres"); 
+            } 
+             
+            @Override 
+            public void mouseExited(MouseEvent e) { 
+                lblInfos.setText(" "); 
+            } 
+        }); 
+        btnParametres.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+ 
+        panel_principal.add(btnParametres,  
+                    "cell 1 2,alignx center");  
+         
+         
+        SwingUtilities.invokeLater( 
+                () -> btnQuitter.requestFocusInWindow()  
+        ); 
+    } 
+ 
+    protected void afficherParametres() { 
+        // à faire soi-même 
+    } 
+ 
+    protected void afficherCommandes() { 
+        // à remplir plus tard 
+    } 
+ 
+    protected void afficherStats() { 
+        // à remplir plus tard 
+    } 
+ 
+    protected void afficherArticles() { 
+        // à remplir plus tard 
+    } 
+ 
+    protected void afficherClients() { 
+        // à remplir plus tard 
+    } 
+}    
+    </pre>
+    <div>
+      <p>Si vous lisez attentivement le code,  vous noterez la ligne suivante :</p>
+    </div>
+    <pre>
+SwingUtilities.invokeLater(  
+        () -> btnQuitter.requestFocusInWindow()  
+);    
+    </pre>
+    <p>La classe <strong>SwingUtilities</strong> permet d’exécuter du code dans le thread graphique.</p>
+    <p>Il s’agit là de demander à ce  que Java mette par défaut le focus sur le bouton <strong>Quitter</strong>, en utilisant les expressions lambda de Java 8.</p>
+  </div>
+  <div>
+    <h2>3. Fenêtre de gestion des clients</h2>
+    <div>
+      <div><img alt="images/09-27.png" src="images/images_09-27.png"></div>
+    </div>
+    <p>Cette fenêtre possède des  actions qui ouvrent d’autres composants graphiques : les  boutons <strong>Ajouter</strong>, <strong>Modifier</strong> et <strong>Rechercher</strong> afficheront chacun une interface graphique  différente.</p>
+    <p>Il serait possible d’afficher alors une nouvelle  fenêtre pour chacune de ces actions, mais le rendu  ne serait pas très agréable : l’ouverture  d’une fenêtre peut être perturbante pour l’utilisateur,  et il est préférable de réserver ce comportement  pour les principaux modules uniquement.</p>
+    <p>Afin de conserver une seule fenêtre  pour les clients, des JPanel différents sont créés  avec WindowBuilder. Ces panneaux sont utilisés comme panneau  de contenu dans la fenêtre des clients.</p>
+    <div>
+      <h3>a. Panneau principal</h3>
+      <div>
+        <p> Créez un nouveau <strong>JPanel</strong> nommé <strong>PClients</strong> à l’aide de WindowBuilder.</p>
+      </div>
+      <div>
+        <p> Créez le contenu de ce panneau à l’aide  de WindowBuilder en vous inspirant de la copie d’écran  ci-dessous :</p>
+      </div>
+      <div>
+        <div><img alt="images/09-28.png" src="images/images_09-28.png"></div>
+      </div>
+      <p>Le grand espace gris de ce panneau est en  fait une JTable. Idéalement, cette JTable doit elle-même  se trouver dans un JScrollPane pour gérer le cas où l’espace n’est  pas suffisant pour pouvoir afficher tous les clients en même temps.</p>
+      <div>
+        <p> Ajoutez un <strong>JScrollPane</strong> à l’emplacement voulu.</p>
+      </div>
+      <div>
+        <p> Ajoutez une <strong>JTable</strong> à l’intérieur du JScrollPane, à l’emplacement  du <strong>Viewport</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/09-29-2.png" src="images/images_09-29-2.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Les JTextField utilisés pour  l’affichage d’un client sélectionné dans la table  du bas ne sont pas activés : leur propriété <strong>enabled</strong> doit être positionnée à <strong>false</strong>. La même chose est valable pour la case à cocher  en haut à droite.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>b. Panneaux d’ajout et de modification</h3>
+      <div>
+        <div><img alt="images/09-29-1.png" src="images/images_09-29-1.png"></div>
+      </div>
+      <p>Chacune des grandes catégories d’informations  concernant le client est placée dans un JPanel avec une  bordure titrée (Titled Border).</p>
+      <p>Le champ affichant la date de création  du client est non pas un JTextField mais un <strong>JFormattedTextField</strong>.</p>
+      <p>Pour ce dernier composant graphique, il est  nécessaire de créer une classe annexe qui  se chargera du formatage et de la conversion d’un objet de type Instant  en chaîne de caractères et inversement. Ce point  sera abordé plus loin dans le livre.</p>
+    </div>
+    <div>
+      <h3>c. Panneau de recherche</h3>
+      <p>La recherche des clients existants se déroulera  dans cette fenêtre.</p>
+      <div>
+        <div><img alt="images/09-30.png" src="images/images_09-30.png"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>4. Fenêtre de gestion des articles</h2>
+    <p>Les différents articles du système  sont gérés dans cette fenêtre.</p>
+    <div>
+      <div><img alt="images/09-31.png" src="images/images_09-31.png"></div>
+    </div>
+    <p>Cette fenêtre intègre un  composant <strong>JToolBar</strong>, qui propose les actions disponibles concernant un article.</p>
+    <p>Afin de gérer les clics sur les boutons  radio, et afin de créer la logique de désélection  d’un de ces boutons quand l’autre est sélectionné,  il faut créer un <strong>ButtonGroup</strong> les contenant à l’aide du code suivant :</p>
+    <pre>    ButtonGroup buttonGroup = <strong>new ButtonGroup</strong>();       buttonGroup.<strong>add</strong>(rdbtnCode);       buttonGroup.<strong>add</strong>(rdbtnCategorie);          rdbtnCode.<strong>addActionListener((ActionEvent e) -&gt; {</strong>            System.out.println("Code sélectionné ? "                        + rdbtnCode.isSelected()); <strong>       }</strong>);       rdbtnCategorie.addActionListener((ActionEvent e) -&gt; {           System.out.println("Catégorie sélectionnée ? "                       + rdbtnCategorie.<strong>isSelected</strong>());       });  </pre>
+    <p>Il est possible de modifier la valeur affichée  pour la quantité quand le slider est utilisé à l’aide  du code suivant :</p>
+    <pre>sliderQuantite.addChangeListener((ChangeEvent e) -&gt; {       String valeur =                Integer.toString(sliderQuantite.getValue());       txtQuantite.setText(valeur);   });  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Les codes précédents  impliquent de transformer les variables graphiques locales en  attributs de la classe <strong>FArticles</strong>.</p>
+      </div>
+    </div>
+    <p>Le code de la classe <strong>FArticles</strong> est disponible depuis la page Informations générales.</p>
+  </div>
+  <div>
+    <h2>5. Fenêtres de gestion des commandes</h2>
+    <div>
+      <h3>a. Saisie de nouvelles commandes</h3>
+      <p>C’est dans cette fenêtre que s’effectue  la saisie des commandes. La validation déclenche automatiquement  l’impression de la commande en cours.</p>
+      <div>
+        <div><img alt="images/09-32.png" src="images/images_09-32.png"></div>
+      </div>
+      <p>Le code de la classe <strong>FCommandes</strong> est disponible en téléchargement.</p>
+    </div>
+    <div>
+      <h3>b. Affichage des commandes existantes</h3>
+      <p>Cette fenêtre permet de gérer  le fichier des commandes passées.</p>
+      <div>
+        <div><img alt="images/09-33.png" src="images/images_09-33.png"></div>
+      </div>
+      <p>Le code de la classe <strong>FCommandesExistantes</strong> est disponible en téléchargement.</p>
+      <p>Pour ces trois dernières fenêtres,  le code est similaire à la fenêtre de gestion  des clients.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Le code complet de toutes les maquettes  du projet est disponible en téléchargement depuis  la page Informations générales.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_c4b9973b-3477-4349-a8d7-74d2898e7def" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Premier projet</h1>
+  <p>Pour se familiariser avec le <strong>workbench</strong>, une classe très simple est créée.</p>
+  <p>Il faut auparavant créer un projet  puis un package, toute classe d’une application un tant soit peu  professionnelle devant être rangée dans un package.</p>
+  <p>Pour rappel, un package est physiquement un  dossier, et symboliquement un espace de nommage pour rassembler  les classes d’une même fonctionnalité.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Si vous ne rangez pas vos classes  dans un package, Eclipse les placera dans le package par défaut.  L’utilisation du package par défaut est déconseillée.</p>
+    </div>
+  </div>
+  <p>C’est également l’occasion de proposer  une structure pour les fichiers du projet, afin d’améliorer  la lisibilité et la testabilité des applications.</p>
+  <p>En préambule à ce travail,  et afin de faciliter l’ouverture des fichiers provenant de systèmes  d’exploitation différents, il convient de préciser  l’encodage des fichiers. </p>
+  <div>
+    <p> Dans le menu, choisissez <strong>Window - Preferences</strong>. Naviguez ensuite dans <strong>General - Workspace</strong> et sélectionnez la valeur <strong>Other - UTF-8</strong> dans la section<strong> Text file encoding</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-46.png" src="images/images_02-46.png"></div>
+  </div>
+  <p>Ce réglage permettra de lire correctement  les fichiers avec des caractères accentués dans  Eclipse, que ce soit sur Windows, Linux ou Mac.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Les accents ainsi que les caractères  spéciaux sont permis dans les noms des variables, mais  ne sont pas recommandés. Vous comprendrez le jour où votre projet  sera ouvert sur un ordinateur Linux, par exemple, ou quand il s’agira  de travailler sur un projet avec les noms de variables en chinois,  japonais, hébreu ou farsi.</p>
+    </div>
+  </div>
+  <div>
+    <p> Dans le menu choisissez <strong>File - New - Java Project</strong>, ou faites un clic droit dans la vue puis <strong>New - Java Project</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-01.png" src="images/images_02-01.png"></div>
+  </div>
+  <p>La boîte de dialogue de création  de projet s’ouvre. Elle permet de nommer le nouveau projet et de  choisir l’emplacement sur le disque dur où seront stockés les  fichiers du projet (par défaut, les projets sont stockés  dans le dossier d’espace de travail qui a été choisi  lors de l’installation d’Eclipse). </p>
+  <div>
+    <p> Saisissez le nom du projet, puis cliquez sur  le lien <strong>Configure default</strong> en face du bouton radio <strong>Create separate folders for sources and class files</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-02.png" src="images/images_02-02.png"></div>
+  </div>
+  <p>Cette manipulation permet de définir  les dossiers dans lesquels sont rangés les fichiers sources  et les fichiers binaires compilés. D’une manière  générale, ces deux types de fichiers doivent être  séparés. Cela permet par exemple de copier ou  d’effacer facilement les binaires.</p>
+  <p>Les fichiers sources dans un projet Java ont  souvent plusieurs sous-types : il existe des fichiers sources  pour les classes de l’application, des fichiers sources pour les  classes de tests, des fichiers de ressources telles que les images  ou les configurations… </p>
+  <p>La manipulation suivante permet de définir  des dossiers distincts pour chacun de ces types. Ces dossiers distincts  sont inspirés des projets Maven (<a href="http://maven.apache.org/" target="_blank">http://maven.apache.org/</a>) et Gradle (<a href="https://gradle.org/" target="_blank">https://gradle.org/</a>), qui sont des outils puissants pour la gestion  des projets informatiques, permettant de lancer en ligne de commande  ou via une interface graphique la compilation des sources en binaires,  le passage des tests unitaires, la transformation des classes en fichier jar,  le paquetage dans un installateur et le déploiement sur  un serveur, pour ne citer que quelques-unes des fonctionnalités  disponibles.</p>
+  <p>Maven met en application l’adage « Une  place pour chaque chose et chaque chose à sa place » et  définit le répertoire <strong>src/main/java</strong> comme répertoire pour les fichiers sources, <strong>src/main/resources</strong> pour les fichiers de configuration et les images, <strong>src/test/java</strong> pour les sources de tests et <strong>src/test/resources</strong> pour les fichiers de configuration des tests. Les binaires  sont stockés quant à eux dans <strong>target/classes</strong>.</p>
+  <div>
+    <p> Changez les noms des dossiers comme dans l’écran  suivant, puis cliquez sur <strong>OK</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-03.png" src="images/images_02-03.png"></div>
+  </div>
+  <p>Eclipse retourne sur la boîte de  dialogue de création du projet.</p>
+  <div>
+    <p> Cliquez sur <strong>Finish</strong> pour finaliser la création du projet.</p>
+  </div>
+  <p>Le projet et son contenu sont maintenant visibles  dans la vue <strong>Package Explorer</strong>. </p>
+  <div>
+    <div><img alt="images/02-04.png" src="images/images_02-04.png"></div>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pour renommer un projet, effectuez  un clic droit sur son nom et choisissez <strong>Refactor - Rename</strong>. La procédure est la même pour tout  contenu présent dans la vue <strong>Package Explorer</strong> du workbench.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_faf6dc79-a99c-4a06-93ae-3b84d92e6177" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Événements</h1>
+  <p>Toute application comportant des interfaces  graphiques doit être en mesure de gérer des événements :  il s’agit d’un concept essentiel des interfaces homme-machine (ou  IHM).</p>
+  <p>Un événement est un signal  qui est envoyé par les couches basses du système d’exploitation  ou de Java pour notifier le programme que quelque chose de notable  vient de survenir : l’utilisateur a cliqué sur  un bouton, il tape sur le clavier, il survole avec la souris une  zone particulière de l’interface graphique…</p>
+  <p>Du point de vue du développeur, les  composants graphiques vont générer des événements  de plusieurs natures, et il va falloir programmer des séquences  en réaction à l’apparition de ces événements.</p>
+  <p>Il existe véritablement beaucoup  de types d’événements. Voici par exemple une partie  de ceux qui sont disponibles pour un simple composant JButton (un  bouton cliquable).</p>
+  <div>
+    <div><img alt="images/04-01.png" src="images/images_04-01.png"></div>
+  </div>
+  <p>Ne serait-ce que pour la souris, il existe  cinq événements possibles de base, plus deux pour  les déplacements de la souris, et un pour la molette.</p>
+  <p>Afin de programmer des actions en réponse à ces événements,  il faut ajouter ce que l’on appelle un écouteur d’événements,  un <strong>listener</strong> dans la terminologie Java.</p>
+  <p>Pour rappel, dans le chapitre de prise en  main d’Eclipse, vous aviez codé ceci pour pouvoir répondre  au clic du bouton :</p>
+  <pre>JButton btnValider = new Jbutton("Valider");<strong>   btnValider.addActionListener(new ActionListener() {       public void actionPerformed(ActionEvent e) {</strong>             System.out.println("Action!"); <strong>       }   });</strong></pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>L’action est différente ici,  car ce n’est pas le point important du propos.</p>
+    </div>
+  </div>
+  <p>Un écouteur d’action avait été créé sur  le bouton, c’est-à-dire un code qui est exécuté quand  l’utilisateur clique dessus avec la souris, ou appuie sur la touche [Espace] ou [Entrée] quand  le bouton a le focus (quand il est surligné dans l’interface graphique).</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Dans une application graphique, un  seul composant est sélectionné à un instant T.  C’est le principe de focalisation et on dit que le composant a le focus. Par  exemple un encadré apparaît autour d’un bouton  qui a le focus, et le curseur clignote dans une zone de saisie qui  a le focus à son tour.</p>
+    </div>
+  </div>
+  <p>Cet actionneur, qui hérite de l’interface <strong>ActionListener</strong> a été ensuite ajouté comme écouteur  sur le bouton à l’aide de la méthode <strong>addActionListener()</strong>. Il est possible de le désaffecter des écouteurs  grâce à la méthode <strong>removeActionListener()</strong>. Le mécanisme d’ajout et de suppression des écouteurs  repose en Java sur les méthodes <strong>add</strong>XXX<strong>Listener</strong> et <strong>remove</strong>XXX<strong>Listener</strong>, où XXX est le nom de l’événement à écouter.</p>
+  <p>Le concept d’événements  sera repris en détail dans le chapitre Modèle  MVC.</p>
+  <p>L’écouteur d’action créé est  une classe interne anonyme, c’est-à-dire une classe sans  nom définie à l’intérieur d’une autre  classe.</p>
+  <p>Le code de la méthode <strong>actionPerformed</strong> est capable d’utiliser des variables locales définies  dans le code appelant, à la condition que ces variables  soient notées <strong>final</strong> ou ne soient pas modifiées.</p>
+  <pre>boolean test = false;   // ou    // final boolean test = false;    rdbtnCode.addActionListener((e) -&gt; {        System.out.println(test);        if (test) {              // faire quelque chose        }    });   // décommenter la ligne entraîne une erreur de compilation    // test = true;  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Avant Java 8, il était nécessaire  de marquer ces variables comme <strong>final</strong>. Java 8 a enlevé cette nécessité de  marquage, mais il reste néanmoins nécessaire de ne  pas modifier ces variables.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

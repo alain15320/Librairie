@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_c33ab908-1b9e-4461-86bf-4e44e80d23ae" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Type de données</h1>
+  <p>Tout attribut doit impérativement être  typé : long pour la date de naissance et chaîne  de caractères pour les autres dans notre exemple. Le premier  type est dit simple. On parle de types élémentaires  ou primitifs. Vous aurez l’occasion lors du développement  d’utiliser des types plus riches, notamment des types classe,  comme la classe <strong>String</strong>.</p>
+  <pre>class Chat {<strong>       String</strong> nom;        String couleur;<strong>       long</strong> dateDeNaissance;    }  </pre>
+  <p>Dans les applications se pose souvent le problème  de conversion (casting) des données. Par exemple, les demandes  de saisie via les boîtes de dialogue retournent par défaut  des valeurs de type String. Pour un traitement de dates ou de numériques,  il faut alors convertir ces valeurs sous peine de provoquer l’arrêt brutal  de l’application.</p>
+  <p>Qui peut le plus peut le moins. Considérez  le code suivant :</p>
+  <pre>      <strong>int</strong> nombreEntier = 5;<strong>         double</strong> nombreDecimal = 0;           nombreDecimal = nombreEntier;                nombreDecimal = 5.5;           nombreEntier = <strong>(int)</strong> nombreDecimal;  </pre>
+  <p>Un double (qui peut être un nombre  signé très grand avec des décimales)  peut recevoir un entier. On parle de <strong>cast</strong> implicite. L’inverse n’est pas vrai.  Il faut auparavant <strong>convertir</strong> (caster explicitement) le double en entier, grâce  au type entre parenthèses. On perdra alors toute l’information  présente après la virgule. On retiendra que pour  les nombres, les conversions implicites ne concernent que celles  se faisant sans perte d’information.</p>
+  <p>Pour des conversions de type totalement différent,  par exemple de nombre vers chaîne de caractères,  il faut faire appel à des classes particulières  nommées wrappers. Celles-ci enveloppent les données  typées et les convertissent grâce à des  méthodes appropriées dans les types attendus.</p>
+  <p>Exemple :</p>
+  <pre>    // Nombre --&gt; Chaîne         String mot = "";        int nombreEntier = 777_888;        mot = Integer.<strong>toString</strong>(nombreEntier);    // --&gt; "777888"           // Chaîne --&gt; Nombre        nombreEntier = Integer.<strong>parseInt</strong>(mot);        nombreEntier = nombreEntier + 1;         // --&gt; 777889  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Java 8 permet d’écrire un  nombre avec un séparateur underscore (_) pour une  meilleure lisibilité.</p>
+    </div>
+  </div>
+  <p>De la même manière, il est  aisé de convertir un booléen en chaîne.</p>
+  <p>Exemple :</p>
+  <pre>    <strong>boolean</strong> choix = <strong>true</strong>;        String mot = Boolean.<strong>toString</strong>(choix);</pre>
+  <p>et inversement :</p>
+  <pre>      // Chaîne --&gt; Booléen          String mot = "true";          boolean choix = Boolean.<strong>valueOf</strong>(mot);          System.out.println("choix B.valueOf(mot): " + choix);<strong>         if</strong> (choix == <strong>true</strong>) {             System.out.println("Je suis un booléen.");          }  </pre>
+  <p>Veuillez noter que le test <strong>if</strong> qui a été utilisé ci-dessus  n’est pas optimal, pour permettre de mieux comprendre son mécanisme.  Une forme plus correcte serait :</p>
+  <pre><strong>if (choix)</strong> {            System.out.println("Je suis un booléen.")   }  </pre>
+  <p>puisque les tests conditionnels se font par  l’évaluation de données booléennes.</p>
+  <p>Pour les dates, les conversions sont plus  complexes car il faut formater et convertir les dates en fonction  des langues. Java propose de nombreuses classes et méthodes  dont certaines seront mises en œuvre pour notre projet. Voici  un exemple non optimal d’une méthode statique  qui convertit la date du jour au format jour-mois-année.</p>
+  <pre>public static String dateJourEnChaineFR() {        // Choix de la langue par défaut       Locale locale = Locale.getDefault();       Date dateJour = new Date();       // Définition du format à utiliser       DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", locale);      String date = dateFormat.format(dateJour);         return date;    }  </pre>
+  <p>Java 8 propose désormais une nouvelle  gestion des dates avec les classes du package <strong>java.time</strong>. Une explication plus complète de leur utilisation  est disponible au chapitre suivant. Si Java 8 n’est pas  utilisé pour l’application, il faudra gérer ces  dates « à l’ancienne » ou  utiliser des librairies externes pour simplifier cette gestion.</p>
+</div>
+</body>
+</html>

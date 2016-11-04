@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_74511b3b-3285-40f6-afc5-0328785379e4" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Gérer les révisions d’un projet</h1>
+  <p>Au fur et à mesure de la vie d’un  logiciel, les fichiers sont modifiés, amendés, effacés,  déplacés…</p>
+  <p>Il est intéressant pour un développeur  seul ou une équipe de garder une trace de ces différentes  modifications, appelées également révisions  ou versions.</p>
+  <p>La méthode la plus basique pour faire  ceci est de conserver sur le disque dur chaque modification dans  un répertoire séparé, dans le meilleur  des cas avec la date incluse dans le nom.</p>
+  <p>Cette méthode permet de partager  un code entre plusieurs personnes, chacune travaillant de son côté pendant  une à trois semaines, et après… permet  de réintégrer chacune des modifications en y passant  une à trois semaines en courant le risque d’oublier  certaines parties.</p>
+  <p>Heureusement, il n’y a pas que cette manière  de faire. Afin de faciliter ce travail nécessaire, des  logiciels de gestion de version sont disponibles, tels que Git (<a href="https://git-scm.com/" target="_blank">https://git-scm.com/</a>), Mercurial (<a href="https://mercurial.selenic.com/" target="_blank">https://mercurial.selenic.com/</a>), Subversion (<a href="https://subversion.apache.org/" target="_blank">https://subversion.apache.org/</a>) voire CVS (<a href="http://www.nongnu.org/cvs/" target="_blank">http://www.nongnu.org/cvs/</a>) pour ceux qui ont l’âme d’un paléontologue.</p>
+  <p>Ces différents logiciels de gestion  de version permettent d’archiver toutes les modifications du code  source d’un logiciel, de partager ce code entre différents membres  d’une équipe, d’intégrer facilement leurs différentes  modifications, de tester différentes solutions, de trouver  quelle modification a provoqué des bugs ainsi que le fautif à blâmer… et  plus prosaïquement de pouvoir revenir à un état  stable du code source si quelqu’un a effectué une modification  ou effacé malencontreusement des fichiers.</p>
+  <p>Ces systèmes de gestion de version  ne servent pas que pour les équipes : même si  un seul développeur travaille sur un projet, il pourra  bénéficier de ce parachute en cas d’erreur de  codage.</p>
+  <p>Git étant intégré nativement  dans Eclipse Luna, c’est ce système décentralisé de  gestion de version qui est brièvement expliqué.</p>
+  <div>
+    <p> Sélectionnez le projet <strong>MonPremierProjet</strong> dans l’explorateur de packages, faites un clic droit  et choisissez l’option <strong>Team - Share Project</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/05-21.png" src="images/images_05-21.png"></div>
+  </div>
+  <p>Une boîte de dialogue s’ouvre afin  de paramétrer la gestion de versions du projet. </p>
+  <div>
+    <div><img alt="images/05-22.png" src="images/images_05-22.png"></div>
+  </div>
+  <div>
+    <p> Sélectionnez <strong>Git</strong> comme type de gestion de versions et cliquez sur <strong>Next</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/05-23.png" src="images/images_05-23.png"></div>
+  </div>
+  <div>
+    <p> Cliquez ensuite sur le bouton <strong>Create</strong> en face du champ <strong>Repository</strong>.</p>
+  </div>
+  <div>
+    <p>Une nouvelle boîte de dialogue  s’ouvre afin de créer un espace de stockage pour toutes  les révisions du projet. Cette étape n’a besoin  d’être effectuée qu’une seule fois.</p>
+  </div>
+  <div>
+    <div><img alt="images/05-24.png" src="images/images_05-24.png"></div>
+  </div>
+  <div>
+    <p> Choisissez l’emplacement du disque dur où créer  cet espace de stockage (appelé repository ou dépôt),  puis cliquez sur <strong>Finish</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/05-25.png" src="images/images_05-25.png"></div>
+  </div>
+  <div>
+    <p> Cliquez ensuite sur <strong>Finish</strong>.</p>
+  </div>
+  <p>Le projet est dorénavant géré par  le système de contrôle de versions, mais les fichiers  existants ne sont pas encore considérés comme  versionnés : ils sont décorés  avec un point d’interrogation dans la vue Package Explorer.</p>
+  <div>
+    <div><img alt="images/05-26.png" src="images/images_05-26.png"></div>
+  </div>
+  <div>
+    <p> Sélectionnez le projet, faites un  clic droit et choisissez l’option <strong>Team - Add to Index</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/05-27.png" src="images/images_05-27.png"></div>
+  </div>
+  <p>Les fichiers sont maintenant marqués  par un astérisque sur fond noir : ils sont détectés  comme faisant partie d’une modification par Git.</p>
+  <div>
+    <div><img alt="images/05-28.png" src="images/images_05-28.png"></div>
+  </div>
+  <div>
+    <p> Sélectionnez ensuite l’option <strong>Team - Commit</strong> après avoir fait un clic droit sur le projet.</p>
+  </div>
+  <div>
+    <p>Une boîte de dialogue s’ouvre  permettant de soumettre les modifications dans le dépôt. </p>
+  </div>
+  <div>
+    <div><img alt="images/05-29.png" src="images/images_05-29.png"></div>
+  </div>
+  <div>
+    <p> Ajoutez un message pour la soumission des modifications  (le message est obligatoire dans le système Git), et cliquez  sur <strong>Commit</strong>.</p>
+  </div>
+  <div>
+    <p>Les fichiers ont été versionnés  (commités) : ils sont maintenant décorés avec  un petit cylindre jaune.</p>
+  </div>
+  <div>
+    <div><img alt="images/05-30.png" src="images/images_05-30.png"></div>
+  </div>
+  <p>Si un fichier est ensuite modifié dans  ce projet, il apparaîtra avec un chevron &gt; devant  son nom.</p>
+  <p>Les actions disponibles avec Git dans Eclipse  sont nombreuses, voici une présentation succincte des plus  courantes, nommées d’après leur emplacement depuis  le menu clic droit :</p>
+  <div>
+    <ul>
+      <li>
+        <p><strong>Team - Commit</strong> : déverse toutes les modifications  dans le dépôt de gestion de versions.</p>
+      </li>
+      <li>
+        <p><strong>Team - Add to Index</strong> : ajoute un fichier dans le système  de gestion de versions. Il sera nécessaire de  commiter pour que le nouveau fichier soit pris en compte.</p>
+      </li>
+      <li>
+        <p><strong>Compare With - Head Revision</strong> : compare un fichier avec la toute dernière version  du fichier et ouvre un éditeur graphique affichant les  modifications.</p>
+      </li>
+      <li>
+        <p><strong>Replace With - Head Revision</strong> : efface les modifications courantes et revient à la  toute dernière version.</p>
+      </li>
+      <li>
+        <p><strong>Team - Pull</strong> : récupère les dernières  modifications commitées dans le dépôt de  l’équipe</p>
+      </li>
+      <li>
+        <p><strong>Team - Synchronize Workspace</strong> : liste les fichiers modifiés localement  et ceux modifiés par le reste de l’équipe.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Il est également possible de créer  des branches, c’est-à-dire des versions alternatives du  projet qui auront leur vie propre, de mettre en attente des modifications  par une commande appelée <strong>Stash</strong>, etc.</p>
+  <p>Eclipse ne proposant qu’un sous-ensemble de  toutes les fonctionnalités de Git, des interfaces graphiques  sont disponibles pour en exploiter toutes les possibilités : <a href="https://git-scm.com/download/gui/linux" target="_blank">https://git-scm.com/download/gui/linux</a></p>
+</div>
+</body>
+</html>

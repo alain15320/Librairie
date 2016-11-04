@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_aa0c683d-26a0-4abc-84ed-4e758ff57072" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Diagramme de séquence</h1>
+  <p>Le diagramme de <strong>séquence</strong> s’attache à modéliser l’aspect <strong>dynamique</strong> du système. Il peut être  comparé à un storyboard mettant en évidence  les interactions existantes entre des objets du système.  L’accent est mis sur l’ordre chronologique des messages émis,  l’axe du temps étant l’axe vertical dans ce diagramme et  les premiers messages émis étant situés  graphiquement le plus haut.</p>
+  <p>Pour chaque action de l’utilisateur définie  dans le diagramme de cas d’utilisation, il convient d’établir  un diagramme de séquence. La fonction de lecture de tous  les clients est utilisée ici comme exemple.</p>
+  <div>
+    <p> Dans la vue <strong>Model Explorer</strong>, sélectionnez le modèle racine, faites  un clic droit sur l’élément et choisissez l’option <strong>New Diagram</strong> - <strong>Create a new UML Sequence Diagram</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/07-12.png" src="images/images_07-12.png"></div>
+  </div>
+  <div>
+    <p> Choisissez un nom pour ce diagramme, comme  par exemple <strong>SequenceLectureClientsGlobal</strong>.</p>
+  </div>
+  <div>
+    <p>Le diagramme est généré avec  une autre palette.</p>
+  </div>
+  <div>
+    <p> Faites un clic droit sur l’élément  model de la vue <strong>Model Explorer</strong> et ajoutez un package avec l’option <strong>New Child - Package</strong>. Appelez cet élément <strong>dialogue</strong>. </p>
+  </div>
+  <div>
+    <p> Répétez l’opération  pour créer un package <strong>contrôle</strong>.</p>
+  </div>
+  <div>
+    <p> Faites un clic droit sur ce package dans la  même vue et ajoutez une classe avec l’option <strong>New Child</strong> - <strong>Class</strong>. Appelez cet élément <strong>VueClients</strong>.</p>
+  </div>
+  <div>
+    <p>Répétez l’opération  pour les classes que vous voulez introduire dans le modèle. </p>
+  </div>
+  <div>
+    <p> Utilisez les éléments présents  dans la vue <strong>Model Explorer</strong> pour bâtir le diagramme en y faisant  glisser des éléments interagissant entre eux.</p>
+  </div>
+  <div>
+    <p> Utilisez la section <strong>Edges</strong> de la palette pour créer des flèches  représentant les interactions entre les éléments.</p>
+  </div>
+  <div>
+    <p>Les flèches ne peuvent se relier  aux composants du système que sur un rectangle présent  dans leur ligne de vie.</p>
+  </div>
+  <div>
+    <p> Pour ajouter ce rectangle, sélectionnez  l’élément <strong>Action Execution Specification</strong> dans la palette à la section <strong>Nodes</strong>, et faites-le glisser sur l’élément voulu.</p>
+  </div>
+  <p>Le premier diagramme présenté ci-après  représente une première itération possible.</p>
+  <div>
+    <div><img alt="images/07-13.png" src="images/images_07-13.png"></div>
+  </div>
+  <p>Une conception du système en langage-objet  comme Java nécessite pour la clarté et la maintenance  de l’application de ne confier idéalement qu’une seule responsabilité par  classe. Le contrôle client a ici trop de responsabilités à gérer, certaines  de ces responsabilités sont communes avec le futur contrôle  article, il est donc avantageux de le découper en plus  petites classes.</p>
+  <p>Une deuxième itération dans  la construction du diagramme permet de mieux cerner les différents éléments  nécessaires aux interactions entre le contrôle client  et la base de données.</p>
+  <div>
+    <div><img alt="images/07-14.png" src="images/images_07-14.png"></div>
+  </div>
+</div>
+</body>
+</html>

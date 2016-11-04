@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_678e7444-b44b-4ea8-95e8-422a22acaff6" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>CRUD de la classe Commande</h1>
+  <p>Créez une classe <strong>CommandeCrud</strong> dans le package <strong>entite.crud</strong>.</p>
+<pre>
+package entite.crud;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import javax.swing.JOptionPane;
+import controle.connection.Connexion;
+import entite.Commande;
+public class CommandeCrud {
+	
+    private Connexion laConnexion;
+    
+    /*
+    * Constructeur 1
+    */
+    public CommandeCrud(Connexion connexion) {
+    	this.laConnexion = connexion;
+    }
+}
+</pre>
+  <div>
+    <h2>1. Créer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>
+/**
+* Ajout d’une nouvelle commande dans la BD.
+* @throws EniException si il est impossible de créer la commande
+*/
+public void creer(Commande commande) <strong>throws EniException</strong> {
+	<strong>try {
+    	</strong>laConnexion.modifier((gerant) -&gt; {
+			gerant.persist(commande);
+			return commande;
+		});
+    <strong>} catch(RuntimeException e) {
+		throw new EniException(e.getMessage(), e);
+	}
+</strong>}
+</pre>
+    <p>Cette méthode a pour particularité de  récupérer et transformer l’exception de type <strong>RuntimeException</strong>, lancée éventuellement par JPA, en  une exception spécifique, qui n’est pas de type RuntimeException.  Cette dernière doit donc obligatoirement être  renseignée dans la signature de la méthode par  le mot-clé <strong>throws</strong>. À partir de là, tout code appelant  cette méthode doit explicitement gérer cette exception,  faute de quoi le code ne compilera même pas.</p>
+    <p>Il s’agit d’une technique efficace pour ne  pas risquer d’oublier de gérer une erreur éventuelle  au cours de l’exécution de l’application.</p>
+    <p>Il faut néanmoins créer  cette exception spécifique.</p>
+    <div>
+      <p> Créez une classe <strong>EniException</strong> dans le package <strong>entite</strong>.</p>
+    </div>
+    <pre>package entite.crud;      public class EniException extends Exception {          private static final long serialVersionUID = 1L;              public EniException() {           super();       }          public EniException(String message, Throwable cause) {           super(message, cause);       }          public EniException(String message) {           super(message);       }          public EniException(Throwable cause) {           super(cause);       }   }  </pre>
+  </div>
+  <div>
+    <h2>2. Lire</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe pour lire toutes les commandes.</p>
+    </div>
+    <pre>/*    * Lecture et récupération des enregistrements de la BD    */   public List&lt;Commande&gt; lire() {       return laConnexion.chercher((gerant) -&gt; {<strong>            TypedQuery&lt;Commande&gt;</strong> query = gerant.createQuery(                           "SELECT c FROM Commande c",<strong>                            Commande.class</strong>);                           return query.getResultList();       });   }  </pre>
+    <p>Cette méthode utilise une version  de la méthode <strong>createQuery</strong> disponible depuis JPA 2.0, qui comprend un  paramètre supplémentaire de type <strong>Class</strong>. Elle permet d’obtenir un objet de type <strong>TypedQuery</strong>, qui dérive de Query.</p>
+    <p>Cet objet est typé avec la classe  en paramètre, et permet d’éviter les @SuppressWarning  vus précédemment.</p>
+    <p>Si le type de résultat de la requête  est connu, il est plus avantageux d’utiliser cette version.</p>
+    <div>
+      <p> Créez une méthode dans la  classe pour lire une commande particulière.</p>
+    </div>
+    <pre>/*    * Requête équivalente à    *     "SELECT c FROM Commande c WHERE c.code = :code"    */   public Commande lire(String code) {       return laConnexion.chercher((gerant) -&gt; {             CriteriaBuilder cb = gerant.<strong>getCriteriaBuilder</strong>();          CriteriaQuery&lt;Commande&gt; critère =                       cb.<strong>createQuery</strong>(Commande.class);          ParameterExpression&lt;String&gt; parametre =                       cb.<strong>parameter</strong>(String.class);          Root&lt;Commande&gt; objet = critère.<strong>from</strong>(Commande.class);          critère.<strong>select</strong>(objet)              .<strong>where</strong>(cb.<strong>equal</strong>(objet.<strong>get</strong>("code"), parametre));                         TypedQuery&lt;Commande&gt; query = gerant.createQuery(critère);                        query.setParameter(paramètre, code);          return query.getSingleResult();       });   }  </pre>
+    <p>Cette méthode utilise l’API Criteria  de JPA. Elle permet de créer des requêtes programmatiquement  au lieu de passer des requêtes sous forme de chaîne  de caractères.</p>
+    <p>Son avantage principal est que les erreurs éventuelles  dans la syntaxe de la requête sont détectées  au moment de la compilation et non au moment de leur exécution,  comme dans les exemples précédents.</p>
+    <p>Son principal inconvénient est qu’elle  est moins lisible par des développeurs habitués à la  syntaxe SQL, alors que le langage JPQL est finalement très proche  de SQL.</p>
+  </div>
+  <div>
+    <h2>3. Modifier</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/*    * Modification d’une commande dans la BD    */   public Commande modifier(Commande laCommande) <strong>throws EniException</strong>   {           Object retour = laConnexion.modifier((gerant) -&gt; {           String code = laCommande.getCode();                          Commande commande = gerant.find(Commande.class, code);                          if (commande == null) {<strong>               return new EniException</strong>(                   "Pas de commande pour le code " + code);           } else {             try {                           commande.setClient(laCommande.getClient());                  for (Ligne uneLigne : laCommande.getLignes()) {                   commande.ajouter(uneLigne);               }                  commande.setReglement(laCommande.getReglement());               if (laCommande.getLignes().isEmpty()) {                   commande.getLignes().clear();               }             } catch(RuntimeException e) {<strong>                return new EniException</strong>(e.getMessage(), e);             }<strong>                 return commande;</strong>           }       });       Commande commande = null;       if (retour <strong>instanceof</strong> Commande) {           commande = (Commande) retour;       }       if (retour <strong>instanceof</strong> EniException) {           throw (EniException) retour;       }       return commande;   }  </pre>
+    <p>L’interface <strong>Function</strong> ne prend pas en compte les exceptions vérifiées.  Si l’on veut continuer à avertir le développeur  que la méthode est susceptible de lancer une exception,  il ne faut pas lancer l’exception depuis le bloc de la méthode <strong>apply()</strong> de l’interface <strong>Function</strong> mais en dehors de celle-ci.</p>
+    <p>Le résultat est ensuite vérifié par  rapport à un type de classe grâce à l’instruction <strong>instanceof</strong>.</p>
+  </div>
+  <div>
+    <h2>4. Supprimer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/*    * Suppression d’une commande dans la BD    */   public void supprimer(String vCode) <strong>throws EniException</strong> {       EniException probleme =       laConnexion.modifier((gerant) -&gt; {           EniException exception = null;           Commande commande = gerant.find(Commande.class, vCode);                          if (commande == null) {<strong>                exception = new EniException</strong>(                   "Pas de commande pour le code " + vCode);           } else {               try {                             gerant.remove(commande);               } catch(RuntimeException e) {                 exception = new EniException(e.getMessage(), e);               }           }           return exception;       });<strong>        if (probleme != null) {           throw probleme;       }</strong>   }  </pre>
+    <p>La vérification est ici faite simplement  par rapport à la non-initialisation de la variable de retour,  c’est-à-dire si le retour de la méthode <strong>modifier()</strong> est égal à null.</p>
+  </div>
+  <div>
+    <h2>5. Rechercher</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/*    * Recherche dans la BD    */   public List&lt;Commande&gt; chercher(String recherche) {       return laConnexion.chercher((gerant) -&gt; {<strong>             TypedQuery&lt;Commande&gt;</strong> query =                gerant.<strong>createNamedQuery</strong>(                   "chercherCommande", <strong>Commande.class</strong>);           query.setParameter("recherche", "%" +recherche +"%");           return query.getResultList();       });   }  </pre>
+    <p>Cette méthode montre par l’exemple  qu’il est aussi possible de créer des requêtes nommées  ET typées.</p>
+  </div>
+</div>
+</body>
+</html>

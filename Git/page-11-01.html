@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_6d569b36-29cd-4aee-bfce-f6ef6f9fcaa7" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Mettre de côté des modifications  avec git stash</h1>
+  <p>Il arrive régulièrement  qu’un développeur soit dérangé pendant  qu’il travaille sur une nouvelle fonctionnalité. C’est  souvent en raison d’un mail débutant par le mot "URGENT"  que le développeur doit stopper son développement pour  corriger un bug éventuel. </p>
+  <p>Seulement, le développeur ne doit  pas commiter son développement pour corriger le  bug. Ce commit serait alors composé de modifications non  terminées avec un code non fonctionnel et peut-être  des lignes de débogage. Un commit ne doit être  effectué que lorsque le projet a été testé et  est fonctionnel ce qui ne correspond pas à un travail en  cours.</p>
+  <div>
+    <div><img src="images/PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>git stash peut  avoir plusieurs utilités. Imaginons le cas d’un développeur  qui souhaite faire une démonstration client (sans l’avoir  prévue à l’avance). Le développeur était  en plein développement et certaines pages retournent encore  une page d’erreur. En utilisant git stash,  le développeur remet son projet dans le même état  qu’après son dernier commit tout en conservant son développement  en cours pour une prochaine fois. Le développeur peut alors faire  sa démonstration facilement et rapidement sans faire attendre  le client.</p>
+    </div>
+  </div>
+  <p>git stash va  garder toutes les modifications de côté. Elles  ne seront plus présentes dans le répertoire de  travail et l’index, elles ne seront pas non plus présentes  dans l’historique, car elles n’auront jamais été commitées.</p>
+  <p>Pour tester git stash avec  un exemple, il convient de créer un dépôt  dans un nouveau dossier : </p>
+  <pre>mkdir git_stash    cd git_stash    git init    vi README    vi projet.md    git add README    git add projet.md    git commit -m "README + projet.md : ajout"  </pre>
+  <p>À présent que le projet  initial est créé, le développeur continue  de modifier la documentation contenue dans le fichier projet.md et commencer à écrire une page HTML  de présentation dans un fichier index.html : </p>
+  <pre>vi projet.md    vi index.html  </pre>
+  <p>La commande git status indique  alors que le fichier projet.md est modifié et que le fichier index.html n’est pas encore suivi par Git.</p>
+  <p>Il est possible d’imaginer que le développeur  soit obligé de créer une branche pour modifier  le fichier README en vue d’ajouter une licence. Pour cela, le développeur va  mettre de côté les modifications qu’il a effectuées  avec la commande suivante :</p>
+  <pre>git stash --include-untracked  </pre>
+  <p>Cette commande est équivalente à la  commande suivante, car la sous-commande save est utilisée par défaut  par Git : </p>
+  <pre>git stash save --include-untracked  </pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>Saved working directory and index state WIP on master: a43bc9b   README + projet.md : ajout    HEAD is now at a43bc9b README + projet.md : ajout  </pre>
+  <p>Cette sortie indique que le travail a été enregistré dans  un stash et que la version a été placée  sur le commit a43bc9b. La chaîne WIP (pour Work In Progress) signifie travail en cours et correspond au début du titre automatique  donné au stash par Git. </p>
+  <p>La commande git stash peut être  utilisée sans l’argument --include-untracked.  Cela aura pour effet de laisser les fichiers non suivis dans le répertoire de  travail.</p>
+  <p>Si des modifications ont été placées  dans l’index, elles seront également incluses dans  le stash, sauf si l’argument keep-index a été utilisé.</p>
+  <p>Pour lister les stashs d’un dépôt,  il faut utiliser la commande suivante : </p>
+  <pre>git stash list  </pre>
+  <p>Cette commande affiche la sortie suivante :</p>
+  <pre>stash@{0}: WIP on master: a43bc9b README + projet.md : ajout  </pre>
+  <p>La sortie correspond exactement au stash créé précédemment.  Si le développeur utilise git  status à ce moment-là, il aura la sortie  qui lui indique qu’aucune modification n’est en  cours. Cela signifie que le développeur peut créer  sa branche et écrire ses modifications. Une fois celles-ci  effectuées, le développeur revient sur la branche master.</p>
+  <p>Pour récupérer les modifications  contenues dans un stash, il faut utiliser la commande suivante : </p>
+  <pre>git stash apply stash@{0}  </pre>
+  <p>Cette commande est également utilisable  sans préciser le stash en appliquant le dernier stash enregistré.  La sortie de cette commande est équivalente à celle de git status, elle liste les fichiers  modifiés et non suivis. Pour supprimer le stash une fois  récupéré, il faut utiliser la commande  suivante : </p>
+  <pre>git stash drop stash@{0}  </pre>
+  <p>Dans cette commande, il n’est pas  non plus nécessaire de spécifier le stash car le  dernier est automatiquement renseigné.</p>
+  <div>
+    <div><img src="images/PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>La commande git  stash pop permet de combiner git  stash apply et git stash drop.</p>
+    </div>
+  </div>
+  <p>Il existe également une commande  qui permet de supprimer tous les stashs du dépôt : </p>
+  <pre>git stash clear  </pre>
+  <p>Évidemment, cette commande est à utiliser  avec une très grande précaution !</p>
+</div>
+
+</body>
+</html>

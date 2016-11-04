@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_6dfb7e71-b86a-49aa-89ad-c51af3b03d48" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Fusionner deux branches</h1>
+  <p>Pour présenter une démonstration  du système de boutons à son client, Raphaël va  se replacer dans la branche color_buttons :</p>
+  <pre>git checkout color_buttons  </pre>
+  <p>Il retrouve alors les modifications qu’il  avait effectuées dans cette branche. Seulement, il n’y  a pas la modification de titre qu’il vient de faire dans la branche master. Son client ne va pas être très ouvert à sa  proposition s’il n’y a pas les modifications demandées.  Raphaël va donc récupérer les modifications effectuées  sur la branche master à l’aide de la commande git  merge :</p>
+  <pre>git merge master  </pre>
+  <p>Lorsque Raphaël exécute  la commande précédente, Git lui propose un message  pour le commit qui va représenter les modifications de master qui seront ajoutées dans la branche color_buttons. Il garde ce message pour son commit.</p>
+  <p>Cette commande va intégrer les modifications  de la branche master dans la branche colors_buttons. Implicitement, la commande git  merge signifie que les modifications de la branche spécifiée  seront ajoutées dans la branche sur laquelle le dépôt  est positionné. Cette étape de fusion engendre  parfois un conflit lorsque les mêmes parties du fichier  ont été modifiées sur les deux branches.  Les conflits doivent alors être résolus manuellement  par le développeur.</p>
+  <p>Après avoir fait la démonstration  du système de boutons à son client, celui-ci a  accepté la mise à jour pour une mise en production.  Il était très satisfait d’avoir un système  qui lui permette de gagner autant de temps et de se souvenir de  tous les anniversaires de sa famille.</p>
+  <p>Raphaël va donc inclure les modifications  de la branche color_buttons vers sa branche de production master. Il va donc tout d’abord se placer sur sa branche master :</p>
+  <pre>git checkout master  </pre>
+  <p>Il va ensuite fusionner les deux branches  :</p>
+  <pre>git merge color_buttons  </pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>Updating 7a5372c..01555d8    Fast-forward  </pre>
+  <p>L’affichage du texte <strong>Fast-forward</strong> indique que Git n’a pas eu besoin d’appliquer  les modifications contenues dans la branche color_buttons. En effet, Git a détecté que le commit  le plus récent de la branche color_buttons représente exactement la même version  (en tenant uniquement compte du contenu des fichiers du dépôt)  que la version à laquelle aurait dû arriver la  branche master après la commande git  merge color_buttons. </p>
+  <p>Après cela, la branche color_buttons n’est plus nécessaire. Pour laisser son dépôt propre,  Raphaël décide de la supprimer. Pour cela, il  utilise la commande suivante : </p>
+  <pre>git branch -d color_buttons</pre>
+  <p>Cette commande supprime la branche spécifiée.  Par sécurité, Git empêche le développeur  d’exécuter cette commande si la branche possède  des modifications non présentes dans une autre branche.</p>
+  <p>Ce scénario permet de visualiser  l’utilisation de Git lorsqu’un développeur travaille seul.  Il permet de mieux appréhender les actions simples de Git  et comment ces actions s’enchaînent dans le flux de travail  quotidien. Ce scénario couvre beaucoup de concepts de Git  rapidement. Il faut lire les chapitres précédents  pour avoir plus de détails de tous ces concepts.</p>
+  <p>Le scénario du chapitre suivant présente  une équipe de développeurs utilisant Git pour  centraliser et partager leurs sources au travers d’un dépôt  partagé via GitLab.</p>
+</div>
+</body>
+</html>

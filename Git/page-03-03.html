@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_e509412d-f944-4563-9596-9e217eb1b550" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Histoire de la gestion de version</h1>
+  <div>
+    <h2>1. Systèmes de gestion de versions locaux</h2>
+    <p>Les systèmes à stockage  local sont des systèmes où tous les utilisateurs  partagent le même système de fichiers. Le système  conserve les fichiers d’origine puis toutes les modifications effectuées  par la suite. De cette manière, il est possible de restaurer  les fichiers à n’importe quelle date pendant laquelle a été utilisé le  VCS. Les systèmes à stockage local sont arrivés  en 1972 grâce à SCCS (Source Code Control System) développé par Marc Rochkind travaillant  pour les laboratoires Bell.</p>
+    <p>En 1982, au cours d’un projet universitaire,  Walter F. Tichy publie GNU RCS (Revision Control System). Il apportait aussi un gain de performance important comparé à SCCS  grâce à une autre manière de stocker  les fichiers. En effet, RCS stockait les dernières versions  des fichiers et la différence avec l’ancien fichier, ce  qui permettait d’avoir la dernière version des fichiers  plus rapidement.</p>
+    <p>Ce type de solution ne permettait pas aux  collaborateurs de travailler ensemble s’ils n’utilisaient pas le  même système de fichiers. La collaboration n’était  pas aisée et ne permettait aucune mobilité. Avec  ces systèmes seuls les fichiers sont versionnés  et ils possèdent chacun leur propre historique de version. </p>
+    <p>Après avoir été très  utilisé dans le monde du libre, RCS a peu à peu été remplacé par  CVS.</p>
+  </div>
+  <div>
+    <h2>2. Systèmes de gestion de versions centralisés</h2>
+    <p>Dans ce type de système, toutes les  données du suivi de version sont stockées sur  un serveur. À partir de ces systèmes, l’administrateur  du VCS pouvait restreindre les privilèges de certains  utilisateurs. Parmi les logiciels de gestion de version centralisée,  on peut retenir CVS (Concurrent Versions System) et Subversion (ou SVN). CVS est apparu en  1990. Il a été le premier à utiliser  un système centralisé. Il a été très  utilisé dans le monde du libre et a été remplacé par  Subversion en 2000. En effet, Subversion est né de la volonté de  l’entreprise CollabNet d’améliorer certains aspects de  CVS. Les points d’améliorations les plus notables furent  : </p>
+    <div>
+      <ul>
+        <li>
+          <p>Les commits sont devenus  atomiques. Un commit correspond à une série de modifications  (cela sera expliqué plus en détail dans le chapitre  Manipulation des fichiers et commit). Cela signifie que l’historique  n’était plus autonome sur chaque fichier. En effet, à partir  de Subversion les commits ont concerné plusieurs fichiers.</p>
+        </li>
+        <li>
+          <p>Les fichiers renommés ou  déplacés conservent leur historique. En effet,  avec les anciens systèmes un déplacement ou un  renommage de fichier revenait à dire "Le fichier n’a plus  rien à voir avec ce qu’il était".</p>
+        </li>
+      </ul>
+    </div>
+    <p>Ces systèmes avaient cependant une  importante limitation : la dépendance des clients vis-à-vis  du serveur. En effet, pendant que le serveur est inaccessible, il  est impossible d’enregistrer des modifications ou de récupérer  quoi que ce soit. Cette limitation impose aux administrateurs de  garantir une haute disponibilité du serveur de versionning  pour ne pas immobiliser les développeurs.</p>
+  </div>
+  <div>
+    <h2>3. Systèmes de gestion de versions décentralisés</h2>
+    <p>Ce type de système est le plus récent.  Il répond tout d’abord au principal défaut des  systèmes centralisés : la dépendance  des clients vis-à-vis du serveur. Concrètement,  lorsque nous utilisons un système décentralisé et  que nous souhaitons travailler sur un projet contenu sur le serveur,  nous allons tout d’abord cloner ce projet sur notre poste. Cette étape  de clonage copie intégralement le projet et son historique  sur la machine locale. Cela permet au développeur d’être  autonome une fois qu’il a cloné le projet. Il n’a pas besoin  d’être connecté à un réseau  pour enregistrer ses modifications et consulter l’historique. Bien évidemment,  il a besoin d’être connecté au serveur pour recevoir les  mises à jour du projet ou partager ses modifications.</p>
+    <p>L’histoire des VCS (ou DVCS pour Decentralized VCS) commença en 1997 lorsque Larry McVoy (CEO  de BitMover) amorça le développement de son système  de gestion de versions BitKeeper. BitKeeper est le premier système distribué et  son histoire est intimement liée à celle du projet  Linux.</p>
+    <p>Au début de l’année 1999,  Larry McVoy propose à Linus Torvalds (créateur  du noyau Linux) d’utiliser son gestionnaire de versions BitKeeper  pour lui permettre de mieux diriger le nombre grandissant  de contributeurs au noyau Linux. En effet, la quantité de  contributions au noyau devient si importante que le projet prend  du retard. Ce retard est en partie dû au fait que la gestion des  versions de Linux était basée sur des fichiers  de patchs générés par Linus lui-même.</p>
+    <p>Toujours en 1999, lors d’une interview pour  Linux Weekly News, Alan Cox (contributeur du noyau Linux) rappelle  que Linus Torvalds est seul pour générer les patchs  du projet Linux et qu’il est constamment surchargé de travail. Il  affirme également que BitKeeper permettrait de mieux gérer  le nombre grandissant de contributeurs au noyau Linux.</p>
+    <p>En janvier 2002, un développeur du  noyau, Rob Langley, propose de nommer un lieutenant d’intégration  pour soulager le travail de Linus. Cette proposition démontre  que la tâche de Linus est trop fastidieuse et ralentit  l’évolution du noyau Linux.</p>
+    <p>En février 2002, Linus Torvalds décide  de migrer vers le système BitKeeper pour simplifier la  gestion des versions. À ce moment-là, il est possible  d’utiliser gratuitement une version limitée de BitKeeper  pour les projets libres. Cette décision a été très  controversée dans le monde du libre et dans le cercle des contributeurs  au noyau. Deux mois après l’adoption de BitKeeper, un développeur  du noyau (Daniel Phillips) soumet un patch retirant la documentation  de BitKeeper du projet Linux, en précisant que beaucoup  de développeurs "ruminent en silence" la décision  de Linus.</p>
+    <p>Une fois que les membres de la communauté Linux  se sont habitués à utiliser BitKeeper, le développement  du noyau s’est beaucoup accéléré. Les  fusions ont été beaucoup plus rapides et le retard  s’est résorbé en quelques mois.</p>
+    <p>En février 2005, soit trois ans après  le passage à BitKeeper, Linus informe Larry McVoy sur le  fait qu’un développeur du noyau (Andrew Tridgell, qui est également  le créateur de Samba) concevait un client libre pour récupérer  les métadonnées de BitKeeper. En effet, dans un  système de gestion de versions les métadonnées  sont très importantes et permettent au système  de fonctionner efficacement. Cependant, la version gratuite de BitKeeper  ne permettait pas de récupérer ces données  ce qui était une source de frustration chez certains développeurs.  Pour pallier ce problème, Andrew Tridgell a analysé le  fonctionnement de BitKeeper et notamment ses échanges avec  le serveur. Il a donc réussi à développer  un client qui permettait de s’affranchir de cette limite.</p>
+    <p>Larry McVoy et Linus ont très mal  vu ce nouveau client. Pour Larry McVoy, les développeurs  utilisant une version gratuite de BitKeeper doivent "jouer le jeu"  et accepter les limitations de cette version. En réponse à ce  client libre, BitMover a annoncé qu’il arrêterait  de fournir une version gratuite de BitKeeper aux contributeurs.  La situation devenait très complexe pour Linus et toute  la communauté était sous tension. Il a donc travaillé sur  un nouveau système.</p>
+    <p>Le 20 avril 2005, Linus annonce la sortie  d’un nouveau système de gestion de version distribué :  Git. Le développement de Git a été très  rapide, car la communauté avait besoin d’un nouveau  VCS pour le mois de juillet 2005, la licence gratuite de BitKeeper  expirant le 1er juillet 2005.</p>
+    <p>Cette période d’utilisation de BitKeeper  par le projet Linux aura tout de même permis au noyau Linux  d’accélérer sa croissance et elle aura permis également à BitMover  de promouvoir son système de gestion de versions.</p>
+    <p>Lorsque Linus a commencé à travailler  sur Git, il a défini un certain nombre de besoins auxquels  le nouveau système devrait répondre :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Un système  libre : après les problèmes internes et externes  dus à l’utilisation de BitKeeper, Linus ne voulait plus être  dépendant d’un système propriétaire et  voulait diminuer les tensions au sein de la communauté du  projet Linux.</p>
+        </li>
+        <li>
+          <p>Un système performant :  parce que le projet Linux nécessitait beaucoup de fusions  de branches et de créations de patchs de mise à jour,  Linus voulait un système performant afin de ne pas pénaliser  le projet à cause de fusions difficiles.</p>
+        </li>
+        <li>
+          <p>Un système distribué à l’instar  de BitKeeper pour conserver les avantages de ce type de système.</p>
+        </li>
+        <li>
+          <p>Un système compatible avec  les protocoles existants : la compatibilité d’un nouveau  système avec les protocoles HTTP, FTP et SSH accélérerait  le développement et la compatibilité du nouveau  système. De plus, un serveur émulant le système  CVS a été intégré dans Git pour  faciliter le travail des développeurs utilisant CVS.</p>
+        </li>
+        <li>
+          <p>Un système s’adaptant à des  projets importants : Git a été conçu  pour pouvoir gérer des projets importants en bénéficiant  de très bonnes performances.</p>
+        </li>
+        <li>
+          <p>Un système se basant sur  des hashs : un hash (ou une empreinte) est une valeur (souvent représentée  sous forme hexadécimale). Elle est calculée à partir  d’une autre valeur comme une chaîne de caractères  ou un fichier. Deux fichiers ayant un contenu différent  auront une empreinte différente (sauf dans certains cas  rarissimes). Ce système de fichiers basé sur les  hashs permettra à Git de détecter la moindre modification  dans un fichier et permettra d’identifier un fichier à partir  de son contenu.</p>
+        </li>
+      </ul>
+    </div>
+    <p>À l’origine, le système était  conçu comme un système de fichiers sur lequel était  placée une surcouche ajoutant les fonctionnalités  de suivi de version. C’était cependant un système  basé sur le contenu des fichiers, car on définissait  un fichier par son contenu grâce au hash généré.</p>
+    <p>Au début de l’évolution  de Git, les nouveaux développements mirent en avant cette  surcouche.</p>
+    <p>Jusqu’à aujourd’hui (en 2015), Git  a évolué et a continué à gagner  en popularité. Cette popularité est également  due à un service en ligne né en 2008 : GitHub. C’est  une plateforme offrant la possibilité de stocker ses projets  sous forme de dépôts distants sur les serveurs  de la société. Ce service offre des fonctionnalités  pour travailler en équipe et collaborer efficacement entre  développeurs. L’utilisation de GitHub pour les projets  libres (et sans restriction d’accès) est gratuite. En revanche,  lorsqu’une entreprise veut utiliser GitHub pour des projets privés  elle est obligée de passer à la caisse. Pour donner  un aperçu de la popularité de GitHub en 2013,  il y avait plus de 3,5 millions d’utilisateurs ainsi que plus de  10 millions de dépôts. Dans le même type  de service, il existe Bitbucket qui se base sur un autre business  model que GitHub, mais ces services seront abordés plus  précisément dans le chapitre concernant les outils  Git et dans celui proposant le scénario d’un développeur  indépendant.</p>
+  </div>
+</div>
+<div id="AU_e509412d-f944-4563-9596-9e217eb1b550" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div> </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

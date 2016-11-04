@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_51d259d8-eec9-4ae9-8799-0f41df855685" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Gestion du temps et des dates</h1>
+  <p>La gestion des dates a été historiquement  un point faible de Java.</p>
+  <p>Avant Java 8, créer une date c’est-à-dire  un instant précis sur une ligne temporelle se faisait avec  l’aide de la classe <strong>java.util.Date</strong>. Par exemple :</p>
+  <pre>Date maintenant = <strong>new Date()</strong>;  </pre>
+  <p>Le problème était avant  tout conceptuel : un objet Date est véritablement  un instant précis à la milliseconde, on pourrait  dire un temps-machine, calculé par le nombre de millisecondes écoulées  depuis l’<strong>epoch</strong> Java : le 1er janvier 1970 à minuit  UTC (Coordinated Universal Time). Or, si l’on utilise la méthode <strong>toString()</strong> de l’objet <strong>Date</strong> :</p>
+  <pre>
+String description = new Date().<strong>toString</strong>();
+System.out.println(description); // <strong>Mon Jun 01 14:09:38 CEST 2015</strong>
+</pre>
+  <p>on obtient une description de la date faite  pour être lue par des humains, notamment avec la présence  d’un fuseau horaire (CEST signifie Central European Summer Time, soit l’heure d’été sur le fuseau  horaire de Paris).</p>
+  <p>Ces deux notions d’un temps-machine et d’un  temps-humain sont conceptuellement différentes, car un  temps-humain utilise toujours le concept de fuseau horaire et d’heure  d’été/heure d’hiver alors qu’un temps-machine  est essentiellement un horodatage (un timestamp en anglais). De  la même manière, un enfant né à Paris  le 1er juillet 2015 à 15h55  et un enfant né le même jour à la même  heure et la même minute à Katmandou n’ont pas  tout à fait le même âge : ils  ont quelques heures d’écart (3 heures et 45 minutes pour être précis).</p>
+  <p>La classe <strong>Date</strong> était tellement erronée que quasiment  toutes ses méthodes ont été marquées  dépréciées dès la sortie suivante  de Java, avec l’introduction d’une classe <strong>Calendar</strong>, qui souffrait également de problèmes  conceptuels. </p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pour obtenir l’année à partir  d’un objet Date, il faut lui ajouter 1900, et le mois numéro  0 est le mois de janvier !</p>
+    </div>
+  </div>
+  <p>Java 8 introduit une refonte complète  sur la gestion du temps, et propose les classes du package <strong>java.time</strong>. Ses classes principales sont : <strong>Instant</strong>, <strong>LocalDate</strong>, <strong>LocalTime</strong>, <strong>LocalDateTime</strong>, <strong>ZoneId</strong> et <strong>ZonedDateTime</strong>. Les classes <strong>Date</strong> et <strong>Calendar</strong> ont également été rendues  compatibles avec ces nouvelles classes.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Si vous créez un nouveau  logiciel avec Java 8, préférez toujours les classes  du package <strong>java.time</strong>. La librairie Joda (<a href="http://www.joda.org/joda-time/" target="_blank">http://www.joda.org/joda-time/</a>) est une aide précieuse pour tout développement  avec une version moins récente de Java.</p>
+    </div>
+  </div>
+  <p><strong>Instant</strong> représente un instant précis dans  le temps. Cette classe n’a aucune notion de fuseau horaire. Il s’agit  de l’équivalent le plus proche de la classe <strong>java.util.Date</strong>. </p>
+  <p>La classe <strong>LocalDate</strong> représente un jour précis, sans indication  d’heure et sans notion de fuseau horaire : il s’agit de  la représentation Java du jour dans un calendrier mural.</p>
+  <p>La classe <strong>LocalTime</strong> représente une heure précise, sans  notion de jour ni de fuseau horaire : il s’agit de la représentation  Java d’une horloge murale.</p>
+  <p>La classe <strong>LocalDateTime</strong> est une combinaison des deux précédentes  classes et représente donc un jour et une heure précise  sans notion de fuseau horaire.</p>
+  <p><strong>ZoneId</strong> représente un fuseau horaire, avec son décalage éventuel  heure d’été/heure d’hiver. <strong>ZonedDateTime</strong> représente la transcription d’un instant temporel  sur ce fuseau horaire particulier.</p>
+  <p>Leur fonctionnement est illustré par  un petit programme permettant de montrer leurs différences.</p>
+  <div>
+    <p> Créez un petit programme avec une  méthode <strong>main()</strong> permettant de le lancer. </p>
+  </div>
+  <div>
+    <p> À l’intérieur de cette méthode <strong>main()</strong>, écrivez le code suivant et exécutez-le  par [Ctrl][F11] :</p>
+  </div>
+  <pre>
+	public static void main(String[] args) {
+		Date maintenant = new Date();
+		System.out.println("Date: " + maintenant);
+		System.out.println("Instant: " + maintenant.toInstant());
+	} // résultat Date: Mon Jun 01 14:09:38 CEST 2015
+</pre>
+  <p>La date affiche une description de l’instant  précis où la méthode <strong>main()</strong> a été exécutée en <strong>anglais</strong> ! L’instant Java 8 correspondant obtenu avec  la méthode <strong>toInstant()</strong> est décrit de manière normalisée  avec des nombres, un T pour indiquer l’heure et la lettre  Z pour décrire le fuseau horaire Zulu, utilisé par  les militaires et l’aviation.</p>
+  <p>Les deux affichages ont un décalage  de deux heures, correspondant au décalage de l’heure d’été à Paris :  un instant est toujours aligné sur ce fuseau horaire militaire.</p>
+  <p>Il est possible avec Java 8 de connaître  l’instant précis du début d’un jour particulier  dans le calendrier, dans différentes parties du monde.</p>
+  <div>
+    <p> Complétez la méthode <strong>main()</strong> à l’aide du code suivant et exécutez-le :</p>
+  </div>
+  <pre>LocalDate aujourdhui = <strong>LocalDate.now</strong>();<strong>       LocalDateTime</strong> minuit = aujourdhui.<strong>atStartOfDay</strong>();    System.out.println("Minuit:" +minuit);<strong>       ZonedDateTime</strong> aParis = minuit.<strong>atZone</strong>(<strong>ZoneId.systemDefault</strong>());    System.out.println("Minuit A Paris:" +aParis);        System.out.println("Un instant à Paris:" +aParis.<strong>toInstant</strong>());        ZonedDateTime aKtm = minuit.atZone(<strong>ZoneId.of("Asia/Katmandu")</strong>);    System.out.println("Minuit A Katmandou:" +aKtm);    System.out.println("Un instant à Katmandou:" +aKtm.<strong>toInstant</strong>());            // résultat   Aujourdhui:<strong>2015-06-01</strong>    Minuit:<strong>2015-06-01T00:00</strong>    Minuit A Paris:<strong>2015-06-01T00:00+02:00[Europe/Paris]</strong>   Un instant à Paris:2015-05-31T<strong>22:00:00Z</strong>   Minuit A Katmandou:2015-06-01T00:00<strong>+05:45[Asia/Katmandu]</strong>    Un instant à Katmandou:2015-05-31T<strong>18:15:00Z</strong></pre>
+  <p>Pour obtenir un instant à partir  d’un objet <strong>LocalDate</strong>, il est nécessaire de lui ajouter une heure :  cela se fait ici grâce à la méthode <strong>atStartOfDay()</strong>, qui retourne un objet de type <strong>LocalDateTime</strong>. Cela pourrait se faire également avec la méthode <strong>atTime(heure, minute)</strong>, ou une autre des méthodes <strong>atTime(...)</strong>. </p>
+  <p>Cette manière de faire permet d’évaluer  minuit à Paris et à Katmandou, ces deux minuits étant  placés différemment dans le temps.</p>
+  <p>Dans l’exemple, le 1er juin  2015 à minuit, qui ne représente qu’une date dans un  calendrier avec une heure donnée à l’horloge,  correspond à Paris à l’instant du 31 mai 2015  22 heures UTC (ou GMT, même si c’est un amalgame de confondre  UTC et GMT), et à Katmandou à l’instant du 31  mai 2015 à 18 heures 15 UTC.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Les objets du package <strong>java.time</strong> sont immuables : une fois créés  ils ne peuvent plus être modifiés ! Il  est possible par contre de créer de nouveaux objets à partir  de ceux-ci à l’aide de différentes méthodes,  commençant généralement par « at » ou « with ».</p>
+    </div>
+  </div>
+  <p>Examinons maintenant comment, à partir  d’un instant précis et unique dans le temps, il est possible  d’obtenir l’heure de différentes parties du monde.</p>
+  <div>
+    <p> Insérez les lignes suivantes et exécutez  le programme :</p>
+  </div>
+  <pre>LocalDateTime dateHeure = null;       Instant now = Instant.now();    System.out.println("Instant:" +maintenant);       ZoneId ici = ZoneId.systemDefault();   dateHeure = LocalDateTime.ofInstant(maintenant, ici);   ZonedDateTime aParis = maintenant.<strong>atZone</strong>(ici);   System.out.println("Date locale Ici: " +dateHeure);   System.out.println("Date zonée Ici : " +dateHeure.atZone(ici));   System.out.println("Maintenant Ici : " +aParis);   System.out.println("Un instant Ici : " +aParis.toInstant());   System.out.println();      ZoneId ktm = ZoneId.of("Asia/Katmandu");       dateHeure = <strong>LocalDateTime.ofInstant</strong>(maintenant, ktm);   System.out.println("Date locale à Katmandou: " +dateHeure);   System.out.println();   System.out.println("Date zonée à Katmandou : "                                       +dateHeure.atZone(ktm));   System.out.println("Date zonée Ici  : " +dateHeure.atZone(ici));   System.out.println();      ZonedDateTime aKtm = maintenant.atZone(ktm);   System.out.println("Maintenant à Katmandou : " +aKtm);   System.out.println("Un instant à Katmandou : " +aKtm.toInstant());  System.out.println();      ZoneId bsas = ZoneId.of("America/Buenos_Aires");       dateHeure = LocalDateTime.ofInstant(maintenant, bsas);   System.out.println("Date locale à Buenos Aires: " +dateHeure);   System.out.println("Date zonée à Buenos Aires: "                                       +dateHeure.atZone(bsas));   System.out.println("Date zonée Ici  : " +dateHeure.atZone(ici));      ZonedDateTime aBsAs = maintenant.atZone(bsas);   System.out.println("Maintenant à Buenos Aires : " +aBsAs);   System.out.println("Un instant à Buenos Aires : "                                       +aBsAs.<strong>toInstant</strong>());         // résultat   Instant:<strong>2015-06-01T19:42:14Z</strong>   Date locale Ici: 2015-06-01T21:42:14   Date zonée Ici : 2015-06-01T21:42:14<strong>+02:00[Europe/Paris]</strong>   Maintenant Ici : 2015-06-01T21:42:14+02:00[Europe/Paris]   Un instant Ici : <strong>2015-06-01T19:42:14Z</strong>       Date locale à Katmandou: 2015-06-<strong>02T01:27</strong>:14      Date zonée à Katmandou : 2015-06-02T01:27:14<strong>+05:45[Asia/Katmandu]</strong>   Date zonée Ici  : 2015-06-<strong>02T01:27:14+02:00[Europe/Paris]</strong>      Maintenant à Katmandou : 2015-06-02T01:27:14+05:45[Asia/Katmandu]   Un instant à Katmandou : <strong>2015-06-01T19:42:14Z</strong>      Date locale à Buenos Aires: 2015-06-01<strong>T16</strong>:42:14   Date zonée à Buenos Aires:                    2015-06-01T16:42:14<strong>-03:00[America/Buenos_Aires]</strong>   Date zonée Ici  : 2015-06-01T16:42:14+02:00[Europe/Paris]   Maintenant à Buenos Aires :                    2015-06-01T16:42:14-03:00[America/Buenos_Aires]   Un instant à Buenos Aires : <strong>2015-06-01T19:42:14Z</strong>   </pre>
+  <p>Cet exemple montre que le 1er juin  2015 à 19 heures 42 UTC, qui est un instant unique  dans le temps, correspond au 1er juin  2015 à 21 heures 42 sur le fuseau horaire de Paris (on  parle plus communément de Paris heure locale), au 2 juin  2015 à 1 heure 27 du matin sur le fuseau horaire de Katmandou,  et au 1er juin 2015 à 16 heures  42 à Buenos Aires.</p>
+  <p>Ces quelques lignes illustrent la différence  entre les concepts de temps machine et temps humain :  le temps humain fait intervenir en plus du temps une notion d’espace  (le fuseau horaire) et une notion de compensation (le décalage de  l’heure d’été/heure d’hiver).</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Si une gestion du temps intervient  dans votre application, essayez toujours de la faire à partir  des objets de type <strong>Instant</strong>. Cette classe est le pivot autour duquel tournent  les autres classes du package <strong>java.time</strong>.</p>
+    </div>
+  </div>
+  <p>Il existe de plus des manières simples  et élégantes pour calculer le nombre de minutes  ou de semaines entre deux instants donnés, pour ajouter  deux jours au début du mois prochain… Le package <strong>java.time</strong> est un des grands ajouts de Java 8.</p>
+  <p>Par exemple, comment calculer l’heure locale  d’arrivée d’un avion volant de Paris vers Katmandou ?  Voici une proposition de calcul :</p>
+  <pre>DateTimeFormatter format = DateTimeFormatter<strong>                                 .ofLocalizedDateTime</strong>(                                              FormatStyle.LONG)<strong>                                 .withLocale(Locale.FRENCH)</strong>;      LocalDateTime surBillet = <strong>LocalDateTime.of</strong>(2015, Month.JULY, 01,                                                            19, 42);   ZoneId fuseauDépart = ZoneId.systemDefault();    ZonedDateTime départ = ZonedDateTime.of(surBillet, fuseauDépart);      String strDépart = départ.format(format);   System.out.printf("Départ d’ici:  %s (%s)%n", strDépart,                                                     fuseauDépart);      // Le vol dure 14 heures et 20 minutes, soit 860 minutes   ZonedDateTime arrivéeIci = départ.<strong>plusMinutes</strong>(860);       ZoneId fuseauArrivée = ZoneId.of("Asia/Katmandu");    ZonedDateTime arrivéeHeureLocale = arrivéeIci<strong>                                 .withZoneSameInstant</strong>(fuseauArrivée);      String strArrivée = arrivéeHeureLocale.format(format);   System.out.printf("Arrivée heure locale: %s (%s)%n", strArrivée,                                                      fuseauArrivée);   strArrivée = arrivéeIci.format(format);   System.out.printf("Arrivée heure d’ici: %s (%s)%n", strArrivée,                                                      fuseauDépart);              Duration durée = <strong>Duration.between</strong>(départ, arrivéeHeureLocale);   Duration durée2 = Duration.between(départ, arrivéeIci);   System.out.printf("Durée du vol   : %s %s %n", durée, durée2);                  // résultat   Départ d’ici:  1 juillet 2015 19:42:00 CEST (Europe/Paris)   Arrivée heure locale: 2 juillet 2015 13:47:00 NPT (Asia/Katmandu)   Arrivée heure d’ici: 2 juillet 2015 10:02:00 CEST (Europe/Paris)   Durée du vol   : PT14H20M PT14H20M    </pre>
+  <p>Voici une manière pour formater une  date au format français en utilisant ce nouveau package :</p>
+  <pre>String matrice = "dd/MM/yyyy";    Instant laDate = ...      DateTimeFormatter format = <strong>DateTimeFormatter.ofPattern</strong>(matrice);   ZoneId fuseau = ZoneId.systemDefault();       ZonedDateTime dateSurFuseau = laDate.atZone(fuseau);      String date = format.<strong>format</strong>(dateSurFuseau);   </pre>
+  <p>Cette séquence se décompose  de la manière suivante :</p>
+  <div>
+    <ul>
+      <li>
+        <p>La matrice est le  format de la date, dd signifie les deux chiffres du jour, MM les  deux chiffres du mois, yyyy l’année. La syntaxe du format  est riche, consultez la documentation de la classe <strong>DateTimeFormatter</strong> pour une explication extensive.</p>
+      </li>
+      <li>
+        <p>La variable laDate est l’instant  qui doit être converti en chaîne de caractères !</p>
+      </li>
+    </ul>
+  </div>
+  <p>Le code obtient un objet qui va formater la  date en fonction de la matrice grâce à la méthode  statique <strong>ofPattern(...)</strong> de la classe <strong>DateTimeFormatter</strong>.</p>
+  <p>Le fuseau horaire actuel (tel que configuré dans  l’ordinateur) est obtenu avec la méthode statique <strong>systemDefault()</strong> de la classe <strong>ZoneId</strong>.</p>
+  <p>La méthode <strong>atZone()</strong> de la classe Instant convertit l’instant en un objet temporel zoné,  c’est-à-dire que le temps est converti selon le fuseau  horaire en paramètre.</p>
+  <p>Cet objet temporel zoné est ensuite  formaté en chaîne de caractères grâce à la méthode <strong>format</strong>.</p>
+  <p>Il est également possible d’effectuer  l’opération inverse, qui consiste à retrouver  un instant à partir d’une chaîne de caractères  qui décrit un jour particulier : un éphéméride.</p>
+  <pre>DateTimeFormatter format =<strong>                            DateTimeFormatter.ofPattern</strong>("dd/MM/yyyy");      LocalDate date = LocalDate.<strong>parse</strong>(laDateChaine, format);   LocalDateTime minuit = date.atStartOfDay();   ZoneId fuseau = ZoneId.systemDefault();   ZonedDateTime ici = minuit.atZone(fuseau);      Instant laDate = ici.toInstant();  </pre>
+  <p>Le code démarre de la même  manière, en obtenant un formateur de date en fonction de  la matrice.</p>
+  <p>Comme il s’agit d’un jour, sans indication  d’heure, la méthode statique <strong>parse</strong> de la classe <strong>LocalDate</strong> est utilisée. Son retour donne un objet de  type <strong>LocalDate</strong>.</p>
+  <p>Il s’agit ensuite d’ajouter une heure à cet  objet. Pour cela, la méthode d’instance <strong>atStartOfDay()</strong> retourne un objet temporel du jour donné à minuit, soit à la  première seconde du début du jour.</p>
+  <div>
+    <div>&lt;img src=&quot;images/images_PUCE.PNG&quot; alt=&quot;&quot; width=&quot;20&quot;&gt;</div>
+    <div>
+      <p>Techniquement il s’agit de la première  nanoseconde du début du jour.</p>
+    </div>
+  </div>
+  <p>Un temps situé sur un fuseau horaire  est alors obtenu, qui permet d’obtenir son instant précis.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Avant Java 8, la classe <strong>SimpleDateFormat</strong> permettait de convertir une date en chaîne,  mais son utilisation présentait des problèmes  notamment d’accès concurrents (voir la section Threads).</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

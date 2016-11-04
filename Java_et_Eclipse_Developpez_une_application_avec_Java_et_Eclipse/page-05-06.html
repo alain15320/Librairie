@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_0b8acfc1-83fc-44d7-b040-f9ac610ba2a9" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Méthode</h1>
+  <p>Les méthodes représentent  les actions et les comportements que peuvent mener des  objets issus d’une classe. Elles définissent l’aspect  dynamique ou comportemental de la classe. Les chats peuvent dormir,  manger, miauler, etc.</p>
+  <p>Voici quelques-unes de ces méthodes.</p>
+  <pre>class Chat {           // propriétés          String nom;          String couleur;            long dateDeNaissance;              // méthodes  <strong>         void</strong> dormir(){<strong>                return </strong>;         }            void manger(Object deLaNourriture){          } <strong>             String</strong> miauler(){                String leMiaulement = "miaou";<strong>               return</strong> leMiaulement;          }    }  </pre>
+  <p>Les méthodes qui ne renvoient aucune  valeur correspondent à des procédures. Elles sont  toujours précédées du mot-clé <strong>void</strong>.</p>
+  <p>Les méthodes qui renvoient une valeur  correspondent à des fonctions. Elles sont toujours précédées  du type de la valeur renvoyée.</p>
+  <p>Les méthodes peuvent bien sûr  contenir des paramètres qui doivent tous être typés.</p>
+  <p>Le mot-clé <strong>return</strong> permet de sortir de la méthode et de retourner à la  méthode appelante.</p>
+  <p>Exemple :</p>
+  <pre>   <strong>double</strong> pourcentage(<strong>Double</strong> numerateur, Double denominateur) {         Double resultat = numerateur/denominateur * 100;  <strong>         return</strong> resultat;             }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le code ci-dessus comporte des actions  d’autoboxing implicites, notion qui sera détaillée  dans le prochain chapitre.</p>
+    </div>
+  </div>
+  <p>Le nom d’une méthode et les types  ordonnés de ses paramètres constituent sa <strong>signature</strong> (le type de retour de la méthode est exclu  de la signature, tout comme les noms des paramètres). À l’intérieur  d’une classe donnée, il ne peut exister qu’une seule méthode  par signature. </p>
+  <p>Par exemple, le code suivant provoquera des  erreurs à la compilation.</p>
+  <pre>public class MauvaiseSignature {        void calculer(int a, int b) {               }       // le compilateur n’accepte pas cette méthode       int calculer(int c, int d) {             return c + d ;       }   }  </pre>
+  <p>Parmi les méthodes, certaines ont  pour rôle de retourner les valeurs des propriétés  de la classe et d’autres de les modifier. Elles sont nommées  respectivement <strong>accesseurs</strong> et <strong>mutateurs</strong> (getters et setters).</p>
+  <p>Exemple :</p>
+  <pre>int getAge() {       // retourne l’âge calculé à partir de la        // date de naissance    }       long getDateDeNaissance() {       return dateDeNaissance ;   }       void setDateDeNaissance(long nouvelleDate) {       dateDeNaissance = nouvelleDate ;   }  </pre>
+  <p>Ces accesseurs et mutateurs sont traditionnellement  codés sous la forme <strong>getXXX</strong>/<strong>setXXX</strong>. Le mélange français-anglais n’est  pas idéal ici, mais beaucoup d’outils reposent  sur cette notation pour découvrir dynamiquement les propriétés  d’une classe donnée, comme les Java Beans. Il est fortement conseillé de  garder cette habitude de notation.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le terme de services est parfois utilisé pour  désigner les méthodes et celui d’opération  pour l’implémentation des méthodes.</p>
+    </div>
+  </div>
+  <p>Des méthodes peuvent être  préfixées avec le mot-clé <strong>static</strong>. Elles ne sont alors plus spécifiques à l’objet  lui-même mais à sa classe. Cela permet le plus souvent de  créer des services utilitaires, et plus communément  le point d’entrée d’une application.</p>
+  <p>Exemple :</p>
+  <pre><strong>static</strong> int calculerAge(long date) {        Instant naissance = Instant.ofEpochMilli(date) ;       Instant maintenant = Instant.now() ;       long annees = ChronoUnit.YEAR.between(naissance, maintenant) ;      return annees ;   }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Les méthodes statiques sont  très utiles mais ont tendance à « casser » le  paradigme objet, et à rendre le code plus difficile à modifier.  Il est conseillé de les créer avec parcimonie.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

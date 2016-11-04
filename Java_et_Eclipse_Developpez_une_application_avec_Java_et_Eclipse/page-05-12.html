@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_1eaabf8c-0ccf-4b41-8b41-1ccbabd5c297" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Polymorphisme</h1>
+  <p>Le polymorphisme est une notion importante  en POO, et veut dire étymologiquement « qui  peut prendre plusieurs formes ». </p>
+  <p>Le polymorphisme est la capacité d’un  code à choisir dynamiquement à l’exécution  la méthode à exécuter, et implique qu’un  même appel de méthode puisse avoir des comportements  différents, soit en fonction des paramètres de cet  appel, soit en fonction de l’objet avec lequel l’appel est effectué.</p>
+  <p>Java comporte deux types de polymorphismes  principaux : la surcharge et la redéfinition.</p>
+  <p>Le mécanisme de polymorphisme peut également être  obtenu à l’aide d’interfaces.</p>
+  <p>Depuis Java 1.5, il existe également  un polymorphisme dit paramétrique, avec l’utilisation de  génériques, qui sera étudié au  chapitre suivant.</p>
+  <div>
+    <h2>1. Par surcharge</h2>
+    <p>Le polymorphisme de <strong>surcharge</strong> correspond à la capacité d’un  objet à choisir au moment de l’exécution  (dynamiquement) la méthode qui correspond le mieux à ses  besoins parmi ses propres méthodes ou celles des méthodes  mères. </p>
+    <p>Une autre particularité de ce polymorphisme  est que toutes les méthodes concernées portent  le même nom. Au sein d’une classe, elles se différencient obligatoirement  et uniquement par le nombre de paramètres ou le type de  ces derniers.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Rappel : une signature de  méthode ne peut être implémentée  qu’une seule fois dans une même classe.</p>
+      </div>
+    </div>
+    <p>La classe <strong>Chat</strong> est modifiée pour mettre en évidence  ce mécanisme de surcharge. </p>
+    <pre>public class Chat {      ...      public void manger(String nourriture){        System.out.println("Je mange de " + nourriture);      }       public void manger() {       System.out.println("Je vais aller chasser ma nourriture");      }         public void manger(List&lt;Object&gt; nourriture){        System.out.println("Je mange tout ça : " + nourriture);      }   }  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>La notation <strong>List&lt;Object&gt;</strong> définit un ensemble de données de  type Object sur lequel il est possible d’itérer (parcourir  tous les éléments). Ces notions seront développées  dans le prochain chapitre dans les sections Collections et Génériques.</p>
+      </div>
+    </div>
+    <p>Le programme appelant peut alors être  modifié comme :</p>
+    <pre>leChat.manger("la pâtée");    leChat.manger();   leChat.manger(Arrays.asList("croquettes", "pâté")) ;  </pre>
+    <p>À l’exécution,  le résultat suivant est obtenu :</p>
+    <pre>Je mange de la pâtée    Je vais aller chasser ma nourriture   Je mange tout ça : [croquettes, pâté]   </pre>
+    <p>Ce mécanisme de surcharge peut également être  appliqué aux constructeurs.</p>
+    <pre>public class Chat {       private Chat() {       }              Chat(String nom, String couleur) {             // créer un chat naissant maintenant             this(nom, couleur, new Date()) ;       }       Chat(String nom, String couleur,<strong>                    Date</strong> dateDeNaissance){             this(nom, couleur, dateDeNaissance.getTime()) ;       }       Chat(String nom, String couleur,<strong>                    long</strong> dateDeNaissance) {             this() ;             ...       }   }  </pre>
+  </div>
+  <div>
+    <h2>2. Par redéfinition</h2>
+    <p>Les méthodes de la classe mère  peuvent être <strong>redéfinies</strong> dans les classes filles ou sous-classes par une opération  de sous-typage. Il s’agit en fait d’une <strong>spécialisation</strong>. Dans le sens inverse, c’est une généralisation  qui permet de factoriser les comportements communs.</p>
+    <p>D’un point de vue pratique, les méthodes  des classes filles sont réécrites afin d’obtenir  le comportement voulu. À l’utilisation, on a l’impression  d’appeler la méthode de la classe mère, mais en  fait le code de la classe fille est exécuté.</p>
+    <p>Un exemple classique est la méthode <strong>toString()</strong> de la classe <strong>Object</strong>, présente dans TOUTES les classes de l’application.  Elle permet de fournir une description textuelle de l’objet instancié.  Cette méthode peut être redéfinie dans  les classes de l’application pour fournir plus d’informations contextuelles  sur les objets.</p>
+    <p>En reprenant le cas des animaux, tous les  mammifères se nourrissent mais les chats domestiques mangent  des croquettes, ce qui n’est pas forcément le  cas des tigres.</p>
+    <p>Avec les classes déjà créées,  cela donne :</p>
+    <pre>public class Felin {      ...      public void manger(Object nourriture){      }    }        public class Chat extends Felin {      ...      @Override     public void manger(Object nourriture){        System.out.println("Je mange des " + nourriture);      }   }   public class Tigre extends Felin {      ...      @Override     public void manger(Object nourriture){        if( "croquettes".equals(nourriture)) {             System.out.println("Un tigre ne mange pas de ça");        }       ...     }    }  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>La ligne <strong>@Override</strong> est une <strong>annotation</strong>, notion qui sera développée dans le prochain  chapitre. Elle signifie ici que la méthode annotée  (immédiatement en dessous) est obligatoirement redéfinie  et lèvera une erreur à la compilation si ce n’est  pas le cas.</p>
+      </div>
+    </div>
+    <p>Exemple dans un programme :</p>
+    <pre>  leChat.manger("croquettes") ;     leTigre.manger("croquettes") ;  </pre>
+    <p>Le résultat suivant est obtenu à l’exécution :</p>
+    <pre>Je mange des croquettes   Un tigre ne mange pas de ça    </pre>
+    <p>Pour stopper ce mécanisme de redéfinition,  le mot-clé <strong>final</strong> peut être utilisé. Dans ce cas, les  méthodes ne pourront pas être redéfinies  (réécrites).</p>
+    <p>Exemple :</p>
+    <pre>public class Felin {        ...       public <strong>final</strong> void manger(Object nourriture){         System.out.println("Je mange " + nourriture);       }     }          public class Chat extends Felin {       ...       // erreur à la compilation      public void manger(Object deLaNourriture){       }     }  </pre>
+  </div>
+  <div>
+    <h2>3. Par interface</h2>
+    <p>Le polymorphisme par interface permet d’avoir  des méthodes ayant le même nom et les mêmes  types (on parle de <strong>signature identique</strong>) dans des classes différentes (sans aucun lien  d’héritage entre elles), dont l’implémentation pourra également être  différente.</p>
+    <p>Afin de conserver un lien sémantique  entre ces méthodes, il est important de créer  une interface portant cette méthode, et d’implémenter  cette interface dans les différentes classes. Cela permet  d’appeler cette méthode au niveau de l’interface sans connaître  a priori la classe effective qui concrétise cette méthode. </p>
+    <p>Exemple de code :</p>
+    <pre>public interface Ecouteur {        void quelqueChoseEstArrive(Object quelqueChose) ;    }        class PremierEcouteur implements Ecouteur {        public void quelqueChoseEstArrive(Object quelqueChose) {              System.out.println("action 1") ;        }    }   class SecondEcouteur implements Ecouteur {        public void quelqueChoseEstArrive(Object quelqueChose) {              System.out.println("action 2") ;        }    }</pre>
+    <p>Le résultat suivant est obtenu à l’exécution :</p>
+    <pre>Ecouteur ecouteur = null ;      ecouteur = new PremierEcouteur() ;   ecouteur.quelqueChoseEstArrive(null) ; // action 1      ecouteur = new SecondEcouteur() ;   ecouteur.quelqueChoseEstArrive(null) ; // action 2  </pre>
+    <p>Le code ci-dessus crée des objets  avec les classes concrètes <strong>PremierEcouteur</strong> et <strong>SecondEcouteur</strong>, et les stocke dans une variable de type interface <strong>Ecouteur</strong>. Le type concret de l’objet disparaît donc à ce  moment. Pourtant, en appelant la même méthode <strong>quelqueChoseEstArrive()</strong>, les comportements des deux objets diffèrent.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Ce n’est pas un polymorphisme de redéfinition,  car les classes n’ont pas une hiérarchie commune. Le polymorphisme  est basé ici sur le contrat que les classes implémentant  l’interface doivent respecter.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

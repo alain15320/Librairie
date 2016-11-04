@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_167caca8-4055-4554-bb7d-fd7565f93530" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Exemple de workflow</h1>
+  <p>Pour utiliser la méthode Git-Flow  efficacement, il est préférable de nommer ses  branches avec les termes anglais. De cette manière tous  les développeurs (français ou étrangers)  seront capables de comprendre le schéma rapidement. De  plus, utiliser les noms anglais favorise la compatibilité avec  des outils s’interfaçant avec un dépôt  en mode Git-Flow.</p>
+  <p>Avec la méthode Git-Flow, tous les  merges doivent être effectués en désactivant  l’avance rapide avec l’argument --no-ff de  la commande git merge pour que chaque  merge produise un commit. Cela permet d’avoir un historique plus  clair et non pollué par les avances rapides.</p>
+  <p>Voici une vision schématique des  branches composant un historique dans un dépôt  géré par la méthode Git-Flow :</p>
+  <div>
+    <div><img alt="images/08E01.png" src="images/08E01.png"></div>
+  </div>
+  <p>Le schéma ci-dessus représente  le dépôt utilisé pour le chapitre Scénario d’équipe.  Le dépôt contient un projet nommé improllow-up. Ce projet permet aux entreprises de suivre plus efficacement  les tâches de leurs salariés.</p>
+  <p>Voici l’enchaînement des étapes  du dépôt représentées par le  schéma :</p>
+  <div>
+    <ul>
+      <li>
+        <p>C1 (master) : premier commit du projet. Ce commit ajoute la base  du projet dans le dépôt (version v1.0.0).</p>
+      </li>
+      <li>
+        <p>C2 (develop) : création de la branche develop. Après ce commit, les deux branches éternelles  auront été créées.</p>
+      </li>
+      <li>
+        <p>C3 (graph_employee) : création d’une branche de fonctionnalité pour  ajouter des graphiques sur la page des salariés.</p>
+      </li>
+      <li>
+        <p>C4 (hotfix-negative-time) : création d’une branche de correctifs pour  gérer le cas où le salarié entre une  valeur négative dans la durée d’une tâche.</p>
+      </li>
+      <li>
+        <p>C5 (master) : intégration dans la branche master du correctif (version v1.0.1).</p>
+      </li>
+      <li>
+        <p>C6 (develop) : intégration dans la branche develop du correctif.</p>
+      </li>
+      <li>
+        <p>C7 (task_type) : création d’une branche de fonctionnalité pour  ajouter une notion de type des tâches.</p>
+      </li>
+      <li>
+        <p>C8 (graph_employee) : dernier commit de la branche graph_employee.</p>
+      </li>
+      <li>
+        <p>C9 (develop) : intégration de la branche graph_employee dans develop. La branche graph_employee est alors supprimée.</p>
+      </li>
+      <li>
+        <p>C10 (task_type) : dernier commit de la branche task_type.</p>
+      </li>
+      <li>
+        <p>C11 (develop) : intégration de la branche task_type dans develop.</p>
+      </li>
+      <li>
+        <p>C12 (release-v1.1) : création de la branche de version.</p>
+      </li>
+      <li>
+        <p>C13 (export_csv) : création d’une branche de fonctionnalité pour  ajouter un export CSV des tâches d’un salarié durant  une période.</p>
+      </li>
+      <li>
+        <p>C14 (release-v1.1) : correctif : le graphique est en erreur lorsque le  salarié n’a aucune tâche.</p>
+      </li>
+      <li>
+        <p>C15 (master) : intégration de la version 1.1 dans la branche master (version v1.1).</p>
+      </li>
+      <li>
+        <p>C16 (develop) : intégration du correctif de la version 1.1  dans la branche develop. </p>
+      </li>
+      <li>
+        <p>C17 (export_csv) : dernier commit formant la branche de fonctionnalité export_csv.</p>
+      </li>
+      <li>
+        <p>C18 (develop) : intégration de la branche export_csv dans la branche develop.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Cet exemple montre particulièrement  l’enchaînement des actions et la vie du projet. Un exemple  pratique exposant ce cas concret se trouve dans le chapitre Scénario  d’équipe.</p>
+</div>
+
+</body>
+</html>

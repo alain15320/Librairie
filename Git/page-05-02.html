@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_276719a5-9bfe-44b2-8d23-ce15d3c53859" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Le contenu du dossier .git</h1>
+  <p>Le dossier <strong>.git</strong> héberge tout le contenu du dépôt  utilisé par Git. De manière pragmatique, nous  allons visualiser les dossiers et fichiers présents dans  ce dossier. Pour cela, il faut se placer dans le répertoire <strong>.git</strong> en utilisant la commande cd :</p>
+  <pre>cd .git   ls -la  </pre>
+  <p>Le système d’exploitation  nous affiche alors une liste de fichiers et de dossiers : </p>
+  <pre>-rw-r--r--   1 dauzon  staff   23  8 jui 23:30 HEAD   drwxr-xr-x   2 dauzon  staff   68  8 jui 23:30 branches   -rw-r--r--   1 dauzon  staff  137  8 jui 23:30 config   -rw-r--r--   1 dauzon  staff   73  8 jui 23:30 description   drwxr-xr-x  11 dauzon  staff  374  8 jui 23:30 hooks   drwxr-xr-x   3 dauzon  staff  102  8 jui 23:30 info   drwxr-xr-x   4 dauzon  staff  136  8 jui 23:30 objects   drwxr-xr-x   4 dauzon  staff  136  8 jui 23:30 refs  </pre>
+  <p>Chacun de ces fichiers ou dossiers contient  des éléments que Git utilise pour suivre notre  code. Voici une liste des fichiers et dossiers et leur contenu (certains termes  peuvent paraître obscurs, mais ils seront traités  dans la suite de ce livre) : </p>
+  <div>
+    <ul>
+      <li>
+        <p><strong>HEAD </strong>: contient la référence du commit à partir  duquel on travaille. C’est une référence  qui est dépendante de la branche sur laquelle nous sommes  situés. Dans la suite de ce livre (et dans de nombreux  cas), HEAD désignera le commit le plus récent  d’une branche et par défaut le commit le plus  récent de la branche courante.</p>
+      </li>
+      <li>
+        <p><strong>branches </strong>: ce dossier contient les branches du projet. Les branches  sont des versions qui divergent du développement principal  et sont particulièrement utiles pour développer  de nouvelles fonctionnalités sans créer de conflit  avec la version stable du projet. Les branches seront abordées  plus en détail dans le chapitre Les branches et les tags.</p>
+      </li>
+      <li>
+        <p><strong>config </strong>: ce fichier contient les éléments  de configuration et les alias propres au dépôt.</p>
+      </li>
+      <li>
+        <p><strong>description </strong>: ce fichier sera affiché lors de l’utilisation  de l’interface web GitWeb.</p>
+      </li>
+      <li>
+        <p><strong>hooks </strong>: ce dossier contient les hooks du dépôt.  Les hooks sont des mécanismes de contrôle utilisés  par Git. Il est possible de créer ses propres hooks pour  répondre à des besoins spécifiques.</p>
+      </li>
+      <li>
+        <p><strong>info </strong>: ce dossier contient un fichier <strong>exclude</strong> utilisé pour demander à Git d’ignorer  les fichiers spécifiés. Une autre possibilité existe  pour ignorer des fichiers, elle sera abordée dans le chapitre  Manipulation des fichiers et commit, à la section  Ignorer des fichiers.</p>
+      </li>
+      <li>
+        <p><strong>objects </strong>: contient tous les objets de notre projet, c’est-à-dire  que c’est dans ce dossier que seront placées toutes les  informations concernant nos fichiers, dossiers, commits,  ou tout autre objet que Git a besoin de traiter.</p>
+      </li>
+      <li>
+        <p><strong>refs</strong> : ce dossier comprend les références  qui pointent vers des commits. Ces références  sont en réalité soit des branches, soit des tags  qui seront abordés dans le chapitre Les branches et les  tags.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Ces dossiers et fichiers forment le dépôt  réel. En utilisant normalement Git sans chercher à en  comprendre les mécanismes internes, un utilisateur n’a jamais besoin  d’aller dans ces dossiers.</p>
+</div>
+<div id="AU_276719a5-9bfe-44b2-8d23-ce15d3c53859" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\"> </div>
+<div id="CFooter"> </div>
+</body>
+</html>

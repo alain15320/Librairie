@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_a7322fc6-e1d6-4f1d-9f15-aae13e4e834e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Aperçu du projet</h1>
+  <p>Avant de se lancer dans ce chapitre, il peut être  utile d’essayer le logiciel pour étudier son fonctionnement  et mieux comprendre les exemples du chapitre. Pour cela, il faut  installer Python et Django sur son système (en plus de  Git). Cette partie du chapitre a uniquement pour but de montrer  le logiciel final. Elle n’est absolument pas nécessaire à l’apprentissage  de Git et le lecteur pressé peut directement passer à l’installation  de GitLab.</p>
+  <p>Le projet est présent dans les éléments  téléchargeables. Le dépôt se  trouve dans le dossier 11/Improllow-up. Les bibliothèques jQuery et AngularJS sont déjà générées,  la base de données SQLite également, ainsi qu’un  utilisateur root. Il reste malgré tout à installer  Python et ses dépendances, puis à lancer le serveur.</p>
+  <p>Ces étapes considèrent que  Git est déjà installé sur la machine.</p>
+  <div>
+    <h2>1. Installation de Python</h2>
+    <p>Sous Windows, il faut télécharger  l’exécutable de Python 3.5 à partir de l’adresse  suivante : <a href="https://www.python.org/downloads/windows/" target="_blank">https://www.python.org/downloads/windows/</a></p>
+    <p>Lors de l’installation, il ne faut pas oublier  de cocher l’option <strong>Add Python 3.5 to PATH</strong>. Cette option permettra d’accéder à l’exécutable  Python sans spécifier le chemin absolu.</p>
+    <p>Une fois Python installé, il peut être  exécuté directement à partir de Cygwin. Pour  vérifier que Python est accessible, il faut utiliser la  commande suivante dans Cygwin (accessible via le programme <strong>git bash</strong>) :</p>
+    <pre>python -V   </pre>
+    <p>Sous Mac OS, il faut télécharger  l’exécutable d’installation de Python 3.5 à partir  de l’adresse suivante : <a href="https://www.python.org/downloads/mac-osx/" target="_blank">https://www.python.org/downloads/mac-osx/</a>. La suite de l’installation sera standard.</p>
+    <p>Sous Linux (Debian 8.2), les derniers paquets  ne sont pas immédiatement disponibles. C’est la  raison pour laquelle, sous Debian, l’exemple sera montré avec  Python 3.4. Pour installer Python 3.4 à partir des paquets  Debian existants, il faut utiliser la commande suivante :</p>
+    <pre>apt-get install python3.4  </pre>
+    <p>Il faut ensuite essayer d’afficher  l’aide de PIP avec la commande suivante (uniquement pip sous Windows) :</p>
+    <pre>pip3.4  </pre>
+    <p>Si la commande n’est pas reconnue,  il faut installer PIP avec les commandes suivantes : </p>
+    <pre>wget https://bootstrap.pypa.io/get-pip.py    python3 get-pip.py  </pre>
+  </div>
+  <div>
+    <h2>2. Récupération du dépôt</h2>
+    <p>Pour récupérer le dépôt,  il faut tout d’abord consulter la page du dépôt  (<a href="https://github.com/SamuelDauzon/Improllow-up" target="_blank">https://github.com/SamuelDauzon/Improllow-up</a>), copier le lien qui se trouve dans l’encadré nommé <strong>HTTPS clone URL</strong>, puis utiliser la commande suivante :</p>
+    <pre>git clone https://github.com/SamuelDauzon/Improllow-up.git  </pre>
+  </div>
+  <div>
+    <h2>3. Installation des dépendances Python</h2>
+    <p>Une fois que Python est installé,  vous avez accès à l’outil PIP (depuis Python 3.4+).  Cet outil va permettre d’installer Django 1.8 (version LTS : Long Time Support). Il faut tout d’abord se placer dans le dépôt  avec la commande suivante : </p>
+    <pre>cd Improllow-up  </pre>
+    <p>Sous Mac OS et Linux, il faut utiliser la  commande suivante :</p>
+    <pre>pip3.4 install -r requirements.txt  </pre>
+    <p>Sous Windows (via l’interface de  Cygwin) :</p>
+    <pre>pip install -r requirements.txt  </pre>
+  </div>
+  <div>
+    <h2>4. Initialisation des dépôts intégrés</h2>
+    <p>Dans le dépôt, il faut exécuter  les commandes suivantes :</p>
+    <pre>git submodule init    git submodule update  </pre>
+    <p>La dernière commande peut être  longue à exécuter, car elle télécharge  tout le contenu des dépôts intégrés.</p>
+  </div>
+  <div>
+    <h2>5. Génération des bibliothèques</h2>
+    <p>Pour cette partie, il est nécessaire  d’installer NodeJS et npm. Pour cela, il faut aller sur la page  de téléchargement du site officiel (<a href="https://nodejs.org/en/download/" target="_blank">https://nodejs.org/en/download/</a>). Cette page permet de télécharger  des installeurs pour Windows et Mac OS.</p>
+    <p>Pour Linux (Debian), il est possible de compiler  les sources ou d’utiliser apt-get :</p>
+    <pre>sudo apt-get install nodejs    sudo apt-get install npm  </pre>
+    <p>Charger les submodules ne suffit pas toujours  pour disposer des fichiers nécessaires à l’utilisation  des bibliothèques. En effet, les dépôts  que l’on charge sont conçus pour les développeurs  et les fichiers de bibliothèques doivent parfois être  générés.</p>
+    <p>Pour générer le fichier jquery.js de jQuery sous Windows et Mac OS, il faut utiliser les  commandes suivantes :</p>
+    <pre>cd improllowup/static/lib/js/jquery    npm run build  </pre>
+    <p>Par exemple, pour générer  le fichier jquery.js de jQuery sous Debian, il faut se placer dans le dépôt  de jQuery et exécuter les commandes suivantes :</p>
+    <pre>cd improllowup/static/lib/js/jquery    apt-get install nodejs-legacy    npm run build  </pre>
+    <p>Pour générer jQuery, il  faut installer le paquet <strong>nodejs-legacy</strong> pour régler des problèmes de rétrocompatibilité sous  Debian.</p>
+    <p>Ensuite, pour générer AngularJS  il faut utiliser les commandes suivantes :</p>
+    <pre>cd ../angularjs/    npm install -g grunt-cli    npm install -g bower    npm install    bower install    grunt package  </pre>
+  </div>
+  <div>
+    <h2>6. Création du fichier de configuration</h2>
+    <p>L’une des bonnes pratiques est de ne jamais  versionner de données sensibles. La configuration de Django  a besoin de stocker une donnée sensible nommée SECRET_KEY. Cette clé est utilisée à de  nombreux endroits et permet entre autres de générer  les jetons de protection CSRF, ou sert de sel pour générer  le hash des mots de passe utilisateurs. Si cette clé était  compromise, toute la sécurité de l’application  serait également compromise, d’où l’importance  de ne jamais la perdre.</p>
+    <p>Des robots ont été spécialement  conçus pour parcourir les projets hébergés  sur GitHub à la recherche de clés d’API, de mots  de passe et de clés privées pour le chiffrement  symétrique ou asymétrique. Le risque est donc  bien réel et ne doit pas être sous-estimé.</p>
+    <p>Voici par exemple le contenu possible du fichier improllowup/settings/local.py :</p>
+    <pre>from .base import *        SECRET_KEY = ’_dklma3)=/?kdjDE885$+0f88(ys1!7ˆ+@b’    DEBUG = True  </pre>
+  </div>
+  <div>
+    <h2>7. Création de la base</h2>
+    <p>À partir de ce point, les commandes  seront présentées pour les systèmes Debian  et Mac OS. Les commandes sont exactement les mêmes pour  Windows excepté le fait que par défaut il faille  utiliser l’alias python et pas python3.</p>
+    <p>Pour créer la base de données,  il faut utiliser le système de migration de Django avec  la commande suivante (exécutée à la racine  du projet) :</p>
+    <pre>python3 manage.py migrate --settings=improllowup.settings.local  </pre>
+    <p>Après cette action, le fichier de  base de données SQLite est créé.</p>
+  </div>
+  <div>
+    <h2>8. Création d’un compte root</h2>
+    <p>L’application est conçue pour être  utilisée uniquement par des utilisateurs connectés.  Il faut donc pour cela ajouter le premier utilisateur qui sera administrateur.  Cet utilisateur aura accès à l’interface d’administration.  Sous Windows, cette commande ne devra pas être exécutée  sous Cygwin, mais avec l’interface en ligne de commande cmd.exe  (raccourci-clavier Windows + R) pour ne pas rencontrer  l’erreur <strong>Superuser creation skipped due to not running in a TTY</strong>.</p>
+    <pre>python3 manage.py createsuperuser --username=root     --email=git@dauzon.com --settings=improllowup.settings.local  </pre>
+    <p>Après avoir exécuté cette  commande, il faut spécifier le mot de passe.</p>
+  </div>
+  <div>
+    <h2>9. Lancement du serveur</h2>
+    <p>La dernière action à réaliser  est le lancement du serveur avec la commande suivante :</p>
+    <pre>python3 manage.py runserver --settings=improllowup.settings.local  </pre>
+    <p>À présent, le serveur est  connecté et prêt à recevoir des requêtes.  Par défaut, le serveur attend les requêtes sur <strong>127.0.0.1:8000</strong>. Pour accéder à l’application via  un navigateur, il faut donc consulter l’URL suivante : <strong>http://127.0.0.1:8000</strong> (où <strong>127.0.0.1</strong> peut être remplacé par <strong>localhost</strong>).</p>
+    <p>Pour se connecter au site, il faut cliquer  sur le bouton en haut à droite et utiliser les identifiants  du compte root. Pour accéder à l’interface  d’administration, il faut aller sur la page <strong>http://127.0.0.1:8000/admin</strong> et se connecter avec les identifiants du compte root.</p>
+  </div>
+</div>
+
+</body>
+</html>

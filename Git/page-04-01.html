@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Installation sous Linux</h1>
+<p>Sous Linux, certains développeurs  préfèrent installer Git depuis ses sources pour  profiter d’une version très récente. D’autres  préfèrent utiliser des paquets déjà existants  pour simplifier l’installation et la mise à jour.</p>
+<p>Le principal intérêt d’installer  Git depuis ses sources est que l’utilisateur profite de la version  la plus récente possible alors qu’un gestionnaire de paquets peut  parfois proposer une version avec plusieurs mois de retard.</p>
+<div>
+  <h2>1. Installation à partir de paquets préexistants</h2>
+  <p>Pour installer Git sur un système  Debian à partir de paquets préexistants, il est  possible d’utiliser le gestionnaire de paquets apt-get.  Après avoir ouvert une interface en ligne de commande abrégée  CLI (Command Line Interface) il faut utiliser la commande suivante pour installer  Git :</p>
+  <pre>sudo apt-get install git  </pre>
+  <p>Une fois que l’installation est terminée,  pour tester cette installation et obtenir la version de Git qui  a été installée il faut utiliser la commande  suivante : </p>
+  <pre>git --version  </pre>
+  <p>Pour obtenir les commandes utilisées  pour installer Git sur d’autres distributions Linux, il  faut se rendre sur la page <a href="http://git-scm.com/download/linux" target="_blank">http://git-scm.com/download/linux</a>.</p>
+</div>
+<div>
+  <h2>2. Installation à partir des sources</h2>
+  <p>Pour être sûr de travailler  sur une version récente de Git il vaut mieux l’installer  depuis les sources. Cet exemple montre l’installation de  Git à partir des sources sur la distribution Debian 8.</p>
+  <p>Pour installer Git à partir des sources,  il faut tout d’abord avoir téléchargé celles-ci.  Pour cela, nous pouvons télécharger une version  stable de Git accessible à partir du dépôt  GitHub : <a href="https://github.com/git/git/releases" target="_blank">https://github.com/git/git/releases</a>.</p>
+  <p>La commande suivante va télécharger  sur la machine locale l’archive disponible sur GitHub.</p>
+  <pre>wget https://github.com/git/git/archive/v2.4.5.zip  </pre>
+  <p>Pour pouvoir utiliser les sources, il convient  de les extraire de l’archive à l’aide de  la commande suivante :</p>
+  <pre>unzip v2.4.5.zip -d code_git  </pre>
+  <p>Il faut ensuite télécharger  les dépendances nécessaires à l’installation  de Git : </p>
+  <pre>apt-get update   apt-get install make libssl-dev libz-dev gettext libexpat1-dev    libcurl4-openssl-dev build-essential  </pre>
+  <p>Pour terminer l’installation de Git,  il faut compiler et installer les sources avec les commandes suivantes : </p>
+  <pre>cd code_git/git-2.4.5   make prefix=/usr/local all   make prefix=/usr/local install  </pre>
+  <p>Pour vérifier l’installation  de Git, il est possible d’utiliser la commande suivante : </p>
+  <pre>git --version  </pre>
+  <p>Dans cet exemple, Debian nous affiche la version  avec la sortie suivante : </p>
+</div>
+<div id="AU_b632ee8e-a8b9-41ca-af1e-8e3daefaa9ad" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <pre>git version 2.4.5  </pre>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_42f22ba8-bd29-49ce-8aed-9bc0062cc6b3" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>JDBC</h1>
+  <p>JDBC (Java DataBase Connectivity) permet à des applications clientes développées  en Java d’accéder à des bases de données  relationnelles. JDBC fournit toutes les classes utiles pour gérer  ces opérations.</p>
+  <p>JDBC est une API pour laquelle il existe quatre  types de pilotes dont les performances et la portabilité sont  variables.</p>
+  <div>
+    <ul>
+      <li>
+        <p>Type 1 :  le premier type est basé sur ODBC. Les appels JDBC sont  dans ce cas convertis en appels ODBC. Celui-ci les transmet au SGBDR  qui traite les requêtes SQL reçues. De même,  les jeux d’enregistrements retournés utilisent la passerelle  ou pont JDBC/ODBC entre l’application Java et la base de données.</p>
+        <div>
+          <div><img alt="images/08-34.png" src="images/images_08-34.png"></div>
+        </div>
+        <div>
+          <p>Les principales opérations réalisées  sont les suivantes :</p>
+        </div>
+        <div>
+          <p>1. Chargement du pilote</p>
+        </div>
+        <div>
+          <p>2. Établissement de la connexion  via le pont JDBC/ODBC avec la base de données</p>
+        </div>
+        <div>
+          <p>3. Exécution des requêtes  SQL par le SGBDR MySQL</p>
+        </div>
+        <div>
+          <p>4. Récupération des  jeux d’enregistrements (pour des requêtes de sélection)</p>
+        </div>
+        <div>
+          <p>5. Fermeture des jeux d’enregistrements  (si existants)</p>
+        </div>
+        <div>
+          <p>6. Fermeture de la connexion</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>Type 2 : il s’agit  d’un pilote dont une partie est écrite en Java et l’autre  dans le langage du SGBDR. Les appels JDBC sont convertis en appels  natifs. Son utilisation nécessite l’installation de la  partie native sur le client. Autres inconvénients :  la perte de la portabilité du code, ce qui exclut son utilisation  avec des applets.</p>
+        <div>
+          <div><img alt="images/08-35.png" src="images/images_08-35.png"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>Type 3 : il s’agit  d’un pilote totalement écrit en Java communiquant avec  le SGBD via une application middleware. La portabilité et  l’utilisation avec les applets sont donc assurées.</p>
+        <div>
+          <div><img alt="images/08-36.png" src="images/images_08-36.png"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>Type 4 : il s’agit  d’un pilote totalement écrit en Java avec un accès  direct au SGBD. Comme pour le type précédent,  la portabilité et l’utilisation avec les applets sont assurées.  Ce sont les éditeurs de SGBD qui fournissent ce type de  pilotes.</p>
+        <div>
+          <div><img alt="images/08-37.png" src="images/images_08-37.png"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <p>Pour le projet Luna, un pilote de type 4 fourni  par MySQL est utilisé.</p>
+</div>
+</body>
+</html>

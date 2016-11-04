@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_47a0d6d0-ac53-42fa-98c1-d822be13a425" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Gestion des commandes</h1>
+  <p>La même démarche que pour  la gestion des clients est reprise en s’appuyant sur le design pattern  MVC, à ceci près que l’ajout d’une commande se  fait depuis la fenêtre principale du module.</p>
+  <p>Pour les commandes, deux fenêtres  sont disponibles :</p>
+  <div>
+    <ul>
+      <li>
+        <p><strong>FCommandes</strong> : accessible à partir de la fenêtre  d’accueil pour l’ajout des données et qui est donc la première  présentée.</p>
+      </li>
+      <li>
+        <p><strong>FCommandesExistantes</strong> : accessible à partir de la fenêtre  FCommandes et qui regroupe les autres fonctionnalités :  suppression, recherche, aperçu, impression et  exportation.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2>1. Affichage</h2>
+    <p>Les opérations suivantes sont réalisées  comme précédemment :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Création  de la classe qui contient le modèle de données  graphiques.</p>
+        </li>
+        <li>
+          <p>Ajout du modèle au JTable  pour affichage.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>a. Création du modèle graphique</h3>
+      <div>
+        <p> Créez une nouvelle classe <strong>ModeleCommandes</strong> et rangez-la dans le package <strong>controle.modele</strong>.</p>
+      </div>
+      <pre>
+package controle.modele;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.swing.table.AbstractTableModel;
+
+import entite.Commande;
+
+public class ModeleCommandes extends AbstractTableModel {
+
+	private static final long serialVersionUID = 1L;
+    private static final <strong>Comparator&lt;? super Commande&gt; COMPARATEUR</strong>  = new Comparator&lt;Commande&gt;()
+ {              @Override           public <strong>int compare(Commande cmd1, Commande cmd2)</strong> {               // les commandes les plus récentes                // sont les premières à être affichées               return <strong>                    cmd2</strong>.getInstant() <strong>                           .compareTo</strong>(<strong>cmd1</strong>.getInstant());           }       };          private final List&lt;Commande&gt; lesDonnees;       private final String[] lesTitres =                    {"Code", "Client", "Mode de paiement",                    "Total TTC", "Date"};          public ModeleCommandes(List&lt;Commande&gt; lesCommandes){           lesDonnees = new ArrayList&lt;&gt;(lesCommandes);<strong>            Collections.sort(lesDonnees, COMPARATEUR);</strong>       }              public int getRowCount() {           return lesDonnees.size();       }              public int getColumnCount() {           return lesTitres.length;       }              public String getColumnName(int columnIndex) {           return lesTitres[columnIndex];       }          public Object getValueAt(int rowIndex, int columnIndex) {           Commande uneCommande = lesDonnees.get(rowIndex);           if(columnIndex == 0) return uneCommande.getCode();           if(columnIndex == 1) {               Client client = uneCommande.getClient();               return client.getNom() + " " + client.getPrenom();           }           if(columnIndex == 2) return                        uneCommande.getReglement()                                        .getType();           if(columnIndex == 3) return uneCommande.getTotalTTC();           else return uneCommande.getInstant();       }          public Class&lt;?&gt; getColumnClass(int columnIndex){           Class&lt;?&gt; classe = Object.class;           switch(columnIndex){           case 0:           case 1:           case 2:               classe = String.class;               break;           case 3:               classe = Double.class;               break;           default:           }           return classe;       }          public void créé(Commande uneCommande) {           if(lesDonnees.add(uneCommande)){               int ligne = lesDonnees.size() -1;               fireTableRowsInserted(ligne, ligne);           }       }              public void supprimé(int rowIndex) {           lesDonnees.remove(rowIndex);           fireTableRowsDeleted(rowIndex, rowIndex);       }          public void modifié(int numeroLigne, Commande uneCommande) {           lesDonnees.set(numeroLigne, uneCommande);           fireTableRowsUpdated(numeroLigne, numeroLigne);       }              public void lu(List&lt;Commande&gt; lesCommandes){           lesDonnees.clear();           lesDonnees.addAll(lesCommandes);<strong>           Collections.sort(lesDonnees, COMPARATEUR);</strong>           fireTableDataChanged();           }              public List&lt;Commande&gt; getCommandes() {            return <strong>Collections.unmodifiableList</strong>(lesDonnees);       }              public Commande getCommande(int numeroDeLigne) {           return lesDonnees.get(numeroDeLigne);       }   }  </pre>
+      <p>À la différence du module  des clients et des articles, la liste des commandes est triée  en fonction de leur date, afin que les plus récentes soient  en tête de liste.</p>
+      <p>Pour cela, la méthode statique <strong>sort()</strong> de la classe <strong>Collections</strong> est utilisée. Un comparateur implémentant  l’interface <strong>Comparator</strong>, spécialisé dans le tri d’une commande  par rapport à sa position sur la ligne du temps, est utilisé.</p>
+      <div>
+        <p> Créez une nouvelle classe <strong>ModeleLignes</strong> et rangez-la dans le package <strong>controle.modele</strong>.</p>
+      </div>
+      <pre>package controle.modele;      import java.util.ArrayList;   import java.util.List;      import javax.swing.table.AbstractTableModel;      import entite.Article;   import entite.Ligne;      public class ModeleLignes extends AbstractTableModel {       private static final long serialVersionUID = 1L;       Ligne instanceLigneCommande = null;       private final List&lt;Ligne&gt; lesDonnees;       private final String[] lesTitres =                    {"Code", "Code catégorie",                    "Désignation", "Quantité",                    "Prix unitaire", "Total"};          public ModeleLignes(){           lesDonnees = new ArrayList&lt;&gt;();       }              public int getRowCount() {           return lesDonnees.size();       }       public int getColumnCount() {           return lesTitres.length;       }       public String getColumnName(int columnIndex) {           return lesTitres[columnIndex];       }           public Object getValueAt(int rowIndex, int columnIndex) {           Ligne uneLigne = lesDonnees.get(rowIndex);           Article article = uneLigne.getArticle();           if(columnIndex == 0) return article.getCode();           if(columnIndex == 1) {               return article.getCategorie().getCode();           }           if(columnIndex == 2) return article.getDesignation();           if(columnIndex == 3) return uneLigne.getQuantite();           if(columnIndex == 4) return uneLigne.getPrixUnitaire();           else return uneLigne.getTotal();       }          public Class&lt;?&gt; getColumnClass(int columnIndex){           switch(columnIndex){               case 0:                   return String.class;               case 1:                   return Character.class;               case 2:                   return String.class;               case 3:                   return Integer.class;                         case 4:                   return Double.class;               case 5:                   return Double.class;               default:                   return Object.class;           }       }          // -------------------------       public void créée(Ligne uneLigne) {           // TODO merger les lignes par article           if(lesDonnees.add(uneLigne)){               int ligne = lesDonnees.size() -1;                  fireTableRowsInserted(ligne, ligne);           }       }          public void supprimée(int rowIndex) {           lesDonnees.remove(rowIndex);           fireTableRowsDeleted(rowIndex, rowIndex);       }              public void supprimées(){           lesDonnees.clear();           fireTableDataChanged();       }              public void modifiée(int numeroLigne, Ligne uneLigne) {           lesDonnees.set(numeroLigne, uneLigne);           fireTableRowsUpdated(numeroLigne, numeroLigne);       }              public void lu(List&lt;Ligne&gt; nouvellesDonnees){           lesDonnees.clear();           lesDonnees.addAll(nouvellesDonnees);           fireTableDataChanged();           }          public List&lt;Ligne&gt; getLignes() {           return lesDonnees;       }   }  </pre>
+    </div>
+    <div>
+      <h3>b. Création du contrôle</h3>
+      <p>De même que pour les articles, le  contrôle des commandes se fait grâce à une classe  spécifique. La classe graphique ne connaîtra que  ce type, et n’aura donc pas à gérer directement  les accès à la base.</p>
+      <div>
+        <p> Créez une classe <strong>ControleCommande</strong> dans le package <strong>controle</strong>.</p>
+      </div>
+      <pre>package controle;         public class ControleCommande {          private final CommandeCrud commandeCrud;       private final ArticleCrud articleCrud;       private final ModeReglementsCrud reglementsCrud;              private final ModeleLignes leModeleLigneCommande;       private final ModeleCommandes leModeleCommande; <strong>          private Commande commande;</strong>              public ControleCommande(Connexion connexion) {           commandeCrud = new CommandeCrud(connexion);           articleCrud = new ArticleCrud(connexion);           reglementsCrud = new ModeReglementsCrud(connexion);           leModeleLigneCommande = new ModeleLignes();           List&lt;Commande&gt; commandes = Collections.emptyList();           leModeleCommande = new ModeleCommandes(commandes);       }          public void init() {           List&lt;Commande&gt; commandes = commandeCrud.lire();           leModeleCommande.lu(commandes);<strong>            if (getModeReglements().isEmpty()) {               reglementsCrud.creer("Carte Bleue");               reglementsCrud.creer("Chèque");               reglementsCrud.creer("Virement");           }</strong>       }              public List&lt;ModeReglements&gt; getModeReglements() {           return reglementsCrud.lire();       }          public ModeleCommandes getModeleCommande() {           return leModeleCommande;       }          public TableModel getModeleLignes() {           return leModeleLigneCommande;       }          private static String randomCommandeNumber() {           Random rand = new Random();           String num = "COM" + rand.nextInt(999); //$NON-NLS-1$           return num;       }          public Commande <strong>nouvelleCommande</strong>() {           String code    = randomCommandeNumber();<strong>            commande = new Commande(code);</strong>           leModeleLigneCommande.lu(commande.getLignes());           return commande;       }          public Commande <strong>getCommande</strong>() {           return commande;       }   }  </pre>
+      <div>
+        <p> <strong>Organisez les imports</strong> de cette classe, en utilisant le raccourci-clavier [Ctrl][Shift] <strong>O</strong>.</p>
+      </div>
+      <div>
+        <p>À la différence du  modèle d’articles, l’objet de type <strong>ControleCommande</strong> va conserver en propriété la <strong>commande en cours de création</strong>. Cette propriété sera initialisée à chaque  appel de la méthode <strong>nouvelleCommande()</strong>. </p>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Les modes de règlements sont  initialisés paresseusement. Ce procédé n’est absolument  pas recommandé dans une application professionnelle.</p>
+        </div>
+      </div>
+      <p>À ce stade, la gestion des erreurs  n’est pas effectuée.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Nous vous laissons le soin de vous  inspirer de la classe <strong>ControleArticleDecore</strong> pour créer une classe <strong>ControleCommandeDecore</strong> dédiée à la gestion des erreurs des  commandes.</p>
+        </div>
+      </div>
+      <p>Il reste maintenant à faire en sorte  que les fenêtres graphiques utilisent un objet de  type <strong>ControleCommandeDecore</strong> ou <strong>ControleCommande</strong>.</p>
+      <div>
+        <p> Complétez le code de la méthode <strong>setConnexion</strong> de la classe <strong>FCommandesExistantes</strong>.</p>
+      </div>
+      <pre>
+	FCommandesExistantes setConnexion(Connexion connexion) {  
+	    controleCommande = new ControleCommande(connexion); 
+	 
+	    controleCommande.init(); 
+	 
+	    ModeleCommandes modele = controleCommande.getModeleCommande(); 
+	    table.setModel(modele); 
+	 
+	    TableColumnModel colonne = table.getColumnModel();  
+	    TableColumn prix = colonne.getColumn(3); 
+	    prix.setCellRenderer(new PrixRenderer()); 
+	    TableColumn dates = colonne.getColumn(4); 
+	    dates.setCellRenderer(new InstantRenderer()); 
+	 
+	     double total = 0; 
+	     List<Commande> commandes = modele.getCommandes(); 
+	     for( Commande commande : commandes) { 
+	         total += commande.getTotalTTC(); 
+	     } 
+	     txtTotalcommandes.setText(formate(total)); 
+	 
+	    return this; 
+	}      
+      </pre>
+      <div>
+        <div><img alt="images/13-05.png" src="images/images_13-05.png"></div>
+      </div>
+      <p>Le total des commandes se calcule avec le  code suivant :</p>
+      <pre>
+	 double total = 0; 
+     List<Commande> commandes = modele.getCommandes(); 
+     for( Commande commande : commandes) { 
+         total += commande.getTotalTTC(); 
+     }      
+      </pre>
+      <p>Il peut aussi se calculer en Java 8 avec l’API  Stream :</p>
+      <pre>
+     List<Commande> commandes = modele.getCommandes(); 
+     double total = commandes 
+             .stream()  
+             .mapToDouble(cmd -> cmd.getTotalTTC())  
+             .sum();
+      </pre>
+      <p>Le total est ensuite formaté en tant  que chaîne de caractères avec le code suivant :</p>
+      <pre>
+      </pre>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Les JTextField acceptent un formatage  en HTML !</p>
+        </div>
+      </div>
+      <div>
+        <p> Complétez le code de la méthode <strong>setConnexion</strong> de la classe <strong>FCommandes</strong>.</p>
+      </div>
+      <pre>...       private ControleCommande controleCommande;   ...      public FCommandes setConnexion(Connexion connexion) {       this.connexion = connexion;<strong>        controleCommande = new ControleCommande(connexion);          Commande laCommande = controleCommande.nouvelleCommande();                  table.setModel(controleCommande.getModeleLignes());</strong>          // gestion du rendu des colonnes du JTables       // ----------------------------------------       TableColumnModel colonnes = table.getColumnModel();       TableColumn colonne = colonnes.getColumn(1);       colonne.setCellRenderer(new GrasRenderer());<strong>           txtNumeroCommande.setText(laCommande.getCode());</strong>          for (ModeReglements unMode :                    controleCommande.getModeReglements()) {           comboBoxReglement.addItem(unMode);       }          comboBoxReglement.addActionListener(evt -&gt; {           ModeReglements reglement = getReglement();<strong>            Commande commandeActuelle =                       controleCommande.getCommande();           commandeActuelle.setReglement(reglement);</strong>       });<strong>        comboBoxReglement.setSelectedIndex(0);</strong>          actionValiderCommande.<strong>setEnabled</strong>(false);          return this;   }  </pre>
+      <p>Cette méthode crée d’entrée  de jeu une nouvelle commande dans le contrôle, initialise  la JTable avec le modèle de lignes, et affiche le code  de la nouvelle commande dans l’emplacement dédié.</p>
+      <p>Ensuite, la liste déroulante des  modes de règlement est écoutée, pour  qu’à chaque changement, la commande en cours soit récupérée  et son mode de règlement mis à jour.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Ajouter l’écouteur d’action  sur la liste déroulante AVANT de sélectionner  un élément permet de préremplir le mode  de règlement. Ici, l’ordre de la séquence <strong>addActionListener</strong> puis <strong>setSelectedIndex</strong> est important.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Ajout</h2>
+    <p>L’ajout se fait dans la fenêtre principale  du module, comme pour les articles.</p>
+    <div>
+      <div><img alt="images/13-06.png" src="images/images_13-06.png"></div>
+    </div>
+    <p>Au moment de l’initialisation, dans la méthode <strong>setConnexion</strong>, l’action de validation de la commande est désactivée  grâce à la méthode <strong>setEnabled(false)</strong>. En effet, une commande ne peut être validée  que si un client est choisi et si au moins un article a été sélectionné.</p>
+    <p>Les fenêtres de choix du client et  de l’article sont codées en premier.</p>
+    <div>
+      <p> En mode <strong>Design</strong>, dans la classe <strong>FCommandes</strong>, sélectionnez le bouton de sélection  d’un client et mettez en place une action.</p>
+    </div>
+    <div>
+      <div><img alt="images/13-07.png" src="images/images_13-07.png"></div>
+    </div>
+    <pre>private class ActionChoixClient extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionChoixClient() {           putValue(NAME, "Sélectionner le client");       }          public void actionPerformed(ActionEvent e) {           ChoixClient choix = new ChoixClient(FCommandes.this,                                    connexion);           choix.setModal(true);           choix.setLocationRelativeTo(choix.getParent());           choix.setVisible(true);              Client client = choix.getClient();           if (client != null) {               Commande commande =                           controleCommande.getCommande();               commande.setClient(client);               btnChoixclient.setText(String.format(                               "%s %s [%s]",                               client.getPrenom(),                               client.getNom(),                               client.getCode()));<strong>                if (!commande.getLignes().isEmpty()) {                   actionValiderCommande.setEnabled(true);               }</strong>           }       }   }  </pre>
+    <p>La fenêtre du choix des clients comporte  le même type de recherche assistée vue avec les  articles.</p>
+    <div>
+      <div><img alt="images/13-08.png" src="images/images_13-08.png"></div>
+    </div>
+    <div>
+      <p> Ouvrez la classe <strong>ChoixClient</strong> et complétez le constructeur et la méthode <strong>getJTable</strong>.</p>
+    </div>
+    <pre>...    private ControleClient controleClient;   ...    public ChoixClient(Window parent, Connexion connexion) {          super(parent);<strong>           controleClient = new ControleClient(connexion);</strong>          initialize();   }  </pre>
+    <pre>private JTable getJTable() {       if (jTable == null) {<strong>            ModeleClients modele = controleClient.getModele();</strong>           jTable = new JTable(<strong>modele</strong>);           jTable.addMouseListener(new MouseAdapter() {                  public void mousePressed(MouseEvent e) {                   if (e.getClickCount() == 2) {                       int ligne = jTable.getSelectedRow();                       client = modele.getClient(ligne);                          ChoixClient.this.dispose();                   }               }           });           TableColumnModel colonnes = jTable.getColumnModel();           TableColumn fidelite = colonnes.getColumn(3);<strong>            fidelite.setCellRenderer(new BooleenRenderer());</strong>           TableColumn dates = colonnes.getColumn(4);<strong>            dates.setCellRenderer(new InstantRenderer());</strong>       }       return jTable;   }   </pre>
+    <p>La fenêtre de choix de l’article  est maintenant à développer. Elle apparaît lorsque  l’on clique sur sur bouton de sélection des articles et  propose elle aussi une recherche assistée.</p>
+    <div>
+      <div><img alt="images/13-09.png" src="images/images_13-09.png"></div>
+    </div>
+    <div>
+      <div><img alt="images/13-10.png" src="images/images_13-10.png"></div>
+    </div>
+    <div>
+      <p> Ouvrez la maquette <strong>ChoixArticle</strong> et complétez le code.</p>
+    </div>
+    <pre>...<strong>    private ControleArticleDecore controleArticle;</strong>   ...    public ChoixArticle(Window parent, Connexion connexion) {         super(parent);<strong>          controleArticle = new ControleArticleDecore(connexion);         controleArticle.init();</strong>         initialize();   }  </pre>
+    <pre>private JTable getJTable() {       if (jTable == null) {<strong>            ModeleArticles modele = controleArticle.getModele();           jTable = new JTable(modele);</strong>           jTable.addMouseListener(new MouseAdapter() {                  public void mousePressed(MouseEvent e) {                   if (e.getClickCount() == 2) {                       int ligne = jTable.getSelectedRow();<strong>                        article = modele.getArticle(ligne);</strong>                       if (article.getQuantite() == 0) {                           JOptionPane.showMessageDialog(                               null,                           "Stock épuisé pour cet article",                           "Ajout",                           JOptionPane.WARNING_MESSAGE);                       } else {                           ChoixArticle.this.dispose();                       }                   }               }           });       }       return jTable;   }  </pre>
+    <pre>private JTextField getRechercher() {       if (rechercher == null) {           rechercher = new JtextField();<strong>            rechercher.addKeyListener(new KeyAdapter() {             public void keyReleased(KeyEvent evt) {               controleArticle.rechercher(rechercher.getText());             }           });</strong>           rechercher.setColumns(10);       }       return rechercher;   }  </pre>
+    <div>
+      <p> En mode <strong>Design</strong>, dans la classe <strong>FCommandes</strong>, sélectionnez le bouton de sélection  d’un article et mettez en place une action.</p>
+    </div>
+    <pre>private class ActionChoixArticle extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionChoixArticle() {           putValue(NAME, "Sélectionner un article");           putValue(SHORT_DESCRIPTION,               "Parcourir les articles pour en choisir un");       }          public void actionPerformed(ActionEvent e) {           ChoixArticle choix = new ChoixArticle(FCommandes.this,                                    connexion);           choix.setModal(true);           choix.setLocationRelativeTo(choix.getParent());           choix.setVisible(true);           Article article = choix.getArticle();           if (article != null) {               choixArticle(article);           }       }          private void choixArticle(Article article) {           txtCode.setText(article.getCode());           txtCategorie.setText(article.getCategorie().getCode());           txtDesignation.setText(article.getDesignation());           txtMontant.setText(formate(article.getPrixUnitaire()));           SpinnerNumberModel model = (SpinnerNumberModel)                            spinnerQuantite.getModel();           model.setMaximum(article.getQuantite());       }   }  </pre>
+    <p>L’étape suivante est de coder les  actions des boutons <strong>Ajouter</strong> et <strong>Valider</strong> de la fenêtre <strong>FCommandes</strong>.</p>
+    <p>Le premier bouton ajoute une ligne dans la  commande en cours, le second valide la commande et l’enregistre  dans la base de données.</p>
+    <div>
+      <p> Sélectionnez le bouton <strong>Ajouter</strong> et attachez-lui une action.</p>
+    </div>
+    <pre>private class ActionAjouter extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionAjouter() {           putValue(NAME, "Ajouter");           putValue(SHORT_DESCRIPTION,               "Ajouter une nouvelle ligne dans la commande");       }          public void actionPerformed(ActionEvent e) {           String codeArticle = txtCode.getText();           if (codeArticle.isEmpty()) {               JOptionPane.showMessageDialog(null,                   Messages.getString("FenCommande.39"));           } else {               int quantite = Integer.parseInt(                           spinnerQuantite.getValue()                           .toString());               if (quantite &gt; 0) {                   ajouterArticle(codeArticle, quantite);               }           }       }          private void ajouterArticle(String codeArticle, int quantite) {          boolean creee = controleCommande.<strong>creerLigne</strong>(codeArticle,                                       quantite);           if (creee) {               Commande enCours = controleCommande.getCommande();               double total = enCours.getTotalTTC();               lblValeurTotale.setText(formate(total));               effacerSaisie();               if (enCours.getClient() != null) {                   actionValiderCommande.setEnabled(true);               }           }       }   }  </pre>
+    <p>À chaque fois qu’une ligne correspondant à un  nouvel achat dans la commande en cours est créée,  la méthode <strong>creerLigne()</strong> de la classe <strong>ControleCommande</strong> est appelée. </p>
+    <div>
+      <p> Créez la méthode <strong>creerLigne</strong> dans la classe <strong>ControleCommande</strong>.</p>
+    </div>
+    <pre>public boolean creerLigne(String codeArticle, int quantite) {       Article article = articleCrud.lire(codeArticle);       if (article != null) {           Ligne uneLigne = new Ligne(article, quantite);           commande.<strong>ajouter</strong>(uneLigne);           leModeleLigneCommande.<strong>créée</strong>(uneLigne);                          return true;       }       return false;   }  </pre>
+    <div>
+      <p> Sélectionnez le bouton <strong>Valider la commande</strong> et attachez-lui une action.</p>
+    </div>
+    <pre>private class ActionValiderCommande extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionValiderCommande() {           putValue(NAME, "Valider la commande");       }          public void actionPerformed(ActionEvent evt) {           if (table.getRowCount() == 0) {               JOptionPane.showMessageDialog(null,                       "Pas d’article",                       "Attention",                       JOptionPane.INFORMATION_MESSAGE);           } else {               creer();           }       }          private void creer() {           try {               controleCommande.<strong>creerCommande</strong>();               effacerSaisie();               Commande laCommande =                         controleCommande.<strong>nouvelleCommande</strong>();               txtNumeroCommande.setText(laCommande.getCode());               lblValeurTotale.setText("0.00");               btnChoixclient.setText((String) actionChoixClient                           .getValue(Action.NAME));<strong>                   actionValiderCommande.setEnabled(false);</strong>              } catch (EniException e) {               JOptionPane.showMessageDialog(null,                                e.getMessage(),                               "Attention"),                           JOptionPane.ERROR_MESSAGE);           }       }   }  </pre>
+    <p>Quand la commande est validée, la  méthode <strong>creerCommande</strong> est appelée. Une fois la commande créée,  une nouvelle commande est automatiquement créée  avec la méthode <strong>nouvelleCommande</strong>.</p>
+    <div>
+      <p> Créez la méthode <strong>creerCommande()</strong> dans la classe <strong>ControleCommande</strong>.</p>
+    </div>
+    <pre>    public void creerCommande() throws EniException {           if (commande.getClient() == null) {               throw new EniException("Pas de client "                           + "pour la commande "                           + commande.getCode());           }           commande.<strong>maintenant()</strong>;           commandeCrud.<strong>creer</strong>(commande);   //      JasperFacade.apercu("commande.jrxml",   //                     commande.getLignes());       }  </pre>
+    <div>
+      <p> Créez la méthode <strong>maintenant()</strong> dans la classe <strong>Commande</strong>.</p>
+    </div>
+    <pre>    public void maintenant() {           setDate(Instant.now());       }  </pre>
+    <p>Une conséquence importante de cette  manière de procéder est que rien n’est stocké en  base de données tant que le bouton <strong>Valider la commande</strong> n’est pas appuyé, et ceci grâce à JPA.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Avant JPA, il fallait le plus souvent  stocker les lignes en base, et si l’utilisateur abandonnait la commande  en cours, il fallait effacer les lignes de commande devenues inutiles.  C’était… fastidieux.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>3. Modification</h2>
+    <p>La modification n’est pas traitée  entièrement dans le livre, du moins pour cette version.</p>
+    <p>C’est un exercice que nous vous proposons  de pratiquer seul. Vous pouvez vous aider de ce qui a été réalisé pour  la gestion des clients et des articles.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Pensez à traiter le cas de  lignes modifiées, et non pas seulement ajoutées  ou supprimées.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>4. Suppression</h2>
+    <p>Pour la gestion des commandes, deux types  de suppression doivent être gérées.</p>
+    <p>La première consiste à retirer  une ou plusieurs lignes d’articles du JTable lors de la saisie d’une  commande en cours.</p>
+    <p>La seconde concerne la suppression de la commande  elle-même.</p>
+    <p>Commençons par le premier cas.</p>
+    <div>
+      <div><img alt="images/13-11.png" src="images/images_13-11.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur le bouton de suppression d’une  ligne dans WindowBuilder et attachez-lui une action.</p>
+    </div>
+    <pre>private class ActionSupprimer extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionSupprimer() {           putValue(NAME, "Supprimer");           putValue(SHORT_DESCRIPTION,               "Supprimer la ligne de commande sélectionnée");       }          public void actionPerformed(ActionEvent e) {           int numeroLigne = table.getSelectedRow();           if (numeroLigne &lt; 0) {               // si aucune ligne sélectionnée               JOptionPane.showMessageDialog(null,                       "Vous devez sélectionner une ligne"                       + " pour la supprimer",                       "Avertissement",                       JOptionPane.WARNING_MESSAGE);           } else {               int choix = JOptionPane.showConfirmDialog(null,                       "Voulez-vous vraiment supprimer"                       + " la ligne sélectionnée ?",                       "Confirmation",                       JOptionPane.YES_NO_OPTION);               if (choix == JOptionPane.YES_OPTION) {                   controleCommande.<strong>supprimer</strong>(numeroLigne);               }           }       }   }  </pre>
+    <div>
+      <p> Créez la méthode <strong>supprimer()</strong> dans la classe <strong>ControleCommande</strong>.</p>
+    </div>
+    <pre>    public void supprimer(int numeroLigne) {           leModeleLigneCommande.supprimée(numeroLigne);       }  </pre>
+    <div>
+      <p> Cliquez sur le bouton de suppression de toutes  les lignes et attachez-lui une action.</p>
+    </div>
+    <pre>private class ActionSupprimerToutesLignes extends AbstractAction {      private static final long serialVersionUID = 1L;          public ActionSupprimerToutesLignes() {           putValue(NAME, "Supprimer toutes les lignes");       }          public void actionPerformed(ActionEvent e) {           controleCommande.<strong>supprimerToutesLesLignes</strong>();       }   }  </pre>
+    <div>
+      <p> Créez la méthode <strong>supprimerToutesLesLignes()</strong> dans la classe <strong>ControleCommande</strong>.</p>
+    </div>
+    <pre>    public void supprimerToutesLesLignes() {           leModeleLigneCommande.supprimées();       }  </pre>
+    <p>Il s’agit maintenant de traiter le cas plus  délicat (fonctionnellement parlant) de la suppression d’une  commande.</p>
+    <div>
+      <p> Ouvrez la classe <strong>FCommandesExistantes</strong>.</p>
+    </div>
+    <div>
+      <p> Sélectionnez le bouton <strong>Supprimer</strong> et attachez-lui une action.</p>
+    </div>
+    <pre>private class ActionSupprimerCommande extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionSupprimerCommande() {           putValue(NAME, "Supprimer");           putValue(SHORT_DESCRIPTION,                   "Supprimer la commande sélectionnée");       }          public void actionPerformed(ActionEvent e) {           int ligne = table.getSelectedRow();           if(ligne &lt; 0){               JOptionPane.showMessageDialog(null,                         "Vous devez sélectionner "                        + "une commande "                        + "pour la supprimer.");           }else{              int confirme = JOptionPane.showConfirmDialog(null,                         "Souhaitez-vous vraiment "                        + "supprimer cette commande ?",                         "Confirmation",                        JOptionPane.YES_NO_OPTION);              if(confirme == JOptionPane.YES_OPTION){                 supprimer(ligne);              }            }       }          private void supprimer(int ligne) {           ModeleCommandes modele =                    controleCommande.getModeleCommande();           Commande commande = modele.getCommande(ligne);           controleCommande.<strong>supprimerCommande</strong>(commande.getCode(),  ligne);       }   }  </pre>
+    <div>
+      <p> Créez la méthode <strong>supprimerCommande()</strong> dans la classe <strong>ControleCommande</strong>.</p>
+    </div>
+    <pre>public boolean supprimerCommande(String codeCommande,                            int ligne_a_supprimer)                                throws EniException {       commandeCrud.supprimer(codeCommande);       leModeleCommande.supprimé(ligne_a_supprimer);       return true;   }  </pre>
+    <p>Cette méthode lève une exception éventuelle,  elle peut être traitée dans la classe <strong>ControleCommandeDecore</strong>.</p>
+    <pre>public boolean supprimerCommande(String codeCommande,                            int ligne_a_supprimer) {       try {           return controle.supprimerCommande(codeCommande,                                ligne_a_supprimer);       } catch (Exception e) {           JOptionPane.showMessageDialog(null,               "Aucune suppression effectuée dans la BD.\n\n"               + e.getMessage(), "Problème rencontré",               JOptionPane.ERROR_MESSAGE);       }       return false;   }  </pre>
+  </div>
+  <div>
+    <h2>5. Recherche</h2>
+    <p>Il s’agit comme pour le module article d’une  simple recherche assistée.</p>
+    <div>
+      <div><img alt="images/13-12.png" src="images/images_13-12.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur le <strong>JTextField</strong> de recherche de la classe <strong>FCommandesExistantes</strong>.</p>
+    </div>
+    <div>
+      <p> Attachez un gestionnaire d’événements  de type <strong>KeyListener</strong> avec une méthode <strong>keyReleased()</strong> sur ce composant graphique, puis complétez  le code.</p>
+    </div>
+    <pre>     txtRecherche.addKeyListener(new KeyAdapter() {            public void keyReleased(KeyEvent evt) {                String texte = txtRecherche.getText();               controleCommande.rechercher(texte);            }        });  </pre>
+    <p>Ceci est la plus simple des implémentations. À titre  d’exercice, essayez d’utiliser les classes du package <strong>java.util.concurrent</strong> pour accomplir cette recherche. </p>
+    <p>Les autres fonctionnalités de ces  fenêtres sont traitées dans le prochain chapitre. </p>
+  </div>
+</div>
+</body>
+</html>

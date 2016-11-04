@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Les protocoles d’échange</h1>
+<p>Pour échanger avec un dépôt  distant, il faut utiliser un moyen de communication entre ce dépôt  et le dépôt local. Les dépôts  ont besoin d’échanger des données lorsque par  exemple un développeur souhaite cloner un dépôt  ou encore lorsqu’il souhaite envoyer ses modifications vers le dépôt  distant.</p>
+<p>Il existe quatre protocoles permettant d’échanger  des informations entre deux dépôts :</p>
+<div>
+  <ul>
+    <li>
+      <p>Local : à l’aide  du système de fichiers.</p>
+    </li>
+    <li>
+      <p>SSH : à l’aide d’un accès  SSH sur la machine contenant le dépôt distant.</p>
+    </li>
+    <li>
+      <p>HTTP : à l’aide du protocole  HTTP via un serveur HTTP.</p>
+    </li>
+    <li>
+      <p>Git : à l’aide du protocole  Git conçu pour être performant.</p>
+    </li>
+  </ul>
+</div>
+<p>Chacun de ces protocoles présente  des avantages et inconvénients et convient à des  utilisations différentes. Le tableau ci-dessous présente  une liste non exhaustive des avantages et des inconvénients  des différents protocoles :</p>
+<div>
+  <table width="90%" bordercolor="black" border="1" align="left">
+    <colgroup>
+      <col title="1" width="21.873759428344584%">
+      <col title="2" width="39.06312028582771%">
+      <col title="3" width="39.06312028582771%">
+    </colgroup>
+    <thead>
+      <tr>
+        <td><p>Protocoles</p></td>
+        <td><p>Avantages</p></td>
+        <td><p>Inconvénients</p></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><p>Local</p></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Simplicité de mise en place.</p>
+            </li>
+            <li>
+              <p>Mêmes restrictions d’accès que  celles du système de fichiers.</p>
+            </li>
+          </ul>
+        </div></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Mise en place d’un accès via  Internet compliquée.</p>
+            </li>
+          </ul>
+        </div></td>
+      </tr>
+      <tr>
+        <td><p>SSH</p></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Protocole populaire.</p>
+            </li>
+            <li>
+              <p>Protocole sécurisé par  une authentification, des restrictions et un chiffrement.</p>
+            </li>
+          </ul>
+        </div></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Requiert quelques compétences  d’administration système pour la mise en place  et la gestion des droits.</p>
+            </li>
+          </ul>
+        </div></td>
+      </tr>
+      <tr>
+        <td><p>HTTP</p></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>L’accès est simple  via ce protocole universel.</p>
+            </li>
+            <li>
+              <p>Mise en place simple via un serveur  HTTP.</p>
+            </li>
+          </ul>
+        </div></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Protocole lent.</p>
+            </li>
+            <li>
+              <p>Pas d’authentification  ni de restriction.</p>
+            </li>
+            <li>
+              <p>Trafic réseau non chiffré (excepté en  HTTPS).</p>
+            </li>
+          </ul>
+        </div></td>
+      </tr>
+      <tr>
+        <td><p>Git</p></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Protocole très rapide</p>
+            </li>
+          </ul>
+        </div></td>
+        <td><div>
+          <ul>
+            <li>
+              <p>Pas d’authentification  ni de restriction.</p>
+            </li>
+            <li>
+              <p>Requiert des compétences d’administration  système.</p>
+            </li>
+            <li>
+              <p>Trafic réseau non chiffré.</p>
+            </li>
+          </ul>
+        </div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p>La façon de cloner un dépôt  distant dépend du protocole utilisé. Par exemple, pour  cloner un dépôt via le système de fichiers,  il faut utiliser une syntaxe semblable à cet exemple :</p>
+<pre>git clone ~/Depots/Serveur/CMS.git</pre>
+<p>La commande suivante est un exemple de clonage  via SSH :</p>
+<pre>git clone ssh://git.entreprise@serveur_ssh:CMS.git  </pre>
+<p>La commande suivante est un exemple de clonage  via HTTP : </p>
+<pre>git clone http://git-conflict.com/depots/CMS.git  </pre>
+<p>La commande suivante est un exemple de clonage  via Git :</p>
+<div id="AU_0cb45a63-0121-4840-8c95-409d5941befe" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <pre>git clone git://git-conflict.com/depots/CMS.git  </pre>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

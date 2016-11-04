@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_fef5c81e-ed74-4933-a74d-0c54279349ed" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>.gitignore : ignorer une bibliothèque</h1>
+  <p>Lorsque Raphaël a fait une démonstration  de la page web à son client, celui-ci lui a rétorqué :  "Mais ce n’est pas pratique, comment puis-je me souvenir de tous  ces codes de couleurs ? Je ne peux pas avoir quelque chose de mieux  pour pas cher ?".</p>
+  <p>Raphaël va donc lui proposer un champ  qui lui permettra de sélectionner une couleur à partir  d’une palette. Le code couleur sera automatiquement généré à partir  de la couleur choisie. En proposant cela, Raphaël sait  qu’il va utiliser une bibliothèque existante qu’il a déjà rencontrée  dans d’autres développements. Cela lui permet aussi de  garantir un tarif très attractif, car il va réutiliser  un code déjà existant.</p>
+  <p>Après que Raphaël lui a  donné le tarif de la prestation, M. Airadun a directement  accepté tout en marmonnant quelques réticences  : "Encore une facture... Si ça avait directement été fait...".</p>
+  <p>Après avoir quitté son client,  Raphaël a commencé par télécharger  la bibliothèque JSColor sur le site officiel (<a href="http://jscolor.com" target="_blank">http://jscolor.com</a>). Il modifie ensuite le fichier anniversaire.html et ajoute la ligne suivante juste avant la balise fermante &lt;/head&gt; :</p>
+  <pre>&lt;script type="text/javascript"   src="static/lib/js/jscolor/jscolor.js"&gt;&lt;/script&gt;  </pre>
+  <p>Et il va modifier la ligne contenant le champ  permettant de définir la couleur avec le contenu suivant  :</p>
+  <pre>&lt;br /&gt;Couleur (ex : 0F0) : &lt;input type="text" id="couleur"   class="color" /&gt;  </pre>
+  <p>Il va ensuite créer un dossier lib (pour library) à la racine de son projet. Dans ce dossier lib, il va créer un dossier js qui va servir à stocker toutes les bibliothèques  JavaScript qu’il va utiliser.</p>
+  <p>Il va ensuite copier le contenu de la bibliothèque  dans le dossier static/lib/js. Après avoir vérifié que  le code est bien fonctionnel, Raphaël ne va pas commiter  immédiatement. En effet, il ne va pas avoir besoin de suivre  les évolutions de la bibliothèque car il ne va  pas la modifier. Il va donc indiquer à Git de ne pas suivre  les fichiers contenus dans le dossier lib. Si le projet avait été plus conséquent  et le client moins pressant, Raphaël aurait très  certainement utilisé les dépôts intégrés  (ou sous-modules).</p>
+  <p>Raphaël va utiliser la commande git status pour vérifier  que la bibliothèque est présente et non suivie.  Cette commande lui affiche la sortie suivante (tronquée)  : </p>
+  <pre>Untracked files:      (use "git add &lt;file&gt;..." to include in what will be committed)           static/lib/        no changes added to commit (use "git add" and/or "git commit -a")  </pre>
+  <p>Cette commande affiche uniquement le dossier static/lib car Git ne suit aucun fichier présent dans  ce répertoire. Pour vérifier l’état de  ses fichiers, Raphaël exécute alors la commande git ls-files -o et obtient la sortie  suivante :</p>
+  <pre>static/lib/js/jscolor/arrow.gif    static/lib/js/jscolor/cross.gif    static/lib/js/jscolor/demo.html    static/lib/js/jscolor/hs.png    static/lib/js/jscolor/hv.png    static/lib/js/jscolor/jscolor.js  </pre>
+  <p>La commande précédente permet  de lister les fichiers non suivis. Au total, six fichiers sont présents  dans l’inclusion de la bibliothèque.</p>
+  <p>Raphaël souhaite que Git ignore ces  fichiers, c’est-à-dire que Git ne s’en occupe jamais, comme  s’ils n’existaient pas.</p>
+  <p>Pour cela, il va créer le fichier .gitignore à la racine du projet (dans le dossier qui contient  le dossier .git masqué sur la plupart des systèmes).</p>
+  <p>Ce fichier .gitignore va permettre d’indiquer à Git les fichiers  qu’il ne doit pas versionner. En effet, il existe des fichiers qu’il  vaut mieux ne pas versionner : </p>
+  <div>
+    <ul>
+      <li>
+        <p>les fichiers générés  ou compilés, car le contenu des fichiers ne peut pas être suivi  et est illisible. Les fichiers qui doivent être versionnés  sont les fichiers lisibles et modifiables par des humains.</p>
+      </li>
+      <li>
+        <p>Les fichiers de configuration contenant  des mots de passe, car les collaborateurs ne doivent pas forcément  avoir accès à vos mots de passe. Cette règle est  d’autant plus vraie lorsque le projet est libre.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Raphaël va ajouter la ligne suivante  dans le fichier .gitignore :</p>
+  <pre>lib/  </pre>
+  <p>Cette ligne signifie qu’aucun des fichiers  contenus dans le dossier lib ne sera pris en compte par Git. Cela ne veut pas seulement  dire qu’ils ne seront pas versionnés, mais également  que lorsqu’on exécutera des commandes comme git status, Git ignorera totalement  ces fichiers comme s’ils n’existaient pas.</p>
+  <p>Raphaël va vérifier que  les fichiers de la bibliothèque sont correctement ignorés  par Git avec la commande git status.  La sortie indique que le fichier .gitignore n’est pas suivi, mais ne donne plus aucune  indication sur le dossier static/lib, ce qui signifie qu’il est correctement ignoré.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/PUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GgNsKnSuzTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>La commande git-ls-files  -o indiquera toujours la présence des fichiers, car  c’est une commande de plomberie. Elle passe outre les fichiers  ignorés.</p>
+    </div>
+  </div>
+  <p>Raphaël va ensuite ajouter le fichier .gitignore à son dépôt Git pour que  les autres développeurs ne soient pas pollués  par les fichiers de la bibliothèque.</p>
+  <pre>git add .gitignore    git commit -m "Ajout du .gitignore"  </pre>
+  <p>Il existe de meilleurs moyens de ne pas polluer  l’historique avec les bibliothèques. Pour avoir plus d’informations  sur les dépôts intégrés, il  faut consulter le chapitre Les outils de Git à la  section Dépôts intégrés avec  submodules. Les dépôts intégrés  permettent de gérer beaucoup plus facilement les bibliothèques  externes en suivant leurs versions sans polluer l’historique du projet.   Dans cet exemple, Raphaël a choisi la simplicité pour  ne pas polluer son historique (et peut-être aussi pour  ne pas trop complexifier ce scénario). Si le projet évolue,  Raphaël utilisera les dépôts intégrés.</p>
+</div>
+</body>
+</html>

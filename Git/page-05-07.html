@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_fbdfb9d3-e126-455c-937b-8c0a1b43799f" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Configurer le dépôt local</h1>
+  <p>Git nous offre de nombreuses options de configuration  pour pouvoir le personnaliser selon notre utilisation.</p>
+  <p>Il existe plusieurs manières de configurer  un dépôt local et il existe de nombreux paramètres.  Nous aborderons donc dans l’ordre :</p>
+  <div>
+    <ul>
+      <li>
+        <p>la configuration minimale  d’un projet ; sans cette configuration minimale, vous ne pourrez  pas utiliser Git,</p>
+      </li>
+      <li>
+        <p>les différents niveaux  de configuration,</p>
+      </li>
+      <li>
+        <p>les paramètres configurables,</p>
+      </li>
+      <li>
+        <p>la création et l’utilisation  d’alias.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2>1. Configuration minimale</h2>
+    <p>Cette configuration a déjà été évoquée à la  fin du chapitre Installation de Git, à la section Configuration  requise, cette partie sera donc très rapide. Pour utiliser  Git, il est nécessaire de passer par une étape  de configuration préalable. Sans celle-ci, il n’est pas  possible d’utiliser Git normalement, il refusera par exemple d’enregistrer  vos modifications.</p>
+    <p>Cette configuration va servir à nous  identifier pour que Git sache qui effectue telle ou telle modification.  Voici donc comment configurer sur le dépôt nos nom,  prénom et adresse e-mail :</p>
+    <pre>git config --global user.name "Prenom Nom"   git config --global user.email email@domain.ext</pre>
+    <p>Maintenant que la configuration initiale a été définie,  il est possible de travailler avec Git. Pour avoir une aide concernant  la configuration et ses paramètres, il faut utiliser la  commande suivante :</p>
+    <pre>git config --help  </pre>
+  </div>
+  <div>
+    <h2>2. Niveaux de configuration</h2>
+    <p>Git utilise des fichiers pour stocker les  différents éléments de configuration. Lorsque  nous utilisons les commandes git config,  ce sont indirectement ces fichiers que nous modifions.</p>
+    <p>Il existe trois niveaux de configuration dans  Git. Ces niveaux de configuration ont tous une portée différente,  c’est-à-dire que les éléments de configuration ne  concerneront pas tout le monde selon leur niveau.</p>
+    <div>
+      <h3>a. Le niveau système</h3>
+      <p>Ce niveau concerne tous les utilisateurs de  la machine qui utilisent Git. Les valeurs de ce niveau de configuration  sont contenues dans le fichier /etc/gitconfig (pour Linux). C’est le premier niveau où Git  va rechercher des paramètres.</p>
+      <p>Ce niveau est pratique pour définir  des alias pour l’équipe ou pour toutes les options qui  doivent être communes à tous les utilisateurs  du système.</p>
+      <p>L’argument qui permet de définir  une valeur de ce niveau est --system.</p>
+    </div>
+    <div>
+      <h3>b. Le niveau utilisateur</h3>
+      <p>Ce niveau concerne uniquement l’utilisateur  connecté sur la machine. Les valeurs de ce niveau sont  contenues dans le fichier ~/.gitconfig (où ~ est le dossier de base de l’utilisateur).  C’est le deuxième niveau parcouru par Git pour rechercher  des paramètres. Cela signifie que si des paramètres  utilisateur sont déjà définis dans le  niveau système, alors Git ignorera les paramètres système et  prendra en compte les paramètres utilisateur.</p>
+      <p>L’argument qui permet de définir  une valeur de ce niveau est --global.</p>
+    </div>
+    <div>
+      <h3>c. Le niveau dépôt</h3>
+      <p>Le dernier niveau se situe au niveau du dépôt  et est propre au dépôt local. Les valeurs de ce  niveau sont contenues dans le fichier .git/config (où .git est le dépôt concerné).  Toutes les valeurs de ce niveau surchargent celles des autres dépôts.</p>
+      <p>L’argument qui permet de définir  une valeur de ce niveau est --local.</p>
+    </div>
+  </div>
+  <div>
+    <h2>3. Les paramètres configurables</h2>
+    <div>
+      <h3>a. Définir l’éditeur de texte</h3>
+      <p>Ce paramètre n’est pas indispensable  pour travailler avec Git, mais presque ! En effet, lors de l’utilisation  de Git il est très fréquent d’utiliser l’éditeur  de texte pour définir les messages de commit. C’est notamment  cet éditeur de texte que Git affichera pour permettre de  créer un message de commit sur plusieurs lignes.</p>
+      <p>Voici la configuration pour définir  l’éditeur de texte vi comme éditeur par défaut :</p>
+      <pre>git config --global core.editor vi  </pre>
+      <p>Cette commande fonctionne sur Mac OS, Linux  et également sur Windows grâce à l’outil  Cygwin.</p>
+    </div>
+    <div>
+      <h3>b. Modèle de commit</h3>
+      <p>Ce paramètre permet de définir  un fichier texte comme étant le modèle de vos commits.  Ce texte sera alors prérempli dans l’éditeur de  texte lorsque Git demandera le message de commit. Par exemple, ci-dessous  le contenu du fichier ~/gitRessources/template.txt :</p>
+      <pre>#Contexte -&gt; Titre du commit (49 caractères max)         #Numéro du ticket (si correction support) suivi de #      #Explications complémentaires  </pre>
+      <p>Il faut ensuite ajouter le fichier dans la  configuration (global dans cet exemple) :</p>
+      <pre>git config --global commit.template ~/gitRessources/template.txt  </pre>
+      <p>Les lignes débutant par un dièse  sont des commentaires, elles ne seront pas ajoutées dans  le message de commit.</p>
+      <p>Après ces modifications, à chaque  fois qu’un développeur soumettra une révision,  ce modèle lui sera proposé dans l’éditeur  de texte. Cela permet de définir une base commune à plusieurs  développeurs.</p>
+    </div>
+    <div>
+      <h3>c. Ignorer des fichiers</h3>
+      <p>Il est possible de demander à Git  de ne pas du tout prendre en compte certains fichiers. Ces fichiers  seront alors totalement inexistants pour Git. Il existe deux manières  d’indiquer à Git les fichiers à ignorer : </p>
+      <div>
+        <ul>
+          <li>
+            <p>le fichier .gitignore,</p>
+          </li>
+          <li>
+            <p>l’option de configuration core.excludesfile, qui permet d’ignorer  des fichiers à partir de la configuration de Git.</p>
+          </li>
+        </ul>
+      </div>
+      <p>L’option de configuration core.excludesfile permet de définir  un fichier qui contiendra une liste des fichiers à ignorer.  Pour définir ce fichier, il faut utiliser la commande suivante : </p>
+      <pre>git config --global core.excludesfile ~/.gitignore_global  </pre>
+      <p>Cette commande définira le fichier  .gitignore_global (à la racine du dossier de l’utilisateur)  comme celui contenant les fichiers que Git doit ignorer.</p>
+      <p>Le contenu et la syntaxe de ce fichier ainsi  que des règles de bonnes pratiques seront abordés  dans le chapitre Manipulation des fichiers et commit, à la section Ignorer  des fichiers.</p>
+    </div>
+    <div>
+      <h3>d. Hashs abrégés</h3>
+      <p>Chaque donnée utilisée par  Git est identifiée par une chaîne hexadécimale  de 40 caractères. Ces 40 caractères nuisent parfois à la  lisibilité de ces identifiants. Il est possible d’indiquer à Git  de n’afficher que les sept premiers caractères  de ces identifiants. Pour cela, il faut utiliser la commande suivante : </p>
+      <pre>git config --global log.abbrevCommit true  </pre>
+    </div>
+  </div>
+  <div>
+    <h2>4. Définition d’alias Git</h2>
+    <p>Lorsqu’on utilise quotidiennement Git, on  regrette quelquefois la longueur de certaines commandes. Par exemple,  les commandes git status, git checkout ou encore git commit sont utilisées  très régulièrement. À ce moment-là,  il est possible de définir un alias qui va servir de raccourci  pour l’appel des commandes.</p>
+    <pre>git config --global alias.co checkout   git config --global alias.last ’log -1 HEAD’  </pre>
+    <p>Un alias va juste être remplacé par  la commande complète avant l’interprétation de  celle-ci par Git. Il est donc tout à fait possible d’ajouter  des paramètres à la commande même en  utilisant un alias. Par exemple, pour ajouter une branche et y basculer,  vous pouvez utiliser la version complète :</p>
+    <pre>git checkout -b disabled_buttons  </pre>
+    <p>ou utiliser un alias :</p>
+    <pre>git co -b disabled_buttons  </pre>
+    <p>La commande présente dans cet exemple  sera expliquée plus précisément dans le  chapitre Les branches et les tags, à la section Positionnement  sur une branche.</p>
+    <p>La liste d’alias ci-dessous est définie à partir  des commandes de Git les plus couramment utilisées. Elle  est totalement personnalisable en fonction des besoins des  utilisateurs. En effet, les alias doivent permettre aux développeurs de  gagner du temps, mais il faut un certain temps pour s’habituer à certains raccourcis,  surtout lorsqu’ils ne sont pas utilisés fréquemment.  Voici la liste des alias : </p>
+    <div>
+      <ul>
+        <li>
+          <p>alias.st : status</p>
+        </li>
+        <li>
+          <p>alias.co : checkout</p>
+        </li>
+        <li>
+          <p>alias.ci : commit</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="AU_fbdfb9d3-e126-455c-937b-8c0a1b43799f" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <div>
+      <ul>
+        <li>
+          <p> </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

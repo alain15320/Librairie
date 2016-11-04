@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_43de4311-9332-4da9-bf15-f3e08e33343e" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Paramètres de connexion</h1>
+  <p>JPA fournit un mécanisme général  de configuration de la connexion à la base de données.  Ce mécanisme s’appuie sur la présence d’un fichier  particulier à un endroit donné. La première étape,  vue au chapitre Base de données MySQL, a été de  créer ce fichier et de l’avoir configuré avec  les données de connexion à la base. Il sera complété ensuite  au fur et à mesure de l’avancement du projet.</p>
+  <div>
+    <p> Répétez la création  du fichier « persistence.xml » dans  le répertoire <strong>src/main/resources/META-INF</strong> du projet Luna.</p>
+  </div>
+  <div>
+    <p> Ajoutez le pilote JDBC MySQL dans les propriétés  du projet.</p>
+  </div>
+  <div>
+    <p> Ajoutez les fichiers jar issus de la librairie  EclipseLink.</p>
+  </div>
+  <div>
+    <p> Testez l’accès à la base  de données avec la classe <strong>TestJPA</strong> qui a été codée au chapitre  Base de données MySQL, en l’important dans le projet Luna.</p>
+  </div>
+  <p>Il est ensuite temps de s’intéresser à la  méthode d’accès aux données de l’application.</p>
+  <p>Pour faire simple et rapide, le nom de l’utilisateur  et le mot de passe sont uniques pour tous les utilisateurs de l’application.  Les paramètres concernant le pilote, le serveur et la base  de données proviennent de l’installation réalisée pour  le SGBDR MySQL (cf. chapitre Base de données MySQL), ainsi  que les données d’identification.</p>
+  <p>Dans une application plus réaliste,  il serait possible de créer des tables utilisateurs avec  pour chaque utilisateur un couple login/mot de passe unique  et un identifiant d’accès unique à la base. Une  autre possibilité serait de gérer les utilisateurs  via la base de données elle-même, l’application  se chargeant d’injecter dans la configuration les identifiants de  connexion fournis par l’utilisateur. Il est également envisageable  de se connecter à un annuaire LDAP, ou d’utiliser toute  autre méthode.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pour une exploitation réelle,  ne jamais mettre en clair le mot de passe.</p>
+    </div>
+  </div>
+  <p>Une classe permettant de centraliser l’accès à la  base de données va maintenant être créée.  Cette classe comportera également des méthodes  utiles pour le reste de l’application.</p>
+  <div>
+    <p> Complétez la structure de projet en  ajoutant les packages nommés « entite » et « controle » au  dossier <strong>src/main/java</strong> :</p>
+  </div>
+  <div>
+    <div><img alt="images/10-04.png" src="images/images_10-04.png"></div>
+  </div>
+  <div>
+    <p> Pour conserver une organisation claire et structurée  de nos classes, ajoutez un sous-package nommé « connection » au  package <strong>controle</strong> (n’oubliez pas le point de séparation).</p>
+  </div>
+  <div>
+    <div><img alt="images/10-05.png" src="images/images_10-05.png"></div>
+  </div>
+  <div>
+    <p> Créez ensuite une classe <strong>Connexion</strong> à l’aide du menu <strong>File - New - Class</strong>, ou en sélectionnant le package <strong>connection</strong> et en faisant un clic droit puis <strong>New - Class</strong>. Remplissez le nom de la classe, vérifiez que  le nom du package est correct et cliquez sur <strong>Finish</strong>.</p>
+  </div>
+  <div>
+    <p> Ajoutez les importations pour la couche de  persistance :</p>
+  </div>
+  <pre>
+package controle.connection;  
+ 
+import javax.persistence.EntityManager; 
+import javax.persistence.EntityManagerFactory; 
+import javax.persistence.EntityTransaction; 
+import javax.persistence.Persistence; 
+ 
+public class Connexion {     
+}  
+  </pre>
+  <p>Les classes du package <strong>javax.persistence</strong> permettent d’accéder à la base et à ses  données.</p>
+  <div>
+    <div><img alt="images/10-07.png" src="images/images_10-07.png"></div>
+  </div>
+  <p>Le code de la classe <strong>TestJPA</strong> a permis d’obtenir un avant-goût de la manière de  faire avec JPA :</p>
+  <div>
+    <ul>
+      <li>
+        <p>créer une  fabrique de gestionnaires d’entités pour la base de données,</p>
+      </li>
+      <li>
+        <p>créer un gestionnaire d’entités à partir  de cette fabrique,</p>
+      </li>
+      <li>
+        <p>utiliser le gestionnaire d’entités,</p>
+      </li>
+      <li>
+        <p>fermer le gestionnaire d’entités,</p>
+      </li>
+      <li>
+        <p>fermer la fabrique.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Les premières et dernières étapes  concernant la fabrique devraient être réalisées  respectivement au début et à la fin du cycle de  vie de l’application.</p>
+  <p>La classe <strong>Connexion</strong> conservera donc une référence vers  la fabrique pour la fermer et libérer les ressources associées.</p>
+  <div>
+    <p> Ajoutez la propriété suivante :</p>
+  </div>
+  <pre><strong>private final</strong> EntityManagerFactory fabrique;</pre>
+  <p>Afin de respecter le principe d’encapsulation,  cet attribut est déclaré <strong>private</strong>. Son accès est isolé, il n’a donc  ni accesseur ni mutateur.</p>
+  <p>Afin de ne pas risquer de modifier cette propriété qui  est vitale pour l’application, elle est marquée <strong>final</strong>, ce qui interdit tout changement une fois que l’attribut est  initialisé.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Les propriétés à l’intérieur  d’un attribut final sont modifiables !</p>
+    </div>
+  </div>
+  <p>D’autres écritures de cette  classe sont possibles :</p>
+  <div>
+    <ul>
+      <li>
+        <p>La déclarer <strong>final</strong> : elle ne pourra alors plus être dérivée.</p>
+      </li>
+      <li>
+        <p>La déclarer <strong>abstract</strong> : elle ne peut plus être instanciée.</p>
+      </li>
+      <li>
+        <p>Déclarer ses attributs <strong>static</strong> : les instances de la classe ne posséderont  alors pas ses attributs. L’accès à ceux-ci est  alors réalisé selon la syntaxe <strong>classe.accesseur</strong>.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Cette écriture est une affaire de  choix : personnel ou en accord avec l’équipe du  projet.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Les attributs et méthodes <strong>static</strong> sont notoirement plus difficiles à tester.</p>
+    </div>
+  </div>
+  <p>Il s’agit ensuite d’initialiser cette propriété <strong>fabrique</strong>. Une propriété <strong>final</strong> ne peut être initialisée que de deux  manières : lors de sa déclaration ou  lors de la construction de l’objet. Le choix est fait de l’initialiser  dans le constructeur.</p>
+  <div>
+    <p> Créez le constructeur de la classe <strong>Connexion</strong>.</p>
+  </div>
+  <pre>
+Connexion(){  
+    fabrique = Persistence.createEntityManagerFactory("eni-acces");  
+}
+</pre>
+  <p>La méthode statique <strong>createEntityManagerFactory</strong> de la classe <strong>Persistence</strong> est utilisée dans ce constructeur. Le paramètre  d’appel de cette méthode est le nom qui a été fourni  dans l’élément XML <strong>persistence-unit</strong> du fichier <strong>persistence.xml</strong>.</p>
+  <p>L’intérêt de cette manière  de faire est de pouvoir fournir plusieurs unités de persistance  en fonction des besoins. Il est alors possible de déclarer  une unité de persistance spécifique au développement,  où les tables sont supprimées et recréées  et où une base de données spécifique  est utilisée. Une autre unité de persistance sera  utilisée pour la production, et une autre encore pour les  tests. Ceci peut éviter de modifier ou supprimer définitivement  les enregistrements vitaux de la production !</p>
+  <p>Si cette manière de faire est validée,  il suffit de modifier le constructeur :</p>
+  <pre>
+Connexion(String unite){ 
+    fabrique = Persistence.createEntityManagerFactory(unite); 
+} 
+ 
+private static final Connexion connexion  
+                        = new Connexion("eni-acces"); 
+ 
+public static Connexion getConnexion() { 
+    return connexion ; 
+}  
+  </pre>
+  <p>Le lien avec la base de données est  assuré avec cette propriété de type EntityManagerFactory,  grâce à des objets de type EntityManager et à l’aide  de la méthode d’instance <strong>createEntityManager</strong>.</p>
+  <p>La classe <strong>EntityManager</strong> est fournie par <strong>javax.persistence</strong>, et est le point d’accès permettant de créer,  lire, modifier et supprimer les données de la base avec  les classes du domaine métier.</p>
+  <p>La méthode publique statique <strong>getConnexion()</strong> permet ensuite de récupérer l’objet  qui servira dans toute l’application. Cette méthode renvoie  juste le contenu de la propriété privée  statique et finale <strong>connexion</strong>. Cette dernière propriété est <strong>statique</strong> pour permettre à la méthode publique  statique d’y accéder. Elle est <strong>privée</strong> ainsi rien ni personne ne peut y accéder par  d’autre moyen que la méthode publique. Elle est enfin <strong>finale</strong> pour éviter toute tentative de modification.</p>
+  <p>L’objet de type <strong>Connexion</strong> masque donc au maximum les détails techniques d’accès à la  base, ce qui permet de faciliter des changements éventuels  dans le code.</p>
+</div>
+</body>
+</html>

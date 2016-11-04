@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_429e789b-e8ad-4b1f-aa66-9a3d46cda8f8" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Markdown</h1>
+  <div>
+    <h2>1. Présentation</h2>
+    <p>Markdown est un langage de présentation  qui gagne en popularité depuis plusieurs années,  comme le montre le graphique Google Trends ci-dessous :</p>
+    <div>
+      <div><img alt="images/03E01.png" src="images/images_03E01.png"></div>
+    </div>
+    <p>Source : <a href="http://www.google.fr/trends/explore#q=markdown" target="_blank">http://www.google.fr/trends/explore#q=markdown</a></p>
+    <p>Ce langage n’est pas un langage de présentation  avec une structure XML comme l’est HTML. Ce langage a été conçu  dans le but d’être lisible directement en mode texte, ce  qui l’a rendu très populaire chez les développeurs.  En effet, un format comme le Markdown peut être consulté en  mode texte et donc peut facilement être versionné.  Il est d’ailleurs possible d’exporter des fichiers Markdown  facilement vers du code HTML ou d’autres formats.</p>
+    <p>La syntaxe officielle est documentée  sur le lien suivant : <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">http://daringfireball.net/projects/markdown/syntax</a></p>
+    <p>Certaines syntaxes ne sont pas officielles,  mais sont généralement bien supportées par  les logiciels et bibliothèques s’interfaçant avec  Markdown. Elles permettent d’ajouter des fonctionnalités  absentes du format officiel. Les fichiers Markdown portent généralement  l’extension .md.</p>
+    <p>Voici un exemple de fichier Markdown très  simple d’un jeu fictif et son affichage sur GitHub :</p>
+    <pre># Stratégiii : le meilleur de la stratégie      ## Fonctionnalités      + 64 unités différentes !   + La **meilleure IA** jamais vue !  </pre>
+    <p>Voici la manière dont ce fichier  sera affiché sous GitHub :</p>
+    <div>
+      <div><img alt="images/03E02.png" src="images/images_03E02.png"></div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Éléments de syntaxe</h2>
+    <div>
+      <h3>a. Titres</h3>
+      <p>En Markdown, il est possible d’utiliser les  titres sur six niveaux comme en HTML. Ces titres sont définis  par un nombre précis de dièses au début  du titre.</p>
+      <p>Par exemple un titre principal (équivalent à h1 en HTML) se note donc ainsi :</p>
+      <pre># Titre de premier niveau  </pre>
+      <p>Un sous-titre (titre de deuxième  niveau, équivalent à h2 en  HTML) se note ainsi :</p>
+      <pre>## Titre de deuxième niveau  </pre>
+      <p>Le nombre de dièses devant le titre  détermine ainsi son niveau.</p>
+    </div>
+    <div>
+      <h3>b. Listes non ordonnées</h3>
+      <p>Pour établir des listes à puces  (équivalent de la balise ul en  HTML), il faut utiliser un des caractères suivants au début  de chaque ligne formant la liste : + * -</p>
+      <p>Par exemple, voici une liste de trois éléments  :</p>
+      <pre>+ 64 unités différentes !   + La meilleure IA jamais vue !   + Un jeu compatible avec toutes les plateformes !  </pre>
+    </div>
+    <div>
+      <h3>c. Listes ordonnées</h3>
+      <p>Pour établir des listes ordonnées  (équivalent de la balise ol en  HTML), il faut préfixer chaque ligne de cette liste par  le numéro de l’élément dans cette liste.</p>
+      <p>Voici un exemple fictif de liste d’actions à effectuer  pour contribuer au projet :</p>
+      <pre>1. S’inscrire sur la liste de diffusion.   2. Lire la liste des règles de code.   3. Soumettre le patch aux administrateurs du projet.  </pre>
+    </div>
+    <div>
+      <h3>d. Mettre en gras</h3>
+      <p>Pour mettre en gras un mot ou une partie de  phrase, il faut l’entourer de doubles étoiles **. Par exemple,  dans la ligne suivante le mot « évolué » sera affiché en  gras :</p>
+      <pre>Le jeu le plus **évolué** de tous les temps.  </pre>
+    </div>
+    <div>
+      <h3>e. Mettre en italique</h3>
+      <p>Pour mettre en italique un mot ou une partie  de phrase, il faut l’entourer d’étoiles *. Par exemple, dans la ligne  suivante la partie « le meilleur jeu de tous les  temps » du texte sera affichée en italique :</p>
+      <pre>Selon la presse Stratégiii est *le meilleur jeu de tous les temps*.  </pre>
+    </div>
+    <div>
+      <h3>f. Ligne horizontale</h3>
+      <p>Pour séparer différentes  parties d’un document, une ligne horizontale (équivalente à &lt;hr /&gt; en HTML) pourra être  utilisée. Il faut utiliser l’un des trois caractères  suivants _ - * et  le répéter au minimum trois fois sur une même ligne,  par exemple :</p>
+      <pre>---  </pre>
+      <p>Cette suite de caractères affichera  une ligne horizontale.</p>
+    </div>
+    <div>
+      <h3>g. Code</h3>
+      <p>Pour insérer du code il faut l’entourer  de trois backtick : ```. Il est également possible  (en fonction des convertisseurs Markdown) de spécifier  le langage après les premiers ```.  Par exemple, voici une balise HTML simple :</p>
+      <pre>```html   &lt;button&gt;Clique-moi !&lt;/button&gt;   ```  </pre>
+      <p>Pour insérer une petite ligne de  code dans une phrase standard, il faut utiliser un seul backtick,  par exemple :</p>
+      <pre>Pour accéder à l’objet Utilisateur de Django il faut utiliser la   propriété `user` de l’objet `request`.  </pre>
+      <p>Pour insérer du code dans une liste,  il faut l’indenter de huit espaces ou de deux tabulations.</p>
+    </div>
+    <div>
+      <h3>h. Tableaux</h3>
+      <p>Il est également possible d’insérer  des tableaux en Markdown. Un exemple sera plus compréhensible  et lisible qu’une longue explication :</p>
+      <pre>|Prénom|Nom|   |---|--------------|   |Guido|Van Rossum|   |Dennis|Ritchie|  </pre>
+      <p>sera affiché de la manière  suivante sur GitHub :</p>
+      <div>
+        <div><img alt="images/03E03.png" src="images/images_03E03.png"></div>
+      </div>
+    </div>
+    <div>
+      <h3>i. Liens</h3>
+      <p>Des liens peuvent également être  générés avec Markdown. Pour cela, il  faut utiliser la syntaxe suivante :</p>
+      <pre>[Texte du lien](URL du lien)  </pre>
+      <p>Par exemple, voici un lien qui redirigera  vers le moteur de recherche Google :</p>
+      <pre>[Lien de Google](http://google.fr)  </pre>
+    </div>
+    <div>
+      <h3>j. Notes de bas de page</h3>
+      <p>Insérer des notes de bas de page  peut être utile pour ajouter des informations à la  documentation sans surcharger la lecture. Voici un exemple de phrase  qui contient des notes de bas de page :</p>
+      <pre>Git est un SCM[ˆ1] très utilisé.   [ˆ1]: Système de gestion de versions (Source Content Management)  </pre>
+      <p>Cette syntaxe ne fonctionne pas sur GitHub.  Voici une capture d’écran tirée de MacDown  pour un aperçu de cette fonctionnalité : </p>
+    </div>
+  </div>
+</div>
+<div id="AU_429e789b-e8ad-4b1f-aa66-9a3d46cda8f8" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <div>
+      <div>
+        <div><img alt="images/03E04.png" src="images/images_03E04.png"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

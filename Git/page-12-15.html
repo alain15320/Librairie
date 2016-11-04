@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_4788302e-7e37-4e1c-89df-54c730ec9e3f" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Changer de branche</h1>
+  <p>Raphaël reçoit un appel  urgent de son client. En effet, celui-ci n’aime pas du tout le titre  de la page. Il demande donc à Raphaël de modifier  le titre qui était <strong>Liste des anniversaires</strong> en <strong>Page des anniversaires</strong>.</p>
+  <p>Raphaël ne va pas effectuer cette  modification sur la branche contenant les boutons des couleurs.  En effet, le client refusera peut-être les boutons ou demandera  une autre modification avant la mise en production. Raphaël  va donc revenir sur la branche principale (la branche par défaut  de Git s’appelle master) pour modifier le titre. Pour cela, il va utiliser la  commande suivante :</p>
+  <pre>git checkout master  </pre>
+  <p>Cette commande permet de changer de branche.  Un changement de branche signifie que le répertoire de  travail va être mis à jour à partir des  données de la branche spécifiée dans  la commande. Dans ce cas, cela signifie que les modifications effectuées  dans la branche color_buttons seront effacées du répertoire de travail,  mais conservées par Git.</p>
+  <p>Après avoir exécuté cette  commande, il est possible de vérifier la branche sur laquelle  le prochain commit sera effectué avec la commande suivante  :</p>
+  <pre>git branch  </pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>  color_buttons    * master  </pre>
+  <p>Cette sortie indique qu’il y a deux  branches dans le dépôt et que l’état  du répertoire de travail correspond à la  branche master.</p>
+  <p>Si Raphaël consulte les fichiers,  il ne verra plus les modifications qu’il a effectuées pour  mettre en place le système de boutons.</p>
+  <p>En regardant plus précisément  les fichiers, Raphaël remarque que la bibliothèque  jQuery qu’il a ajoutée dans la branche color_buttons est toujours présente. C’est normal, étant  donné qu’elle est ignorée par Git (dans le fichier .gitignore), elle n’a aucune existence pour Git quelle que soit  la branche dans laquelle Raphaël était au moment  de l’ajout.</p>
+  <p>Raphaël change donc le titre dans  le fichier anniversaire.html et commite sa modification avec les commandes suivantes  :</p>
+  <pre>git add anniversaire.html    git commit -m "Titre page : Page des anniversaires"  </pre>
+  <p>Lorsque son commit est terminé, il  est situé uniquement dans la branche master, la branche color_buttons n’ayant reçu aucune modification.</p>
+</div>
+</body>
+</html>

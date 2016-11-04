@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_56ee413d-7508-41eb-b5eb-7b44ac0ad8c5" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Découverte de l’IDE</h1>
+  <p>Accédons sans plus tarder au <strong>workbench</strong> ou plan de travail.</p>
+  <div>
+    <p> Cliquez sur l’icône suivante <img alt="images/01-13.png" src="images/images_01-13.png">.</p>
+  </div>
+  <div>
+    <h2>1. Perspective - Vue</h2>
+    <p>Eclipse propose un environnement de développement  par défaut nommé <strong>perspective</strong>, composé de plusieurs onglets (des vues dans  la terminologie Eclipse). Plus précisément, il  s’agit de la <strong>perspective Java</strong>.</p>
+    <div>
+      <div><img alt="images/01-14.png" src="images/images_01-14.png"></div>
+    </div>
+    <p>Il existe d’autres perspectives accessibles  par le menu <strong>Window - Open Perspective</strong> et qui sont utilisées selon les besoins  des développeurs. Pour ne pas encombrer l’espace mémoire  de l’IDE, il vaut mieux fermer celles qui ne sont pas utilisées.</p>
+    <div>
+      <div><img alt="images/01-15.png" src="images/images_01-15.png"></div>
+    </div>
+    <p>Chaque perspective est constituée  d’un certain nombre d’éléments appelés vues  (views) qui ne sont pas forcément tous ouverts (visibles).  Comme pour les perspectives, n’ouvrez que les vues qui  vous sont réellement utiles, sinon vous risquez de travailler  sur une partie de l’écran aussi grande qu’un timbre-poste.</p>
+    <div>
+      <p> Pour ajouter par exemple la vue Console à la  perspective Java, choisissez l’option du menu <strong>Window - Show View - Console</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/01-16.png" src="images/images_01-16.png"></div>
+    </div>
+    <div>
+      <p> Pour afficher une vue dans tout l’espace disponible,  double cliquez sur son onglet. Double cliquez une deuxième  fois sur l’onglet pour restaurer la vue avec sa taille initiale.</p>
+    </div>
+    <div>
+      <p> Pour restaurer une perspective, après  un clic droit sur son nom dans l’onglet situé en haut à gauche  de l’écran, choisissez <strong>Reset</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/01-17.png" src="images/images_01-17.png"></div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Éditeur de code</h2>
+    <p>Il est possible de choisir entre deux éditeurs  de code, <strong>Java Editor</strong> et <strong>Text Editor</strong>. </p>
+    <p>Par défaut, les classes sont ouvertes  avec l’éditeur Java.</p>
+    <div>
+      <div><img alt="images/01so17.png" src="images/images_01so17.png"></div>
+    </div>
+    <p>Une instruction peut être longue  et dépasser la largeur d’une page-écran. Pour l’écrire  sur plusieurs lignes, il suffit d’effectuer un saut de ligne à l’endroit  où vous voulez effectuer une coupure.</p>
+    <p>Exemple :</p>
+    <pre>laFenetre.getJLab_Action().setIcon(new ImageIcon(
+		Fenetre.class.getResource("/images/gestion/modifier.png")));  </pre>
+    <p>Par contre, pour couper les chaînes,  il faut obligatoirement utiliser l’opérateur +.  Ceci étant, Eclipse se charge de le faire pour vous dès  que vous effectuez un saut de ligne. </p>
+    <div>
+      <p> À titre d’exercice, placez le curseur  au milieu d’une chaîne de caractères, et appuyez  sur [Entrée].</p>
+    </div>
+    <div>
+      <p>La chaîne sera automatiquement  coupée en deux, sur deux lignes différentes.</p>
+    </div>
+    <p>Exemple :</p>
+    <pre>  ...
+getResource("/images/gestion" +
+					"/modifier.png")));  </pre>
+    <div>
+      <p> Pour bénéficier de l’autocomplétion,  saisissez les premières lettres suivies de la combinaison  de touches [Ctrl][Espace].</p>
+    </div>
+    <div>
+      <p>Eclipse complète votre saisie  ou vous propose une liste. Vous pouvez paramétrer l’autocomplétion  en modifiant les options disponibles ici : <strong>Window - Preferences - Editor - Content Assist</strong>.</p>
+    </div>
+    <div>
+      <p> Pour bénéficier d’une aide  contextuelle, pointez un mot du code avec le curseur de  la souris.</p>
+    </div>
+    <p>Exemple :</p>
+    <div>
+      <div><img alt="images/01so18.png" src="images/images_01so18.png"></div>
+    </div>
+    <p>Eclipse se charge automatiquement de l’indentation  du code.</p>
+    <div>
+      <p> Pour provoquer volontairement une indentation,  sélectionnez la ou les lignes contiguës concernées  et utilisez le raccourci-clavier [Ctrl] <strong>I</strong> ou faites un clic droit et choisissez <strong>Source - Correct Indentation</strong>.</p>
+    </div>
+    <p>Vous noterez que dans le menu contextuel les  commandes disponibles sont accompagnées sur leur droite  des raccourcis-clavier associés. </p>
+    <p>Eclipse ne formate pas automatiquement le  code par défaut.</p>
+    <div>
+      <p> Pour formater le code (espaces, indentation…),  utilisez le raccourci-clavier [Ctrl][Shift] <strong>F</strong>, ou faites un clic droit et sélectionnez <strong>Source - Format</strong>.</p>
+    </div>
+    <div>
+      <p>Pour ne formater qu’une partie du code,  sélectionnez celui-ci et effectuez l’opération  précédente.</p>
+    </div>
+    <div>
+      <p> Pour désactiver le correcteur orthographique  qui agit sur vos commentaires, choisissez <strong>Window - Preferences - General - Editors - Text Editors - Spelling</strong> puis décochez l’option <strong>Enable spell checking</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/01so19.png" src="images/images_01so19.png"></div>
+    </div>
+    <div>
+      <p> Pour ajouter les numéros de lignes,  développer ou réduire le code, effectuez un clic  droit sur la bande verticale gauche légèrement  grisée.</p>
+    </div>
+    <div>
+      <div><img alt="images/01-19.png" src="images/images_01-19.png"></div>
+    </div>
+  </div>
+  <div>
+    <h2>3. Débogueur</h2>
+    <p>Le développement nécessite  de nombreux tests. Pour contrôler la bonne exécution  d’une partie d’un programme comportant des structures conditionnelles  et itératives, l’utilisation d’un débogueur s’avère  souvent indispensable. La découverte du débogueur  d’Eclipse se fera au travers d’un programme qui affiche les tables  de multiplication.</p>
+    <p>Voici une proposition de code pour un tel  programme :</p>
+    <div>
+      <div><img alt="images/01-20.png" src="images/images_01-20.png"></div>
+    </div>
+    <div>
+      <p> Testez auparavant le programme en appuyant  sur les touches [Ctrl][F11].</p>
+    </div>
+    <div>
+      <div><img alt="images/01-21.png" src="images/images_01-21.png"></div>
+    </div>
+    <div>
+      <p> Effectuez un clic droit dans la marge grise  devant le numéro de ligne 20 et choisissez <strong>Toggle Breakpoint</strong>.</p>
+    </div>
+    <div>
+      <p> Testez le programme en appuyant cette fois  uniquement sur la touche [F11] pour lancer le  débogueur.</p>
+    </div>
+    <div>
+      <p>Si la perspective <strong>Debug</strong> n’est pas encore ouverte, Eclipse affiche une fenêtre.</p>
+    </div>
+    <div>
+      <div><img alt="images/01-22.png" src="images/images_01-22.png"></div>
+    </div>
+    <div>
+      <p> Cochez l’option <strong>Remember my decision</strong>.</p>
+    </div>
+    <p>Ceci a pour conséquence d’ouvrir  cette perspective ; un bouton est alors ajouté à la  barre principale des icônes de l’IDE pour permettre d’y  accéder rapidement.</p>
+    <div>
+      <div><img alt="images/01-23.png" src="images/images_01-23.png"></div>
+    </div>
+    <div>
+      <div><img alt="images/01-24.png" src="images/images_01-24.png"></div>
+    </div>
+    <p>Les valeurs des variables sont affichées  dans une vue.</p>
+    <div>
+      <div><img alt="images/01-25.png" src="images/images_01-25.png"></div>
+    </div>
+    <p>Le débogueur va permettre de vérifier  l’exactitude des données en contrôlant pas à pas  les valeurs des variables.</p>
+    <div>
+      <p> Cliquez sur l’icône <img alt="images/01-26.png" src="images/images_01-26.png"> ou appuyez sur la touche [F5].</p>
+    </div>
+    <p>Le point d’arrêt étant à la  ligne 20, le parcours concerne la boucle <strong>for</strong> interne. À l’itération suivante, la  variable <strong>ligne</strong> doit contenir le nombre 1 et les variables <strong>colonne</strong> et <strong>nombre</strong> doivent demeurer inchangées.</p>
+    <div>
+      <div><img alt="images/01-27.png" src="images/images_01-27.png"></div>
+    </div>
+    <div>
+      <p> Pour poursuivre les tests et lire les valeurs  des variables, appuyez à nouveau sur [F5].</p>
+    </div>
+    <div>
+      <p> Pour revenir à la perspective Java,  cliquez sur le bouton <strong>Java</strong> en haut à droite de la fenêtre principale  de l’IDE.</p>
+    </div>
+    <div>
+      <p>Si celui-ci n’est pas visible, cliquez  sur les doubles chevrons pour le faire apparaître. </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

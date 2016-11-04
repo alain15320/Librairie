@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_5ced4205-dfa7-490f-abc5-8e640cbe34d7" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Accessibilité</h1>
+  <p>La POO ajoute le principe d’accessibilité (visibilité)  qui consiste à contrôler l’accès  aux classes et à leurs membres (propriétés  et méthodes).</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le terme d’accessibilité servant également à désigner  les techniques d’utilisation d’une application pour des utilisateurs  handicapés, le terme de visibilité sera préféré dans  cette section.</p>
+    </div>
+  </div>
+  <p>Les niveaux de visibilité sous Java  sont les suivants :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Classes :</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p><strong>public</strong> : les classes avec une visibilité publique  sont accessibles par tout le monde (toutes les classes de tous les  packages).</p>
+      </li>
+      <li>
+        <p><strong>&lt;rien&gt;</strong> : le fait de ne pas mettre de visibilité à la  classe rend celle-ci inaccessible en dehors des classes de son propre  package.</p>
+      </li>
+      <li>
+        <p><strong>private</strong> : ce niveau ne concerne que les classes internes.  Ce sont des classes définies à l’intérieur  d’une classe et qui ne sont utilisées que par celle-ci.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p>Membres :</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>
+        <p><strong>public</strong> : les membres (propriétés  et méthodes) sont accessibles à l’extérieur  de la classe. Pour protéger les propriétés  de modifications non autorisées ou malencontreuses, il  est cependant fortement recommandé de ne jamais les déclarer  publiques.</p>
+      </li>
+      <li>
+        <p><strong>protected</strong> : les membres sont accessibles aux classes  descendantes (voir la notion d’héritage plus loin)  mais aussi avec Java aux autres classes du même package.</p>
+      </li>
+      <li>
+        <p><strong>&lt;rien&gt;</strong> : les attributs et méthodes sont accessibles  uniquement pour les classes appartenant au même package  si aucune visibilité n’est fournie.</p>
+      </li>
+      <li>
+        <p><strong>private</strong> : c’est le niveau le plus élevé de  restriction. Les propriétés et méthodes ne  sont alors accessibles que depuis la classe elle-même. Concernant  les propriétés, elles peuvent l’être  en dehors de la classe mais uniquement par le biais de ses mutateurs  et accesseurs accessibles.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Les membres (attributs et méthodes)  d’une classe peuvent également être qualifiés avec  des mots-clés particuliers :</p>
+  <div>
+    <ul>
+      <li>
+        <p><strong>static</strong> : les membres déclarés <strong>static</strong> appartiennent à la classe et non aux objets issus  de la classe. Ils ne peuvent pas être hérités  par les classes filles.</p>
+      </li>
+      <li>
+        <p><strong>final</strong> : les attributs déclarés <strong>final</strong> ne peuvent plus être modifiés une  fois initialisés. Ils doivent également être  initialisés à la construction des objets. Les méthodes  déclarées <strong>final</strong> ne peuvent plus être redéfinies dans  les classes filles.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>D’autres mots-clés  permettent de caractériser les classes et leurs membres dans  des domaines autres que celui de la visibilité tels que  la concurrence ou l’optimisation. Les lecteurs curieux  chercheront les usages de <strong>volatile</strong>, <strong>synchronized</strong> et <strong>transient</strong>.</p>
+    </div>
+  </div>
+  <p>Voici la classe réécrite  en tenant compte des principes énoncés.</p>
+  <pre>public class Chat {         // propriétés         private String nom;         private String couleur;         private long dateDeNaissance;                 // accesseurs &lt;=&gt; getters         public String getNomChat() {           return nom;         }         public String getCouleur() {              return couleur;         }         public int getAge() {              // calcule l’âge à partir de la date de naissance             return calculerAge(dateDeNaissance) ;        }                  public int getDateDeNaissance() {              return dateDeNaissance ;        }                  // mutateurs &lt;=&gt; setters         public void setNom(String nom) {           this.nom = nom;         }              public void setCouleur(String couleur) {           this.couleur = couleur;         }             protected void setDateDeNaissance(long nouvelleDate) {           this.dateDeNaissance = nouvelleDate;         }                  // autres méthodes         public void dormir(){             }         public void manger(Object deLaNourriture){             }         public String miauler(){           String leMiaulement = "miaou";           return leMiaulement;         }            private static int calculerAge(long date) {             Instant naissance = Instant.ofEpochMilli(date) ;             Instant maintenant = Instant.now() ;             long annees = ChronoUnit.YEAR.between(naissance, maintenant) ;            return annees ;        }   }  </pre>
+  <p>L’attribut dérivé age discuté précédemment  est alors défini par l’utilisation de la méthode <strong>getAge()</strong>. Il ne correspond pas à une propriété stockée  dans l’objet, mais à un calcul qui fait intervenir  un autre attribut.</p>
+  <p>Toute application doit disposer d’une  classe avec une méthode particulière chargée  de son exécution. Il s’agit de la méthode <strong>main()</strong> qui a été rencontrée au chapitre  Prise en main d’Eclipse. Sa syntaxe et sa structure sont  toujours les mêmes :</p>
+  <pre>public static void main(String[] args) {       // action(s)    }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Par convention, le terme <strong>args</strong> est employé mais il est possible d’en  choisir un autre.</p>
+    </div>
+  </div>
+  <p>Il s’agit d’une méthode  publique et statique. Comme vu précédemment, elle est  donc accessible à l’extérieur de la classe  et appartient à celle-ci et non à ses instances.</p>
+  <p>La méthode <strong>main()</strong> prend un paramètre obligatoire nommé <strong>args</strong> de type <strong>String[]</strong>.</p>
+  <p>Exemple :</p>
+  <pre><strong>public static void</strong> main(String[] args) {       System.out.print("Java, c’est extra !");    }    </pre>
+  <p>Dans la seule ligne qui constitue le corps  du programme, <strong>System</strong> désigne une classe Java dont la classe parente  est <strong>Object</strong>. En consultant l’aide, il est possible de  visualiser la hiérarchie des classes.</p>
+  <div>
+    <div><img alt="images/03so01.png" src="images/images_03so01.png"></div>
+  </div>
+  <p>Ces deux classes sont rangées dans  le paquetage <strong>lang</strong>, lui-même contenu dans le package <strong>java</strong>.</p>
+  <p>Le mot <strong>out</strong> désigne une propriété statique  de la classe <strong>System</strong>, <strong>out</strong> étant lui-même du type classe <strong>PrintStream</strong> dont la hiérarchie avec les classes parentes est  présentée ci-après.</p>
+  <div>
+    <div><img alt="images/03so02.png" src="images/images_03so02.png"></div>
+  </div>
+  <p>En consultant la classe <strong>PrintStream</strong>, on constate que <strong>println</strong> est une méthode de celle-ci. Cette  méthode est utilisable dans la classe <strong>System</strong> via la propriété statique <strong>out</strong>. La méthode <strong>println</strong> affiche la valeur littérale qui se trouve encadrée  par des guillemets et effectue un retour de ligne.</p>
+</div>
+</body>
+</html>

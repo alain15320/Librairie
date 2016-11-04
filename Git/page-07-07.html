@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_388f6eba-0f35-4a33-9ac3-8795d07a429e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Revenir à un état antérieur</h1>
+  <p>Plusieurs raisons peuvent nécessiter  de se repositionner sur une version antérieure. L’une d’elles  est de tester une version antérieure pour comparer certaines fonctions  du logiciel. Il arrive également que les développeurs veuillent  tester une ancienne version avant d’utiliser git  bisect. La commande git bisect est  un outil de recherche dichotomique dans le dépôt. Cette  fonctionnalité est abordée dans le chapitre Les  outils de Git, à la section Retrouver un commit erroné.</p>
+  <p>Pour revenir à un état antérieur  en utilisant le hash du commit sur lequel le développeur  veut se replacer, il faut utiliser la syntaxe suivante : </p>
+  <pre>git reset hash_du_commit</pre>
+  <p>Par exemple, si le développeur désire  revenir au projet tel qu’il l’était à la fin de l’année  2014, il recherche tout d’abord les commits effectués avant  le 31 décembre 2014 : </p>
+  <pre>git log --before="2014-12-31" -1  </pre>
+  <p>Cette commande affiche la sortie suivante  : </p>
+  <pre>commit 013c2d8    Author: Russell Keith-Magee &lt;russell@keith-magee.com&gt;    Date:   Wed Dec 31 13:21:32 2014 +0800            Renamed variables to avoid name collision with import of   django.db.models.  </pre>
+  <p>Puis il utilise ensuite la commande git reset de cette manière  : </p>
+  <pre>git reset 013c2d8  </pre>
+  <p>Celle-ci affiche alors la sortie suivante  indiquant tous les fichiers modifiés depuis le  commit visé (la sortie a été tronquée) : </p>
+  <pre>Unstaged changes after reset:    M   .gitattributes    M   .gitignore  </pre>
+  <p>En effet, le répertoire de travail  n’a pas été modifié, il contient  donc les modifications incluses dans le précédent  commit où se trouvait le développeur. Il est possible  de modifier également le répertoire de travail  grâce à l’argument --hard.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Envoyer ses modifications</h1>
+<p>Lorsqu’un développeur travaille sur  un dépôt local et commite son travail, il a besoin  d’envoyer régulièrement ses modifications au dépôt  distant. Envoyer ses modifications sur un dépôt  distant permet de les partager avec ses autres collaborateurs. Voici  la commande permettant d’envoyer au remote nommé origin les modifications ajoutées dans la branche master. Cette commande est utilisable sur un dépôt  local :</p>
+<pre>git push origin master</pre>
+<p>Un remote est un dépôt distant  pour lequel une liaison existe dans le dépôt local.  Ici, le remote origin est en réalité un raccourci vers un  dépôt distant. Si le dépôt a été cloné à partir  de l’URL http://git-conflict.com/depots/CMS.git, alors origin pointera toujours vers cette URL.</p>
+<p>Il faut savoir que si plusieurs développeurs  travaillent sur le même serveur distant, si un autre développeur  a envoyé des modifications (via un ou plusieurs commits)  sur le serveur et que personne ne les a récupérées,  alors personne ne pourra envoyer ses modifications avant d’avoir  récupéré celles présentes sur  le serveur. Ce cas peut être testé facilement  en suivant les étapes suivantes :</p>
+<div>
+  <ul>
+    <li>
+      <p>Créer un  nouveau dépôt distant :</p>
+    </li>
+  </ul>
+</div>
+<pre>mkdir test_echange    cd test_echange    git init --bare distant  </pre>
+<div>
+  <p>Lorsque l’interface en ligne  de commande se situe dans le dépôt distant, la commande git log affiche  la sortie suivante :</p>
+</div>
+<pre>fatal: bad default revision ’HEAD’  </pre>
+<div>
+  <p>Cette sortie indique que le dépôt  est vide et que Git ne trouve pas de référence  HEAD, ce qui est normal car HEAD n’a aucun commit auquel  se référer.</p>
+</div>
+<div>
+  <ul>
+    <li>
+      <p>Clonage à deux  endroits différents du dépôt distant :</p>
+    </li>
+  </ul>
+</div>
+<pre>git clone distant local1    git clone distant local2  </pre>
+<div>
+  <p>Pour chacune de ces commandes, Git indique  que le dépôt cloné est vide avec la sortie  suivante : </p>
+</div>
+<pre>Cloning into ’local1’...    warning: You appear to have cloned an empty repository.    done.  </pre>
+<div>
+  <ul>
+    <li>
+      <p>Commiter une modification  d’un dépôt local (ici local1) :</p>
+    </li>
+  </ul>
+</div>
+<pre>vi README    git add README    git commit -m "README : initial"  </pre>
+<div>
+  <ul>
+    <li>
+      <p>Envoyer le commit  vers le dépôt distant en utilisant la commande  suivante :</p>
+    </li>
+  </ul>
+</div>
+<pre>git push  </pre>
+<div>
+  <ul>
+    <li>
+      <p>Lister les commits  sur le dépôt distant avec git  log :</p>
+    </li>
+  </ul>
+</div>
+<pre>commit cc6bb2a    Author: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Sat Aug 22 02:28:21 2015 +0200            README : initial  </pre>
+<p>Cette sortie indique que le commit présent  sur le dépôt local1 a bien été envoyé sur  le dépôt distant.</p>
+<p>Il existe plusieurs méthodes par  défaut pour l’envoi des modifications :</p>
+<div>
+  <ul>
+    <li>
+      <p><strong>matching</strong> : cette méthode est activée  par défaut sur les installations de Git 1.x. Elle envoie  toutes les branches locales qui correspondent aux branches distantes  suivies (ces branches seront abordées dans la suite de  ce chapitre).</p>
+    </li>
+    <li>
+      <p><strong>simple</strong> : cette méthode est activée  par défaut sur les installations de Git 2.X. Elle envoie  uniquement la branche courante si son nom correspond à celui  de la branche distante suivie.</p>
+    </li>
+    <li>
+      <p><strong>nothing</strong> : cette méthode ne va rien envoyer.</p>
+    </li>
+    <li>
+      <p><strong>current</strong> : cette méthode va envoyer la branche  courante vers la branche distante suivie de même nom.</p>
+    </li>
+    <li>
+      <p><strong>upstream</strong> : cette méthode va envoyer la branche  courante vers sa branche distante suivie, quel que soit le nom des  branches.</p>
+    </li>
+  </ul>
+</div>
+<p>Ces méthodes doivent être  configurées en suivant la syntaxe suivante : </p>
+<pre>git config --global push.default nom_méthode</pre>
+<p>Lorsque le développeur doit envoyer  une branche inconnue du dépôt distant, il faut  explicitement l’envoyer avec la syntaxe suivante : </p>
+<pre>git push --set-upstream origin nom_branche</pre>
+
+</body>
+</html>

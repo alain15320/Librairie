@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_8a31afbe-1afb-4838-b1dc-4be1b4b90726" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Présentation du concept</h1>
+  <p>Le projet Luna a été bâti  en prenant soin de séparer les objets métier (les données) de  leur représentation graphique, et ce dès la phase  d’analyse.</p>
+  <p>Le modèle MVC (Modèle-Vue-Contrôleur)  est un patron d’architecture qui formalise cette séparation  en introduisant une couche logicielle intermédiaire, le  contrôleur.</p>
+  <p>Dans un contexte MVC, les données  constituent les modèles, les classes graphiques les vues.  Modèle et Vue sont totalement indépendants l’un  de l’autre : ils ne se connaissent pas. Comment alors les  actions des utilisateurs via les vues peuvent-elles modifier les  modèles et inversement comment les données attendues  peuvent-elles être affichées ? Ce sont  justement les contrôleurs qui vont établir ce  lien.</p>
+  <p>Autre particularité importante :  le modèle, s’il ne connaît pas directement les vues  qui affichent ses données, a néanmoins la possibilité de  notifier à celles-ci tout changement le concernant.</p>
+  <div>
+    <div><img alt="images/re12-01.png" src="images/images_re12-01.png"></div>
+  </div>
+  <p>Le schéma montre que l’utilisateur  n’a aucune connaissance du contrôleur. C’est pourtant lui  qui transmet de manière transparente pour l’utilisateur  les demandes au modèle pour traitement. Les vues sont mises à jour  par l’intermédiaire du modèle via un système  de notification basé sur la notion d’événements  et d’écouteurs d’événements.</p>
+  <p>Les avantages de cette architecture, qui repose  sur la séparation des responsabilités, sont multiples :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Si des changements  doivent être apportés à l’application  concernant les données, le modèle sera  impacté ainsi que probablement le contrôleur,  la vue restant la même. Si des changements visuels doivent être  effectués, la vue sera modifiée, laissant le modèle  et le contrôleur intouchés. Cela facilite la maintenance  de l’application.</p>
+      </li>
+      <li>
+        <p>Le découplage du modèle,  de la vue et du contrôleur permet d’écrire plus facilement des  tests unitaires pour la logique métier.</p>
+      </li>
+      <li>
+        <p>Cette modularité permet à des  développeurs différents de travailler simultanément  sur les aspects logiques métier et interface utilisateur.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Pour la gestion des clients, des articles  et de commandes du projet Luna, cette méthode de conception  est utilisée pour afficher les données dans des  tableaux graphiques qui auront la capacité de se mettre à jour  suite à des modifications des données.</p>
+  <p>Un composant graphique de Swing, nommé JTable,  construit sur ce patron de conception MVC est mis en œuvre  dans ce but, et cette séparation des responsabilités  sera reprise à un niveau supérieur.</p>
+  <p>L’aspect graphique est abordé dans  un premier temps.</p>
+</div>
+</body>
+</html>

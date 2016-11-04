@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_378804c4-4551-4266-a06c-8ad20e9931f9" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>L’aide de Git</h1>
+  <div>
+    <h2>1. Généralités</h2>
+    <p>Après avoir installé Git,  il est très utile de savoir accéder à l’aide  de Git. En effet, en lisant les prochains chapitres vous  aurez peut-être besoin d’obtenir plus d’informations  sur une commande et pour cela vous aurez besoin de l’aide.  Pour afficher l’aide générale qui liste  les commandes principales de Git, il faut utiliser la commande suivante  (équivalente à la commande git seule ou  encore à git help) :</p>
+    <pre>git --help  </pre>
+    <p>Ci-dessous un exemple des trois premières  commandes proposées : </p>
+    <pre>add        Add file contents to the index   bisect     Find by binary search the change that introduced a bug   branch     List, create, or delete branches  </pre>
+    <p>Cette commande permet d’avoir une  liste et une explication brève (anglophone) des commandes  principales de Git.</p>
+    <p>Pour obtenir une aide très complète  sur une commande spécifique de Git, il faut utiliser la  syntaxe suivante : </p>
+    <pre>git commande_git --help  </pre>
+    <p>Par exemple, pour obtenir de l’aide  sur la commande git add, il faut  utiliser la commande suivante : </p>
+    <pre>git add --help  </pre>
+    <p>Le résultat de cette commande représente  un important volume de texte mais est découpé en  plusieurs parties présentées ci-dessous :</p>
+    <div>
+      <ul>
+        <li>
+          <p><strong>NAME </strong>: présente le nom de la commande et la brève  description présente dans la commande git  --help.</p>
+        </li>
+        <li>
+          <p><strong>SYNOPSIS </strong>: présente la syntaxe détaillée  de la commande et de ses options.</p>
+        </li>
+        <li>
+          <p><strong>DESCRIPTIONS </strong>: présente une explication complète  des fonctionnalités de la commande.</p>
+        </li>
+        <li>
+          <p><strong>OPTIONS </strong>: présente les options disponibles et décrit  précisément pour chacune d’elles, sa  fonctionnalité.</p>
+        </li>
+        <li>
+          <p><strong>CONFIGURATION </strong>: présente les interactions avec la configuration  de Git. Par exemple, la variable de configuration core.excludesfiles empêche git add d’ajouter certains  fichiers.</p>
+        </li>
+        <li>
+          <p><strong>EXAMPLES </strong>: présente des exemples d’utilisation  de la commande avec une explication de l’exemple.</p>
+        </li>
+        <li>
+          <p><strong>SEE ALSO</strong> : présente des commandes en corrélation  avec la commande dont l’aide est affichée.</p>
+        </li>
+      </ul>
+    </div>
+    <p>D’autres parties de l’aide  existent en fonction de la commande. L’aide est très complète  et permet d’explorer les fonctionnalités évoluées  de chaque commande. </p>
+  </div>
+  <div>
+    <h2>2. Types de commandes Git</h2>
+    <p>Git propose un certain nombre de commandes  qui sont divisées en deux catégories :</p>
+    <div>
+      <ul>
+        <li>
+          <p>les commandes de porcelaine  (porcelain command en anglais),</p>
+        </li>
+        <li>
+          <p>les commandes de plomberie (plumbing commands en anglais).</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>a. Les commandes de porcelaine</h3>
+      <p>Ces commandes sont des commandes de haut niveau.  Ce sont les commandes qui sont utilisées au quotidien et  pour lesquelles Git propose un certain nombre de contrôles.  Par exemple, git commit et git add sont des commandes de porcelaine.</p>
+    </div>
+    <div>
+      <h3>b. Les commandes de plomberie</h3>
+      <p>Ces commandes sont des commandes de bas niveau,  c’est-à-dire qu’elles manipulent directement les  informations qui sont au cœur de Git. Ces commandes peuvent être  destructrices pour le dépôt et sont généralement  mises en œuvre par les utilisateurs maîtrisant  Git.</p>
+      <p>Aide des commandes de plomberie</p>
+      <p>Par défaut, la commande git help ne renvoie pas les commandes  de plomberie. Pour afficher toutes les commandes de Git (commandes  de porcelaine et de plomberie), il faut utiliser le paramètre -a (ou --all)  avec la commande git help :</p>
+      <pre>git help -a  </pre>
+      <p>Cette commande affiche une liste de toutes  les commandes de Git.</p>
+    </div>
+  </div>
+</div>
+<div id="AU_378804c4-4551-4266-a06c-8ad20e9931f9" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <div> </div>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

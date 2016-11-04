@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_735bb263-18e4-4a81-90d0-38bcf8c4d0c0" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Les trois zones d’un fichier</h1>
+  <p>Un fichier peut se trouver à trois  endroits différents : le répertoire de travail, l’index  et le dépôt. Le fichier va se trouver dans les  différentes zones selon son avancée dans le projet.</p>
+  <p>Le schéma suivant montre un projet  totalement vierge dans lequel un dépôt Git vient  d’être initialisé, c’est-à-dire que nous  n’avons enregistré aucun fichier dans le projet. La seule  action effectuée sur ce projet est un git  init.</p>
+  <div>
+    <div><img alt="images/04E01.png" src="images/04E01.png"></div>
+  </div>
+  <p>Pour arriver à ce résultat,  vous pouvez utiliser les commandes :</p>
+  <pre>mkdir zoneFichier   cd zoneFichier   git init  </pre>
+  <p>Pour visualiser l’état des fichiers,  nous allons utiliser la commande suivante :</p>
+  <pre>git status</pre>
+  <p>Cette commande affiche la sortie suivante :</p>
+  <pre>git status   On branch master      Initial commit      nothing to commit (create/copy files and use "git add" to track)  </pre>
+  <p>La commande git status permet  d’afficher l’état des fichiers du dépôt. Cette  commande va être expliquée à l’aide  des exemples qui vont suivre dans la suite de ce chapitre.</p>
+  <p>Dans l’exemple précédent,  la commande git status nous précise  qu’aucun fichier n’est à commiter (nothing to commit).</p>
+  <div>
+    <h2>1. Le répertoire de travail</h2>
+    <p>Cette zone correspond au répertoire  du système de fichiers sur lequel travaille le développeur.  C’est le dossier du projet tel qu’il est stocké sur le  disque dur. Les fichiers qui se trouvent dans cette zone peuvent être  connus de Git selon qu’ils ont été ajoutés  au moins une fois dans Git ou non. Un fichier qui se trouve uniquement  dans cette zone est un fichier totalement inconnu pour Git.  Ce  genre de fichier est également appelé fichier  non suivi (untracked file en anglais).</p>
+    <div>
+      <div><img alt="images/04E02.png" src="images/04E02.png"></div>
+    </div>
+    <p>Pour arriver à ce résultat,  vous pouvez utiliser les commandes :</p>
+    <pre>echo "&lt;html&gt;Le fichier est dans le répertoire de travail&lt;/html&gt;"   &gt; fichier.html  </pre>
+    <p>La commande git status nous  indique que le fichier est visualisé en tant que fichier  non suivi :</p>
+    <pre>git status   On branch master      Initial commit      Untracked files:     (use "git add &lt;file&gt;..." to include in what will be committed)          fichier.html      nothing added to commit but untracked files present (use "git add" to track)  </pre>
+    <p>Le fichier fichier.html n’est pas suivi par Git. Il n’est  pas encore identifié par Git et ne possède donc  pas encore d’identifiant sous forme de hash. Git possède une  commande de plomberie qui permet de visualiser les fichiers non  suivis. Cette commande présente l’avantage d’afficher  l’identifiant du fichier lorsque cet identifiant existe.  Voici la commande qui permet de visualiser les fichiers non suivis :</p>
+    <pre>git ls-files --others  </pre>
+    <p>Elle affiche la sortie suivante :</p>
+    <pre>fichier.html  </pre>
+  </div>
+  <div>
+    <h2>2. L’index</h2>
+    <p>Cette zone utilisée par Git est très  particulière. C’est en quelque sorte une zone d’attente  de commit indépendante du répertoire de travail.  Nous allons y placer les différents fichiers que nous voulons  intégrer au prochain commit.</p>
+    <p>Un fichier qui a été ajouté dans  l’index ne sera plus considéré comme un fichier non  suivi.</p>
+    <div>
+      <div><img alt="images/04E03.png" src="images/04E03.png"></div>
+    </div>
+    <p>Pour arriver à ce résultat,  nous pouvons utiliser la commande suivante :</p>
+    <pre>git add fichier.html  </pre>
+    <p>La commande git add sera  expliquée plus précisément dans la suite  de ce chapitre. En bref, git add permet  d’ajouter un fichier à l’index.</p>
+    <p>La commande git status nous  indique que le fichier est prêt à être  commité :</p>
+    <pre>git status   On branch master      Initial commit      Changes to be committed:     (use "git rm --cached &lt;file&gt;..." to unstage)          new file:   fichier.html  </pre>
+    <p>Cette indication de Git selon laquelle les  fichiers sont prêts à être commités signifie  qu’ils se situent dans l’index, qui est la zone  d’attente avant le commit. La commande de plomberie git ls-files va nous permettre d’afficher les  fichiers présents dans l’index et l’identifiant  sous forme de hash que Git leur a attribué.  Voici la commande  qui va nous permettre d’afficher ces éléments : </p>
+    <pre>git ls-files --stage  </pre>
+    <p>Elle va afficher la sortie suivante : </p>
+    <pre>100644 54d5bee5fa3b94e6efaea0cca0e42cee7b46e2e5 0   fichier.html  </pre>
+    <p>Les différents éléments  de cette sortie sont expliqués plus en détail  dans la documentation officielle de la commande git  ls-files (<a href="http://git-scm.com/docs/git-ls-files" target="_blank">http://git-scm.com/docs/git-ls-files</a>). Pour simplifier, nous remarquons que le fichier fichier.html a correctement été ajouté à l’index  et que son identifiant est la chaîne hexadécimale  débutant par <strong>54d5bee</strong>. Le fait que Git ait attribué un identifiant  au contenu du fichier signifie que Git a correctement intégré le  fichier dans son système. Cela ne signifie pas pour autant  que le fichier est présent dans l’historique du  dépôt. </p>
+  </div>
+  <div>
+    <h2>3. Le dépôt</h2>
+    <p>Pour que le fichier passe de l’index  au dépôt, il faut le commiter. Commiter revient à enregistrer  un ensemble de modifications. Le commit est le concept fondamental,  de Git, il est expliqué plus en détail dans la  suite de ce chapitre. Une fois qu’un fichier a été commité,  il passe alors dans la zone du dépôt.</p>
+    <p>Dans cette zone, le fichier est versionné par  Git qui en contient au moins une version. Le fichier est suivi (tracked) par Git et sera considéré comme modifié si  le hash du fichier dans le répertoire de travail est différent  du hash enregistré dans le dépôt.</p>
+    <p>La zone de dépôt contient  tous les commits du dépôt. Cela signifie que tout l’historique  du projet se situe dans le dépôt. </p>
+    <p>Pour enregistrer le fichier fichier.html dans le dépôt, il faut utiliser la  commande git commit. Le terme « enregistrer » est  simplificateur et représente bien plus qu’une  simple sauvegarde comme l’explique la suite de ce chapitre.</p>
+    <pre>git commit -m "exemple chemin fichier.html"</pre>
+    <p>Cette commande va créer un paquet  virtuel (également appelé commit) contenant un ensemble de modifications avec le titre  défini par l’argument -m.</p>
+    <p>Lorsqu’on exécute cette commande,  Git récupère le fichier placé dans l’index et  l’ajoute dans le dépôt. Ensuite, Git supprime  le fichier de l’index, car étant donné que celui-ci  est une zone d’attente, le fichier n’a plus de raison de s’y trouver.</p>
+    <p>Étant donné que cet exemple  est le premier de la commande git commit,  il convient de préciser que les bonnes pratiques conseillent  un autre formalisme pour le message de commit. Ce formalisme sera  expliqué en détail dans la suite de ce chapitre,  mais nombre d’exemples de ce livre utiliseront cette notation pour  simplifier leur lecture.</p>
+    <p>Il est intéressant de vérifier  ce qu’affiche la commande git  status :</p>
+    <pre>git status   On branch master   nothing to commit, working directory clean  </pre>
+    <p>Git nous indique cela car aucun fichier n’est  présent dans la zone d’index et la version du  projet contenue dans le répertoire de travail correspond à la  dernière version du dépôt.</p>
+    <p>En réalité, pour vérifier  s’il y a des modifications, Git compare le répertoire  de travail avec HEAD. HEAD est une référence (c’est-à-dire  un raccourci de Git) qui pointe vers le commit le plus récent  de la branche courante. Expliqué plus simplement, HEAD  est la version courante enregistrée dans le dépôt. </p>
+    <p>Pour afficher les détails du commit  (ainsi que son identifiant), il est possible d’utiliser  la commande suivante :</p>
+    <pre>git log -1</pre>
+    <p>Cette commande va afficher la sortie suivante :</p>
+    <pre>commit e23586086614ee21b8586ef09cff726ec5f95d27   Author: Samuel DAUZON &lt;git@dauzon.com&gt;   Date:   Fri Jul 17 23:29:49 2015 +0200          exemple chemin fichier.html  </pre>
+    <p>Cette sortie permet notamment d’afficher  l’identifiant du commit représenté ici  par la chaîne hexadécimale commençant  par <strong>e235860</strong>.</p>
+    <p>De la même manière que lorsque  le fichier se trouvait dans l’index, il est possible de  l’afficher maintenant qu’il est dans le dépôt  avec la commande suivante : </p>
+    <pre>git ls-tree -r HEAD</pre>
+    <p>Cette commande affiche presque la même  sortie que lorsque le fichier était dans l’index : </p>
+    <pre>100644 blob 54d5bee5fa3b94e6efaea0cca0e42cee7b46e2e5      fichier.html  </pre>
+    <p>Un élément supplémentaire  est affiché dans cette sortie : le mot <strong>blob</strong>. Celui-ci signifie binary large object, c’est un type d’objet interne à Git  qui est chargé de stocker l’intégralité du  contenu d’un fichier. Dans le dépôt,  c’est en réalité le blob qui est identifié par  un hash.</p>
+    <p>Il existe un autre type d’objet stocké par  Git : les <strong>trees</strong>. Là où les blobs représentent  les fichiers, les trees représentent les dossiers. Les  trees sont des objets contenant le chemin du dossier ainsi qu’une  liste d’objets Git descendants. Cette liste contiendra  des objets de type tree ou blob de la même manière qu’un  répertoire contient des fichiers et des répertoires.</p>
+    <p>La sortie de git  ls-tree nous indique d’ailleurs que l’identifiant  du blob est identique à celui du fichier dans l’index.  Cela garantit que le fichier n’a pas été modifié entre  l’index et le dépôt.</p>
+    <p>Le schéma ci-dessous récapitule  l’état des trois zones ainsi que le détail  des éléments stockés dans le dépôt.</p>
+    <div>
+      <div><img alt="images/04E04.png" src="images/04E04.png"></div>
+    </div>
+    <p>Le schéma ci-dessous montre ce qui  se passe si le développeur modifie le fichier, l’ajoute à l’index  mais ne le commite pas. Le fichier se retrouve donc dans un état  distinct entre l’index et le dépôt, ce  qui est à l’origine des deux identifiants différents.</p>
+  </div>
+</div>
+<div id="AU_735bb263-18e4-4a81-90d0-38bcf8c4d0c0" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <div>
+      <div><img alt="IMAGES/04E05.png" src="images/04E05.png"></div>
+    </div>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

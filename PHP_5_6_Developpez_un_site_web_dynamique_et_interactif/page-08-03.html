@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_32e1bea5-fc16-459e-9d7e-4caaf8f3b6d2" uri="ImagesUri_../download/18b760c8-a96c-4f47-aa67-2806743c808b/images\">
+  <h1>Construire un formulaire dynamiquement</h1>
+  <p>Comme tout le reste de la page, tout ou partie  d’un formulaire peut être construit dynamiquement. Trois  cas sont abordés dans cette section :</p>
+  <div>
+    <ul>
+      <li>
+        <p>générer  la totalité du formulaire.</p>
+      </li>
+      <li>
+        <p>générer des valeurs  initiales dans les zones de saisie.</p>
+      </li>
+      <li>
+        <p>générer une liste  d’options.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Générer la totalité du  formulaire</p>
+  <p>S’il existe une description du formulaire  sous une forme ou sous une autre, il est possible de générer  la totalité du formulaire.</p>
+  <p>Dans l’exemple simplifié suivant,  nous supposons que nous récupérons (dans un fichier, dans  une base...) une description du formulaire sous la forme d’un tableau à deux  dimensions : chaque ligne du tableau contient une description de  la zone sous la forme d’un tableau avec le titre, le type,  le nom et la valeur.</p>
+  <pre>
+&lt;?php
+// Tableau contenant la description du formulaire.
+$formulaire = array(
+	array(’Nom : ’,’text’,’nom’,’HEURTEL’),
+	array(’’,’submit’,’ok’,’OK’) );
+// Génération du formulaire à l’aide d’une boucle
+// sur le tableau.
+echo ’&lt;form action="saisie.php" method="POST"&gt;’;
+foreach($formulaire as $zone) {
+	echo "$zone[0]&lt;input type=\"$zone[1]\" ",
+		"name=\"$zone[2]\" value=\"$zone[3]\"&gt;&lt;br /&gt;";
+}
+echo ’&lt;/form&gt;’;
+?&gt;  
+  </pre>
+  <p>Résultat à l’écran</p>
+  <div>
+    <div><img alt="images/07RI12.PNG" src="images/images_07RI12.PNG"></div>
+  </div>
+  <p>Résultat dans le code source  de la page du navigateur (tout est sur une ligne)</p>
+  <pre>&lt;form action="saisie.php" method="POST"&gt;Nom : &lt;input   type="text" name="nom" value="HEURTEL"&gt;&lt;br /&gt;&lt;input   type="submit" name="ok" value="OK"&gt;&lt;br /&gt;&lt;/form&gt;  </pre>
+  <p>Générer des valeurs  initiales dans les zones de saisie</p>
+  <p>Nous avons déjà étudié cette  possibilité dans différents exemples.</p>
+  <p>Exemple</p>
+  <pre>&lt;form action="saisie.php" method="POST"&gt;   Nom : &lt;input type="text" name="nom"                value="&lt;?<strong>php echo $nom ?</strong>&gt;"&gt;&lt;br /&gt;   &lt;input type="submit" name="ok" value="OK"&gt;   &lt;/form&gt;  </pre>
+  <p>Ici, nous supposons que $nom est  une variable initialisée par ailleurs dans le script PHP.</p>
+  <p>Générer une liste d’options</p>
+  <p>Du code PHP peut être utilisé pour  générer des listes d’options, soit dans une zone &lt;select&gt; (liste à sélection  unique ou multiple), soit dans une zone &lt;input&gt; de  type radio (groupe de boutons radio),  soit dans une zone &lt;input&gt; de type checkbox (case à cocher).</p>
+  <p>Les données affichées proviennent  très souvent d’une base de données et il est intéressant  de pouvoir construire cette zone du formulaire dynamiquement à partir  des données extraites de la base.</p>
+  <p>Exemple avec une liste à sélection  multiple</p>
+  <pre>&lt;?php   // Liste des fruits à afficher dans la liste, sous la    // forme d’un tableau associatif donnant le code du   // fruit (clé du tableau) et l’intitulé du fruit.   $fruits_du_marché = array(     ’A’ =&gt; ’Abricots’,     ’C’ =&gt; ’Cerises’,     ’F’ =&gt; ’Fraises’,     ’P’ =&gt; ’Pêches’,     ’?’ =&gt; ’Ne sait pas’);   // Liste des fruits préférés de l’utilisateur, sous la   // forme d’un tableau donnant le code des fruits concernés.   $fruits_préférés = array(’A’,’F’);   // Remarque : nous verrons ultérieurement comment récupérer   //            ces informations dans une base.   ?&gt;   &lt;!-- construction du formulaire --&gt;   &lt;form action="saisie.php" method="POST"&gt;   Fruits préférés :&lt;br /&gt;   &lt;select name="fruits[]" multiple size="8"&gt;<strong>   &lt;?php   // Code PHP générant la partie dynamique du formulaire.   // Parcourir la liste à afficher et récupérer le code   // et l’intitulé.   foreach($fruits_du_marché as $code =&gt; $intitulé) {     // Déterminer si la ligne doit être sélectionnée     //  - oui si le code figure dans la liste des fruits     //    préférés de l’utilisateur =&gt; recherche de $code     //    dans $fruits_préférés avec la fonction in_array     //  - si c’est le cas, mettre l’attribut "selected" dans     //    la balise "option", sinon ne rien mettre.     $sélection =        in_array($code,$fruits_préférés)?’selected="selected"’:’’;     // Générer la balise "option" avec la variable $code pour     // l’attribut "value", la variable $sélection pour      // l’indication de sélection et la variable $intitulé      // pour le texte affiché dans la liste.     echo "&lt;option value=\"$code\" $sélection&gt;$intitulé&lt;/option&gt;";   }   ?&gt;</strong>   &lt;/select&gt;   &lt;/form&gt;  </pre>
+  <p>Résultat à l’écran</p>
+  <div>
+    <div><img alt="images/07RI13.PNG" src="images/images_07RI13.PNG"></div>
+  </div>
+  <p>Source dans le navigateur</p>
+  <pre>&lt;!-- construction du formulaire --&gt;   &lt;form action="saisie.php" method="POST"&gt;   Fruits préférés :&lt;br /&gt;   &lt;select name="fruits[]" multiple size="8"&gt;   &lt;option value="A"   selected="selected"&gt;Abricots&lt;/option&gt;&lt;option value="C"   &gt;Cerises&lt;/option&gt;&lt;option value="F"   selected="selected"&gt;Fraises&lt;/option&gt;&lt;option value="P"   &gt;Pêches&lt;/option&gt;&lt;option value="?" &gt;Ne sait   pas&lt;/option&gt;&lt;/select&gt;   &lt;/form&gt;  </pre>
+  <p>Cet exemple est très facile à adapter  si l’attribut value n’est  pas utilisé.</p>
+  <p>Exemple avec une liste à sélection  unique</p>
+  <pre>&lt;?php   // Liste des langues à afficher dans la liste, sous la    // forme d’un tableau associatif donnant le code de   // la langue (clé du tableau) et l’intitulé de la langue.   $langues_disponibles = array(     ’E’ =&gt; ’Espagnol’,     ’F’ =&gt; ’Français’,     ’I’ =&gt; ’Italien’);   // Code de la langue de l’utilisateur   $langue = ’F’;   ?&gt;   &lt;!-- construction du formulaire --&gt;   &lt;form action="saisie.php" method="POST"&gt;   Langue :&lt;br /&gt;   &lt;select name="langue"&gt;<strong>   &lt;?php   // Code PHP générant la partie dynamique du formulaire.   // Parcourir la liste à afficher et récupérer le code   // et l’intitulé.   foreach($langues_disponibles as $code =&gt; $intitulé) {     // Déterminer si la ligne doit être sélectionnée     //  - oui si le code est égal au code de la langue de      //    l’utilisateur     //  - si c’est le cas, mettre l’attribut "selected" dans     //    la balise "option", sinon ne rien mettre     $sélection = ($code == $langue)?’selected="selected"’:’’;     // Générer la balise "option" avec la variable $code pour     // l’option "value", la variable $sélection pour      // l’indication de sélection et la variable $intitulé      // pour le texte affiché dans la liste.     echo "&lt;option value=\"$code\" $sélection&gt;$intitulé&lt;/option&gt;";   }   ?&gt;</strong>   &lt;/select&gt;   &lt;/form&gt;  </pre>
+  <p>Résultat à l’écran</p>
+  <div>
+    <div><img alt="images/07RI14.PNG" src="images/images_07RI14.PNG"></div>
+  </div>
+  <p>Source dans le navigateur</p>
+  <pre>&lt;!-- construction du formulaire --&gt;   &lt;form action="saisie.php" method="POST"&gt;   Langue :&lt;br /&gt;   &lt;select name="langue"&gt;   &lt;option value="E" &gt;Espagnol&lt;/option&gt;&lt;option value="F"   selected="selected"&gt;Français&lt;/option&gt;&lt;option value="I"   &gt;Italien&lt;/option&gt;&lt;/select&gt;   &lt;/form&gt;  </pre>
+  <p>Des techniques similaires peuvent être  utilisées pour construire une liste de cases à cocher, un  groupe de boutons radio...</p>
+</div>
+</body>
+</html>

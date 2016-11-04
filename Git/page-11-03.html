@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_11864897-2d24-433c-9a97-12db1491059e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Retrouver un commit erroné</h1>
+  <p>Dans tout type de développement,  il arrive des cas où un développeur ajoute une  régression dans son code. Une régression signifie  que lors du développement d’une fonctionnalité ou  lors de la correction d’un bug, les modifications du développeur  ont eu pour effet de rendre une autre partie du logiciel non fonctionnelle.  Les régressions sont ajoutées sans que le développeur  ne s’en rende compte, et si aucun test unitaire ou fonctionnel n’est  là pour détecter ce type d’erreur, alors celle-ci  reste présente jusqu’à ce qu’un utilisateur ou  un développeur remonte le problème.</p>
+  <p>Git aide le développeur à retrouver  le commit qui a ajouté la régression par une recherche  dichotomique. À chaque étape de git bisect, Git va remplacer le répertoire  de travail par une ancienne version et il faut alors lui indiquer  si l’erreur est toujours présente. Il va alors restreindre  le nombre de commits qui sont susceptibles d’avoir ajouté l’erreur  puis va effectuer une itération en modifiant à nouveau  le répertoire de travail.</p>
+  <div>
+    <div><img src="images/PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Une recherche dichotomique est un  algorithme de recherche qui consiste à couper une plage  de valeurs en deux parties égales à chaque étape. À la  fin de chaque étape, on ne garde qu’une moitié comme  plage de solutions acceptables puis on effectue une nouvelle étape  pour amoindrir la plage de solutions.</p>
+    </div>
+  </div>
+  <div>
+    <h2>1. Utilisation pratique de git bisect</h2>
+    <p>Pour expliquer comment fonctionne la commande git bisect, il est préférable  de montrer son fonctionnement au travers d’un exemple concret  et pratique. L’exemple ci-dessous a été produit à partir  du dépôt <strong>09/bisect</strong> disponible dans les fichiers téléchargeables.</p>
+    <p>En consultant le fichier README, un développeur s’est rendu compte  qu’une phrase insensée a été ajoutée  par un autre développeur. Il va donc vouloir rechercher le  commit qui a ajouté cette phrase pour voir si d’autres éléments erronés  ont été ajoutés sur le même  commit. La ligne dont le développeur veut retrouver le  commit est :</p>
+    <pre>Git bisect est très utile pour faire cuire des mouches  </pre>
+    <p>Pour pouvoir utiliser git  bisect, il faut tout d’abord lancer ce mode : </p>
+    <pre>git bisect start  </pre>
+    <p>Il faut lui spécifier un commit contenant  la modification à rechercher (spécifier HEAD n’est  pas nécessaire) : </p>
+    <pre>git bisect bad HEAD  </pre>
+    <p>Il faut lui spécifier un commit ne  contenant pas la modification à rechercher (ici le premier  commit du dépôt) : </p>
+    <pre>git bisect good a894f82  </pre>
+    <p>Ces deux derniers commits permettent de borner  la recherche pour qu’elle se fasse sur un échantillon  plus étroit de commits. Une fois le bon et le mauvais commit  spécifiés, Git affiche le hash du commit sur lequel  la recherche commence : </p>
+    <pre>Bisecting: 3 revisions left to test after this (roughly 2 steps)    [5b9094ff2f09fb74ec6c9965bdd02f6b6666ab88] README : ajout sous-commande  </pre>
+    <p>À ce moment-là, le développeur  consulte le fichier README pour vérifier si la ligne est toujours présente.  Il remarque qu’elle est toujours présente et demande à Git  de continuer la recherche en spécifiant que ce commit est défectueux : </p>
+    <pre>git bisect bad  </pre>
+    <p>Git affiche alors le commit sur lequel la  recherche continue :</p>
+    <pre>Bisecting: 1 revision left to test after this (roughly 1 step)    [d42018b585c7a5b6b3593031faaefb09376bb14c] LICENCE : ajout  </pre>
+    <p>Le développeur remarque que la ligne  n’est pas présente, il continue donc la recherche  en spécifiant le commit comme correct : </p>
+    <pre>git bisect good  </pre>
+    <p>Git affiche la sortie suivante :</p>
+    <pre>Bisecting: 0 revisions left to test after this (roughly 0 steps)    [be902d9cc6cacfc7a927a8a07a5774a6aff6f0b4] README : explications manquantes  </pre>
+    <p>Cette sortie confirme que la recherche est  terminée et que le commit recherché est le commit be902d9.</p>
+    <p>Pour arrêter le mode bisect et revenir  sur HEAD, il faut utiliser la commande suivante : </p>
+    <pre>git bisect reset  </pre>
+    <p>Cet exemple est volontairement simpliste et  permet de montrer les intérêts de git bisect. Dans une vraie situation  d’entreprise, il faut imaginer qu’un bug s’est  immiscé dans le code il y a plusieurs semaines/mois.  Le projet est très complexe et est séparé en  plusieurs couches d’expertises. Si la recherche du bug  dans le code est plus coûteuse en temps que la recherche  avec git bisect, alors il vaut mieux  utiliser git bisect pour trouver  le problème et le commit défectueux.</p>
+  </div>
+  <div>
+    <h2>2. Automatiser git bisect</h2>
+    <p>Le mode bisect est interactif et nécessite  qu’une personne indique à Git si le commit est  défectueux ou non. Une sous-commande de git bisect permet de demander à un  programme de dire à Git si le commit est défectueux  ou non.</p>
+    <p>En utilisant le même dépôt  (<strong>09/bisect</strong>), il est possible de faire fonctionner git bisect en mode automatisé.  Tout d’abord, il faut écrire un script qui renvoie good ou bad selon un cas bien précis.</p>
+    <p>Voici un script Python qui va vérifier  si la ligne recherchée dans l’exemple précédent  existe dans le fichier README :</p>
+    <pre># coding:utf-8    logfile = open(’README’, ’r’)    loglist = logfile.read().splitlines()    logfile.close()    for line in loglist:        if line == "Git bisect est très utile pour faire cuire des mouches":           exit(1)    exit(0)  </pre>
+    <p>Le script renvoie un code d’erreur  1 lorsque le commit est défectueux (bad) et il renvoie un code d’erreur 0 lorsque le  commit est correct (good). Ce code d’erreur remplacera la vérification  humaine utilisée dans l’exemple précédent.</p>
+    <p>Il faut ensuite lancer le mode bisect comme  dans l’exemple précédent avec les commandes  suivantes : </p>
+    <pre>git bisect start    git bisect good a894f82    git bisect bad  </pre>
+    <p>Pour lancer la recherche automatisée,  il faut utiliser la commande suivante : </p>
+    <pre>git bisect run python script.py  </pre>
+    <p>Git va alors afficher la sortie suivante : </p>
+    <pre>running python script.py    Bisecting: 1 revision left to test after this (roughly 1 step)   [d42018b585c7a5b6b3593031faaefb09376bb14c] LICENCE : ajout    running python script.py    Bisecting: 0 revisions left to test after this (roughly 0 steps)   [be902d9cc6cacfc7a927a8a07a5774a6aff6f0b4] README : explications manquantes   running python script.py    be902d9cc6cacfc7a927a8a07a5774a6aff6f0b4 is the first bad commit    commit be902d9cc6cacfc7a927a8a07a5774a6aff6f0b4    Author: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Sun Aug 30 23:02:06 2015 +0200            README : explications manquantes        :100644 100644 68d0bbcb27ef5bb248ebe31799bac43315dcdd3a   1b34c2d8c795ce358aaa9c718efc0ed61b939534 M   README    bisect run success  </pre>
+    <p>Cette sortie montre dans sa première  moitié les itérations effectuées par  Git. La deuxième moitié sert à afficher  le commit qui a ajouté la ligne particulière.</p>
+  </div>
+</div>
+<div id="AU_11864897-2d24-433c-9a97-12db1491059e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div> </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

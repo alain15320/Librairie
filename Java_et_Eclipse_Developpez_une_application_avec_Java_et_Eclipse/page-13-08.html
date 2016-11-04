@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_91605ab6-c494-4c11-8d58-23a62f8247a3" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>CRUD de la classe Article</h1>
+  <div>
+    <p> Créons maintenant la classe d’accès  aux articles.</p>
+  </div>
+  <div>
+    <p> Créez une classe <strong>ArticleCrud</strong> dans le package <strong>entite.crud</strong>.</p>
+  </div>
+  <pre>package entite.crud;      import java.util.Collections;   import java.util.List;      import javax.persistence.EntityManager;   import javax.persistence.Query;   import javax.swing.JOptionPane;      import controle.connection.Connexion;   import entite.Article;   import entite.Categorie;      public class ArticleCrud {          private final Connexion laConnexion;          /*        * Constructeur        */       public ArticleCrud(Connexion connexion) {           this.laConnexion = connexion;       }   }  </pre>
+  <div>
+    <h2>1. Créer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Ajout d’un nouvel article dans la BD.    *<strong>     * @throws IllegalArgumentException     *                 si il est impossible de créer l’article.</strong>    */   public void creer(Article article) {       laConnexion.modifier((gerant) -&gt; {           gerant.persist(article);           return article;       });   }  </pre>
+    <p>La nouveauté de cette méthode  par rapport aux méthodes <strong>créer</strong> précédentes est d’indiquer dans la  JavaDoc qu’une exception est susceptible d’arriver au cours de son  exécution.</p>
+    <div>
+      <div><img alt="images/11-01.png" src="images/images_11-01.png"></div>
+    </div>
+    <p>Il s’agit d’un indicateur supplémentaire  pour l’appelant de cette méthode. Néanmoins, cette  indication suppose que le développeur lise cette documentation  pour en tenir compte !</p>
+  </div>
+  <div>
+    <h2>2. Lire</h2>
+    <div>
+      <p> Créez deux nouvelles méthodes  dans la classe.</p>
+    </div>
+    <pre>/**    * Lecture et récupération des enregistrements de la BD.    * @throws IllegalArgumentException     *                 si il est impossible de lire les articles.    */   public List&lt;Article&gt; lire() {       return laConnexion.chercher((gerant) -&gt; {           Query query = gerant.createQuery(                           "SELECT a FROM Article a");           return query.getResultList();            });   }      /**    * lire un article particulier de la BdD.    * @throws IllegalArgumentException     *                 si il est impossible de créer l’article.    */   public Article lire(String code) {       return laConnexion.chercher((gerant) -&gt; {                       Query query = gerant.<strong>createQuery(               "SELECT a FROM Article a WHERE a.code = :code</strong>");           query.<strong>setParameter</strong>("<strong>code</strong>", code);           return (Article) query.getSingleResult();       });   }  </pre>
+    <p>Ce code montre par l’exemple que les requêtes  paramétrées peuvent être créées  au fil de l’eau, sans être stockées dans une requête  nommée.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Les requêtes nommées  sont plus performantes en termes de vitesse d’exécution  car il n’y a pas besoin de les instancier.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>3. Modifier</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Modification d’un article dans la BD.    * @throws IllegalArgumentException     *                 si il est impossible de modifier l’article.    */   public boolean modifier(String vCode, String vReference,               String vDesignation, int vQuantite, double vPu) {       return laConnexion.modifier((gerant) -&gt; {                             Article article = gerant.find(Article.class, vCode);                          if (article == null) {               throw new IllegalArgumentException(                   "Pas d’article pour le code " + vCode);           } else {               article.setReference(                   new Categorie().setCode(vReference));               article.setDesignation(vDesignation);               article.setQuantite(vQuantite);               article.setPrixUnitaire(vPu);           }           return true;       });   }  </pre>
+    <p>Cette méthode <strong>modifier()</strong> ne prend pas en paramètre un article, mais  les nouvelles propriétés de l’article à modifier. </p>
+    <div>
+      <p> Comparez la lisibilité de cette méthode  avec la méthode modifiée de la classe <strong>ClientCrud</strong>. Quelle manière de coder vous semble la plus  lisible ?</p>
+    </div>
+  </div>
+  <div>
+    <h2>4. Supprimer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/**    * Suppression d’un client dans la BD.    * @throws IllegalArgumentException     *                 s’il est impossible de supprimer l’article.    */   public boolean supprimer(String vCode) {       return laConnexion.modifier((gerant) -&gt; {           Article article = gerant.find(Article.class, vCode);           if (article == null) {               throw new IllegalArgumentException(                   "Pas d’article pour le code " + vCode);           } else {                  gerant.remove(article);           }           return true;       });   }  </pre>
+  </div>
+  <div>
+    <h2>5. Rechercher</h2>
+    <div>
+      <p> Créez deux nouvelles méthodes  dans la classe.</p>
+    </div>
+    <pre>/*    * Recherche dans la BD    */<strong>    @SuppressWarnings("unchecked")</strong>   public List&lt;Article&gt; chercherTous(String recherche) {       return laConnexion.chercher((gerant) -&gt; {         String requete = "";             + "SELECT a "             + "FROM Article a "             + "WHERE a.code LIKE ’%" + recherche + "%’ "             + "OR a.categorie.code LIKE ’%" + recherche + "%’ "             + "OR a.designation LIKE ’%" + recherche + "%’ ";                        Query query = gerant.createQuery(requete);         return query.getResultList();                   });   }      /*    * Recherche rapide juste sur le code    */<strong>    @SuppressWarnings("unchecked")</strong>   public List&lt;Article&gt; chercherParCode(String vCode) {       return laConnexion.chercher((gerant) -&gt; {            Query requete = gerant.createQuery(               "SELECT a FROM Article a WHERE a.code LIKE ?1");           requete.setParameter(1, vCode);                          return requete.getResultList();       });   }  </pre>
+    <p>Vous aurez sûrement noté des  avertissements lancés par Eclipse dans l’éditeur au  sujet des lignes comprenant l’appel de la méthode <strong>getResultList()</strong>. Cet avertissement est matérialisé par  un surlignage jaune sur cette ligne.</p>
+    <p>Eclipse vous prévient de cette manière  qu’il n’est pas sûr que la liste retournée contienne  effectivement des objets du bon type. Cela est dû au fait  que l’objet <strong>Query</strong> ne peut pas connaître de manière sûre  le type des objets retournés dans la liste.</p>
+    <p>Pour régler ce souci, il est possible  d’utiliser les <strong>Quick Fix</strong> d’Eclipse.</p>
+    <div>
+      <p> Positionnez le curseur de la souris sur la  ligne surlignée, et tapez [Ctrl] <strong>1</strong> ou faites un clic droit et sélectionnez <strong>Quick Fix</strong>.</p>
+    </div>
+    <div>
+      <p>Eclipse propose une liste de choix possibles  pour régler le problème.</p>
+    </div>
+    <div>
+      <div><img alt="images/11-02.png" src="images/images_11-02.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur le choix <strong>Add @SuppressWarnings ’unchecked’</strong>.</p>
+    </div>
+    <p>La méthode est dorénavant  annotée, et l’avertissement a disparu.</p>
+  </div>
+</div>
+</body>
+</html>

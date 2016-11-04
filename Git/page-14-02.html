@@ -1,0 +1,440 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Les commandes</h1>
+<p>Cette section liste une partie des commandes  Git et de leurs arguments utiles. Cette liste est non exhaustive  et a pour but de servir au quotidien pour le développeur  sans qu’il ait besoin d’aller voir la verbeuse (mais exhaustive)  documentation officielle.</p>
+<p>Cette liste permet également au lecteur  de connaître rapidement l’utilité et les possibilités  d’une commande pendant la lecture de ce livre.</p>
+<p>Les commandes sont listées par ordre  alphabétique. Les arguments sont listés par ordre  d’apparition, excepté les arguments nommés (ceux  définis explicitement de type --dry-run).</p>
+<div>
+  <h2>1. git add</h2>
+  <p>Cette commande permet d’ajouter un fichier à l’index  en vue d’effectuer un commit.</p>
+  <p>Arguments</p>
+  <p>&lt;chemin_fichier&gt; :  permet d’ajouter un fichier à l’index.</p>
+  <p>-A ou --all : permet d’ajouter tous les  fichiers (sauf ceux ignorés) à l’index.</p>
+  <p>-i ou --interactive : permet de démarrer  le mode interactif d’ajout de fichiers. </p>
+  <p>-n ou --dry-run : permet d’exécuter  la commande sans ajouter de fichier. Elle permet d’afficher les  fichiers qui seraient ajoutés si l’argument n’avait pas été utilisé.</p>
+  <p>--ignore-errors :  permet de continuer d’ajouter les fichiers même lorsqu’une  erreur se produit. Cette commande est utile lorsque de nombreux  fichiers sont ajoutés par la commande git  add.</p>
+  <p>Exemples</p>
+  <pre>git add README
+git add --all --dry-run  </pre>
+</div>
+<div>
+  <h2>2. git archive</h2>
+  <p>Cette commande permet de créer une  archive du contenu du dépôt. </p>
+  <p>Arguments</p>
+  <p>&lt;commit&gt; :  définit le commit à partir duquel effectuer l’export.</p>
+  <p>--format=&lt;format&gt; :  définit le format de l’archive (zip ou tar).</p>
+  <p>-l ou --list : liste les formats disponibles.</p>
+  <p>Exemple</p>
+  <pre>git archive --format zip --output export.zip master  </pre>
+</div>
+<div>
+  <h2>3. git bisect</h2>
+  <p>Cette commande permet d’effectuer une recherche  dichotomique dans l’historique des commits pour connaître  le commit qui a ajouté un comportement particulier. Dans  de nombreux cas, cette commande est utilisée lorsqu’une régression a été ajoutée  depuis un certain temps.</p>
+  <p>Arguments</p>
+  <p>start : permet  de lancer le mode bisect.</p>
+  <p>bad &lt;commit&gt; :  permet de définir le commit comme incorrect.</p>
+  <p>good &lt;commit&gt; :  permet de définir le commit comme correct.</p>
+  <p>reset : permet  de sortir du mode bisect. Remet le répertoire de travail  sur HEAD.</p>
+  <p>run &lt;commande&gt; :  permet d’exécuter git bisect en  mode automatisé en fonction d’une commande.</p>
+  <p>Exemples</p>
+  <pre>git bisect start
+git bisect bad HEAD
+git bisect good HEADˆ15
+git bisect bad
+git bisect reset  </pre>
+</div>
+<div>
+  <h2>4. git blame</h2>
+  <p>Cette commande permet d’afficher le contenu  du fichier avec chaque ligne précédée  de plusieurs informations :</p>
+  <div>
+    <ul>
+      <li>
+        <p>le hash du commit  qui a modifié/ajouté la ligne en dernier,</p>
+      </li>
+      <li>
+        <p>l’auteur de la ligne,</p>
+      </li>
+      <li>
+        <p>la date du commit,</p>
+      </li>
+      <li>
+        <p>le numéro de la ligne dans  le fichier.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Arguments</p>
+  <p>&lt;nom_du_fichier&gt; (obligatoire)  : spécifie le fichier sur lequel effectuer le git blame.</p>
+  <p>-L &lt;ligne_début&gt;,&lt;ligne_fin&gt; :  permet de définir une ligne de début et une ligne  de fin à inspecter dans le fichier. La valeur ligne_fin peut également  accepter le nombre de lignes à inspecter précédé du  signe +.</p>
+  <p>Exemples</p>
+  <pre>git blame README
+git blame -L 25,+5 README  </pre>
+</div>
+<div>
+  <h2>5. git branch</h2>
+  <p>Cette commande permet de gérer les  branches du dépôt, de la création des branches  jusqu’à leur suppression.</p>
+  <p>Sans argument, cette commande permet de lister  les branches locales. La branche courante (celle sur laquelle sera  effectué le prochain commit) est précédée  d’une étoile.</p>
+  <p>Arguments</p>
+  <p>&lt;nom_branche&gt; :  permet de créer une branche à partir de la branche  courante (sans changer de branche courante).</p>
+  <p>-a ou --all : permet de lister toutes les  branches (locales et distantes suivies).</p>
+  <p>-d ou --delete &lt;nom_branche&gt; :  permet de supprimer la branche dont le nom est entré en  paramètre.</p>
+  <p>-D ou --delete --force &lt;nom_branche&gt; :  permet de forcer la suppression d’une branche même si elle  n’a pas été complètement mergée  dans une autre branche.</p>
+  <p>-r ou --remotes : permet de lister les branches  distantes (ou de supprimer une branche distante en ajoutant -d).</p>
+  <p>--contains &lt;commit&gt; :  permet de lister les branches contenant le commit spécifié.</p>
+  <p>Exemples</p>
+  <pre>git branch nouvel_accueil
+git branch --all
+git branch -D branche_non_mergee  </pre>
+</div>
+<div>
+  <h2>6. git checkout</h2>
+  <p>Cette commande permet de changer de branche.  Un changement de branche signifie que la référence HEAD, l’index et le répertoire de travail seront  modifiés. Cette commande permet également de restaurer  une partie du répertoire de travail.</p>
+  <p>Arguments</p>
+  <p>-b &lt;nom_branche&gt; :  permet de créer la branche nom_branche à partir de la branche courante et de s’y placer  directement.</p>
+  <p>&lt;commit_ou_nom_branche&gt; :  si cet argument correspond au nom d’une branche, cette commande  va mettre à jour le répertoire de travail et la  référence HEAD. Dans le cas où le commit spécifié n’est  pas le dernier commit d’une branche, cet argument va placer  le répertoire de travail et la référence HEAD sur le commit spécifié, ce cas s’appelle  une detached HEAD. Cela signifie que la tête (HEAD) n’est plus liée à une branche. Cela  signifie également que si un commit est effectué à partir  d’une tête détachée, il ne sera référencé que par HEAD.</p>
+  <p>&lt;commit&gt; &lt;chemin_fichier&gt; :  permet de restaurer l’état du fichier à l’état  de ce même fichier dans le commit spécifié.  Couplée avec l’argument -f,  cette commande ne s’occupera pas des modifications en cours dans  le fichier et les supprimera.</p>
+  <p>-m ou --merge : permet de changer de branche  même lorsque des modifications en cours sont non commitées.  Un merge de ces modifications est alors fait dans la branche de  destination. Une autre alternative au merge est d’utiliser la commande git stash.</p>
+  <p>--orphan &lt;nom_branche&gt; :  permet de créer une nouvelle branche liée à aucune  autre. Le premier commit de cette branche n’aura pas de commit parent et  sera donc totalement détaché du reste de l’historique.</p>
+  <p>Exemples</p>
+  <pre>git checkout dev
+git checkout master models.py
+git checkout --merge graphiques
+git checkout --orphan etude_reecriture  </pre>
+</div>
+<div>
+  <h2>7. git cherry-pick</h2>
+  <p>Cette commande permet d’appliquer un commit  dans une branche ne le contenant pas. Cette commande permet par  exemple d’appliquer un commit contenu dans une branche A dans la branche B sans pour autant importer toutes les modifications de  la branche A (ce que ferait un merge).</p>
+  <p>Arguments</p>
+  <p>&lt;commit&gt; (obligatoire)  : permet de spécifier le commit à appliquer sur  la branche courante.</p>
+  <p>-n ou --no-commit : permet de ne pas commiter  les modifications du cherry-pick. Les modifications seront donc  présentes dans le répertoire de travail et  dans l’index.</p>
+  <p>Exemple</p>
+  <pre>git cherry-pick 32ae1b  </pre>
+</div>
+<div>
+  <h2>8. git clean</h2>
+  <p>Cette commande permet de supprimer les fichiers  non suivis du répertoire de travail. Les fichiers ignorés  par Git (via le fichier .gitignore) ne sont pas supprimés par la commande.</p>
+  <p>Arguments</p>
+  <p>-f : cet argument  sert de garde-fou et est nécessaire pour que Git supprime  les fichiers. Dans le cas où l’option de configuration clean.requireForce est définie  sur la valeur false, cet argument  peut être omis.</p>
+  <p>-d : supprime également  les dossiers non suivis en plus des fichiers non suivis.</p>
+  <p>-n ou --dry-run : permet de vérifier  les fichiers qui seront supprimés. C’est une bonne pratique  de commencer par utiliser cet argument pour éviter d’avoir  de mauvaises surprises.</p>
+  <p>-x : permet  de supprimer également les fichiers ignorés.</p>
+  <p>-X : permet  de ne supprimer que les fichiers ignorés.</p>
+  <p>Exemples</p>
+  <pre>git clean --dry-run
+git clean -x -f  </pre>
+</div>
+<div>
+  <h2>9. git clone</h2>
+  <p>Cette commande permet de copier l’intégralité d’un  dépôt et de ses objets.</p>
+  <p>Arguments</p>
+  <p>&lt;url_ou_chemin_du_dépôt&gt; (obligatoire)  : définit le dépôt qui doit être cloné.</p>
+  <p>&lt;nom_du_dossier&gt; :  permet de définir le nom du dossier qui va contenir le dépôt  cloné. Par défaut, un dossier portant le nom du  dépôt sera créé.</p>
+  <p>-l ou --local : permet de cloner un dépôt  sur un même système de fichiers en économisant  de l’espace. Certains objets de Git ne seront pas copiés,  mais un lien symbolique les reliera au dépôt d’origine.</p>
+  <p>--no-hardlinks :  permet de demander à Git de copier l’intégralité d’un dépôt lors  d’un clone sur le même système de fichiers. Cela  permet d’obtenir un dépôt indépendant  du dépôt d’origine.</p>
+  <p>--bare : permet  de spécifier que le dépôt résultant  de git clone sera un dépôt  distant. Ce dépôt ne contiendra pas de répertoire  de travail et sera utile dans le cas où d’autres dépôts  communiqueront avec lui.</p>
+  <p>--origin &lt;nom_du_remote&gt; :  permet de modifier le nom origin donné par défaut au remote du dépôt  cloné. Pour rappel, le remote est un nom (servant de raccourci)  pointant sur un dépôt distant par une URL ou un  chemin de système de fichiers.</p>
+  <p>--branch &lt;nom_de_la_branche&gt; :  permet, à l’issue du clone, de placer directement le dépôt  sur la branche spécifiée.</p>
+  <p>--depth &lt;profondeur&gt; :  permet de cloner le dépôt avec un nombre de commits  limité défini à l’aide de l’argument &lt;profondeur&gt;.</p>
+  <p>--recursive ou --recurse-submodules : permet d’initialiser  tous les dépôts intégrés d’un  dépôt cloné.</p>
+  <p>Exemples</p>
+  <pre>git clone --no-hardlinks /home/dauzon/improllowup.git improllowupCopie
+git clone --branch master
+git clone --recurse-submodules  </pre>
+</div>
+<div>
+  <h2>10. git commit</h2>
+  <p>Cette commande va créer un commit à partir  des modifications contenues dans l’index.</p>
+  <p>Arguments</p>
+  <p>-m "&lt;message&gt;" :  permet de spécifier le message du commit.</p>
+  <p>-a ou --all : permet de commiter tous les  fichiers suivis (modifiés ou supprimés). Les  nouveaux fichiers étant inconnus de Git ne seront pas commités.</p>
+  <p>--amend :  permet de remplacer le dernier commit par un nouveau. Cet argument  est très utile lorsque le dernier commit contient une erreur.  Attention : si le dernier commit a été envoyé à un  dépôt distant, il ne faut pas utiliser cet argument.</p>
+  <p>--author=&lt;auteur_du_commit&gt; :  permet de spécifier un auteur de commit différent  de l’utilisateur courant. Cet argument est utilisé lorsque  celui qui commite n’est pas réellement l’auteur du code.</p>
+  <p>--allow-empty :  permet d’effectuer un commit exactement similaire au commit précédent.</p>
+  <p>Exemples</p>
+  <pre>git commit -m "Utilisateur : ajout droit bloqué"
+git commit --allow-empty
+git commit --amend  </pre>
+</div>
+<div>
+  <h2>11. git config</h2>
+  <p>Cette commande permet à l’utilisateur  de modifier ses options de configuration. Trois portées  de configuration existent : system, global, local.</p>
+  <p>Arguments</p>
+  <p>--get &lt;mot_clé_config&gt; :  permet de récupérer la valeur de l’option de configuration mot_clé_config.  Cette commande renvoie une erreur lorsque la valeur de configuration  n’a pas été trouvée.</p>
+  <p>-l ou --list : permet de récupérer  toutes les valeurs de configuration.</p>
+  <p>--system :  définira une portée système pour la commande  de configuration. C’est-à-dire que l’option de configuration  créée avec --system sera  valable pour tous les dépôts et tous les utilisateurs  de la machine si elle n’a pas été surchargée  par une autre valeur de configuration.</p>
+  <p>--global :  définira une portée utilisateur pour la commande  de configuration. C’est-à-dire que l’option de configuration  créée avec --global sera  valable pour tous les dépôts de l’utilisateur  de la machine si elle n’a pas été surchargée  par une valeur de configuration locale.</p>
+  <p>--local :  définira une portée dépôt pour  la commande de configuration. C’est-à-dire que l’option  de configuration créée avec --local sera  valable pour le dépôt courant.</p>
+  <p>-e ou --edit : ouvre l’éditeur  pour modifier le fichier de configuration. Cet argument affichera  le fichier spécifique selon l’argument de portée  (system, global, local).</p>
+  <p>Exemples</p>
+  <pre>git config --get core.editor
+git config --local user.name "Samuel Dauzon"
+git config --edit --local  </pre>
+</div>
+<div>
+  <h2>12. git diff</h2>
+  <p>Cette commande permet de comparer les états  des différents fichiers du dépôt. </p>
+  <p>Par défaut, la commande compare le  répertoire de travail et l’index.</p>
+  <p>Arguments</p>
+  <p>&lt;commit&gt; :  compare le répertoire de travail avec le contenu du projet  sur le commit spécifié.</p>
+  <p>&lt;chemin_du_fichier&gt; :  seul le fichier spécifié sera pris en compte dans  la génération du diff.</p>
+  <p>--cached :  permet de comparer l’index et un commit (par défaut HEAD).</p>
+  <p>-p ou -u ou --patch :  permet de générer un patch à partir du  résultat de git diff. Un  patch est un fichier texte contenant des modifications et pouvant être  importé dans un dépôt pour les appliquer.</p>
+  <p>--name-only :  permet de n’afficher que les noms des fichiers modifiés.</p>
+  <p>-S &lt;regex_à_rechercher&gt; :  permet d’afficher les lignes modifiées en fonction d’une  expression régulière entrée en paramètre.</p>
+  <p>Exemples</p>
+  <pre>git diff
+git diff --cached
+git diff HEAD..graph_task
+git diff f32eˆ..f32e  </pre>
+</div>
+<div>
+  <h2>13. git fetch</h2>
+  <p>Cette commande permet de télécharger  les commits du dépôt distant et permet de  les intégrer dans les branches distantes suivies. Généralement,  cette commande est utilisée par l’intermédiaire  de la commande git pull qui exécute  la commande git fetch puis merge  les branches distantes suivies vers les branches locales utilisées  pour le développement.</p>
+  <p>Arguments</p>
+  <p>--all : permet  de télécharger les nouveaux commits de tous les  dépôts distants liés au dépôt  local.</p>
+  <p>--dry-run :  permet de visualiser le résultat de la commande sans en  appliquer les effets.</p>
+  <p>--recurse-submodules=&lt;valeur&gt; :  permet de définir si le développeur souhaite récupérer  aussi les nouveaux commits des dépôts intégrés.  Les valeurs possibles sont yes pour  télécharger automatiquement les commits des dépôts  intégrés, on-demand pour  attendre la validation de l’utilisateur pour télécharger  les commits, no pour ne pas les  télécharger.</p>
+  <p>Exemples</p>
+  <pre>git fetch
+git fetch --dry-run  </pre>
+</div>
+<div>
+  <h2>14. git gc</h2>
+  <p>Cette commande sert à la maintenance  du dépôt. Elle va compresser des fichiers internes à Git  et va supprimer des objets inutiles. Il est recommandé d’utiliser  cette commande régulièrement pour économiser  de l’espace disque et améliorer les performances du dépôt.</p>
+  <p>Arguments</p>
+  <p>--aggressive :  permet de passer cette commande en mode agressif, ce qui aura pour  effet de supprimer tous les objets inutiles et de compresser de  nombreux fichiers.</p>
+  <p>Exemples</p>
+  <pre>git gc
+git gc --aggressive  </pre>
+</div>
+<div>
+  <h2>15. git help</h2>
+  <p>Cette commande permet d’afficher l’aide de  Git. Par défaut, les commandes avancées (commandes  de plomberie) ne sont pas affichées.</p>
+  <p>Arguments</p>
+  <p>-a ou --all : permet d’afficher toutes les  commandes disponibles.</p>
+  <p>-g ou --guides : permet d’afficher la liste  des guides disponibles. Ces guides anglophones permettent de mieux  comprendre le fonctionnement de Git.</p>
+  <p>&lt;nom_de_la_commande&gt; :  donne des informations sur la commande.</p>
+  <p>Exemples</p>
+  <pre>git help --all
+git help cherry-pick
+git help workflows  </pre>
+</div>
+<div>
+  <h2>16. git init</h2>
+  <p>Cette commande permet de créer un  dépôt vierge. Cette commande créera le dossier .git qui contiendra tout le contenu du dépôt.</p>
+  <p>Sans argument, cette commande initialise un  nouveau dépôt dans le répertoire courant.</p>
+  <p>Argument</p>
+  <p>--bare : le  dépôt est défini comme un dépôt  distant. Il ne contiendra pas de répertoire de travail.</p>
+  <p>Exemple</p>
+  <pre>git init --bare  </pre>
+</div>
+<div>
+  <h2>17. git log</h2>
+  <p>Cette commande permet de lister tous les commits  du dépôt. Ses filtres permettent de rechercher  efficacement un ou plusieurs commits particuliers. Elle possède  de très nombreux filtres qui sont absents de cette liste,  mais qui sont présents sur la documentation officielle.</p>
+  <p>Arguments</p>
+  <p>&lt;chemin_fichier&gt; :  permet de filtrer les commits pour n’afficher que ceux où le  fichier a été modifié.</p>
+  <p>--follow :  permet de suivre l’historique d’un fichier même s’il a été renommé.</p>
+  <p>-&lt;nb&gt; ou -n &lt;nb&gt; ou --max-count=&lt;nb&gt; :  permet de limiter à la valeur nb le  nombre de commits affichés.</p>
+  <p>--skip=&lt;nb&gt; :  permet de ne pas afficher les nb premiers commits qui auraient normalement été affichés.</p>
+  <p>--after=&lt;date&gt; :  permet d’afficher les commits plus récents que la date spécifiée.</p>
+  <p>--before=&lt;date&gt; :  permet d’afficher les commits antérieurs à la  date spécifiée. </p>
+  <p>--grep=&lt;patron&gt; :  permet d’afficher les commits pour lesquels le message de commit  correspond à l’expression régulière définie  par le patron.</p>
+  <p>--merges :  permet d’afficher uniquement les commits issus de merge.</p>
+  <p>--no-merges :  permet de ne pas afficher les commits issus de merge.</p>
+  <p>--oneline :  permet d’afficher les commits sur une seule ligne.</p>
+  <p>Exemples</p>
+  <pre>git log --oneline
+git log --graph --pretty=format:’%Cred%h%Creset -
+%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset’
+git log --after=1.weeks  </pre>
+</div>
+<div>
+  <h2>18. git merge</h2>
+  <p>Cette commande permet de fusionner une ou  plusieurs branches. Elle s’exécute à partir de  la branche qui va recevoir les modifications de l’autre branche.</p>
+  <p>Arguments</p>
+  <p>&lt;branche_à_intégrer&gt; (obligatoire)  : permet de spécifier la branche à intégrer  dans la branche courante.</p>
+  <p>--no-ff :  permet de forcer git merge à commiter  même si le résultat du merge est une avance rapide.</p>
+  <p>-m : permet  de spécifier un message associé au commit résultant  du merge (excepté dans le cas d’une avance rapide.)</p>
+  <p>--strategy=&lt;stratégie_de_merge&gt; :  permet de définir une stratégie de merge. Les  stratégies de merges sont des algorithmes utilisés  pour pratiquer les merges. Il existe plusieurs stratégies  (recursive, ours, octopus, subtree, etc.).  Par défaut, Git sélectionne la stratégie  qui lui semble la plus apte à effectuer le merge. Par exemple,  pour merger plus de deux branches, Git sélectionnera automatiquement  la stratégie octopus qui  permet de fusionner plus de deux branches à la condition  qu’aucune intervention humaine ne soit requise pour corriger les  conflits.</p>
+  <p>Exemple</p>
+  <pre>git merge --no-ff develop  </pre>
+</div>
+<div>
+  <h2>19. git mv</h2>
+  <p>Cette commande permet de déplacer  un fichier dans le dépôt et dans le répertoire  de travail. </p>
+  <p>Arguments</p>
+  <p>&lt;fichier_départ&gt; (obligatoire)  : définit le fichier à déplacer.</p>
+  <p>&lt;fichier_sortie&gt; (obligatoire)  : définit le fichier de destination.</p>
+  <p>Exemple</p>
+  <pre>git mv README.rst README.md  </pre>
+</div>
+<div>
+  <h2>20. git pull</h2>
+  <p>git pull est  une commande condensée qui effectue un git  fetch pour télécharger les commits du dépôt  distant pour les intégrer dans les branches distantes suivies  et qui merge ensuite ces branches dans les branches locales. C’est  la commande qui est utilisée lorsqu’il faut mettre à jour  le dépôt.</p>
+  <p>Arguments</p>
+  <p>--all : permet  de récupérer tous les commits distants de toutes  les branches.</p>
+  <p>--recurse-submodules=&lt;valeur&gt; :  permet de définir si le développeur souhaite intégrer également  les nouveaux commits des dépôts intégrés.  Les valeurs possibles sont yes pour  intégrer automatiquement les commits des dépôts  intégrés, on-demand pour  attendre la validation de l’utilisateur pour intégrer les  commits, no pour ne pas les télécharger.</p>
+  <p>Exemple</p>
+  <pre>git pull --all  </pre>
+</div>
+<div>
+  <h2>21. git push</h2>
+  <p>Cette commande permet d’envoyer les nouveaux  commits du dépôt local vers le dépôt  distant.</p>
+  <p>Arguments</p>
+  <p>&lt;nom_de_la_branche&gt; :  permet de spécifier le nom de la branche dont les commits  doivent être envoyés.</p>
+  <p>&lt;nom_du_remote&gt; :  permet de spécifier vers quel remote doivent être envoyés les  commits.</p>
+  <p>-u ou --set-upstream : permet d’envoyer  les nouvelles références avec les commits. Cet  argument est beaucoup utilisé lors de l’envoi des commits  d’une nouvelle branche.</p>
+  <p>--all : permet  d’envoyer tous les commits de toutes les branches.</p>
+  <p>--dry-run :  permet de visualiser le résultat de la commande sans en  appliquer les effets.</p>
+  <p>Exemples</p>
+  <pre>git push origin graph_jedema -u
+git push --all  </pre>
+</div>
+<div>
+  <h2>22. git rebase</h2>
+  <p>La commande git rebase permet  d’intégrer les modifications d’une branche dans une autre.  Contrairement à la commande git  merge qui permet de fusionner les modifications d’une branche  dans un nouveau commit, git rebase va  réécrire la branche de destination en intégrant  les commits de la branche à intégrer.</p>
+  <p>Arguments</p>
+  <p>&lt;branche_à_intégrer&gt; (obligatoire)  : permet de définir la branche qui doit être intégrée  dans une autre.</p>
+  <p>--onto &lt;nouvelle_base&gt; :  permet de spécifier le commit qui servira de base à l’intégration  des commits. Cet argument est utile pour redéfinir les dépendances des  branches.</p>
+  <p>Exemple</p>
+  <pre>git rebase hotfix-connection  </pre>
+</div>
+<div>
+  <h2>23. git reflog</h2>
+  <p>Le reflog est un journal de références  qui permet de retrouver facilement l’endroit où les références étaient  positionnées à un instant t.</p>
+  <p>Utilisée sans argument, cette commande  affiche le journal des références de HEAD. Une référence raccourcie est créée  par reflog pour y accéder facilement. Cette référence  raccourcie prend la forme suivante : HEAD@{1}.</p>
+  <p>Argument</p>
+  <p>--all : permet  d’afficher toutes les références.</p>
+  <p>Exemple</p>
+  <pre>git reflog  </pre>
+</div>
+<div>
+  <h2>24. git remote</h2>
+  <p>Les remotes sont des liens (sous forme d’URL  ou de chemins de système de fichiers) qui permettent à un  dépôt local de communiquer avec un dépôt  distant. Ces remotes sont nommés pour être utilisés  plus facilement. Le remote standard d’un dépôt  s’appelle origin. La différence entre un dépôt  distant et un remote est similaire à celle entre un téléphone  et un numéro de téléphone : l’un sert à joindre  l’autre.</p>
+  <p>Utilisée sans argument, cette commande  affiche la liste des remotes du dépôt local.</p>
+  <p>Sous-commandes</p>
+  <p>add &lt;nom_du_remote&gt;  &lt;url_ou_chemin&gt; : permet d’ajouter un  remote à partir de son nom et de l’URL (ou du chemin) du  dépôt distant.</p>
+  <p>rename &lt;nom_de_départ&gt;  &lt;nom_final&gt; : permet de renommer un remote. </p>
+  <p>remove &lt;nom_du_remote&gt; :  permet de supprimer un remote et toutes ses branches distantes suivies.</p>
+  <p>set-url &lt;nom_remote&gt;  &lt;url_ou_chemin&gt; : permet de mettre à jour l’URL  ou le chemin du dépôt distant pointé par  le remote.</p>
+  <p>Exemples</p>
+  <pre>git remote add origin
+http://www.gitlab.dauzon.com/improllowup.git
+git remote set-url origin
+http://www.git.dauzon.com/improllowup.git  </pre>
+</div>
+<div>
+  <h2>25. git reset</h2>
+  <p>Cette commande permet de placer le pointeur HEAD sur un commit particulier. Selon les arguments, cette  commande mettra à jour l’index et le répertoire de  travail.</p>
+  <p>Arguments</p>
+  <p>&lt;commit&gt; (obligatoire)  : spécifie le commit sur lequel doit pointer la référence HEAD.</p>
+  <p>--soft : met  uniquement à jour la référence HEAD. Ne modifie ni l’index ni le répertoire de  travail.</p>
+  <p>--mixed :  argument par défaut. Met à jour la référence HEAD ainsi que l’index. Le répertoire de  travail reste inchangé.</p>
+  <p>--hard : met à jour  la référence HEAD, l’index et le répertoire de travail. Attention, car  cette action peut être destructrice. Il faut l’utiliser  prudemment.</p>
+  <p>--merge :  permet d’annuler les modifications présentes dans l’index  et le répertoire de travail qui sont différentes  de HEAD et du commit spécifié. Est couramment  utilisée pour annuler un merge en spécifiant la  référence ORIG_HEAD.</p>
+  <p>Exemples</p>
+  <pre>git reset --hard HEAD
+git reset --soft HEADˆ
+git reset --merge ORIG_HEAD  </pre>
+</div>
+<div>
+  <h2>26. git revert</h2>
+  <p>Cette commande permet d’annuler les effets  d’un commit. Le commit concerné ne sera pas supprimé (car  il risque d’avoir été pushé sur un dépôt  distant), à la place, un commit inverse sera ajouté au  dépôt. Si c’est le dernier commit qu’il faut annuler  et qu’il n’a pas été envoyé au dépôt  distant, la commande git commit --amend permet  de recréer le dernier commit.</p>
+  <p>Arguments</p>
+  <p>&lt;commit&gt; (obligatoire)  : permet de spécifier le commit dont on veut supprimer  les modifications.</p>
+  <p>-n ou --no-commit : permet de ne pas commiter  automatiquement les modifications inverses. Ces modifications seront  effectuées dans le répertoire de travail et dans  l’index.</p>
+  <p>Exemple</p>
+  <pre>git revert --no-commit 1fb34  </pre>
+</div>
+<div>
+  <h2>27. git rm</h2>
+  <p>Cette commande permet de supprimer un fichier  dans le dépôt et dans le répertoire de  travail. </p>
+  <p>Argument</p>
+  <p>&lt;chemin_fichier&gt; (obligatoire)  : définit le fichier à supprimer dans le prochain  commit et dans le répertoire de travail.</p>
+  <p>Exemple</p>
+  <pre>git rm README  </pre>
+</div>
+<div>
+  <h2>28. git show</h2>
+  <p>Cette commande permet de visualiser un objet  Git à partir de son identifiant.</p>
+  <p>Argument</p>
+  <p>&lt;identifiant_objet&gt; (obligatoire)  : définit l’objet à afficher.</p>
+  <p>Exemple</p>
+  <pre>git show HEAD  </pre>
+</div>
+<div>
+  <h2>29. git stash</h2>
+  <p>Cette commande permet de mettre de côté des  modifications du répertoire de travail et de l’index pour  les réappliquer par la suite. Cette commande est particulièrement  utile pour mettre de côté des modifications non  finalisées qui ne doivent pas être commitées.  L’exemple le plus parlant de l’utilité de git stash est lorsque le développeur  doit changer de branche et qu’il a des modifications en cours. On  appelle stash le conteneur qui stocke les données mises de  côté.</p>
+  <p>Sous-commandes</p>
+  <p>save : permet  de sauvegarder les modifications contenues dans le répertoire de  travail et dans l’index.</p>
+  <p>Arguments de la commande save :</p>
+  <div>
+    <ul>
+      <li>
+        <p>&lt;message&gt; :  permet de définir un message de stash pour simplifier la lecture de  la liste de stashs. Les messages de stash sont particulièrement utiles  lorsque les développeurs cumulent de nombreux stashs dans  leurs dépôts. </p>
+      </li>
+      <li>
+        <p>--keep-index :  permet de ne pas récupérer les modifications incluses dans  l’index. Ces modifications seront laissées dans l’index.</p>
+      </li>
+      <li>
+        <p>--include-untracked :  permet d’inclure dans le stash les fichiers non suivis (mais pas  ignorés) de Git.</p>
+      </li>
+    </ul>
+  </div>
+  <p>list : permet  de lister tous les stashs présents sur le dépôt.</p>
+  <p>show : permet  d’afficher les détails d’un stash. Si aucun nom de stash  n’est spécifié, cette commande affiche le dernier  stash.</p>
+  <p>pop : permet  de réappliquer les modifications du stash dans le répertoire  de travail et dans l’index puis supprime le stash si tout s’est  bien passé. Si aucun nom de stash n’est spécifié,  cette commande réapplique et supprime le dernier stash  effectué.</p>
+  <p>apply : permet  d’appliquer un stash sans le supprimer de la liste des stashs. Si  aucun nom de stash n’est spécifié, cette commande  réapplique le dernier stash.</p>
+  <p>branch : permet  de créer une nouvelle branche directement à partir  des données contenues dans le stash entré en paramètre.</p>
+  <p>clear : supprime  tous les stashs sans possibilité de récupération. À utiliser avec  précaution !</p>
+  <p>drop : permet  de supprimer le stash spécifié en argument. Si  aucun nom de stash n’est spécifié, cette commande  supprime le dernier stash.</p>
+  <p>Exemples</p>
+  <pre>git stash save
+git stash save --include-untracked ajout_graph_accueil
+git stash list
+git stash show stash@{0}
+git stash pop
+git stash apply stash@{0}
+git stash branch agenda_semaine stash@{0}  </pre>
+</div>
+<div>
+  <h2>30. git submodule</h2>
+  <p>Cette commande permet de gérer les  dépôts intégrés (également  appelés sous-modules) dans un autre projet. Les dépôts  intégrés sont très utiles pour intégrer  des bibliothèques externes ou internes dans un projet,  le but étant de ne pas suivre le code de cette bibliothèque  dans le dépôt principal.</p>
+  <p>Sous-commandes</p>
+  <p>add &lt;url&gt; &lt;nom_du_dépôt_intégré&gt; :  permet d’ajouter le dépôt intégré disponible à l’URL  spécifiée. Si le nom n’est pas spécifié,  un nom par défaut est défini automatiquement</p>
+  <p>status : permet  d’afficher un état des lieux des différents dépôts  intégrés.</p>
+  <p>init : permet  d’initialiser les dépôts intégrés.  L’initialisation d’un dépôt intégré permet  de commencer à l’utiliser grâce à la  création d’un fichier qui contiendra le hash correspondant  au commit à cibler dans le dépôt intégré.</p>
+  <p>update : permet  de mettre à jour les répertoires de travail des  dépôts intégrés.</p>
+  <p>Exemples</p>
+  <pre>git submodule add https://github.com/thomaspark/bootswatch/ bootswatch
+git submodule init
+git submodule update  </pre>
+</div>
+<div>
+  <h2>31. git tag</h2>
+  <p>Les tags sont des noms pointant vers des commits.  Ils servent de raccourcis pour pouvoir nommer un commit à l’aide  d’un nom compréhensible par un humain (contrairement au  hash de 40 caractères).</p>
+  <p>Arguments</p>
+  <p>&lt;nom_du_tag&gt; (obligatoire)  : définit le nom qui sera donné au tag pointant sur  le commit.</p>
+  <p>&lt;hash_du_commit&gt; :  permet de choisir le commit sur lequel pointera le tag créé.  Lorsque cet argument n’est pas spécifié, le tag  pointera sur le même commit que celui pointé par HEAD.</p>
+  <p>-l ou --list : permet de lister les tags  existants.</p>
+  <p>-a ou --annotate : permet de créer  un tag annoté. Un tag annoté est beaucoup plus  complet qu’un tag simple puisqu’il stocke la date de création  du tag ainsi que son créateur.</p>
+  <p>-d ou --delete &lt;nom_du_tag&gt; :  permet de supprimer le tag dont le nom est entré en paramètre.</p>
+  <p>Exemple</p>
+</div>
+<div id="AU_2379f11b-0b80-40ea-9508-d475249c344a" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <p> </p>
+    <pre>git tag 1.0
+git tag -l
+git tag 1.1 a34efb  </pre>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_a8c28313-6da6-4ea0-a885-c1e92dbfa92b" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Rechercher des commits avec le mode pick axe</h1>
+  <p>Le mode pick axe ne correspond pas à une  commande de Git, car c’est en réalité un mode  utilisable avec plusieurs commandes de Git en ajoutant un argument.  Le mode pick axe va permettre de rechercher les commits en fonction des  modifications qu’ils ajoutent. C’est-à-dire que l’option  pick axe va permettre de savoir dans quels commits le contenu  spécifié a été ajouté ou supprimé.</p>
+  <p>Le mode pick axe peut être utilisé avec git log, mais aussi avec git diff ou encore avec la commande git format-patch. Pour utiliser cette fonctionnalité, il  faut rajouter l’argument -S suivi  du mot ou de la chaîne à rechercher : </p>
+  <pre>git log -S "chaîne à rechercher"  </pre>
+  <p>Par exemple, pour rechercher les commits du  projet Django ajoutant ou supprimant la chaîne « Web  framework that » il faut utiliser la commande  suivante : </p>
+  <pre>git log -S "Web framework that"  </pre>
+  <p>Cette commande trouve quatre commits qui ajoutent  ou suppriment la chaîne recherchée.</p>
+  <p>Cette commande permet alors d’effectuer des  recherches beaucoup plus précises, directement dans les  lignes modifiées ou ajoutées. Il existe également  le paramètre -G qui permet  de rechercher les commits à partir de leurs modifications  en fonction d’une expression régulière. Par exemple,  pour rechercher les commits ajoutant ou supprimant des lignes correspondant à l’expression  régulière « Web framework.{0,  20}that », il faut utiliser la commande  suivante :</p>
+  <pre>git log -G "Web framework.{0, 20}that"  </pre>
+  <p>Cette commande trouve un commit de plus que  la commande utilisée avec l’argument -S. En effet, la dernière  commande est plus permissive, car elle va accepter toutes les chaînes  où les mots « Web framework » sont  séparés de 20 caractères ou moins du  mot « that ».</p>
+  <p>Les expressions régulières  permettent de faire des recherches plus complexes, par exemple pour  détecter le moment où une ligne a été commentée.</p>
+  <p>Ces commandes sont particulièrement  puissantes et peuvent être longues à s’exécuter  selon la taille du dépôt et la complexité de  l’expression régulière. Mais contrairement aux  systèmes de version centralisés, c’est la machine  du développeur qui va travailler, le serveur ne sera pas  du tout surchargé. Il est donc possible d’utiliser ces  commandes sans devoir se soucier de perturber les autres collaborateurs  du projet.</p>
+</div>
+
+</body>
+</html>

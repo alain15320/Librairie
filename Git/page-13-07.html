@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_0f577e03-993b-4cc0-afab-a96a2c8f8cce" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Premier commit du projet</h1>
+  <p>Noëllie a demandé à Raphaël  de s’occuper du premier commit qui placera le projet dans  le dépôt en respectant les bonnes pratiques.</p>
+  <div>
+    <h2>1. Rédaction du fichier .gitignore</h2>
+    <p>Lors de l’ajout du projet dans le  dépôt, il est important de ne pas y ajouter des fichiers  inutiles, c’est-à-dire les fichiers qui ne doivent  pas être suivis. Dans cette optique, Raphaël doit  identifier les fichiers qu’il convient d’ignorer.</p>
+    <p>Raphaël va donc utiliser la commande  suivante pour obtenir la liste de tous les fichiers qui seraient  ajoutés avec un git add --all : </p>
+    <pre>git add --all --dry-run &gt; liste_fichiers.txt  </pre>
+    <p>Cette commande va créer un fichier liste_fichiers.txt qui contiendra toute la liste des fichiers qui seraient  ajoutés avec un git add --all.</p>
+    <div>
+      <h3>a. Ignorer les bibliothèques</h3>
+      <p>En regardant avec attention le contenu du  fichier, Raphaël se rend compte que les bibliothèques  contiennent de nombreux fichiers et empêchent une lecture fluide.  Il va donc créer son fichier .gitignore en ajoutant tout d’abord le contenu suivant : </p>
+      <pre>/improllowup/static/lib  </pre>
+      <p>Cette modification rendra le fichier plus  digeste et permettra une analyse plus précise de son contenu  en le passant de 2706 lignes à 136 lignes.</p>
+    </div>
+    <div>
+      <h3>b. Ignorer les fichiers propres à la technologie</h3>
+      <p>Certains fichiers du dépôt  sont créés par Python, mais n’ont pas besoin d’être suivis.  C’est le cas des fichiers pycache qui contiennent du Bytecode  Python pour éviter de devoir le réinterpréter.  Voici les lignes que Raphaël a ajoutées pour ignorer  les fichiers propres à Python :</p>
+      <pre>__pycache__/    *.pyc  </pre>
+      <p>Il doit également ignorer la base  de données de test qui n’a rien à faire  dans un système de gestion de versions. Pour cela, il ajoute  la ligne suivante :</p>
+      <pre>db.sqlite3  </pre>
+      <p>À présent, il lui reste  68 fichiers à versionner dans la sortie de la commande git add --all --dry-run.</p>
+    </div>
+    <div>
+      <h3>c. Ignorer les données sensibles</h3>
+      <p>Il est déconseillé de versionner  des données sensibles comme les mots de passe ou encore  des clés privées. La configuration du projet Django  se situe dans deux fichiers du dossier improllowup/settings : base.py et local.py.</p>
+      <p>Le fichier local.py contient les données les plus sensibles. Chaque  développeur conserve sa propre version. La version en production  est confidentielle et peu de développeurs y ont accès.  Ce fichier doit être ignoré dans le fichier .gitignore à l’aide de la ligne suivante : </p>
+      <pre>/improllowup/settings/local.py  </pre>
+    </div>
+    <div>
+      <h3>d. Ajouter les dépôts intégrés</h3>
+      <p>Raphaël avait choisi d’ignorer  le dossier lib car il polluait son affichage. Il sait que ce n’est  pas une bonne pratique et va utiliser des dépôts  intégrés pour intégrer ces bibliothèques.</p>
+      <p>Le dossier improllowup/static/lib/css/bootswatch contient la bibliothèque Bootswatch qui regroupe  plusieurs thèmes du framework Bootstrap. Raphaël va  supprimer ce dossier et exécuter la commande suivante (à partir  du dossier improllowup/static/lib/css) : </p>
+      <pre>git submodule add https://github.com/thomaspark/bootswatch/ bootswatch</pre>
+      <p>Raphaël vérifie que le dépôt  intégré a correctement été ajouté en  affichant le contenu du fichier .gitmodules à la racine du dépôt :</p>
+      <pre>[submodule "improllowup/static/lib/css/bootswatch"]        path = improllowup/static/lib/css/bootswatch        url = https://github.com/thomaspark/bootswatch/  </pre>
+      <p>La mise en dépôt d’un  projet permet également parfois de mettre au propre le projet  et de supprimer des dossiers inutiles. C’est le cas du  dossier improllowup/static.lib/css/yeti, que Raphaël supprime.</p>
+      <p>Ensuite, Raphaël se place dans le  dossier improllowup/static/lib/js et supprime le fichier jquery.1.10.2.js. Il exécute ensuite la commande suivante pour  ajouter le dépôt intégré de  jQuery : </p>
+      <pre>git submodule add https://github.com/jquery/jquery jquery  </pre>
+      <p>Contrairement à la bibliothèque  Bootswatch, le dépôt de jQuery n’est  pas directement exploitable en l’état actuel.  Il faut tout d’abord générer les fichiers JavaScript  de jQuery à l’aide des commandes suivantes : </p>
+      <pre>cd jquery    sudo npm run build  </pre>
+      <p>Les fichiers JavaScript de jQuery ont alors été générés  dans le dossier dist du dépôt intégré.  Raphaël doit ensuite modifier la ligne qui importe jQuery  dans le fichier improllowup/templates/base.html par la ligne suivante : </p>
+      <pre>&lt;script src="{% static ’lib/js/jquery/dist/jquery.min.js’ %}"&gt;&lt;/script&gt;  </pre>
+      <p>À présent, les bibliothèques  sont correctement gérées dans le dépôt  de Raphaël. </p>
+    </div>
+    <div>
+      <h3>e. Le fichier README</h3>
+      <p>Raphaël écrit alors le fichier README qui permettra à un nouveau développeur  de cloner le dépôt et de générer  les fichiers nécessaires au projet.</p>
+    </div>
+  </div>
+  <div>
+    <h2>2. Commit du projet</h2>
+    <p>À présent, toutes les bases  du dépôt sont posées. Raphaël  va effectuer le premier commit : </p>
+    <pre>git add --all    git commit -m "C1 : Ajout du projet"  </pre>
+    <p>Ce premier commit a été effectué dans  la branche master contenant les versions publiées. Raphaël  va ajouter le tag de version à ce fichier : </p>
+    <pre>git tag v1.0.0</pre>
+  </div>
+  <div>
+    <h2>3. Création de la branche develop pour Git-Flow</h2>
+    <p>Pour utiliser la méthode Git-Flow,  il est nécessaire d’avoir deux branches : la branche master et la branche develop. Le seul commit présent dans le dépôt  a été effectué dans la branche master.</p>
+    <pre>git checkout -b develop    git commit -m "C2 : Branche develop" --allow-empty</pre>
+    <p>À présent, Raphaël  va envoyer les deux branches dans lesquelles il a commité : </p>
+    <pre>git push -u --all</pre>
+  </div>
+</div>
+
+</body>
+</html>

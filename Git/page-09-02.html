@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_143fb87e-1c21-4be9-a6f3-f4dc5b5c5bfa" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Créer un dépôt distant</h1>
+  <div>
+    <h2>1. Pour un nouveau projet</h2>
+    <p>Un nouveau projet est perçu ici du  point de vue de Git uniquement, c’est-à-dire, qu’un nouveau  projet peut contenir du code et exister depuis plusieurs années.  La seule caractéristique qui le différencie d’un  projet existant est de n’être géré par  aucun dépôt.</p>
+    <p>La création d’un dépôt  distant Git vierge est très simple : il faut utiliser git init en lui ajoutant le paramètre --bare. Par exemple, pour créer  un nouveau dépôt nommé new_browser, il faut utiliser la commande suivante :</p>
+    <pre>git init --bare new_browser</pre>
+    <p>Git indique que la commande s’est  correctement déroulée en affichant la sortie suivante : </p>
+    <pre>Initialized empty Git repository in   /Volumes/JedemaKey/Livre/Git/Repo/07/01BareVierge/new_browser/  </pre>
+  </div>
+  <div>
+    <h2>2. Pour un projet existant</h2>
+    <p>Un projet existant est, du point de vue de  Git un projet qui est déjà stocké dans  un dépôt Git. Pour cela, il faut utiliser la commande git clone qui va copier un dépôt  distant dans un nouveau dépôt local. Cette commande  sera expliquée plus précisément dans  la suite de ce chapitre. Pour tester cette partie, il faut un dépôt  local contenant plusieurs commits. Nous allons donc créer un  dossier contenant un dépôt local, commiter des  modifications dans ce dépôt, et créer  un dossier où nous clonerons le dépôt  local :</p>
+    <pre>mkdir local    cd local    git init    vi fichier.txt    git add fichier.txt    git commit    cd.    mkdir serveur    cd serveur    git clone --bare ../local/.git clone_distant    cd clone_distant    git log  </pre>
+    <p>La sortie suivante de la commande git log démontre que le clonage  a correctement été effectué :</p>
+    <pre>commit 0b9e483    Author: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Thu Aug 20 03:07:21 2015 +0200            Contenu commité  </pre>
+    <p>La copie du dépôt a bien été effectuée.  Les deux dépôts contiennent le même historique,  mais le dépôt distant que nous venons de créer  ne contient pas de répertoire de travail. Il va donc falloir  travailler à partir du dépôt local pour  enregistrer des modifications.</p>
+    <p>Le problème est que le dépôt  local ne sait pas du tout que le dépôt distant existe  maintenant. Pour lui indiquer de se référer au  dépôt distant clone_distant, il va falloir lui indiquer son emplacement. </p>
+    <p>Ce type de dépôt ne contient  pas de répertoire de travail. En effet, en listant les  fichiers et dossiers après avoir créé ce  dépôt (avec la commande ls  -la), l’interface en ligne de commande nous affiche la liste  suivante : </p>
+    <pre>HEAD    branches    config    description    hooks    info    objects    packed-refs    refs  </pre>
+    <p>Pour l’instant, ce dépôt  n’a pas réellement d’utilité parce qu’il est impossible d’y  commiter une quelconque modification. Pour cela, il va falloir utiliser  un dépôt local lié à ce dépôt  distant. Dans ce but, il convient de cloner ce dépôt pour  pouvoir travailler sur la version clonée.</p>
+  </div>
+</div>
+<div id="AU_143fb87e-1c21-4be9-a6f3-f4dc5b5c5bfa" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div> </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

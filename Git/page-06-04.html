@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_5cb5cf7a-c9a1-405c-a30d-b9c4ac9a4e33" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Manipuler les fichiers</h1>
+  <div>
+    <h2>1. Ajouter des fichiers dans l’index</h2>
+    <p>Il existe deux cas où il est utile  d’ajouter un fichier à l’index.</p>
+    <p>Le premier cas est celui où le fichier  est nouveau et inconnu de Git. Ajouter ce nouveau fichier dans l’index  va permettre de prévenir Git que ce fichier doit être  pris en compte. Comme expliqué précédemment,  ce fichier passera d’un état non suivi à un état  suivi par Git.</p>
+    <p>Le deuxième cas est celui où le  fichier est déjà versionné, mais que  le développeur souhaite mettre les modifications effectuées  dans ce fichier dans l’index pour les commiter.</p>
+    <p>Pour ajouter un fichier dans l’index, il faut  utiliser la commande git add avec  la syntaxe suivante :</p>
+    <pre>git add nom_fichier</pre>
+    <p>Il existe également des manières  d’ajouter plusieurs fichiers dans l’index à l’aide d’une  seule commande. Par exemple, pour ajouter tous les fichiers dans le  dépôt, vous devez utiliser la commande suivante  :</p>
+    <pre>git add -A  </pre>
+    <p>Les bonnes pratiques recommandent de ne pas  utiliser cette commande. En effet, en utilisant cette commande,  il est possible d’ajouter des fichiers dont nous ne voulons pas  dans notre dépôt. Ces fichiers peuvent être  des fichiers temporaires créés par le système  ou tout autre fichier qui n’a pas sa place dans le dépôt.</p>
+  </div>
+  <div>
+    <h2>2. Déplacer ou renommer des fichiers</h2>
+    <p>Git possède une commande qui permet  de renommer ou de déplacer un fichier. Voici la  syntaxe de cette commande :</p>
+    <pre>git mv ancien_fichier nouveau_fichier</pre>
+    <p>Voici par exemple comment renommer le fichier fichier.html en index.html :</p>
+    <pre>git mv fichier.html index.html  </pre>
+    <p>La commande git status nous  affiche la sortie suivante : </p>
+    <pre>On branch master   Changes to be committed:     (use "git reset HEAD &lt;file&gt;..." to unstage)          renamed:    fichier.html -&gt; index.html  </pre>
+    <p>Cette sortie indique que le fichier a été ajouté à l’index  et qu’il est détecté comme étant  renommé.</p>
+    <p>La commande ls -l qui  permet de visualiser la liste de fichiers et de dossiers du répertoire  courant affiche la sortie suivante : </p>
+    <pre>total 8   -rw-r--r--  1 dauzon  staff  59 16 jul 23:49 index.html  </pre>
+    <p>Cette sortie indique que Git a bien renommé le  fichier dans le répertoire de travail en plus  de changer l’état du fichier dans l’index.</p>
+  </div>
+  <div>
+    <h2>3. Supprimer des fichiers</h2>
+    <p>Pour supprimer un fichier suivi par Git, il  ne faut pas uniquement le supprimer dans le système de  fichiers. Git nous propose une commande qui permet de supprimer  le fichier dans le répertoire de travail, mais également  de placer cette suppression dans la zone d’index pour qu’au prochain  commit Git sache que le fichier ne doit plus être suivi.  Il faut utiliser la syntaxe suivante : </p>
+    <pre>git rm nom_fichier</pre>
+    <p>Par exemple, dans le cas où un fichier  nommé fichier.html existe dans le répertoire de travail :</p>
+    <pre>git rm fichier.html  </pre>
+    <p>La commande git status indique  que le fichier a été supprimé et que  cette suppression est prête à être commitée.  Voici la sortie qu’affiche git status : </p>
+    <pre>On branch master   Changes to be committed:     (use "git reset HEAD &lt;file&gt;..." to unstage)          deleted:    fichier.html  </pre>
+    <p>Pour obtenir le même comportement,  il est également possible d’utiliser les deux  commandes suivantes : </p>
+    <pre>rm fichier.html   git add fichier.html  </pre>
+    <p>La première commande supprime le  fichier dans le répertoire de travail et la deuxième  commande permet d’ajouter cette suppression dans l’index.</p>
+  </div>
+  <div>
+    <h2>4. Arrêter de suivre un fichier</h2>
+    <p>Plusieurs raisons peuvent pousser un développeur à vouloir  arrêter de suivre un fichier sans le supprimer. Un exemple  typique de ce genre de cas est lorsqu’un développeur  ajoute par erreur un fichier de log (ou n’importe quel autre  type de fichier qu’on ne versionne pas) dans le dépôt.  Le développeur a envoyé son commit au serveur  central et à partir de ce moment-là il ne peut pas  revenir en arrière, il doit donc arrêter de suivre  le fichier ajouté par erreur sans pour autant le supprimer.</p>
+    <p>Pour cela, il faut utiliser la syntaxe suivante : </p>
+    <pre>git rm --cached nom_fichier  </pre>
+    <p>Par exemple, dans le cas où un fichier  nommé fichier.html est présent dans le dépôt  et dans le répertoire de travail :</p>
+    <pre>git rm --cached fichier.html  </pre>
+  </div>
+  <div>
+    <h2>5. Ignorer des fichiers</h2>
+    <p>Dans le chapitre Création d’un  dépôt qui explique comment créer et configurer  un dépôt, la section Ignorer des fichiers présente  de quelle manière configurer le fichier .gitignore permettant d’ignorer un certain nombre de fichiers.</p>
+    <p>En effet, il existe plusieurs types de fichiers  qui ne doivent pas être commités. Voici une liste  non exhaustive des fichiers qui ne doivent pas être versionnés  :</p>
+    <div>
+      <ul>
+        <li>
+          <p>les fichiers de logs,</p>
+        </li>
+        <li>
+          <p>les fichiers résultants  d’une compilation,</p>
+        </li>
+        <li>
+          <p>les fichiers des bibliothèques  (ce cas particulier est abordé dans le chapitre Les outils  de Git, à la section Dépôts intégrés  avec submodules),</p>
+        </li>
+        <li>
+          <p>les fichiers de configuration (surtout  lorsqu’ils contiennent des données sensibles).</p>
+        </li>
+      </ul>
+    </div>
+    <p>Ces fichiers seront spécifiés  dans le fichier .gitignore qui sera stocké à la racine du dépôt.  Les règles de syntaxe du fichier .gitignore sont les suivantes : </p>
+    <div>
+      <ul>
+        <li>
+          <p>Les lignes vides sont  ignorées. Elles peuvent donc servir de séparateur  pour aérer le fichier.</p>
+        </li>
+        <li>
+          <p>Les lignes débutant par  un dièse # sont considérées  comme des commentaires et n’ont aucune incidence sur les  fichiers ignorés.</p>
+        </li>
+        <li>
+          <p>Une ligne contenant un chemin complet  suivi du nom d’un fichier exclut uniquement le fichier  ciblé.</p>
+        </li>
+        <li>
+          <p>Il est possible d’utiliser  un ou plusieurs astérisques pour spécifier plusieurs noms  de fichier à l’instar de ce qui est possible avec  une interface en ligne de commande.</p>
+        </li>
+        <li>
+          <p>Une ligne composée uniquement  d’un nom de fichier ou de dossier exclut les fichiers portant  ce nom quel que soit le dossier dans lequel ils se trouvent. Pour  spécifier un fichier se situant à la racine du  dépôt, il faut le préfixer par un slash  comme si le chemin absolu du fichier débutait au niveau  du dépôt.</p>
+        </li>
+        <li>
+          <p>Un point d’exclamation  en début de ligne signifie que les fichiers ciblés  ne seront pas ignorés.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Ci-dessous un exemple de fichier .gitignore simple : </p>
+    <pre># Ignorer tous les dossiers lib (qui contiennent des bibliothèques)   lib/   # Autoriser le versionnement des bibliothèques internes   !lib/interne/   # Ignorer tous les fichiers Python semi-compilés   *.pyc   __pycache__   # Ignorer tous les exports de documentation, mais pas les originaux   /documentation/*   !/documentation/*.md  </pre>
+    <p>Le fichier .gitignore doit être enregistré à la  racine du dépôt pour être interprété par  Git. Ce fichier sera versionné, car il correspond à toutes  les exclusions qui doivent être faites pour le projet.</p>
+    <p>Il existe un autre type de fichier servant à ignorer  des fichiers dont la configuration a été évoquée  dans le chapitre Création d’un dépôt à la  section Ignorer des fichiers. Ce fichier est global et sert à ignorer  les fichiers propres à l’utilisateur. Par exemple,  ceux qui utilisent des IDE tels que PyCharm ont l’habitude de  voir apparaître à la racine de leur projet un  dossier .idea contant les fichiers utilisés par PyCharm pour  gérer le projet. Ce n’est pas au fichier .gitignore d’ignorer ce type de fichiers, car ces fichiers  ne dépendent pas du tout du projet, mais de l’utilisateur.  En effet, rien n’empêche un développeur  d’utiliser un autre éditeur comme Sublime Text  ou encore Eclipse. Pour cela, il faudra utiliser le fichier .gitignore_global défini avec l’option de configuration core.excludesfile. Ce fichier possède  exactement la même syntaxe que le fichier .gitignore.</p>
+  </div>
+</div>
+<div id="AU_5cb5cf7a-c9a1-405c-a30d-b9c4ac9a4e33" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div> </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

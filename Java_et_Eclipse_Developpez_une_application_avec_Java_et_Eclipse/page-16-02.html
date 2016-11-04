@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_ad517f5f-6dad-455c-8373-daf941f447c9" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Graphiques</h1>
+  <p>JFreeChart a été retenu  pour la production des graphiques qui est, comme JasperReports, open  source et entièrement écrit en Java. JFreeChart  est une librairie fournissant une API permettant à Java  de générer des graphiques à partir de  sources de données et dont la sortie possible est une image  JPEG ou PNG.</p>
+  <div>
+    <h2>1. Création avec Jaspersoft Studio et JFreeChart</h2>
+    <p>Pour rendre la création de graphiques  encore plus simple, il est possible de travailler à nouveau  avec Jaspersoft Studio en tandem avec JFreeChart.</p>
+    <p>Un éditeur graphique est ainsi disponible  pour dessiner les graphiques, placer d’éventuels paramètres  et tester le résultat final comme cela vient d’être  fait avec l’aperçu, l’impression et l’exportation de clients.</p>
+    <p>Un graphique simple va être produit,  qui va donner les pourcentages du nombre de commandes par mois pour  une année donnée.</p>
+    <div>
+      <div><img alt="images/14-33.png" src="images/images_14-33.png"></div>
+    </div>
+    <div>
+      <p> Téléchargez les librairies  de JFreeChart sur le site de SourceForge à l’adresse suivante : <a href="https://sourceforge.net/projects/jfreechart/files/" target="_blank">https://sourceforge.net/projects/jfreechart/files/</a></p>
+    </div>
+    <div>
+      <p> Décompressez le fichier et ajoutez  les librairies suivantes à celles déjà présentes  dans le projet luna.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-34.png" src="images/images_14-34.png"></div>
+    </div>
+    <p>Avant de commencer la création du  rapport, il faut s’intéresser au modèle de données.</p>
+    <p>Chaque statistique comprend deux propriétés :  le nom du mois et le nombre de commandes de ce mois.</p>
+    <div>
+      <p> Créez une classe <strong>Stat</strong> dans le package <strong>dialogue.stats</strong>.</p>
+    </div>
+    <pre>package dialogue.stats;      import java.time.Month;   import java.time.format.TextStyle;   import java.util.Locale;      public class Stat {       private final Long compteur;              private final String mois;              public Stat(Object obj) {           this( (Integer) ((Object[]) obj)[0],                 (Long) ((Object[]) obj)[1]);       }          private Stat(Integer mois, Long nbr) {           this(<strong>Month.of(mois)</strong>, nbr);       }          public Stat(Month mois, Number nbr) {           this.mois = mois.<strong>getDisplayName(TextStyle.FULL,                               Locale.getDefault())</strong>;           compteur = nbr.<strong>longValue</strong>();       }          public Long getCompteur() {           return compteur;       }              public String getMois() {           return mois;       }   }  </pre>
+    <p>Cette classe utilise l’enum <strong>Month</strong> du package <strong>java.time</strong> pour obtenir le nom du mois concerné.</p>
+    <p>Une collection de ce type de données  sera injectée dans le rapport. Les propriétés  qui concernent le rapport sont donc <strong>compteur</strong> et <strong>mois</strong>.</p>
+    <div>
+      <p> Créez un nouvel adaptateur de données  pour tester le graphique sans injecter de données réelles.</p>
+    </div>
+    <pre>package dialogue.stats;      import java.time.Month;   import java.util.ArrayList;   import java.util.List;      public class FabriqueStats {          public static List&lt;Stat&gt; createBeanCollection() {           List&lt;Stat&gt; stats = new ArrayList&lt;&gt;();           stats.add( new Stat(Month.JANUARY, 3));           stats.add( new Stat(Month.FEBRUARY, 21));           stats.add( new Stat(Month.MARCH, 142));           return stats;       }   }  </pre>
+    <div>
+      <p> Créez un nouveau rapport vierge, et  sauvegardez-le sous le nom de <strong>stats.jrxml</strong>.</p>
+    </div>
+    <div>
+      <p> Ouvrez l’éditeur de données,  sélectionnez l’adaptateur qui vient d’être créé et  choisissez la classe <strong>Stat</strong> dans l’onglet <strong>Java Bean</strong>. Sélectionnez ensuite les propriétés <strong>compteur</strong> et <strong>mois</strong>. </p>
+    </div>
+    <div>
+      <p> Ajoutez les champs sélectionnés  avec le bouton <strong>Add selected field(s)</strong> et cliquez sur <strong>OK</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-35.png" src="images/images_14-35.png"></div>
+    </div>
+    <div>
+      <p> Réduisez à zéro  la taille de toutes les sections excepté celle nommée  Titre.</p>
+    </div>
+    <div>
+      <p> Dans la palette, sélectionnez l’élément  graphique (avec une icône de camembert) et glissez-le  dans la section Titre.</p>
+    </div>
+    <div>
+      <p> Sélectionnez ensuite le type de graphique <strong>Camembert</strong>. Cliquez sur <strong>Next</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-36.png" src="images/images_14-36.png"></div>
+    </div>
+    <div>
+      <p> Sélectionnez ensuite la série  de données à afficher :</p>
+    </div>
+    <div>
+      <ul>
+        <li>
+          <p><strong>Key</strong> doit être mis à <strong>$F{mois}</strong>.</p>
+        </li>
+        <li>
+          <p><strong>Value</strong> doit être à <strong>$F{compteur}</strong>.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div><img alt="images/14-37.png" src="images/images_14-37.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur <strong>Finish</strong>.</p>
+    </div>
+    <div>
+      <p> Sélectionnez ensuite le graphique  et affichez ses propriétés. Dans la rubrique <strong>Chart Plot</strong>, saisissez le format du label comme : <strong>{0} : {1} commande(s) ({2})</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-38.png" src="images/images_14-38.png"></div>
+    </div>
+    <div>
+      <p> Testez le rendu en cliquant sur l’onglet <strong>Prévisualiser</strong>.</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Le fichier stats.jrxml est disponible  en téléchargement depuis la page Informations  générales.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Exploitation des graphiques à partir de l’application</h2>
+    <p>Il reste à piloter tout ce qui vient  d’être réalisé à partir de l’application  Java en proposant la saisie de l’année.</p>
+    <div>
+      <p> Ouvrez la classe <strong>FTableauDeBord</strong> en mode <strong>Design</strong>, et sélectionnez le bouton <strong>Commandes</strong>.</p>
+    </div>
+    <div>
+      <p> Ajoutez une action à ce bouton comme  le code suivant :</p>
+    </div>
+    <pre>private class ActionCommandes extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionCommandes() {           putValue(NAME, "Commandes");           putValue(SHORT_DESCRIPTION,                    "Afficher les statistiques des commandes");       }          public void actionPerformed(ActionEvent e) {           String annee = JOptionPane.<strong>showInputDialog</strong>(null,                               "Entrez une année : ");           FStats stats = new FStats(FTableauBord.this,                            connexion, annee);           stats.setModal(true);           stats.setLocationRelativeTo(stats.getParent());           stats.setVisible(true);       }   }  </pre>
+    <div>
+      <p>La méthode <strong>showInputDialog</strong> ouvre une boîte de dialogue permettant de saisir  un texte simple.</p>
+    </div>
+    <div>
+      <p> Téléchargez le code de la  fenêtre <strong>FStats</strong> si ce n’est déjà fait et complétez-le.</p>
+    </div>
+    <pre>public FStats(Window parent,                Connexion connexion, String annee) {       super(parent);       this.annee = annee;          requete = "SELECT <strong>MONTH(date)</strong> AS mois"               + ", <strong>COUNT(*)</strong> AS nbr "               + "FROM commande "                + "WHERE <strong>YEAR</strong>(date) = ’"                + annee + "’ "               + "<strong>GROUP BY MONTH</strong>(date)";       habilleFenetre();          new Travailleur(connexion).execute();   }  </pre>
+    <p>Le constructeur définit la requête à effectuer  pour récupérer les statistiques depuis la  base de données.</p>
+    <p>Il instancie ensuite un Travailleur, qui est  une instance de <strong>SwingWorker</strong>, pour récupérer les résultats  en arrière-plan.</p>
+    <pre>private final class Travailleur                extends SwingWorker&lt;Collection&lt;Stat&gt;, Stat&gt; {       private final Connexion connexion;          public Travailleur(Connexion connexion) {           this.connexion = connexion;       }          @Override       protected Collection&lt;Stat&gt; doInBackground()                            throws Exception {              List&lt;?&gt; results = connexion.chercher(               (gerant) -&gt; {               Query query =                     gerant.<strong>createNativeQuery</strong>(requete);               return query.getResultList();           });           statistiques = new ArrayList&lt;&gt;(results.size());              for (Object obj : results) {               // création de la donnée               Stat stat = new Stat(obj);<strong>                statistiques.add(stat);               publish</strong>(stat);           }           return statistiques;       }          protected void <strong>process</strong>(List&lt;Stat&gt; chunks) {           for (Stat stat : chunks) {               // injection des données dans le tableau<strong>                data.setValue(stat.getMois(),                        stat.getCompteur());</strong>           }       }          protected void done() {           if (statistiques.isEmpty()) {               JOptionPane.showMessageDialog(null,                   "Aucune donnée trouvée pour cette année");           } else {               print.setEnabled(true);           }       }   }  </pre>
+    <p>Les données sont stockées  dans deux attributs de la classe principale pour plus de commodités :  un pour le graphique, un autre pour l’impression.</p>
+    <pre>public class FStats extends JDialog {       ...        private final <strong>DefaultPieDataset</strong> data = new DefaultPieDataset();      private List&lt;Stat&gt; statistiques;       ...    }  </pre>
+    <p>Le composant graphique du camembert est ensuite  créé :</p>
+    <pre>private JPanel getPanel() {       if (panel == null) {           panel = genereGraphicStats();           panel.setLayout(null);       }       return panel;   }      private JPanel genereGraphicStats() {       JPanel panel = null;       try {           // classe pour création et importation des données           // pour générer le graphique           JFreeChart chart = <strong>ChartFactory.createPieChart</strong>(                   // 1er param : titre du graphique                   // 2ème param: données                   "Commandes " + annee, data,                   // 3ème : toolTip                   // 4ème : url                   true, true, false);           // ChartPanel : composant qui transforme            // le graphique en JPanel           ChartPanel chartPane = <strong>new ChartPanel</strong>(chart);           chartPane.setBorder(new LineBorder(Color.BLACK,                                    1, true));           panel = chartPane;       } catch (Exception e) {           panel = new JPanel();           JOptionPane.showMessageDialog(null,               "Une erreur s’est produite lors "               + "de la génération du graphique",               "Erreur", JOptionPane.ERROR_MESSAGE);       }       return panel;   }   </pre>
+    <p>Et le bouton d’impression est configuré :</p>
+    <pre>private JButton getPrint() {       if (print == null) {           print = new JButton("Imprimer le graphique");           print.setEnabled(false);<strong>            print.addActionListener(e -&gt;{                   JasperFacade.apercu("stats.jrxml",                                   statistiques);           });</strong>           UI.deshabillerBouton(print, "Printer");           print.setForeground(Color.BLACK);       }       return print;   }  </pre>
+  </div>
+</div>
+</body>
+</html>

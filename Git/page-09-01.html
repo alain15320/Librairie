@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_c3584321-56c4-4516-aa28-417a8ef641e1" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Qu’est-ce qu’un dépôt distant ?</h1>
+  <p>Un dépôt distant est un  dépôt qui va servir à centraliser un  dépôt. C’est un type de dépôt  qui devient réellement important (voire indispensable) lorsqu’on travaille à plusieurs  sur le même projet puisqu’il permet de centraliser le travail  de chaque développeur.</p>
+  <p>En anglais, ce type de dépôt  s’appelle un bare repository ou encore un remote, ce qui donnerait une traduction proche de dépôt nu ou encore dépôt simple. Il est également possible de trouver les terminologies dépôt d’autorité ou dépôt serveur pour désigner ce type de dépôt.  Dans le milieu francophone, les termes de dépôt distant  et dépôt serveur sont beaucoup utilisés  pour désigner ce type de dépôt. Pour éviter  les confusions et utiliser des termes reconnus, celui utilisé dans  ce livre pour désigner ce type de dépôt  sera le terme dépôt distant. Ce type de dépôt  est en opposition avec le dépôt local (qui pourrait également s’appeler  dépôt client).</p>
+  <p>Le schéma ci-dessous présente  une architecture simple composée d’un dépôt distant  et de deux dépôts locaux :</p>
+  <div>
+    <div><img alt="IMAGES/07E01.png" src="images/07E01.png"></div>
+  </div>
+  <p>Ce schéma présente également  un exemple de cycle de vie de la relation entre ces deux types de  dépôts avec des lignes pointillées représentant  les échanges entre le dépôt distant et  les dépôts locaux. Cet exemple permettra de mieux concevoir  le lien qui unit les deux types de dépôts :</p>
+  <p>1 : Le développeur crée  son dépôt local et travaille dessus pendant plusieurs semaines. </p>
+  <p>2 : Un stagiaire va venir travailler sur le  projet. Le développeur va donc créer un dépôt  distant pour qu’avec le stagiaire ils puissent partager facilement  leur code.</p>
+  <p>3 : Le développeur continue à travailler  seul en attendant l’arrivée du stagiaire. Il décide  cependant de partager systématiquement son travail avec  le dépôt distant.</p>
+  <p>4 : Le stagiaire arrive et clone le dépôt  distant sur son poste.</p>
+  <p>5 : Le stagiaire et le développeur  travaillent donc ensemble en se partageant systématiquement  leur code.</p>
+  <p>Ce cycle de vie n’est absolument pas standard,  il correspond au besoin des développeurs à un  instant t. Par exemple, il aurait été possible  de créer le dépôt distant avant de créer  le dépôt local si le développeur avait  anticipé le fait qu’il ne serait pas seul sur  le projet.</p>
+  <p>La cinquième étape comprend  de nombreux échanges de code. Voici de manière  plus précise ce qui se passe entre chaque échange  (c’est-à-dire à partir du moment où le  développeur ou le stagiaire commence un nouveau développement)  :</p>
+  <p>1 : Le développeur va commencer à corriger  un nouveau bug. Pour cela, il modifie un fichier, le teste et commite  sa modification. Il veut ensuite partager ses modifications, il  va donc utiliser la commande git push (expliquée  dans la suite de ce chapitre) pour envoyer ses modifications.</p>
+  <p>2 : Le dépôt distant va  recevoir et intégrer les modifications.</p>
+  <p>3 : Lorsque le stagiaire utilisera la commande git pull (commande expliquée  dans la suite de ce chapitre), le dépôt distant  lui enverra le commit publié par le développeur.</p>
+</div>
+<div id="AU_c3584321-56c4-4516-aa28-417a8ef641e1" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\"> </div>
+<div id="CFooter"> </div>
+</body>
+</html>

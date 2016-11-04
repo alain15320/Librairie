@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Journal des références (reflog)</h1>
+<p>Avant de parler du journal des références,  il est utile de rappeler que HEAD est une référence  (c’est-à-dire un pointeur) qui pointe vers le commit le  plus récent de la branche courante.</p>
+<p>Il existe un journal de toutes les références  prises par le pointeur HEAD dans Git qui s’appelle le reflog (raccourci  de log de référence). C’est un journal qui va  enregistrer tous les commits par lesquels passe ce pointeur. Le  reflog va par exemple être capable d’enregistrer les changements  de branche ou alors l’ajout de commit.</p>
+<p>Pour visualiser ce journal, il faut utiliser  la commande suivante : </p>
+<pre>git reflog</pre>
+<p>Utilisée sur le dépôt  de la partie consacrée à git  bisect de ce chapitre, cette commande affiche la sortie suivante  :</p>
+<pre>1f28629 HEAD@{0}: checkout: moving from
+be902d9cc6cacfc7a927a8a07a5774a6aff6f0b4 to master
+be902d9 HEAD@{1}: checkout: moving from
+d42018b585c7a5b6b3593031faaefb09376bb14c to
+be902d9cc6cacfc7a927a8a07a5774a6aff6f0b4
+d42018b HEAD@{2}: checkout: moving from
+5b9094ff2f09fb74ec6c9965bdd02f6b6666ab88 to
+d42018b585c7a5b6b3593031faaefb09376bb14c
+... Sortie tronquée ...
+d42018b HEAD@{21}: commit: LICENCE : ajout
+2992238 HEAD@{22}: commit: README : ajout de détails
+a894f82 HEAD@{23}: commit (initial): README : ajout  </pre>
+<p>La première partie de la sortie a été générée  par les changements successifs de git bisect dans  l’exemple précédent. La deuxième  partie correspond aux commits effectués au début  du projet.</p>
+<p>L’intérêt principal  du reflog est de pouvoir retrouver tous les états par lesquels est  passé le répertoire de travail. L’un  des cas pratiques d’utilisation du reflog est celui où le  développeur a effectué un certain nombres de commits  qu’il ne souhaite pas conserver. Il peut alors placer la  référence HEAD sur un ancien commit et oublier  les commits postérieurs. Pour cela, les commits qui seront oubliés  ne doivent jamais avoir été envoyés sur  un dépôt distant. </p>
+<p>Pour revenir au même état  qu’au commit d42018b et oublier les commits plus récents,  il faut utiliser la commande suivante : </p>
+<pre>git reset --hard HEAD@{21}  </pre>
+<p>Git affiche la sortie suivante : </p>
+<pre>HEAD is now at d42018b LICENCE : ajout  </pre>
+<p>Cela signifie que HEAD a bien été mis à jour.  Utiliser la commande git log --oneline permet  de vérifier que les commits plus récents ont été oubliés en  affichant uniquement les trois commits suivants : </p>
+<pre>d42018b LICENCE : ajout
+2992238 README : ajout de détails
+a894f82 README : ajout  </pre>
+<p>Il ne faut pas oublier que cette commande  ne doit pas du tout être effectuée sur des commits  se trouvant sur le dépôt distant.</p>
+<div id="AU_d121703c-021b-41aa-b925-51a7d763ffa5" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\"> </div>
+<div id="CFooter"> </div>
+</body>
+</html>

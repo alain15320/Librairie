@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Gestion des erreurs</h1>
+<p>Une grande partie des activités de  développement d’une application est la gestion des erreurs  pouvant survenir au cours des activités de cette application.</p>
+<p>Concernant l’accès à la  base de données, ces erreurs prendront la forme d’exceptions  lancées par JPA lorsque les méthodes de la classe <strong>EntityManager</strong> seront appelées. Ces erreurs héritent  de la classe <strong>RuntimeException</strong>, elles ne font donc pas partie de la signature des méthodes,  mais sont quand même susceptibles d’arriver. Plutôt  que de les gérer via un bloc try/catch dans cette  partie du code, un chapitre ultérieur expliquera comment  il reviendra aux méthodes appelantes de les gérer  elles-mêmes.</p>
+<p>Cette manière de faire simplifie  la lisibilité du code, et contribue à une meilleure  séparation des tâches : il n’est pas  normal pour une classe technique d’afficher des boîtes  de dialogue informant d’erreurs !</p>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Gardez à l’esprit que des  exceptions peuvent être levées au cours de l’exécution  de ces méthodes.</p>
+  </div>
+</div>
+</body>
+</html>

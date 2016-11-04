@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_a8685971-3425-470a-87b3-1acfcf030e22" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Encapsulation</h1>
+  <p>Le fait de regrouper au sein d’une  même classe propriétés et méthodes  et de définir le niveau d’accessibilité constitue  l’<strong>encapsulation</strong>, un des concepts essentiels de la POO. </p>
+  <p>Une classe va travailler sur les données  privées qui lui sont propres, avec la garantie que  rien d’autre ne va interférer avec leur traitement. Un  développeur saura lui très rapidement quelle partie  du code en est responsable (ou fautive), puisqu’une seule classe  a été habilitée à modifier la  donnée en question. Seuls sont visibles les membres publics,  ce qui renforce la sécurité des données  et la maintenance des programmes. De plus, l’implémentation  des méthodes est masquée. Finalement, avec le  concept d’encapsulation, la classe ne présente qu’un  accès composé des membres publics. Ce qui est  privé est caché aux yeux du monde extérieur à la  classe.</p>
+  <p>En reprenant l’exemple précédent,  pour modifier le nom d’un chat il faut obligatoirement  utiliser la méthode <strong>setNom()</strong>, ce qui permet d’effectuer éventuellement des  contrôles et traitements supplémentaires. En partant  de ce principe, on peut l’appliquer à d’autres  cas tels que le débit d’un compte qui ne peut  se faire sans la méthode appropriée et habilitée.  Les risques d’erreur sont ainsi réduits et la  sécurité accrue. En outre, la modification du  code traitant du miaulement d’un chat ou du débit  d’un compte n’a que peu voire aucune incidence  sur un programme, celui-ci faisant appel à une méthode  par le biais de sa signature.</p>
+  <p>Exemple :</p>
+  <pre>// méthode modifiée       public String miauler(){        // un chat qui n’arrête pas de miauler        String leMiaulement = "miaou miaouuuu miaouuuu ...";          return leMiaulement;      }          // utilisation dans un programme, comme précédemment     leChat.miauler();   </pre>
+</div>
+</body>
+</html>

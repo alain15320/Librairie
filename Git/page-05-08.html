@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Les options de configuration avancées</h1>
+<p>Ces options de configuration ne sont pas particulièrement  complexes, elles sont juste généralement moins  utilisées que les précédentes et correspondent à des  besoins plus précis.</p>
+<div>
+  <h2>1. Pagination</h2>
+  <p>Lorsqu’on utilise des commandes comme git diff, si le résultat  dépasse une page une pagination automatique sera effectuée à l’aide  de less (commande UNIX affichant  un texte page par page). Ce type de pagination peut déranger certains  utilisateurs qui préféreraient n’avoir aucune  pagination et naviguer sans contrainte dans le document. Pour cela,  il faut définir une pagination de type cat :</p>
+  <pre>git config --global pager = cat  </pre>
+</div>
+<div>
+  <h2>2. Expressions régulières étendues</h2>
+  <p>Par défaut, Git n’active pas les  expressions régulières étendues, c’est-à-dire  que les métacaractères comme les accolades sont  totalement ignorés. Pour ceux qui sont habitués  aux expressions régulières et qui les utilisent  couramment, il est préférable d’activer l’option  suivante :</p>
+  <pre>git config --global extendedRegexp = true  </pre>
+</div>
+<div>
+  <h2>3. Séparateur de mots</h2>
+  <p>Lorsqu’on utilise git  diff en mode mot (à l’aide de l’option --color-words par exemple), il peut être  utile de spécifier à Git ce qu’est un mot. Par défaut,  pour Git un mot est une suite de caractères séparée  des autres par un ou des espaces. Or, dans une ligne de code il  est possible de n’avoir aucun espace et pourtant certaines  parties de la ligne sont sémantiquement différentes,  c’est la raison pour laquelle il peut être utile de définir  ce paramètre :</p>
+  <pre>git config --global wordRegex = .{2}  </pre>
+  <p>En effet, ce paramètre va définir  un mot comme étant deux caractères qui se suivent.</p>
+</div>
+<div>
+  <h2>4. Ancêtre commun des conflits</h2>
+  <p>Cette option de configuration prendra plus  de sens après la lecture du chapitre Les branches et les  tags. Lorsqu’on utilise Git, on a parfois besoin de fusionner deux  versions du projet. Si les mêmes parties du code source  ont été modifiées des deux côtés,  Git ne sait pas quelle version prendre et propose alors à l’utilisateur  de choisir entre les deux versions à fusionner.</p>
+  <p>Cette option permet d’afficher, en plus des  deux versions à fusionner, la version de l’ancêtre  commun des deux versions à fusionner. L’ancêtre  commun est en réalité le commit à partir  duquel les codes des deux versions ont commencé à diverger.</p>
+  <p>Voici comment demander à Git d’afficher  la version de l’ancêtre commun :</p>
+</div>
+<div id="AU_9e885039-d954-43f0-bbd1-8d0a880b84ff" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <pre>git config --global conflictStyle = diff3  </pre>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

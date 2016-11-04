@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_50c086c1-ddf7-4b97-92c7-cce242eb2177" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>CRUD de la classe Client</h1>
+  <p>Il est maintenant temps de créer  la classe d’accès au client.</p>
+  <div>
+    <p> Créez la classe <strong>ClientCrud</strong> dans le package « crud ».</p>
+  </div>
+  <pre>package entite.crud;      import java.util.Collections;   import java.util.List;      import javax.persistence.EntityManager;   import javax.persistence.Query;   import javax.swing.JOptionPane;      import controle.connection.Connexion;   import entite.Client;      public class ClientCrud {          // Propriété pour établir la connection avec la BD       // -----------------------------------------------       private final Connexion laConnexion;          // CONSTRUCTEUR       // -------------       public ClientCrud(Connexion connexion) {           this.laConnexion = connexion;       }   }  </pre>
+  <p>Le constructeur de cette classe suit le principe  de la classe <strong>ModeReglementsCrud</strong>.</p>
+  <div>
+    <h2>1. Créer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>// Ajout d’un nouveau client dans la BD   // ------------------------------------   public void creer(Client client) {       laConnexion.modifier((gerant) -&gt; {              gerant.<strong>persist</strong>(client);           return client;       });   }  </pre>
+    <p>À la différence de ModeReglementsCrud,  cette méthode prend un client complet en paramètre,  et elle ne retourne rien. Si elle se termine normalement, le client  a bien été stocké en base. Si l’opération  n’a pas pu être finalisée, une exception de type  RuntimeException sera lancée par JPA, interrompant le fil normal  de l’exécution.</p>
+  </div>
+  <div>
+    <h2>2. Lire</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>/*    * Lecture et récupération des enregistrements de la BD    */   public List&lt;Client&gt; lire() {   return laConnexion.chercher((gerant) -&gt; {           Query query = gerant.createQuery(<strong>"SELECT c FROM Client c"</strong>);          return query.<strong>getResultList()</strong>;         });   }  </pre>
+    <p>Cette méthode liste tous les clients  stockés dans le système.</p>
+    <p>Pour les besoins de l’application, il est  nécessaire d’avoir un moyen de récupérer  un client particulier à partir de son code (sa clé primaire).</p>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>public Client lire(String code) {<strong>        StringBuilder requete = new StringBuilder("SELECT c ");       requete.append("FROM Client c ");       requete.append("WHERE c.code = ");       requete.append("’");       requete.append(code);       requete.append("’");</strong>      return laConnexion.chercher((gerant) -&gt; {           Query query = gerant.createQuery(requete.<strong>toString()</strong>);                          return <strong>(Client)</strong> query.<strong>getSingleResult</strong>();       });   }  </pre>
+    <p>Au lieu de concaténer directement  les chaînes de caractères, une instance de la classe <strong>StringBuilder</strong> est utilisée, qui permet d’accélérer  ce processus. Une fois la requête construite, elle peut être  accédée à partir de la méthode <strong>toString()</strong> de <strong>StringBuilder</strong>.</p>
+    <p>À partir de là, comme un  seul client est cherché, la méthode <strong>getSingleResult()</strong> de l’objet <strong>Query</strong> est appelée. Le retour de la méthode <strong>getSingleResult</strong> étant un simple objet et étant sûrs  qu’il s’agit d’un client, il suffit de <strong>caster</strong> cet objet en type <strong>Client</strong> pour que la méthode appelante ait plus de confort à l’utilisation,  avec la notation <strong>(Client)</strong>.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il pourrait être plus simple  d’utiliser la méthode <strong>find</strong> de la classe <strong>EntityManager</strong>, mais ce serait moins didactique !</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>3. Modifier</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>// Modification d’un client dans la BD   // -----------------------------------   public Client modifier(<strong>Client leClient</strong>) {       return laConnexion.modifier((gerant) -&gt; {             String code = leClient.getCode();           Client client = gerant.<strong>find(Client.class, code);</strong>                          if (client == null) {               throw new IllegalArgumentException(                   "Pas de client pour le code " + code);           } else {               client.<strong>setNom</strong>(leClient.getNom());               client.<strong>setPrenom</strong>(leClient.getPrenom());               client.<strong>setCarteFidele</strong>(leClient.isCarteFidele());                    return client;           }       });   }  </pre>
+    <p>La méthode <strong>find</strong> de la classe <strong>EntityManager</strong> est utilisée ici pour retrouver le client avec  un code particulier.</p>
+    <p>Le client obtenu est ensuite modifié avec  les propriétés du client donné en paramètre, à l’exception  notable de la date de création qui ne doit pas être  modifiée. Cette simple technique permet de limiter les  paramètres de la méthode tout en contrôlant  les propriétés qui peuvent être modifiées  ou non.</p>
+    <p>Le client modifié est ensuite retourné à l’appelant.</p>
+  </div>
+  <div>
+    <h2>4. Supprimer</h2>
+    <div>
+      <p> Créez une nouvelle méthode  dans la classe.</p>
+    </div>
+    <pre>// Suppression d’un client dans la BD   // ----------------------------------   public boolean supprimer(String vCode) {       return laConnexion.modifier((gerant) -&gt; {                          // Vérifier avant qu’il n’existe aucune commande           String requeteClient = <strong>"SELECT COUNT(com.code)"                       +" FROM Commande com "                       + " WHERE com.client.code LIKE ’"                       + vCode + "’"</strong>;           Query requete = gerant.createQuery(requeteClient);<strong>                          long result = (long) requete.getSingleResult();</strong>           if (result != 0) {               throw new IllegalArgumentException(                       "Il existe des commandes ("                       + result + ") pour ce client."                       + " Suppression interdite.");           }           Client client = gerant.<strong>find(Client.class</strong>, vCode);                          if (client == null) {               throw new IllegalArgumentException(               "Aucun enregistrement correspondant au code "                       + vCode + ".");           } else {               gerant.<strong>remove</strong>(client);           }           return true;       });   }  </pre>
+    <p>Cette méthode est un peu plus complexe  que la méthode <strong>supprimer()</strong> de <strong>ModeReglementsCrud</strong>, car il faut s’assurer de ne pas effacer un client dont des  commandes sont déjà enregistrées dans  le système.</p>
+    <p>Pour cela, une première requête  comptant le nombre de commandes du client est effectuée  avec le code :</p>
+    <pre>String requeteClient = <strong>"</strong>SELECT <strong>COUNT</strong>(com.code) "                       +"FROM Commande com "                       + " WHERE <strong>com.client.code</strong> LIKE ’"                       + vCode + "’";   Query requete = gérant.createQuery(requeteClient); <strong>   long result = (long)</strong> requete.<strong>getSingleResult();</strong></pre>
+    <p>Le mot-clé <strong>COUNT</strong> est standard dans SQL et retourne le nombre de résultats en  tant que nombre de type <strong>long</strong>.</p>
+    <p>À terme, la propriété client  sera présente dans la commande. Elle peut être  accédée, ainsi que ses sous-propriétés  par le séparateur point (.). Ici, <strong>com.client.code</strong> correspond au code du client de la commande « com ».</p>
+  </div>
+  <div>
+    <h2>5. Chercher</h2>
+    <p>Pour effectuer des recherches sur les clients,  il est temps d’introduire une facilité de JPA pour construire  les requêtes. En effet, construire des requêtes « à la main » avec  des paramètres est fastidieux et absolument non performant. Comme  les requêtes de recherche sont toujours les mêmes  au paramètre près, il vaut mieux préparer  ces requêtes dans JPA. Ces requêtes sont appelées  des requêtes nommées, ou <strong>NamedQuery</strong>.</p>
+    <div>
+      <p> Insérez l’annotation suivante dans  la classe <strong>Client</strong>.</p>
+    </div>
+    <pre>@Entity<strong>    @NamedQueries({       @NamedQuery(  name="chercherClient",               query="SELECT c FROM Client c "                   + "WHERE c.code LIKE :recherche "                   + "OR c.nom LIKE :recherche "                   + "OR c.prenom LIKE :recherche"),       @NamedQuery(  name="clientPrecis",               query="SELECT c FROM Client c "                   + "WHERE c.code LIKE ?1 "                   + "AND c.nom LIKE ?2 "                   + "AND c.prenom LIKE ?3")   })</strong>   public class Client {   ...    }  </pre>
+    <p>Ces requêtes seront accessibles par  leur nom, spécifié par l’attribut <strong>name</strong>.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Identifiez les requêtes nommées  de manière à les rendre non-ambiguës :  une requête appelée « chercher » concernerait  des clients, des articles ou des commandes ?</p>
+      </div>
+    </div>
+    <div>
+      <p> Créez ensuite une nouvelle méthode  dans la classe <strong>ClientCrud</strong>.</p>
+    </div>
+    <pre>// Recherche dans la BD    // --&gt; avec une chaîne de caracactère(s) quelconque   public List&lt;Client&gt; chercher(String recherche) {       return laConnexion.chercher((gerant) -&gt; {           Query query = gerant.<strong>createNamedQuery("chercherClient")</strong>;          query.<strong>setParameter</strong>("<strong>recherche</strong>", "%" + recherche + "%");           return query.getResultList();                   });   }  </pre>
+    <p>Cette méthode interroge JPA pour  obtenir la requête sauvegardée sous le nom « chercherClient » à l’aide  de la méthode <strong>createNamedQuery</strong> de la classe <strong>EntityManager</strong>. Une fois la requête obtenue, le paramètre  nommé « recherche » est  fixé à la valeur voulue, sans simples apostrophes.</p>
+    <p>Les noms des paramètres sont arbitraires,  ils doivent simplement être notés dans la requête  textuelle comme « :&lt;nom du paramètre&gt; »,  ici « :recherche ». Le type  du paramètre est inféré par rapport à la  colonne de la base de données.</p>
+    <div>
+      <p> Créez cette méthode dans  la classe <strong>ClientCrud</strong>.</p>
+    </div>
+    <pre>// Recherche dans la BD   // --------------------   public List&lt;Client&gt; chercher(String vCode, String vNom, String    vPrenom) {       String code, nom, prenom;       if (vCode.equals("")) {           code = "%";       } else {           code = "%" +vCode +"%";       }       if (vNom.equals("")) {           nom = "%";       } else {           nom = "%" +vNom +"%";       }       if (vPrenom.equals("")) {           prenom = "%";       } else {           prenom = "%" +vPrenom +"%";       }          return laConnexion.chercher((gerant) -&gt; {            Query query = gerant.<strong>createNamedQuery</strong>("<strong>clientPrecis</strong>");           query.setParameter(1, code);           query.<strong>setParameter</strong>(2, nom);           query.setParameter(3, prenom);                      return query.getResultList();       });   }  </pre>
+    <p>Il s’agit d’une variante de la manière  précédente où les paramètres  sont notés de manière ordinale : par  un nombre.</p>
+    <p>Ces paramètres doivent être  notés «?&lt;position du paramètre&gt; »,  ici « ?1 », « ?2 », « ?3 ».</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il est obligatoire d’initialiser tous  les paramètres avant de pouvoir exécuter ces requêtes.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

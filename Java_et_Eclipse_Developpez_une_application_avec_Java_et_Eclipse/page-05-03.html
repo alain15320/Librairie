@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_5d5afdc3-72d9-413f-b7b0-6db1d270c896" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Classe</h1>
+  <p>La génération spontanée  n’existe pas. La voiture que vous conduisez, la chaise sur  laquelle vous êtes assis(e) ont été fabriquées.  Tous ces objets proviennent d’une « fabrique » ou  usine. Pour une première introduction de la notion de classe,  ce dernier terme peut être retenu. Il existe ainsi des  usines pour avions, bateaux, jouets, etc.</p>
+  <p>Une autre particularité des classes  est le principe de regroupement. On évite dans une même  usine de fabriquer à la fois des voitures et des bateaux,  ou des jouets et des ordinateurs. Les objets fabriqués  sont donc liés à des catégories qui sont  les classes en POO. Une classe est une sorte d’usine qui  fabrique des catégories d’objets qui ont des caractéristiques  communes (les bateaux ont une coque, les voitures une carrosserie,  les chats un nom).</p>
+  <p>Pour déclarer une classe <strong>Chat</strong> avec Java, il suffit d’utiliser le mot-clé <strong>class</strong>.</p>
+  <pre><strong>class</strong> Chat {         // ... à suivre   }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Notez les crochets ouvrants et fermants :  tout ce qui se trouve entre ces crochets fait partie de  la même classe, et tout ce qui fait partie de la classe Chat  doit se trouver entre ces crochets. Le même principe s’applique  pour les méthodes.</p>
+    </div>
+  </div>
+  <p>Pour créer (on dit aussi instancier)  un nouvel objet de type Chat qui sera appelé monChat  dans l’application, utilisez le code suivant avec le mot-clé <strong>new</strong> :</p>
+  <pre>Chat monChat = <strong>new</strong> Chat() ;  </pre>
+  <p>Si le mot usine semble encore vague, une métaphore  pâtissière peut être plus appropriée :  la classe est le moule à gâteau, l’objet est le  gâteau lui-même. Une classe permet de créer  des objets, tout comme un moule permet de créer des gâteaux  particuliers, tous uniques et différents les uns des autres.  Ils viennent pourtant tous du même moule.</p>
+  <p>Dans l’univers Java, tout ou presque est classe  et objet. Chaque élément unitaire de votre modélisation  doit être placé dans un fichier unique, portant  le même nom que la classe décrite à l’intérieur.</p>
+  <p>Dans votre projet, il y aura donc un fichier <strong>Chat.java</strong>, qui contiendra l’exemple de code décrit plus  haut, et formalisera l’existence d’une classe Chat dans l’application. </p>
+  <p>Puisque tout est objet dans le paradigme Objet,  tous les objets qui sont manipulés dans l’application auront  une classe commune comme point de départ de leur hiérarchie :  la classe <strong>Object</strong>. Il s’agit d’une classe décrivant les attributs et  comportements minimaux pour tous les objets que vous modéliserez.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Ce qui concerne les aspects hiérarchies  de classe sera développé dans la section concernant  l’héritage.</p>
+    </div>
+  </div>
+  <p>Et comme en Java tout ou presque est objet  et classe, il existe même une classe <strong>Class</strong> ! Cette classe ne sera pas plus explicitée,  car il s’agit de concepts plus avancés concernant ce que  l’on appelle les mécanismes d’introspection (de reflection en  anglais).</p>
+</div>
+</body>
+</html>

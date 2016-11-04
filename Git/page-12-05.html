@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_ec42fec9-22ec-4109-885d-d260b3470c7e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Enregistrer des modifications</h1>
+  <p>Une fois que les fichiers sont ajoutés à l’index,  il est possible de les commiter pour les ajouter dans l’historique  de Git. Un commit ne doit être effectué que sur  des modifications qui représentent une tâche ou  un travail précis. Il est important de rappeler que Git  n’est pas un système de sauvegarde de code, mais un gestionnaire  de versions. Les commits doivent représenter une modification  unique qui va combler un besoin précis (correctif d’un  bug, module d’une nouvelle fonctionnalité, etc.). Il ne  faut pas penser qu’un commit qui ne modifie qu’une seule  ligne est inutile : s’il répond à un besoin précis  avec cette seule et unique ligne (comme la correction d’une syntaxe  erronée), il ne faut pas le regrouper avec d’autres modifications  pour former un commit plus conséquent.</p>
+  <p>Chaque commit doit contenir un message de  commit qui explique l’origine des modifications. Raphaël  commite à présent ses modifications avec la commande git commit :</p>
+  <pre>git commit -m "Liste des anniversaires et ajout en localstorage"  </pre>
+  <div>
+    <div><img src="images/PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il est conseillé de limiter  la taille des messages à 49 caractères. Lorsque  le commit est important et que 49 caractères ne  sont pas suffisants pour écrire un message simple et explicite,  il est conseillé d’utiliser l’éditeur de texte  pour ajouter le message en n’utilisant pas d’argument -m.</p>
+    </div>
+  </div>
+  <p>Un nouveau git status indiquera  cette fois-ci qu’aucun fichier n’a été modifié depuis  le dernier commit. Cela signifie que le commit a bien été pris  en compte et que les fichiers ne diffèrent plus de la dernière  version du dépôt.</p>
+  <p>Après avoir effectué le  premier commit, Raphaël va s’assurer que son commit s’affiche  bien dans la liste des commits en exécutant la commande  suivante :</p>
+  <pre>git log</pre>
+  <p>Cette commande affiche la sortie suivante :</p>
+  <pre>commit ccabf27    Author: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Thu Sep 24 22:56:39 2015 +0200            Liste des anniversaires et ajout en localstorage  </pre>
+  <p>Cette commande permet de lister les commits  du dépôt. D’ailleurs, grâce à cette  commande, le développeur obtient la chaîne d’identification  (sous forme de hash SHA-1) du commit. La chaîne ici est  ccabf27 (version raccourcie de l’identifiant qui en réalité est  long de 40 caractères hexadécimaux). Cet identifiant  est très utile lorsqu’on souhaite effectuer des actions  en relation avec un commit précis.</p>
+  <p>Maintenant que cette modification a été prise  en compte, Raphaël veut centraliser son dépôt  sur un dépôt en ligne.</p>
+</div>
+
+</body>
+</html>

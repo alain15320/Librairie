@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_e8c4df0d-7126-421d-8c90-916211d56cc2" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Un système de gestion des branches</h1>
+  <p>Travailler avec Git en équipe n’est  pas quelque chose d’intuitif. Il faut se former et essayer  plusieurs façons de travailler pour trouver celle qui convient le  mieux. En effet, pour que l’utilisation d’un gestionnaire de version  soit efficace, il faut que les intervenants suivent les mêmes  pratiques.</p>
+  <p>Par exemple, il n’est pas facile pour un développeur  de savoir quand créer une branche, quand créer  un tag, ou encore de savoir dans quelle branche doit être mergée  la branche d’une nouvelle fonctionnalité.</p>
+  <p>Vincent Driessen a proposé un système  efficace de gestion des branches sur son blog professionnel (<a href="http://nvie.com/posts/a-successful-git-branching-model" target="_blank">http://nvie.com/posts/a-successful-git-branching-model</a>). Ce système de gestion des branches est voué à être  utilisé par des équipes de petite taille jusqu’à des équipes  importantes. Le but de ce système est de séparer  efficacement les branches et les différentes versions du  projet. Cette méthode de travail est largement répandue  dans les projets utilisant Git, elle reçoit néanmoins  quelques critiques de développeurs la jugeant trop complexe  et générant de nombreux conflits inutiles.</p>
+  <div>
+    <h2>1. Les branches éternelles</h2>
+    <p>Les branches master et develop sont les branches qui ne seront jamais supprimées  pendant toute la durée de vie du projet. Ce sont les seules  branches à exister au début du projet et à la  fin du projet.</p>
+    <div>
+      <h3>a. La branche de production (master)</h3>
+      <p>Cette branche est la branche qui contiendra  toutes les versions publiées pour les utilisateurs. C’est-à-dire  que c’est cette branche qui recevra toutes les nouvelles fonctionnalités  et toutes les corrections de bugs. Chaque commit de cette branche  est représenté par une nouvelle version spécifiée  par un tag. Tous les commits de cette branche sont des commits produits  par les merges d’autres branches (à l’exception du commit  d’origine).</p>
+      <p>Voici les branches qui peuvent être  créées à partir de master :</p>
+      <div>
+        <ul>
+          <li>
+            <p>la branche develop (qui ne sera créée qu’une seule fois  au début du projet),</p>
+          </li>
+          <li>
+            <p>les branches de correctifs (hotfix).</p>
+          </li>
+        </ul>
+      </div>
+      <p>Voici les branches dont master pourra recevoir les modifications au travers d’un merge  :</p>
+      <div>
+        <ul>
+          <li>
+            <p>les branches de nouvelles  versions (release),</p>
+          </li>
+          <li>
+            <p>les branches de correctifs (hotfix).</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h3>b. La branche de développement (develop)</h3>
+      <p>La branche de développement correspond à la  branche qui recevra toutes les nouvelles fonctionnalités  qui ne sont pas encore intégrées à la  version principale. Cette branche correspond aux futures versions  qui seront publiées et n’est pas encore considérée  comme stable. Cette branche est créée dès  le début du projet à partir de la branche master.</p>
+      <p>Voici les branches qui peuvent être  créées à partir de la branche develop :</p>
+      <div>
+        <ul>
+          <li>
+            <p>les branches de fonctionnalités  (feature),</p>
+          </li>
+          <li>
+            <p>les branches de versions (release).</p>
+          </li>
+        </ul>
+      </div>
+      <p>Voici les branches à partir desquelles develop pourra recevoir les modifications :</p>
+      <div>
+        <ul>
+          <li>
+            <p>les branches de correctifs  (hotfix),</p>
+          </li>
+          <li>
+            <p>les branches de versions (release),</p>
+          </li>
+          <li>
+            <p>les branches de fonctionnalités  (feature).</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>2. Les branches éphémères</h2>
+    <p>Les branches éphémères  sont des branches qui ont une durée de vie limitée. Elles  sont créées dans un but très précis  et, une fois celui-ci accompli, ces branches sont supprimées.</p>
+    <div>
+      <h3>a. Les branches de versions (release)</h3>
+      <p>Ces branches sont des branches de versions  Beta du projet. Prenons l’exemple d’un logiciel dont la version  2.0 est prévue très prochainement. L’entreprise éditrice  décide un mois avant la publication de cette version de  créer une branche release pour préparer cette sortie. Avant de créer  cette branche, l’entreprise doit s’assurer que toutes les nouvelles  fonctionnalités attendues pour la version 2.0 ont été intégrées  dans la branche develop. Une fois que cette vérification est effectuée,  la branche release-2.0 peut être créée à partir  de la branche develop. Cette branche aura deux utilités principales  :</p>
+      <div>
+        <ul>
+          <li>
+            <p>Elle va servir à rendre  la prochaine version stable. C’est-à-dire que la branche release-2.0 sera testée au maximum et que des correctifs  spécifiques aux nouvelles fonctionnalités seront  inclus dans cette branche.</p>
+          </li>
+          <li>
+            <p>Cette branche va permettre aux développeurs  de commencer à travailler sur les fonctionnalités  de la version 3.0 pendant que la version 2.0 est en phase de test.  Aucune fonctionnalité propre à la version 3.0  ne doit se trouver dans la branche release-2.0.</p>
+          </li>
+        </ul>
+      </div>
+      <p>Cette branche ne sert pas à recevoir  de nouvelles fonctionnalités. Elle doit être créée à partir  de develop qui doit contenir toutes les nouvelles fonctionnalités de  la version 2.0.</p>
+      <p>Cette branche sera mergée dans les  branches develop et master. Le commit dans la branche master donnera lieu à un commit sur lequel le tag  v2.0 sera appliqué.</p>
+      <p>Cette branche sera supprimée après  avoir été mergée dans master et develop.</p>
+    </div>
+    <div>
+      <h3>b. Les branches de correctifs (hotfix)</h3>
+      <p>Ces branches sont celles qui vont accueillir  les correctifs destinés à la production. La création  d’une branche de correctifs survient lorsqu’un bug est découvert  et que le développeur commence à le corriger.  Le ou les commits de cette branche sont uniquement des commits destinés à la  résolution du bug (et la mise à jour des numéros  de versions si nécessaire).</p>
+      <p>Une branche de correctif est créée à partir  de la branche master et, une fois le correctif commité, cette branche  sera mergée dans master et dans develop et sera ensuite supprimée. Pour respecter la  norme de Git-Flow, il faut préfixer les noms des branches  de correctifs par hotfix-.</p>
+    </div>
+    <div>
+      <h3>c. Les branches de fonctionnalités (feature)</h3>
+      <p>Chacune des branches de fonctionnalité a  pour but d’intégrer une nouvelle fonctionnalité à la  branche develop. Ces branches sont locales, c’est-à-dire qu’elles  ne sont pas partagées sur le dépôt central.  La création d’une telle branche a toujours lieu à partir  de la branche develop et lorsque la nouvelle fonctionnalité est créée  et commitée, cette branche doit être intégrée à develop.</p>
+      <p>Lorsque la fonctionnalité a été intégrée à develop, la branche de fonctionnalité doit être  supprimée.</p>
+    </div>
+  </div>
+</div>
+<div id="AU_e8c4df0d-7126-421d-8c90-916211d56cc2" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <div> </div>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

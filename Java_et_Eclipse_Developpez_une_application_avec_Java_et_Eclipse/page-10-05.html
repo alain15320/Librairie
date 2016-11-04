@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_1b4dda18-4b35-46c1-86d5-f9812a57649c" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>JPA</h1>
+  <p>Java Persistence API ou JPA est une interface  de programmation applicative permettant de faciliter l’accès  et le codage à des données persistées  par exemple dans une base de données.</p>
+  <p>JPA permet de créer un modèle  métier (des classes) qui servira d’interface entre l’application  et les données en base. Les requêtes vers la base  seront écrites dans le langage JPQL (JPA Query Language), qui permet d’écrire les requêtes SQL  en format Objet. Il est toutefois toujours possible d’écrire  ces requêtes en SQL.</p>
+  <p>Grâce à des annotations  du package <strong>javax.persistence</strong>, il est possible d’effectuer des correspondances entre  les propriétés de ces objets et les tables et  colonnes de la base de données.</p>
+  <p>Il est même possible avec ce modèle  métier de créer complètement la structure de  la base de données : les tables et les colonnes.</p>
+  <p>JPA est donc une API de haut niveau qui permet  de se concentrer sur le modèle métier et de masquer  les détails techniques de la persistance en base.</p>
+  <p>Exemple d’annotation</p>
+  <pre>
+  
+package entite; 
+ 
+import java.util.Date; 
+ 
+import javax.persistence.Basic; 
+import javax.persistence.CascadeType; 
+import javax.persistence.Entity; 
+import javax.persistence.Id; 
+import javax.persistence.ManyToOne; 
+import javax.persistence.Temporal; 
+import javax.persistence.TemporalType; 
+ 
+@Entity 
+public class Article { 
+ 
+    @Id 
+    private String code; 
+ 
+    @ManyToOne(cascade = { CascadeType.PERSIST }) 
+    private Categorie categorie; 
+  
+    @Basic 
+    private String designation; 
+ 
+    @Basic 
+    private int quantite; 
+ 
+    @Basic 
+    private double prix_unitaire; 
+ 
+    @Temporal(TemporalType.TIMESTAMP) 
+    private Date date; 
+... 
+}
+</pre>
+</div>
+
+</body>
+</html>

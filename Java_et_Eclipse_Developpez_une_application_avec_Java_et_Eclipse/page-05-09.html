@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_ec27422a-03eb-490a-be43-c65294c88582" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Constructeur</h1>
+  <p>Pour qu’une classe puisse instancier  des objets, il lui faut un constructeur. Il s’agit d’une  méthode particulière, du même nom que  la classe et écrite sans valeur de retour, qui  permet de créer des objets. Si un constructeur est omis, Java  l’insérera au moment de la compilation du programme en  créant un constructeur basique du type <strong>NomDeLaClasse()</strong>, sans paramètre (il s’agit alors du <strong>constructeur par défaut</strong>). Il est possible de déclarer plusieurs constructeurs  dans une classe, comme dans l’exemple suivant.</p>
+  <pre>public class <strong>Chat</strong> {       // propriétés       ...      // constructeurs         private <strong>Chat()</strong> {<strong>      super</strong>();      }        private <strong>Chat(long laDateDeNaissance) {       this();</strong>       dateDeNaissance = laDateDeNaissance;      }        public <strong>Chat(String leNom, String laCouleur,                   long laDateDeNaissance){        this(laDateDeNaissance)</strong> ;        nom = leNom;        couleur = laCouleur;      }      // méthodes      ...    }  </pre>
+  <p>Le premier constructeur <strong>Chat()</strong> est privé. Il ne peut pas être utilisé en  dehors de la classe Chat. Il fait appel au constructeur de la classe  mère à l’aide de l’instruction <strong>super()</strong>.</p>
+  <p>Le deuxième constructeur <strong>Chat(long)</strong> est privé. Il fait appel au premier constructeur à l’aide  de l’instruction <strong>this()</strong>.</p>
+  <p>Le troisième constructeur <strong>Chat(String, String, long)</strong> attend ici trois paramètres, ce qui permet  de créer un chat avec un nom, une couleur et une date de  naissance. Il utilise le deuxième constructeur privé, à l’aide  de l’instruction <strong>this(laDateDeNaissance)</strong>. Il est public et peut donc être utilisé par  toute votre application et par des programmes extérieurs.</p>
+  <p>Exemple d’utilisation d’un constructeur  dans un programme :</p>
+  <pre>...    Chat leChat = <strong>new</strong> Chat("Filou", "roux", 2);    ...  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>L’absence d’un des  paramètres attendus provoquera une erreur à la  compilation.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

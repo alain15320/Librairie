@@ -1,0 +1,1329 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	width: 960px;
+	margin: 0 auto;
+    color: Black;
+    font-family: verdana;
+    text-align: justify;
+}
+
+pre {
+	border: 1px solid black;
+    display: block;
+    float: left;
+    font-size: 9pt;
+    margin: 10px 0 10px 10px;
+    padding: 5px;
+    width: 99%;
+}
+
+img{
+	
+}
+
+form {
+    height: 100%;
+    overflow: hidden;
+}
+#Footer {
+    display: none;
+}
+.bg_Header {
+    height: 46px;
+    position: absolute;
+    z-index: 0;
+}
+#Header {
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+#Header a {
+    color: #464646;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    padding: 13px 5px 12px 0;
+    text-decoration: none;
+}
+#Header .btn_Home {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_home_G.png") no-repeat scroll left center;
+    margin-left: 12px;
+    padding-left: 21px;
+}
+#Header .btn_Prev {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_prev_G.png") no-repeat scroll left center;
+    margin-left: 15px;
+    padding-left: 23px;
+}
+#Menu {
+    background-color: #666;
+    height: 67px;
+    margin: 0;
+    padding: 15px 0 0;
+    position: relative;
+    width: 1010px;
+    z-index: 2;
+}
+#Menu strong {
+    color: #fff;
+    display: block;
+    font: bold 12px "OpenSans";
+    margin: 0 14px;
+}
+#SearchEngine {
+    border: 0 none;
+    display: inline-block;
+    font-family: "Open Sans Regular",Verdana;
+    font-size: 14px;
+    height: 24px;
+    margin: 14px 0 0 12px;
+    overflow: hidden;
+    padding: 0 10px;
+    width: 240px;
+}
+#SearchEngine:focus {
+    outline: 0 none;
+}
+#btn_SearchEngine {
+    background: #772b52 url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/btn_Search2.png") no-repeat scroll center center;
+    border: 0 none;
+    cursor: pointer;
+    height: 25px;
+    margin: 14px 0 0;
+    padding: 0;
+    position: absolute;
+    width: 50px;
+}
+#left_Panel {
+    background-color: #eeeced;
+    float: left;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 285px;
+}
+#title_Panel {
+    background-position: 10px 20px;
+    background-repeat: no-repeat;
+    font: 300 23px/28px "OpenSans";
+    padding: 20px 25px 15px 50px;
+    position: relative;
+    width: 210px;
+}
+#btn_ClosePanel {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Close.png") no-repeat scroll center center;
+    cursor: pointer;
+    height: 25px;
+    position: absolute;
+    right: 5px;
+    top: 22px;
+    width: 25px;
+    z-index: 10;
+}
+#btn_ResizePanel {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/max_LeftPanel.png") no-repeat scroll 0 center;
+    cursor: pointer;
+    height: 25px;
+    margin-top: -13px;
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    width: 25px;
+    z-index: 10;
+}
+.Max #btn_ResizePanel {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/min_LeftPanel.png") no-repeat scroll right center;
+    right: 10px;
+}
+.Summary #SearchResults, .Summary #NotesBookmarks, .SearchResults #Summary, .SearchResults #NotesBookmarks, .NotesBookmarks #Summary, .NotesBookmarks #SearchResults {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
+.Summary #Summary, .SearchResults #SearchResults, .NotesBookmarks #NotesBookmarks {
+    position: relative;
+    visibility: visible;
+    z-index: 0;
+}
+#Summary, #SearchResults, #NotesBookmarks {
+    min-width: 285px;
+}
+.Summary #title_Panel {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_summary.png");
+}
+.NotesBookmarks #title_Panel {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_notes.png");
+}
+.SearchResults #title_Panel {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_search.png");
+}
+.SearchResults #title_Panel div {
+    color: #772b52;
+    font: bold 14px Verdana;
+    margin-top: 4px;
+}
+.ScrollContent {
+    background-color: #eeeced;
+    font-family: "OpenSans";
+    margin: 10px 0;
+    padding: 0;
+    position: relative;
+}
+.ScrollContent ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+#Summary #Root > li {
+    padding: 5px 10px 5px 20px;
+}
+#Summary #Root > li > ul {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    z-index: 0;
+}
+#Summary #Root > li.Opened > ul {
+    display: block;
+}
+#Summary #Root h2 {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/chip_summary_closed.png") no-repeat scroll 5px center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 10px 0 20px;
+    position: relative;
+    z-index: 1;
+}
+#Summary #Root li a {
+    color: #464646;
+    cursor: pointer;
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    margin: 0;
+    padding: 3px 10px 3px 15px;
+    position: relative;
+    text-decoration: none;
+}
+#Summary #Root li > ul {
+    margin-left: 20px;
+    padding: 2px 0;
+}
+#Summary #Root li.Current {
+    background-color: #fff;
+}
+#Summary #Root li.Opened > h2 {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/chip_summary_opened.png") no-repeat scroll 4px center;
+}
+#Summary #Root li.Current > h2 {
+    font-weight: bold;
+}
+#Summary #Root li.Opened > a {
+    font-weight: bold;
+}
+#Summary #Root li.Bookmarked > a {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Bookmark_AU.png") no-repeat scroll 1px 6px;
+}
+#Summary #Root li.Viewed > a {
+    color: #772b52;
+}
+#NotesBookmarks li {
+    cursor: pointer;
+    font-size: 12px;
+    padding: 14px 10px 14px 20px;
+}
+#NotesBookmarks h2 {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/chip_summary_closed.png") no-repeat scroll 5px center;
+    font-size: 12px;
+    margin: 0;
+    padding: 0 10px 0 20px;
+}
+#NotesBookmarks li.Current {
+    background-color: #fff;
+}
+#NotesBookmarks li.Current strong {
+    color: #772b52;
+}
+#NotesBookmarks li p {
+    font-size: 11px;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 10px 0 20px;
+}
+#NotesBookmarks b {
+    display: block;
+    margin: 0;
+    padding: 0 10px 0 25px;
+}
+#SearchResults li {
+    cursor: pointer;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+#SearchResults li strong {
+    color: #772b52;
+}
+#SearchResults h2 {
+    border-top: 1px solid #fff;
+    font-size: 12px;
+    margin: 0;
+    padding: 10px 10px 0 25px;
+}
+#SearchResults li:first-child h2 {
+    border: 0 none;
+}
+#SearchResults h3 {
+    font-size: 12px;
+    margin: 0 0 2px -10px;
+    padding: 0;
+}
+#SearchResults li.Current {
+    background-color: #fff;
+}
+#SearchResults li div {
+    font-size: 11px;
+    font-weight: normal;
+    margin: 0 15px 0 35px;
+    padding: 5px 5px 5px 15px;
+}
+#SearchResults .Viewed div {
+    background-color: #dadada;
+}
+#SearchResults .Current.Viewed div {
+    background-color: #fff;
+}
+#SearchResults span.highlight {
+    color: #772b52;
+    font-weight: bold;
+}
+#Content {
+    background-color: #fff;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 70px 0 10px;
+    position: relative;
+    width: 718px;
+    z-index: 1;
+}
+#Toolbar {
+    background-color: #fff;
+    height: 65px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#Content input[type="button"] {
+    background: transparent none no-repeat scroll center center;
+    float: right;
+    height: 20px;
+    margin: 30px 20px 0 0;
+    position: relative;
+    width: 20px;
+}
+#Content input.btnNext {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/btn_Next_R.png");
+    margin: 30px 15px 0 0;
+}
+#Content input.btnPrev {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/btn_Prev_R.png");
+}
+#Toolbar #btn_ZoomIn {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_TextIncrease.png");
+    display: none;
+    margin-left: -15px;
+}
+#Toolbar #btn_ZoomOut {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_TextReduce.png");
+    display: none;
+}
+#Toolbar #btn_Print {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Print.png");
+}
+#Toolbar #btn_getPDF {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_PDF.png");
+}
+#Toolbar #btn_addNote {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_AddNotes.png");
+}
+#Toolbar #Note {
+    display: none;
+}
+.Notes #Toolbar #btn_addNote {
+    display: none;
+}
+.Notes #Toolbar #Note {
+    background: #fff url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Bookmark_AU_big.png") no-repeat scroll 6px 0;
+    cursor: pointer;
+    display: block;
+    font: 12px "Open Sans",Verdana;
+    left: 13px;
+    overflow: hidden;
+    padding: 7px 7px 10px 35px;
+    position: absolute;
+    z-index: 2;
+}
+.Empty #Toolbar #Note {
+}
+.Notes .Ellipsis {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ellipsis_F.png") no-repeat scroll 0 3px;
+    display: inline-block;
+    height: 12px;
+    margin: 0 2px 0 5px;
+    vertical-align: middle;
+    width: 27px;
+}
+.Notes #Toolbar .Part {
+    height: 35px;
+    max-height: 35px;
+    overflow: hidden;
+    width: 320px;
+}
+.Notes #Toolbar .Consultation {
+    box-shadow: 0 0 5px #a0a0a0;
+    height: 38px;
+    width: 320px;
+}
+.Empty #Toolbar .Consultation {
+    border: 0 none;
+    box-shadow: none;
+    height: 20px;
+    width: 0;
+}
+.Notes #Toolbar .Consultation textarea, .Notes #Toolbar .Consultation input {
+    visibility: hidden;
+}
+.Notes #Toolbar .Modification {
+    box-shadow: 0 0 5px #a0a0a0;
+    height: 150px;
+    width: 320px;
+}
+.Empty #Toolbar .Modification {
+}
+.Notes #Toolbar .Modification .Part {
+    display: none;
+}
+.Notes #Toolbar .Modification textarea, .Notes #Toolbar .Modification input {
+    position: relative;
+    visibility: visible;
+}
+.Notes #Toolbar .Modification input {
+    float: right;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    width: 25px;
+    z-index: 1;
+}
+.Notes #Toolbar .Modification textarea {
+    border: 0 none;
+    float: left;
+    font-family: "Open Sans",Verdana;
+    height: 118px;
+    line-height: 18px;
+    margin: -18px 0 0;
+    outline: 0 none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 10px 0 0;
+    position: relative;
+    resize: none;
+    width: 306px;
+}
+@-moz-document url-prefix("") {
+.Notes #Toolbar .Modification textarea {
+    padding: 0;
+    width: 316px;
+}
+}
+.mCSB_container {
+    min-height: 100%;
+    position: relative;
+}
+#Toolbar input#btn_closeNote {
+    background: transparent url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/btn_Close.png") no-repeat scroll center center;
+    float: right;
+    height: 25px;
+    margin: 0;
+    width: 25px;
+    z-index: 1;
+}
+#Toolbar input#btn_saveNote {
+    background: transparent url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Save.png") no-repeat scroll center center;
+    margin: 2px 5px 0 0;
+}
+#Toolbar input#btn_deleteNote {
+    background: transparent url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Trash.png") no-repeat scroll center center;
+    float: right;
+    height: 25px;
+    margin: 2px 0 0;
+    width: 25px;
+    z-index: 1;
+}
+#forScroll {
+    height: 100%;
+    padding: 0;
+    position: relative;
+}
+#Content .mCustomScrollBox {
+    padding: 0 20px;
+}
+#Content .mCSB_scrollTools {
+}
+#Content span.highlight {
+    background-color: #f9fe4c;
+}
+ div.beforeFooter {
+    clear: both;
+    height: 160px;
+}
+ div.Footer {
+    bottom: 0;
+    clear: both;
+    display: none;
+    font: 10px "Open Sans",Verdana;
+    height: 130px;
+    left: -10px;
+    position: absolute;
+    width: 100%;
+}
+.Footer {
+    display: none;
+}
+ .Footer a.Terms {
+    bottom: 20px;
+    color: #464646;
+    font-size: 10px;
+    left: 0;
+    position: absolute;
+    z-index: 2;
+}
+ .Footer a.Terms:hover {
+    color: #464646;
+}
+.Footer .Copyright {
+    bottom: 20px;
+    font-size: 10px;
+    position: absolute;
+    right: 80px;
+    z-index: 2;
+}
+.Footer .logo_ENI {
+    bottom: 20px;
+    font-size: 10px;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+}
+#Content .Footer input.btnNext {
+    margin: 0;
+}
+#Content .Footer input.btnPrev {
+    margin: 0 20px 0 0;
+}
+#Content input.btnTop {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Top.png") no-repeat scroll center 0;
+    color: #772b52;
+    height: 40px;
+    left: 50%;
+    margin: 0 0 0 -70px;
+    padding-top: 10px;
+    position: absolute;
+    text-align: center;
+    width: 140px;
+    z-index: 2;
+}
+.bg_Content {
+    background-color: #fff;
+    display: none;
+    top: 128px;
+    width: 1007px;
+}
+ .title em {
+    color: #772b52;
+    display: block;
+    font-size: 0.6em;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 5px;
+}
+#Presentation {
+    font-family: Verdana;
+}
+#Presentation .Left, #Presentation .Right {
+    font-size: 1em;
+}
+#Presentation .Right {
+    font-size: 0.9em;
+    vertical-align: text-top;
+}
+#Presentation .Left div, #Presentation .Right div {
+    margin: 0;
+}
+#Presentation .Authors {
+    border-collapse: collapse;
+}
+#Presentation .Left {
+    text-align: justify;
+}
+#Presentation div.P {
+    margin: 0 0 15px;
+}
+#Presentation strong.A {
+    color: #772b52;
+    display: block;
+    font: 1.2em "Open Sans",Verdana;
+    margin: 0 0 4px;
+    padding: 0;
+}
+#Presentation .Left strong.A {
+    display: block;
+}
+#Presentation .Left .Description, #Presentation .Left .Authors {
+    margin-right: 35px;
+}
+#Presentation .Authors {
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+#Presentation .Authors td {
+    border-top: 1px solid #eee;
+    vertical-align: top;
+}
+#Presentation .Authors img {
+    margin: 14px 18px 8px 0;
+}
+#Presentation .Authors strong.A {
+    margin-top: 10px;
+}
+#Presentation .Authors div.P {
+    margin-bottom: 16px;
+}
+#Presentation .Authors td.Picture img {
+    margin: -6px 18px 16px 0;
+}
+#Presentation .Authors td.Picture img:first-child {
+    margin: 14px 18px 16px 0;
+}
+#Presentation .Authors td > img {
+    margin: -4px 10px 16px 0;
+}
+#Presentation .Right {
+    font: 12px "Open Sans Regular",Verdana;
+    width: 150px;
+}
+#Presentation .Right > div:first-child {
+    margin-top: 25px;
+}
+#Presentation .Right .Download {
+    background-color: #772b52;
+    color: #fff;
+    padding: 0 0 10px;
+}
+#Presentation .Right .Download strong {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Download.png") no-repeat scroll 8px center;
+    display: block;
+    padding: 15px 5px 15px 40px;
+}
+#Presentation .Right .Download a, #Presentation .Right .Download a:hover {
+    background: rgba(0, 0, 0, 0) url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/ico_Arrow_LW.png") no-repeat scroll 8px 9px;
+    color: #fff;
+    display: block;
+    font: 10px "Open Sans Regular",Verdana;
+    padding: 5px 5px 5px 20px;
+    text-decoration: none;
+}
+#Presentation .Right .Download a:hover {
+    background-color: #933567;
+}
+#Presentation .Right .Infos {
+    border-top: 1px solid #464646;
+    color: #000;
+    margin: 18px 0 0;
+    padding: 8px 0 0;
+}
+#Presentation .Right .addthis_toolbox {
+    margin: 38px 0 0;
+    text-align: center;
+}
+#Presentation .Right .addthis_toolbox .addthis_counter {
+    margin-left: 5px;
+}
+#Presentation .Right .addthis_toolbox img {
+    border: medium none;
+    height: 16px;
+    width: 16px;
+}
+#Presentation .Right .Order {
+    background-color: #b1b1b1;
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 10px;
+    padding: 8px 5px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+#Presentation #book {
+    bottom: 26px;
+    box-shadow: 0 0 18px #000;
+    height: 120px;
+    left: 30px;
+    position: absolute;
+    transform: skew(8deg, 5deg);
+    width: 90px;
+    z-index: 0;
+}
+#Presentation .Right .Order img {
+    height: 129px;
+    margin: 15px 10px 8px;
+    position: relative;
+    width: 106px;
+    z-index: 1;
+}
+
+ a {
+    color: navy;
+    font-family: verdana;
+    font-size: 9pt;
+    text-decoration: none;
+}
+ a:visited {
+    color: Purple;
+    font-family: verdana;
+    font-size: 9pt;
+    text-decoration: underline;
+}
+ a:hover {
+    color: navy;
+    font-family: verdana;
+    font-size: 9pt;
+    text-decoration: underline;
+}
+ .sect1 {
+    color: Black;
+    font-family: verdana;
+    margin-right: 10px;
+    text-align: justify;
+    width: 97%;
+}
+H1 {
+    color: #800000;
+    font-size: 14pt;
+    font-weight: bold;
+    margin-left: 0;
+}
+ H2 {
+    color: #800000;
+    font-size: 12pt;
+    font-weight: 300;
+    margin-left: 0;
+}
+ .sect1 H3 {
+    color: #800000;
+    font-size: 10pt;
+    font-weight: bold;
+    margin-left: 0;
+}
+ .sect1 .h1 {
+    color: #800000;
+    font-size: 14pt;
+    font-weight: bold;
+    margin-left: 0;
+}
+ .sect1 .h2 {
+    color: #800000;
+    font-size: 12pt;
+    font-weight: 300;
+    margin-left: 0;
+}
+ .sect1 .h3 {
+    color: #800000;
+    font-size: 10pt;
+    font-weight: bold;
+    margin-left: 0;
+}
+ .sl {
+    text-decoration: underline;
+}
+ .italic {
+    font-style: italic;
+}
+ .italique {
+    font-style: italic;
+}
+ .gras {
+    font-weight: bold;
+}
+ .gras_souligne {
+    font-weight: bold;
+    text-decoration: underline;
+}
+ .cara9 {
+    font-size: 9pt;
+}
+ .cara {
+    font-size: 10pt;
+}
+ .cara10 {
+    font-size: 10pt;
+}
+ .cara11 {
+    font-size: 11pt;
+}
+ .courier {
+    font-family: Courier New;
+    font-size: 10pt;
+}
+ .courier9 {
+    font-family: Courier New;
+    font-size: 11pt;
+}
+ .courier11 {
+    font-family: Courier New;
+    font-size: 11pt;
+}
+ .courier_gras {
+    font-family: Courier New;
+    font-size: 10pt;
+    font-weight: bold;
+}
+ .courier_gras_9 {
+    font-family: Courier New;
+    font-size: 9pt;
+    font-weight: bold;
+}
+ .courier_gras_11 {
+    font-family: Courier New;
+    font-size: 11pt;
+    font-weight: bold;
+}
+ .sect1 .para,  .sect2 .para,  .sect3 .para {
+    font-size: 9pt;
+    margin-left: 10px;
+}
+ .sect1 p,  .sect2 p,  .sect3 .p {
+    font-size: 9pt;
+    line-height: 12pt;
+    margin-left: 10px;
+}
+ div {
+    font-size: 9pt;
+    margin-left: 10px;
+}
+ .sect1 .sect2,  .sect2 .sect3 {
+    font-size: 9pt;
+    margin-left: 10px;
+}
+ .pt {
+    font-size: 9pt;
+    margin-left: 10px;
+}
+ .sect2 {
+    color: Black;
+    margin-top: 40px;
+}
+ .sect3 {
+    color: Black;
+    margin-top: 30px;
+}
+ .title {
+    display: block;
+    text-align: left;
+    width: 98%;
+}
+ .divlistenum {
+    margin-left: 10px;
+    margin-top: 10px;
+    text-align: left;
+}
+ .listenum {
+    list-style-position: outside;
+    list-style-type: decimal;
+    text-align: left;
+}
+ .divpara_num {
+    margin-left: 10px;
+}
+ .para_num {
+    list-style-type: none;
+}
+ ul {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+ li {
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+ .divliste1 {
+    margin-left: 10px;
+    margin-top: 0;
+    width: 98%;
+}
+ .liste1 {
+    list-style-type: disc;
+}
+ .liste1 p {
+    margin: 5px 0;
+}
+ .liste1 div {
+    margin: 5px 0;
+}
+ .divliste2 {
+    margin-left: 20px;
+    text-align: justify;
+    width: 97%;
+}
+ .liste2 {
+    list-style-type: square;
+}
+ .divliste3 {
+    margin-left: 30px;
+    width: 96%;
+}
+ .liste3 {
+    list-style-type: circle;
+}
+ .titre_exemple {
+    font-size: 9pt;
+    font-style: italic;
+    text-decoration: underline;
+}
+ .commentaire,  .intro,  .exemple {
+    font-size: 9pt;
+    font-style: italic;
+}
+ p .commentaire,  div .commentaire,  .intro p,  .exemple p,  .intro div,  .exemple div {
+    display: table;
+    font-size: 9pt;
+    font-style: italic;
+    margin: 10px 0 10px 10px;
+    width: 95%;
+}
+ .orderedlist {
+    color: Black;
+    font-size: 9pt;
+    margin-left: -25px;
+}
+ .itemizedlist {
+    color: Black;
+    font-size: 9pt;
+    margin-left: 10px;
+}
+ .emphasis {
+    font-size: 9pt;
+    font-style: italic;
+}
+ .keysym {
+    font-size: 9pt;
+    font-weight: bold;
+}
+ .ps {
+    font-size: 9pt;
+}
+ .bold {
+    font-size: 9pt;
+    font-weight: bold;
+}
+ .ex {
+    font-size: 9pt;
+    font-style: italic;
+    text-decoration: underline;
+}
+ .itl {
+    font-size: 9pt;
+    font-style: italic;
+}
+ .bridgehead {
+    border-bottom: 2px solid gray;
+    color: #800000;
+    display: inline-block;
+    font-size: 9pt;
+    font-weight: bold;
+    margin: 10px 0 0;
+    text-align: left;
+}
+ .bridgehead_niv4 {
+    border-bottom: 2px solid gray;
+    color: #800000;
+    display: inline-block;
+    font-size: 10pt;
+    font-weight: bold;
+    margin: 10px 0 0;
+    text-align: left;
+}
+ .bridgehead_niv4 .inlineobject {
+    display: inline;
+    margin: 5px 4px 0;
+    padding: 3px;
+    vertical-align: text-bottom;
+}
+ .bridgehead_niv5 {
+    color: #800000;
+    display: block;
+    font-size: 10pt;
+    font-weight: bold;
+    margin: 10px 0 0;
+    text-align: left;
+}
+ .bridgehead_niv6 {
+    color: #800000;
+    display: block;
+    font-size: 9pt;
+    font-weight: bold;
+    margin: 10px 0 0;
+    text-align: left;
+}
+ .bridgeheadb1 {
+    border-bottom: 2px solid gray;
+    color: black;
+    display: inline-block;
+    font-size: 8pt;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+ .titre_sans_niv {
+    display: inline-block;
+    font-size: 10pt;
+    font-style: italic;
+    margin: 10px 0 0 10px;
+    text-decoration: underline;
+}
+ .code {
+    font-family: Courier New;
+}
+ .mediaobject {
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    width: 95%;
+}
+ .inlineobject {
+    display: inline;
+    margin: 5px 4px;
+    padding: 3px;
+    vertical-align: middle;
+}
+ .pres .para {
+    margin: 5px 5px 5px 20px;
+}
+ .pres .inlineobject {
+    display: inline;
+    margin: 5px 5px 5px -21px;
+    padding: 3px 3px 3px 0;
+    vertical-align: middle;
+}
+ .imagedata {
+    margin: 5px 0;
+}
+ .open {
+    cursor: pointer;
+}
+ .legende {
+    font-style: italic;
+    text-align: center;
+}
+ .literallayout {
+    display: block;
+    font-size: 9pt;
+    margin: 10px 0 10px 10px;
+    padding: 5px;
+    width: auto;
+}
+ .programlisting {
+    border: 1px solid black;
+    display: block;
+    float: left;
+    font-size: 9pt;
+    margin: 10px 0 10px 10px;
+    padding: 5px;
+    width: 99%;
+}
+ li .programlisting {
+    float: none;
+    margin: 5px 0;
+}
+ .table {
+    display: block;
+    float: left;
+    margin: 5px 5px 5px 10px;
+    width: 99%;
+}
+ .table p {
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+ .informaltable {
+    border-collapse: collapse;
+    border-color: black;
+    margin: 0 10px 0 0;
+    text-align: left;
+}
+ .thead {
+    font-weight: bold;
+}
+ .thead tr {
+}
+ .row {
+}
+ .tboby {
+    font-weight: normal;
+}
+ .tbody tr {
+}
+ .entry {
+    border-color: black;
+    padding: 2px 5px 3px;
+    text-align: left;
+    vertical-align: top;
+}
+ .entry div {
+    margin-left: 0;
+    margin-top: 0;
+    width: 99%;
+}
+ .table .definition {
+    background-color: Silver;
+    margin-left: 0;
+    width: 100%;
+}
+ .definition {
+    font-family: verdana;
+    font-size: 9pt;
+}
+ .border {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+ .noBorder {
+    border-left: 0 solid black;
+    border-right: 0 solid black;
+}
+ .bordernone {
+    border: 0 solid black;
+}
+ .RowHead {
+}
+ .RowBody {
+}
+ .videodata {
+    text-decoration: underline;
+}
+ .videodata:hover {
+    color: navy;
+}
+ .Hidden {
+    float: right;
+    height: 0;
+    visibility: hidden;
+    width: 0;
+}
+ .VideoData {
+    float: right;
+}
+.TxtVertical {
+}
+ .productnumber {
+    display: inline-block;
+    float: left;
+    font-size: 9pt;
+    font-weight: bold;
+    text-align: right;
+    width: 20px;
+}
+ .guimenu {
+    font-size: 9pt;
+    font-weight: bold;
+}
+ .int {
+    font-size: 9pt;
+    font-style: italic;
+}
+ .lg {
+    font-size: 9pt;
+    font-style: italic;
+}
+ .keycap {
+    font-size: 9pt;
+    font-weight: bold;
+}
+ .note {
+    display: block;
+    font-family: verdana;
+    font-size: 10pt;
+    font-style: normal;
+    height: auto;
+    margin: 10px;
+    padding: 10px 5px 10px 0;
+    width: 98%;
+}
+ .note p,  .note .remarque,  .astuceDiv p {
+    display: block;
+    margin-left: 10px;
+    margin-top: 0;
+}
+ .remarque_suite {
+    font-family: verdana;
+    font-size: 10pt;
+    font-style: normal;
+}
+ p .remarque_suite,  div .remarque_suite {
+    display: block;
+    height: auto;
+    margin: 5px 10px 5px 5px;
+    padding: 5px 10px 5px 5px;
+}
+ .divinline {
+    margin-left: 0;
+}
+ .remarkimg {
+    float: left;
+    margin-bottom: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-right: 0;
+    text-align: left;
+    vertical-align: top;
+}
+ .astuceDiv {
+    display: block;
+    font-family: verdana;
+    font-size: 10pt;
+    font-style: normal;
+    margin: 10px;
+    min-height: 30px;
+    padding: 5px 5px 5px 0;
+    width: 94%;
+}
+ .astuceimg {
+    display: inline-block;
+    float: left;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 5px;
+    padding-right: 0;
+    text-align: left;
+    vertical-align: top;
+}
+ p {
+}
+ .manip {
+    display: table;
+    font-family: verdana;
+    font-size: 10pt;
+    font-style: normal;
+    margin: 10px 0 10px 5px;
+    padding: 0 10px 0 15px;
+    width: 94%;
+}
+ .manip p {
+    margin: 0;
+}
+ .maniplogo {
+    background-image: url("../Java_et_Eclipse_Developpez_une_application_avec_Java_et_Eclipse/images/icn_bullet.gif");
+    background-position: left 5px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-left: -15px;
+    width: 15px;
+}
+ .manip_suite {
+    display: block;
+    font-size: 10pt;
+    font-style: normal;
+    margin: 5px 5px 10px 0;
+    padding: 0 10px 5px;
+    text-align: left;
+    width: 92%;
+}
+ .cd {
+    font-size: 9pt;
+    font-weight: normal;
+}
+ .mode {
+    margin-left: -15px;
+}
+ .entry .manip_suite {
+    display: block;
+    font-size: 10pt;
+    font-style: normal;
+    text-align: left;
+    width: 92%;
+}
+ .logonews_test {
+    float: right;
+    margin: 5px 20px 10px;
+}
+ .logonews {
+    display: block;
+    float: left;
+    margin-left: 0;
+    margin-right: 10px;
+    padding: 7px 0;
+}
+ .video {
+    cursor: pointer;
+    margin: 1px 10px;
+    padding: 0;
+}
+ .new {
+    display: block;
+    height: 30px;
+    padding: 3px 0 2px;
+}
+ .new img {
+    margin: -3px 5px 0 10px;
+    padding: 0;
+}
+ .sect1 .math {
+    font-family: Times New Roman,calibri,Arial,verdana;
+    font-size: 12pt;
+}
+ p .math {
+    font-size: 12pt;
+    font-weight: 300;
+}
+ .title .math {
+    font-size: 16pt;
+}
+ sect1 .url,  sect2 .url,  sect3 .url,  sect1 .p_url,  sect2 .p_url,  sect3 .p_url {
+    font-family: verdana;
+    font-size: 9pt;
+}
+ sect1 .res,  sect2 .res,  sect3 .res {
+    font-family: verdana;
+    font-size: 9pt;
+}
+ .p_url a:visited,  .p_url a:hover,  .p_url a:link {
+    font-family: verdana;
+    font-size: 9pt;
+}
+ .p_res {
+    font-family: verdana;
+    font-size: 9pt;
+}
+
+img {
+	margin: auto;
+}
+p {
+	line-height: 1.5em;
+}

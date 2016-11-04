@@ -1,0 +1,550 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_7e5f09ee-3365-4f7a-a777-42c47260cbce" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Impressions et exports</h1>
+  <p>Bâtir des états sophistiqués,  produire des fichiers de plusieurs formats, ou élaborer  des graphiques avec Java demande du temps et la maîtrise  de nombreuses classes et méthodes supplémentaires.  Conscients de ce fait, plusieurs sociétés proposent  des outils de reporting permettant de réaliser plus rapidement  et sûrement ces types de documents.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Dans ce chapitre, état et  rapport sont considérés comme des synonymes.</p>
+    </div>
+  </div>
+  <p>La librairie <strong>JasperReports</strong>, de la société JasperSoft a été retenue, étant  un très bon système de reporting open source dédié aux  applications Java. Cet outil peut fonctionner indépendamment  d’Eclipse ou en collaboration avec celui-ci. Jaspersoft Studio est  l’éditeur graphique <strong>WYSIWYG</strong> (What You See Is What You Get) intégré dans Eclipse qui se charge  de la création des modèles de rapports. </p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>JasperReports est une librairie écrite  en Java.</p>
+    </div>
+  </div>
+  <div>
+    <h2>1. Fonctionnement de JasperReports</h2>
+    <p>Pour générer des rapports,  il faut nécessairement passer par trois étapes :  la création du fichier de Jasper décrivant le  contenu du rapport, la compilation de ce fichier en un format exploitable  par Jasper en production, et l’alimentation de données  pour remplir ce rapport.</p>
+    <p><strong>Étape 1 : création du fichier jrxml</strong></p>
+    <p>JasperReports se base au départ sur  des fichiers <strong>XML</strong> (eXtensible Markup Language). La maîtrise de XML n’est pas nécessaire  pour cette étape car la création se fait par l’intermédiaire  de Jaspersoft Studio, qui génère le fichier correspondant,  mais elle est recommandée car à un certain stade  il devient plus productif d’intervenir directement sur le fichier  XML.</p>
+    <p>À la fin de cette étape,  un fichier XML est obtenu avec l’extension <strong>jrxml</strong> qui est le modèle de rapport à partir  duquel plusieurs documents de différents formats seront  produits.</p>
+    <div>
+      <div><img alt="images/14-01.png" src="images/images_14-01.png"></div>
+    </div>
+    <p><strong>Étape 2 : compilation du fichier jrxml et génération du fichier Jasper</strong></p>
+    <p>À partir du fichier jrxml, nommé aussi  modèle jrxml, Jasper va procéder à une compilation  qui permet de vérifier si le modèle est bien construit,  notamment s’il est cohérent avec la norme XML et si les  paramètres sont corrects. </p>
+    <p>Si la compilation aboutit, un fichier binaire  est généré avec l’extension Jasper. Ce  fichier peut alors être utilisé pour représenter  les données selon les choix opérés lors  de la création du fichier jrxml avec Jaspersoft Studio.</p>
+    <p>Il est également possible de compiler à la  volée le fichier binaire Jasper. Cette dernière  option est retenue pour l’application Luna.</p>
+    <p><strong>Étape 3 : alimentation du fichier en données</strong></p>
+    <p>Diverses sources de données peuvent être  fournies au fichier Jasper : XML, CSV, jeux d’enregistrements  issus d’une base SQL, objets Java au format JavaBeans, etc.</p>
+    <p>Ces sources de données serviront à générer  le rapport en bonne et due forme.</p>
+    <p>Le document final est alors prêt à l’emploi.  Il ne reste plus qu’à choisir parmi tous les types de sortie  proposés par Jasper : PDF, DOCX, HTML, ODT, …</p>
+  </div>
+  <div>
+    <h2>2. Installation de Jaspersoft Studio</h2>
+    <p>Jaspersoft Studio est directement utilisable  depuis Eclipse, à l’aide du système de plug-ins  et de features de ce dernier. Il est également utilisable  dans une application séparée.</p>
+    <p>Procédons à l’installation  de Jaspersoft Studio, l’éditeur WYSIWYG de Jaspersoft, à l’intérieur  d’Eclipse.</p>
+    <div>
+      <p> Ouvrez l’Eclipse Marketplace depuis le menu  en choisissant l’option <strong>Help - Eclipse Marketplace</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-02.png" src="images/images_14-02.png"></div>
+    </div>
+    <div>
+      <p> Dans le champ texte <strong>Find</strong>, tapez « jaspersoft » puis  cliquez sur le bouton <strong>Go</strong> présent sur la même ligne.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-03.png" src="images/images_14-03.png"></div>
+    </div>
+    <p>Le marketplace d’Eclipse propose alors les  logiciels correspondant à la recherche : Jaspersoft  Studio doit logiquement être le premier à apparaître.</p>
+    <div>
+      <p> Cliquez sur le bouton <strong>Install</strong> de Jaspersoft Studio.</p>
+    </div>
+    <div>
+      <p>Eclipse propose dès lors un  wizard (c’est-à-dire une boîte de dialogue avec plusieurs étapes).  Après la résolution des features, cliquez sur <strong>Confirm</strong> pour continuer l’installation, laissez Eclipse travailler  sur tout ce qu’il faut installer (cela peut prendre du temps), acceptez  les termes de la licence, et cliquez sur <strong>Finish</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-04.png" src="images/images_14-04.png"></div>
+    </div>
+    <div>
+      <p>Eclipse télécharge  alors le logiciel (cela peut prendre également un certain temps),  l’installation se termine et Eclipse vous demande de redémarrer. </p>
+    </div>
+    <div>
+      <p> Acceptez la demande de redémarrage  d’Eclipse.</p>
+    </div>
+    <p>Après le redémarrage d’Eclipse,  Jaspersoft Studio est disponible dans Eclipse.</p>
+  </div>
+  <div>
+    <h2>3. Créer un état simple</h2>
+    <p>Créons un premier état affichant  la liste de tous les clients.</p>
+    <div>
+      <h3>a. Préparation</h3>
+      <p>Afin de faciliter la création de  cet état, une petite classe est créée,  qui importe directement les données clients de la base.</p>
+      <img src="images/images_PUCE.PNG" alt="" width="20">
+      <div>
+        <p> Créez une classe appelée <strong>FabriqueClients</strong> dans le package <strong>controle.etat</strong>.</p>
+      </div>
+      <pre>package controle.etat;      import controle.connection.Connexion;   import entite.crud.ClientCrud;      public class FabriqueClients {          public <strong>static</strong> List&lt;Client&gt; <strong>createBeanCollection</strong>() {           Connexion connexion = Connexion.getConnexion();           ClientCrud crud = new ClientCrud(connexion);           List&lt;Client&gt; clients = crud.lire();           return clients;       }   }  </pre>
+      <p>Cette classe contient une seule méthode  statique appelée <strong>createBeanCollection</strong> qui retourne une collection d’objets JavaBeans qui serviront à alimenter le  rapport.</p>
+      <p>Un <strong>JavaBean</strong> est un objet Java classique qui suit des conventions  d’écriture des méthodes accédant à ses  propriétés : les accesseurs commencent  tous par getXXX() et les mutateurs commencent tous par setXXX() :  dans le cas de la classe Client, la propriété « nom » est  accédée et modifiée par les méthodes <strong>getNom()</strong> et <strong>setNom()</strong>.</p>
+      <p>Il existe plusieurs techniques pour alimenter  les données des rapports : se connecter directement  avec la base, fournir des objets beans… Cette dernière technique  sera utilisée.</p>
+      <div>
+        <p> Créez un adaptateur de données  pour les clients en sélectionnant l’option <strong>File - New - Data Adapter</strong> du menu.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-05.png" src="images/images_14-05.png"></div>
+      </div>
+      <p>La configuration de l’adaptateur est stockée  dans un fichier XML.</p>
+      <div>
+        <p> Appelez ce fichier <strong>donneesClient.xml</strong> et stockez-le dans le répertoire <strong>jasper</strong> du projet.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-06.png" src="images/images_14-06.png"></div>
+      </div>
+      <div>
+        <p> Choisissez <strong>Collection of JavaBeans</strong> comme type d’adaptateur.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-07.png" src="images/images_14-07.png"></div>
+      </div>
+      <div>
+        <p> Donnez un nom à cet adaptateur, renseignez  le nom de la classe <strong>FabriqueClients</strong> avec la méthode <strong>createBeanCollection</strong> et cliquez sur <strong>Finish</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-08.png" src="images/images_14-08.png"></div>
+      </div>
+      <div>
+        <p>Le fichier s’ouvre alors dans l’éditeur.</p>
+      </div>
+      <div>
+        <p> Contrôlez que tout se passe bien en  cliquant sur le bouton <strong>Test Connection</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-09.png" src="images/images_14-09.png"></div>
+      </div>
+      <p>JasperReports ne prend pas encore en compte  les objets du package java.time, comme le type Instant. Il faut  lui fournir des objets de type <strong>java.util.Date</strong> afin qu’il puisse traiter correctement les informations  temporelles.</p>
+      <div>
+        <p> Rajoutez une méthode <strong>getCreation()</strong> retournant un objet de type <strong>java.util.Date</strong> dans la classe <strong>Client</strong>.</p>
+      </div>
+      <pre>    // ------------------------------------       // Méthode utilisée par Jasper       // ------------------------------------ <strong>       @Deprecated</strong>       public Date <strong>getCreation</strong>() {           return date;       }       // ------------------------------------   </pre>
+      <p>Cela aura pour effet de définir un  champ <strong>creation</strong> dans JasperReport pour la classe <strong>Client</strong>, qui sera utilisé dans le rapport.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>L’annotation @Deprecated  a pour objectif de prévenir les développeurs que cette  méthode ne devrait pas être utilisée  (elle apparaît comme barrée dans Eclipse).</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>b. Création du rapport</h3>
+      <p>Après toutes ces phases de préparation,  il est temps de commencer le premier rapport.</p>
+      <div>
+        <p> Dans le menu, choisissez l’option <strong>File - New - Jasper Report</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-10.png" src="images/images_14-10.png"></div>
+      </div>
+      <div>
+        <p> Choisissez un modèle (un template) :  par exemple le modèle vide (d’autres modèles sont à votre  disposition si vous le souhaitez). Cliquez sur <strong>Next</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-11.png" src="images/images_14-11.png"></div>
+      </div>
+      <div>
+        <p> Choisissez le nom du rapport (<strong>Clients.jrxml</strong>) et son emplacement (le dossier <strong>jasper</strong>) et cliquez sur <strong>Next</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-12.png" src="images/images_14-12.png"></div>
+      </div>
+      <div>
+        <p> Choisissez la source de données du  rapport. Ce sera l’adaptateur qui vient d’être créé.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-13.png" src="images/images_14-13.png"></div>
+      </div>
+      <p>Contrairement à ce qui est indiqué,  il sera possible ultérieurement de spécifier les  champs à afficher dans le rapport.</p>
+      <div>
+        <p> Cliquez sur <strong>Next</strong> puis sur <strong>Finish</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-14.png" src="images/images_14-14.png"></div>
+      </div>
+      <p>Le nouveau rapport s’ouvre dans l’éditeur  d’Eclipse.</p>
+      <div>
+        <div><img alt="images/14-15.png" src="images/images_14-15.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Jaspersoft Studio propose une perspective  dédiée à la création des rapports, mais  elle n’était pas fonctionnelle dans la version utilisée  pour le livre. Vous pouvez néanmoins créer un  rapport, simplement en vous assurant que la vue <strong>Outline</strong> soit ouverte. Si ce n’est pas le cas, ouvrez-la avec  l’option du menu <strong>Window - Show view - Outline</strong>.</p>
+        </div>
+      </div>
+      <div>
+        <p> Cliquez sur l’icône du bouton <strong>DataSet and Query editor dialog</strong> pour indiquer les champs qui seront utilisés  par le rapport.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-16.png" src="images/images_14-16.png"></div>
+      </div>
+      <div>
+        <p>Une boîte de dialogue s’ouvre.  Les données seront de type <strong>JavaBean</strong>.</p>
+      </div>
+      <div>
+        <p> Cliquez sur l’onglet <strong>Java Bean</strong>, renseignez la classe <strong>entite.Client</strong> et choisissez les champs qui seront inclus  dans le rapport (code, carteFidele, nom, prenom, creation). Cliquez  ensuite sur <strong>Add selected field(s)</strong> pour que le rapport les prenne en compte.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-17.png" src="images/images_14-17.png"></div>
+      </div>
+      <div>
+        <p> Cliquez sur <strong>OK</strong> pour terminer la configuration des champs du rapport.</p>
+      </div>
+      <div>
+        <p> Modifiez la largeur des sections (comme Titre  et Détail 1), puis faites glisser les champs depuis la  vue <strong>Outline</strong> dans la section <strong>Détail 1</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-18.png" src="images/images_14-18.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>L’éditeur rajoute automatiquement  des labels dans la section <strong>En-tête de Page</strong>.</p>
+        </div>
+      </div>
+      <div>
+        <p> Cliquez sur l’onglet <strong>Prévisualiser</strong> en bas de l’éditeur pour visualiser l’état.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-19.png" src="images/images_14-19.png"></div>
+      </div>
+      <div>
+        <p> Pour modifier le format d’un champ, sélectionnez  celui-ci, effectuez un clic droit et choisissez <strong>Afficher Propriétés</strong>.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-20.png" src="images/images_14-20.png"></div>
+      </div>
+      <div>
+        <p>La vue <strong>Propriétés</strong> s’affiche si elle n’est pas encore ouverte.</p>
+      </div>
+      <div>
+        <p> Sélectionnez la rubrique <strong>Champ de texte</strong> puis cliquez sur le bouton « <strong>...</strong> » en face de <strong>Motif</strong>. Cela ouvre une fenêtre qui permet de choisir  le format de données à appliquer, par exemple  pour une date.</p>
+      </div>
+      <div>
+        <div><img alt="images/14-21.png" src="images/images_14-21.png"></div>
+      </div>
+      <p>Il est également possible de choisir  dans cette vue Propriétés la police de caractères,  sa taille, l’alignement du texte (à gauche, centré…),  la couleur de fond et du texte, une bordure.</p>
+      <div>
+        <p> Modifiez les champs jusqu’à être  satisfait et sauvegardez régulièrement le rapport.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>4. Créer un état paramétré</h2>
+    <p>L’ouvrage n’étant pas dédié à l’apprentissage  avancé de cet excellent outil de reporting, seules les  informations essentielles à connaître pour bâtir  un état paramétré sont expliquées.  Vous avez aussi la possibilité de télécharger  les rapports depuis la page Informations générales.</p>
+    <div>
+      <p> Placez des images dans le dossier <strong>jasper/images</strong> du projet.</p>
+    </div>
+    <div>
+      <p> Ajoutez une image dans le rapport en faisant  glisser l’élément <strong>Image</strong> depuis la palette vers le rapport, par exemple dans  la section <strong>Titre</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-22.png" src="images/images_14-22.png"></div>
+    </div>
+    <div>
+      <p>Une boîte de dialogue s’ouvre  permettant de choisir l’image.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-23.png" src="images/images_14-23.png"></div>
+    </div>
+    <div>
+      <p> Sélectionnez l’option <strong>Workspace resource</strong>, choisissez l’image à afficher et cliquez sur <strong>OK</strong>.</p>
+    </div>
+    <div>
+      <p>L’image s’affiche bien.</p>
+    </div>
+    <p>Le problème avec les images est que  les fichiers sont paramétrés « en  dur ». Si les utilisateurs n’ont pas exactement  la même arborescence sur leur disque dur, les rapports  ne pourront pas être compilés.</p>
+    <p>Un paramètre spécifiant  le nom du dossier des images du rapport est donc rajouté afin  de permettre cette utilisation en production.</p>
+    <div>
+      <p> Dans la vue <strong>Outline</strong>, naviguez vers la rubrique <strong>Paramètres</strong>, effectuez un clic droit et choisissez l’option <strong>Créer Paramètre</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-24.png" src="images/images_14-24.png"></div>
+    </div>
+    <div>
+      <p>La vue <strong>Propriétés</strong> s’affiche alors et un nouveau paramètre est  disponible dans la vue <strong>Outline</strong>.</p>
+    </div>
+    <div>
+      <p> Nommez le paramètre <strong>imagesDir</strong>, et assurez-vous que la case <strong>Inviter Utilisateur A</strong> est bien cochée (le libellé est incomplet).</p>
+    </div>
+    <div>
+      <div><img alt="images/14-25.png" src="images/images_14-25.png"></div>
+    </div>
+    <div>
+      <p> Sélectionnez ensuite l’image. La vue <strong>Propriétés</strong> se met à jour avec les propriétés  de l’image.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-26.png" src="images/images_14-26.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur le bouton en face de la propriété <strong>Expression</strong>. Une boîte de dialogue permettant  de changer le chemin de l’image s’affiche.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-27.png" src="images/images_14-27.png"></div>
+    </div>
+    <div>
+      <p> Sélectionnez <strong>Parameters</strong> dans l’arbre de gauche. Double cliquez ensuite sur le  paramètre <strong>imagesDir</strong> dans l’arbre du milieu (faites défiler l’arbre  si le paramètre n’apparaît pas).</p>
+    </div>
+    <div>
+      <p>L’expression se modifie : JasperReports  ajoute les caractères <strong>$P</strong> et met le nom du paramètre entre accolades,  mais une erreur « The current expression is not valid. Please verify it ! » apparaît.</p>
+    </div>
+    <div>
+      <p> Modifiez l’expression pour obtenir ce résultat  (en admettant que le nom de l’image soit Moon-256.png) et cliquez  sur <strong>Finish</strong>.</p>
+    </div>
+    <pre><strong>$P{imagesDir}+</strong>"/Moon-256.png"  </pre>
+    <div>
+      <p>Le contenu de l’image change car il est  maintenant paramétré.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-28.png" src="images/images_14-28.png"></div>
+    </div>
+    <div>
+      <p> Cliquez sur l’onglet <strong>Prévisualiser</strong>. JasperReports vous demande maintenant de lui donner  le paramètre <strong>imagesDir</strong> pour pouvoir générer la visualisation.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-29.png" src="images/images_14-29.png"></div>
+    </div>
+    <div>
+      <p> Cliquez enfin sur le bouton vert en dessous  du paramètre. Le rapport se génère avec  l’image.</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Une fois le rapport créé à votre  entière satisfaction, pensez à décocher  la case <strong>Inviter Utilisateur A</strong> du paramètre <strong>imagesDir</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>5. Intégration de JasperReports dans Eclipse</h2>
+    <div>
+      <p> Téléchargez les librairies  de JasperReport par exemple en allant sur le site de sourceforge  (<a href="https://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%206.1.0/" target="_blank">https://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%206.1.0/</a>) et en téléchargeant le fichier <strong>jasperreports-6.1.0.jar</strong>.</p>
+    </div>
+    <div>
+      <p> Ajoutez le jar aux librairies du projet.</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Pour l’ajout de librairies externes,  revoir au besoin le chapitre Boîte à outils d’Eclipse.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>6. Mise en œuvre dans le projet</h2>
+    <p>Pour illustrer l’emploi des états  Jasper sous Java, la liste des clients sera générée à partir  de l’application.</p>
+    <div>
+      <p> Ouvrez la classe <strong>FClients</strong>.</p>
+    </div>
+    <div>
+      <p>L’objectif est de pouvoir afficher la  liste de tous les clients.</p>
+    </div>
+    <div>
+      <div><img alt="images/14-30-2.png" src="images/images_14-30-2.png"></div>
+    </div>
+    <p>Pour parvenir à ce résultat,  l’application a besoin :</p>
+    <div>
+      <ul>
+        <li>
+          <p>D’une classe qui couvre  l’ensemble du processus de création d’un rapport Jasper, en  masquant toute la complexité de ce processus.</p>
+        </li>
+        <li>
+          <p>D’un rapport paramétré pour  afficher correctement les images.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p> Pour gagner du temps, téléchargez  l’état paramétré des clients <strong>Clients.jrxml</strong>.</p>
+    </div>
+    <div>
+      <p> Ajoutez ce fichier dans le dossier <strong>jasper</strong> du projet. Si Eclipse est resté ouvert, sélectionnez  ce dossier ou votre projet et appuyez sur la touche [F5] pour rafraîchir  les ressources et faire en sorte qu’Eclipse prenne connaissance  du nouveau fichier.</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>L’oubli du rafraîchissement  est souvent une source de tracas...</p>
+      </div>
+    </div>
+    <p>Il ne « reste plus » qu’à coder.</p>
+    <p>En référence aux principes  de fonctionnement de Jasper, les étapes à réaliser cette  fois-ci avec le code Java sont déterminées comme  suit :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Localiser puis charger  le fichier jrxml.</p>
+        </li>
+        <li>
+          <p>Compiler le document jrxml pour  produire le document Jasper.</p>
+        </li>
+        <li>
+          <p>Alimenter le fichier Jasper avec  les données des clients.</p>
+        </li>
+        <li>
+          <p>Afficher le document final avec  les données, en fonction des choix de type de sortie.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p> Créez tout d’abord la classe <strong>Systeme</strong> dans le package <strong>controle.utilitaires</strong>. Elle servira à trouver le fichier jrxml.</p>
+    </div>
+    <pre>package controle.utilitaires;      import <strong>static</strong> java.lang.System.<strong>getProperty</strong>;      public class Systeme {          private static final String OS = "os.name";       private static final String DIR = "user.dir";       private static final String USER = "user.name";       private static final String VERSION = "os.version";       private static final String SEPARATEUR = "file.separator";          public static String getSeparateur() {           return getProperty(SEPARATEUR);       }          public static String getRepertoireCourant() {           return getProperty(DIR);       }          public static String getNomOS() {           return getProperty(OS);       }          public static String getVersionOS() {           return getProperty(VERSION);       }          public static String getNomUtilisateur() {           return getProperty(USER);       }   }</pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>La ligne <strong>import static</strong> permet d’importer les méthodes statiques d’une  classe. On peut alors les appeler comme si elles faisaient partie  de la classe elle-même.</p>
+      </div>
+    </div>
+    <div>
+      <p> Créez un package nommé <strong>controle.etat</strong>.</p>
+    </div>
+    <div>
+      <p> Créez une nouvelle classe appelée <strong>JasperFacade</strong> dans le package <strong>controle.etat</strong>.</p>
+    </div>
+    <pre>public static JasperPrint chargeEtcompile(String rapport,                           Collection&lt;?&gt; elements,<strong>                            Object ... params</strong>)                                  throws JRException {       try {           // Etape 1           String repertoireJasper = Systeme.getRepertoireCourant()                       + Systeme.getSeparateur() + "jasper"                       + Systeme.getSeparateur();           JasperDesign design =                    JRXmlLoader.load(repertoireJasper + rapport);           // Etape 2           JasperReport report =                   JasperCompileManager.compileReport(design);           // Etape 3              // les paramètres sont passés en alternance:           // d’abord la clé puis la valeur,           // ceci répété pour chaque paramètre<strong>            Map&lt;String, Object&gt; mesParametres =                            new HashMap&lt;String, Object&gt;();</strong>           if (params != null) {               for (int i = 0; i &lt; params.length; i += 2) {               mesParametres                       .put((String) paramètres[i],                               paramètres[i + 1]);               }           }<strong>            mesParametres.put("imagesDir",                            repertoireJasper + "images");</strong>              JRDataSource source =<strong>                    new JRBeanCollectionDataSource</strong>(elements);           return JasperFillManager.fillReport(report,                                mesParametres,                                source);       } catch (Exception e) {           JOptionPane.showMessageDialog(null,               "La compilation du rapport a échouée : \n"               + e.getMessage()               + "\nVeuillez contacter votre administrateur",               "Erreur", JOptionPane.ERROR_MESSAGE);           return null;       }   }  </pre>
+    <div>
+      <p> Procédez aux nombreux imports en une  fois à l’aide du raccourci-clavier [Ctrl][Shift] <strong>O</strong> (la lettre O).</p>
+    </div>
+    <p>La méthode <strong>chargeEtCompile</strong> effectue les trois premières étapes  citées précédemment. Elle prend en paramètre  le nom du rapport à compiler, les données à alimenter  sous forme d’une collection et des paramètres optionnels.</p>
+    <p>Dans cette méthode, une collection  particulière est utilisée : <strong>HashMap</strong> qui associe chaque élément  de la collection avec une clé unique de type String (et non  plus avec un index numérique comme avec la classe <strong>ArrayList</strong>).</p>
+    <p>La méthode <strong>put(clé, valeur)</strong> associe une valeur à une clé dans  la collection.</p>
+    <p>La méthode <strong>get(clé)</strong> permet de retrouver la valeur associée avec  la clé.</p>
+    <p>La notation du dernier paramètre  permet d’ajouter un nombre quelconque de paramètres à une  méthode. Il s’agit de ce que l’on appelle les <strong>varargs</strong>. Il est alors possible d’appeler cette méthode  des différentes manières suivantes :</p>
+    <pre>JasperFacade.chargeEtCompile("nomDuRapport.jrxml",                       Collections.emptyList());      JasperFacade.chargeEtCompile("nomDuRapport.jrxml",                       Collections.emptyList(),                        "param1", "valeur1");      JasperFacade.chargeEtCompile("nomDuRapport.jrxml",                       Collections.emptyList(),                       "param1", "valeur1",                        "param2", "valeur2");      // il est aussi possible de commettre des erreurs    // avec cette notation   JasperFacade.chargeEtCompile("nomDuRapport.jrxml",                       Collections.emptyList(),                       "param1"); // il manque la valeur   </pre>
+    <p>Une fois l’objet de type JasperPrint obtenu,  il est facile de réaliser les opérations de mise  en aperçu, d’impression et d’exportation grâce  aux librairies Jasper. </p>
+    <div>
+      <h3>a. Aperçu</h3>
+      <div>
+        <p> Ajoutez la méthode <strong>apercu()</strong> dans la classe <strong>JasperFacade</strong> pour obtenir l’aperçu :</p>
+      </div>
+      <pre>    public static void apercu(JasperPrint print) {<strong>            JasperViewer.viewReport</strong>(print, false);       }  </pre>
+      <div>
+        <p>et une méthode qui fait toutes  les opérations d’un coup :</p>
+      </div>
+      <pre>public static void apercu(String rapport,                       Collection&lt;?&gt; elements,                       Object... paramètres) {       try {           JasperPrint print = chargeEtcompile(rapport,                                    elements,                                   paramètres);           apercu(print);       } catch (Exception e) {           JOptionPane.showMessageDialog(null,                "Erreur lors de l’aperçu : \n"               + e.getMessage()               + "\nVeuillez contacter votre administrateur",                "Erreur", JOptionPane.ERROR_MESSAGE);       }   }  </pre>
+      <p>La première méthode permet, à l’aide  de la méthode statique <strong>viewReport</strong> de la classe <strong>JasperViewer</strong>, de visualiser directement le rapport dans une nouvelle  fenêtre.</p>
+      <p>Les autres méthodes ne présentant  pas plus de difficultés, elles sont ajoutées afin  de couvrir tout le spectre des fonctionnalités attendues.</p>
+    </div>
+    <div>
+      <h3>b. Impression du rapport</h3>
+      <p>Vous trouverez dans cette section le code  source des méthodes d’impression d’un  rapport.</p>
+      <pre>// Impression du rapport   public static void imprimer(String rapport,                        Collection&lt;?&gt; elements,                       Object... paramètres) {       try {           JasperPrint print = chargeEtcompile(rapport,                                    elements,                                   paramètres);           imprimer(print);       } catch (Exception e) {           JOptionPane.showMessageDialog(null,                       "L’impression a échoué : \n"               + e.getMessage()               + "\nVeuillez contacter votre administrateur",               "Erreur", JOptionPane.ERROR_MESSAGE);       }   }      public static void imprimer(JasperPrint print)                                throws JRException {       JasperPrintManager.printReport(print, true);   }  </pre>
+    </div>
+    <div>
+      <h3>c. Export en PDF</h3>
+      <p>Afin de pouvoir exporter les états  (donc les rapports) dans les différents formats plus  facilement, les <strong>enums</strong> de Java sont utilisés.</p>
+      <div>
+        <p> Créez un nouvel enum <strong>FormatExport</strong> dans le package <strong>controle.etat</strong>, à l’aide de l’option <strong>File - New - Enum</strong> du menu.</p>
+      </div>
+      <pre>package controle.etat;      import java.io.File;      import javax.swing.ImageIcon;      import net.sf.jasperreports.engine.JRAbstractExporter;   import net.sf.jasperreports.engine.JRException;   import net.sf.jasperreports.engine.JasperPrint;   import net.sf.jasperreports.export.SimpleExporterInput;   import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;      public <strong>enum</strong> FormatExport {       PDF,       HTML,       DOCX,       ODT,       ODS,       ;          @SuppressWarnings("rawtypes")       JRAbstractExporter creerExporter() {           return null;       }          @SuppressWarnings({ "rawtypes", "unchecked" })       void exporter(JasperPrint print, File destination)                                throws JRException {          JRAbstractExporter <strong>exporter = creerExporter();</strong>          exporter.setExporterInput(new SimpleExporterInput(print));         exporter.setExporterOutput(           new SimpleOutputStreamExporterOutput(destination));          exporter.exportReport();       }          FormatExport() {       }   }  </pre>
+      <p>Cet <strong>enum</strong> liste les différents formats disponibles à l’export :  cinq formats sont disponibles. Pas plus. Pas moins.</p>
+      <p>Pour chacun de ces formats, une méthode  simple <strong>export(JasperPrint, File)</strong> existe pour exporter un rapport de type <strong>JasperPrint</strong> dans un fichier sur le disque dur, de type <strong>java.io.File</strong>.</p>
+      <p>Il reste maintenant à effectuer l’opération  d’export pour chaque format.</p>
+      <p>Pour le format PDF, la méthode export  est redéfinie :</p>
+      <pre>PDF {       @Override       void export(JasperPrint print, File fichier)                               throws JRException {<strong>            JasperExportManager.exportReportToPdfFile</strong>(                   print,                   fichier.getAbsolutePath());       }   },  </pre>
+      <div>
+        <p> Complétez l’enum avec l’export au  format HTML. La méthode statique <strong>exportReportToHtmlFile</strong> de la classe <strong>JasperExportManager</strong> est utilisée.</p>
+      </div>
+      <div>
+        <p>Pour le format DOCX, la méthode <strong>creerExporter()</strong> est redéfinie par :</p>
+      </div>
+      <pre>    DOCX{           @Override           JRDocxExporter creerExporter() {               return new <strong>JRDocxExporter</strong>();           }       },  </pre>
+      <div>
+        <p> Complétez l’enum avec les formats  ODT et ODS. Les classes d’export sont respectivement :  <strong>JROdtExporter</strong> et  <strong>JROdsExporter</strong>.</p>
+      </div>
+      <div>
+        <p>Il reste à appeler la méthode <strong>export()</strong> de l’enum <strong>FormatExport</strong> depuis la classe <strong>JasperFacade</strong>.</p>
+      </div>
+      <div>
+        <p> Créez la méthode statique <strong>export()</strong> dans la classe <strong>JasperFacade</strong>.</p>
+      </div>
+      <pre>public static void export(FormatExport format,                    String prefixe,                    String rapport,                   Collection&lt;?&gt; elements,                    Object... paramètres) {       JFileChooser save = new JFileChooser();       save.setSelectedFile(new File(prefixe + "."                        + <strong>format.name</strong>().toLowerCase()));       int retour = save.showSaveDialog(save);       if (retour == JFileChooser.APPROVE_OPTION) {           try {               JasperPrint print = chargeEtcompile(rapport,                                       elements,                                       paramètres);<strong>                format.export</strong>(print, save.getSelectedFile());           } catch (Exception e) {               JOptionPane.showMessageDialog(null,                       String.format(               "L’export %s a rencontré une erreur : "               + "\n%s\n"               + "Veuillez contacter votre administrateur",<strong>                format.name</strong>(), e.getMessage()),                "Erreur", JOptionPane.ERROR_MESSAGE);           }       }   }  </pre>
+      <div>
+        <p>Cette méthode ouvre une boîte  de dialogue permettant de choisir le nom et l’emplacement du fichier à sauvegarder  grâce aux lignes :</p>
+      </div>
+      <pre>JFileChooser save = <strong>new JFileChooser</strong>();   save.<strong>setSelectedFile</strong>(<strong>new File</strong>( ... );   int retour = save.<strong>showSaveDialog</strong>(save);   if (retour == JFileChooser.APPROVE_OPTION) {       ...   }  </pre>
+      <div>
+        <div><img alt="images/14-31.png" src="images/images_14-31.png"></div>
+      </div>
+      <p>Le code <strong>format.name()</strong> permet d’obtenir le nom de l’enum (PDF, ODT, …) et  l’instruction <strong>toLowerCase()</strong> permet de transformer ce nom en caractères minuscules.</p>
+      <p>Il s’agit maintenant de tester ces méthodes à partir  du modules des clients.</p>
+      <div>
+        <p> Ouvrez la classe <strong>ControleClient</strong>.</p>
+      </div>
+      <div>
+        <p> Ajoutez la méthode <strong>imprimer()</strong> permettant de lancer l’impression :</p>
+      </div>
+      <pre>public void imprimer() {       try {           List&lt;Client&gt; données = <strong>crud.lire();</strong>           JasperPrint print =                JasperFacade.chargeEtcompile(<strong>"Clients.jrxml"</strong>, <strong>données</strong>);          JasperFacade.imprimer(print);       } catch (JRException e) {           JOptionPane.showMessageDialog(null, "Aucun aperçu.\n\n"                   + e.getMessage(), "Problème rencontré",                   JOptionPane.ERROR_MESSAGE);           e.printStackTrace();       }   }  </pre>
+      <p>La méthode est très simple  et permet d’effectuer toutes les opérations, et le code  de l’aperçu est quasiment le même.</p>
+      <p>Cette méthode pose néanmoins  un problème : la lecture des clients ainsi que le  chargement et la compilation des rapports peuvent prendre un certain temps,  voire même un temps certain.</p>
+      <p>Cela veut dire que l’affichage graphique de  l’application sera figé si cette méthode est  appelée directement depuis l’action du bouton d’impression.</p>
+      <p>Pour corriger ce comportement, la classe <strong>SwingWorker</strong> est utilisée, mais cette fois pour l’aperçu.</p>
+      <div>
+        <p> Ajoutez la méthode <strong>apercu()</strong> dans la classe <strong>ControleClient</strong>.</p>
+      </div>
+      <pre>public void apercu() {<strong>        new SwingWorker</strong>&lt;JasperPrint, Void&gt;() {              @Override           protected JasperPrint <strong>doInBackground</strong>()                                throws Exception {               List&lt;Client&gt; clients = crud.lire();               return                             JasperFacade.chargeEtcompile("Clients.jrxml",                                    clients);           }              @Override           protected void <strong>done</strong>() {               try {                   JasperPrint print = <strong>get()</strong>;                   JasperFacade.apercu(print);                  } catch (InterruptedException e) {                   Thread.currentThread().interrupt();                   e.printStackTrace();               } catch (<strong>ExecutionException e</strong>) {                   JOptionPane.showMessageDialog(null,                       "Aucun aperçu.\n\n"                       + e<strong>.getCause()</strong>.getMessage(),                    "Problème rencontré",                    JOptionPane.ERROR_MESSAGE);               }           }       }<strong>.execute()</strong>;   }  </pre>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p><strong>Void</strong> (avec une majuscule) est la classe Java correspondant  au pseudo-type <strong>void</strong> (avec une minuscule).</p>
+        </div>
+      </div>
+      <div>
+        <p>Il reste à utiliser cette méthode <strong>apercu()</strong>.</p>
+      </div>
+      <div>
+        <p> Ouvrez la classe <strong>PClients</strong>.</p>
+      </div>
+      <div>
+        <p> En mode <strong>Design</strong>, ajoutez une action pour le bouton d’aperçu,  et dans la méthode <strong>actionPerformed</strong> de cette action ajoutez l’appel à la méthode <strong>apercu()</strong> de la classe <strong>ControleClient</strong>.</p>
+      </div>
+      <pre>    private class ActionApercu extends AbstractAction {           private static final long serialVersionUID = 1L;              public ActionApercu() {               putValue(NAME, "Aperçu");               putValue(SHORT_DESCRIPTION,                         "Aperçu avant impression");           }              public void actionPerformed(ActionEvent e) {<strong>                controleClient.apercu();</strong>           }       }  </pre>
+      <div>
+        <p> Effectuez la même opération  pour l’action d’impression :</p>
+      </div>
+      <pre>    private class ActionImprimer extends AbstractAction {           private static final long serialVersionUID = 1L;           public ActionImprimer() {               putValue(NAME, "Imprimer");               putValue(SHORT_DESCRIPTION,                    "Imprimer les données des clients");           }              public void actionPerformed(ActionEvent e) {<strong>                controleClient.imprimer();</strong>           }       }  </pre>
+      <div>
+        <p> Ajoutez la classe d’action pour l’export comme  suit :</p>
+      </div>
+      <pre>    private class ActionExport extends AbstractAction {           private static final long serialVersionUID = 1L;           public ActionExport() {               putValue(NAME, "Export");               putValue(SHORT_DESCRIPTION,               "Exporter les clients sous forme de fichier");           }              public void actionPerformed(ActionEvent e) {<strong>                controleClient.export(getFenetre());</strong>           }       }  </pre>
+      <p>Le compilateur informe d’une erreur car la  méthode <strong>export()</strong> n’existe pas encore dans la classe <strong>ControleClient</strong>.</p>
+      <div>
+        <p> Créez la méthode <strong>export()</strong> à l’aide du Quick Fix d’Eclipse. Appuyez sur [Ctrl] <strong>1</strong> et choisissez l’option de création de nouvelles  méthodes.</p>
+      </div>
+      <div>
+        <p> Complétez la méthode d’export  avec le code suivant :</p>
+      </div>
+      <pre>public void export(Window parent) {       new SwingWorker&lt;List&lt;Client&gt;, Void&gt;() {              @Override           protected List&lt;Client&gt; doInBackground()                                throws Exception {               return crud.lire();           }              @Override           protected void done() {               try {                   List&lt;Client&gt; elements = get();                   FExport laFenetre = new <strong>FExport</strong>(parent,                                "clients",                                "Clients.jrxml",                                elements);                   laFenetre.setModal(true);                    laFenetre.setLocationRelativeTo(null);                   laFenetre.setVisible(true);               } catch (InterruptedException e) {                   Thread.currentThread().interrupt();                   e.printStackTrace();               } catch (ExecutionException e) {                   JOptionPane.showMessageDialog(null,                   "Lecture impossible pour export.\n\n"                   + e.getCause().getMessage(),                   "Problème rencontré",                   JOptionPane.ERROR_MESSAGE);               }           }       }.execute();   }  </pre>
+      <p>La boîte de dialogue <strong>FExport</strong> permet d’afficher une liste des différents  formats disponibles.</p>
+      <div>
+        <div><img alt="images/14-32.png" src="images/images_14-32.png"></div>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Le code de la classe <strong>FExport</strong> est disponible en téléchargement.</p>
+        </div>
+      </div>
+      <p>Un des points importants de la classe <strong>FExport</strong> est la construction de la liste.</p>
+      <pre>ExportRenderer renderer = new ExportRenderer();<strong>    DefaultListModel&lt;FormatExport&gt;</strong> model = new DefaultListModel&lt;&gt;();<strong>   for( FormatExport type : FormatExport.values()) {       model.addElement(type);   }</strong>   type_export = new JList<strong>&lt;FormatExport&gt;</strong>();   type_export.<strong>setModel</strong>(model);   type_export.<strong>setCellRenderer</strong>(renderer);   type_export.setSelectionMode(               ListSelectionModel.SINGLE_INTERVAL_SELECTION);   type_export.setLayoutOrientation(JList.HORIZONTAL_WRAP);  </pre>
+      <p>Elle utilise un modèle par défaut  de type <strong>DefaultListModel</strong>, qui est rempli avec les valeurs de l’enum <strong>FormatExport</strong> dans la boucle <strong>for</strong>. Pour cela, toutes les valeurs de l’enum sont obtenues  avec la méthode <strong>values()</strong>.</p>
+      <p>Le renderer est lui aussi très simple :</p>
+      <pre>package dialogue.rendu;      import java.awt.Component;      import javax.swing.DefaultListCellRenderer;   import javax.swing.ImageIcon;   import javax.swing.JList;      import controle.etat.FormatExport;      public class ExportRenderer extends DefaultListCellRenderer {        private static final long serialVersionUID = 1L;          public ExportRenderer() {           super();       }          public Component getListCellRendererComponent(JList&lt;?&gt; list,                            Object value, int index,                    boolean isSelected, boolean cellHasFocus) {           super.getListCellRendererComponent(list, value,                        index, isSelected, cellHasFocus);           FormatExport type = (FormatExport)value;           String txt = type.<strong>getDescription</strong>();           ImageIcon icon = type.<strong>getIcone</strong>();                              setIcon(icon);           setText(txt);                      return this;       }   }  </pre>
+      <p>Le texte et l’image de chaque format d’export  sont obtenus à partir de l’enum grâce aux méthodes <strong>getDescription()</strong> et <strong>getIcone()</strong>.</p>
+      <div>
+        <p> Créez ces méthodes dans l’enum :</p>
+      </div>
+      <pre>FormatExport(String icone, String fichier) {       this.icone =            new ImageIcon(FormatExport.class.getResource(icone));       this.fichier = fichier;   }      private final ImageIcon icone;   private final String fichier;      public ImageIcon getIcone() {       return icone;   }      public String getDescription() {       return fichier;   }  </pre>
+      <p>Les valeurs sont renseignées à la  construction des constantes de l’enum.</p>
+      <p>Il reste alors à construire les constantes  de l’enum <strong>FormatExport</strong> avec les bons paramètres.</p>
+      <pre>PDF("/images/export/Adobe-Acrobat-48.png", "PDF (*.pdf)") {       ...    },   HTML("/images/export/Microsoft-Office-2013-02-48.png",       ...    },   DOCX("/images/export/Firefox-48.png", "Page web (*.html)") {       ...    },       ODT("/images/export/odt.png",                    "Document Open/Libre Office (*.odt)") {       ...    },       ODS("/images/export/ods.png",                    "Tableur Open/Libre Office (*.ods)") {       ...    },   ;   </pre>
+    </div>
+  </div>
+</div>
+</body>
+</html>

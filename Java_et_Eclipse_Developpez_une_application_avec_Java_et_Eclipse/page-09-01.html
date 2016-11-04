@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_fb980571-0310-4772-9f63-faee53033ee2" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Démarche</h1>
+  <p>Pour mener l’analyse du projet, UML (Unified Modeling Language) est utilisé.</p>
+  <p>UML est né de la fusion des trois  principales méthodes de modélisation objet au  milieu des années 90 : OMT (Object Modeling Technique) de James Rumbaugh, Booch de Grady Booch et OOSE (Object-Oriented Software Engineering) d’Ivar Jacobson. Il ne s’agit pourtant pas d’une méthode  mais d’un langage graphique de modélisation des systèmes  d’information, autrement dit de notation ou de représentation  graphique du domaine que l’on désire modéliser. Ceci  est d’autant plus vrai qu’UML ne précise pas les étapes à suivre  et comment les réaliser pour parvenir des besoins utilisateur  au code source.</p>
+  <p>La modélisation UML s’élabore  selon un formalisme graphique et s’appuie actuellement sur  quatorze diagrammes avec UML version 2.4.1. Ces derniers ne sont  généralement pas tous utilisés. Leur  emploi dépend de la taille, de la nature et de la complexité du  projet. Un nombre restreint de diagrammes sera retenu pour bâtir  l’application Luna qui est un petit projet classique de gestion tel  que défini au chapitre Présentation du projet.</p>
+  <p>Généralement, le diagramme  de classes est considéré comme le plus important.  Il est donc souvent le premier des diagrammes que les concepteurs d’application élaborent.  Une approche Génie Logiciel est choisie dans cet ouvrage en  s’inspirant de méthodes basées sur UML telles  que RUP (Rational Unified Process) et/ou XP (eXtreme Programming).</p>
+  <p>La démarche adoptée est  pilotée par les besoins des utilisateurs : les  classes techniques, comme les classes de connexion, qui ne sont  pas directement perceptibles par l’utilisateur final, ne sont donc  pas modélisées en premier.</p>
+  <p>Par contre, compte tenu de de la place centrale  de l’utilisateur, les maquettes représentatives de l’application  finale sont produites en premier lieu et lui sont soumises pour  approbation.</p>
+  <p>Il est supposé dans le cadre de ce  livre que ces maquettes et les prototypes ultérieurs ont été validés  par ces utilisateurs.</p>
+  <p>Résumons la démarche retenue  pour le projet. En partant des besoins, des maquettes sont produites  et parallèlement le diagramme des cas d’utilisation est élaboré.</p>
+  <p>Les diagrammes de séquence et de  communication sont ensuite créés, puis finalement le  diagramme de classes de l’application. Tout ceci selon des cycles itératifs  et incrémentaux.</p>
+  <div>
+    <div><img alt="images/07-01.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C07-01.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ed4RMM%2bRvTiAsA"></div>
+  </div>
+  <p>L’idée est finalement simple :  pour modéliser (comprendre et représenter) un système  complexe, il est nécessaire de recommencer plusieurs fois,  en affinant l’analyse par étape et en autorisant les retours  sur les étapes précédentes. Cette démarche  est appliquée au cycle de développement dans son  ensemble. Une ou plusieurs itérations permettent ainsi  une avancée significative nommée incrément. Le  processus est réitéré à chaque  incrément.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2Ed4RMM%2bRvTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>La démarche itérative  et incrémentale peut également être appliquée  aux cycles de vie plus classiques (en cascade, en V…).</p>
+    </div>
+  </div>
+  <p>Parvenu enfin au diagramme de classes, deux  options sont possibles. Soit la production du code démarre  de suite, soit celle-ci est différée pour réaliser  auparavant un regroupement de classes. Cet effort supplémentaire  est guidé par la volonté de rationaliser le code  afin de faciliter la maintenance corrective et évolutive.</p>
+  <p>Les classes sont déterminées  en fonction de trois types :</p>
+  <div>
+    <ul>
+      <li>
+        <p>dialogue,</p>
+      </li>
+      <li>
+        <p>contrôle,</p>
+      </li>
+      <li>
+        <p>entité.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Le type dialogue regroupe les classes qui  constituent l’interface homme-machine : l’IHM (en anglais  GUI pour Graphical User Interface). Ce sont en majorité des classes graphiques  issues des maquettes. Elles n’effectuent aucun traitement hormis  ceux qui permettent des interactions avec l’utilisateur et sont  responsables de l’affichage des données.</p>
+  <p>Le type <strong>entité</strong> correspond aux classes propres au domaine modélisé.  Chaque instance de ces classes correspondra en général à une  ligne de données stockée dans une des tables de  la base MySQL. Chaque classe aura une classe compagne qui dispose  des méthodes dites CRUD (pour Create, Read, Update, Delete), permettant d’effectuer des opérations élémentaires  sur les données.</p>
+  <p>Les classes du type <strong>contrôle</strong> établissent la jonction entre les classes des  deux précédents types. Par exemple, la demande  de création d’un client est prise en compte par une classe  contrôle qui la transmet à la classe CRUD possédant cette  méthode et qui est en charge des clients.  On peut aussi  leur confier les contrôles du respect des règles  métiers. Les classes techniques sont également de  ce type.</p>
+  <p>Du point de vue du code, ces classes sont  rangées dans des packages.</p>
+  <p>Une architecture 3-tiers se dessine alors  pour l’application Luna.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le terme de tiers est à prendre  ici comme dans l’expression « tiers de confiance » :  un des intervenants du système, et non pas comme 33,33 % du système.</p>
+    </div>
+  </div>
+  <div>
+    <div><img alt="images/07-02-1.png" src="images/images_07-02-1.png"></div>
+  </div>
+  <p>UML est un formalisme, qui permet de décrire  graphiquement un système informatique. Il est  tout à fait possible de réaliser une modélisation  en UML avec un crayon et du papier !</p>
+  <p>Certains logiciels permettent également  de réaliser cette modélisation de manière informatique,  avec des bonus comme la génération automatique  de code…</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le plus important dans une modélisation  UML est qu’un intervenant du projet puisse comprendre l’application  sans avoir nécessairement besoin d’acquérir un  bagage technique supplémentaire.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

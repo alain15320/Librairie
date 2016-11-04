@@ -1,0 +1,686 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Gestion des clients</h1>
+<p>Le paradigme MVC va être mis en œuvre  en commençant par la gestion des clients. La démarche  pour les articles et les commandes est similaire.</p>
+<div>
+  <h2>1. Modèle métier</h2>
+  <p>La classe <strong>Client</strong> est une classe entité qui fait partie du M  de MVC, le modèle. Elle a été explicitée  au chapitre Classes entités.</p>
+  <p>Sa classe associée <strong>ClientCrud</strong> permet d’effectuer des opérations depuis la  base de données, dont en particulier la recherche de clients.</p>
+  <p>Voici la liste des méthodes disponibles  dans la classe <strong>ClientCrud</strong> :</p>
+  <div>
+    <div><img alt="images/12-02.png" src="images/images_12-02.png"></div>
+  </div>
+  <p>La table va pouvoir afficher les clients issus  de la base de données. Pour cela, la méthode <strong>lire()</strong> de la classe <strong>ClientCrud</strong> interviendra à un certain point.</p>
+</div>
+<div>
+  <h2>2. Modèle graphique</h2>
+  <p>La classe <strong>JTable</strong> nécessite des données à afficher.  Ces données lui sont fournies par le modèle de  table, soit un objet qui implémente l’interface <strong>TableModel</strong>. Ce modèle de table est différent  du modèle métier car il ne concerne que l’aspect  graphique.</p>
+  <p>Ce modèle de table fournit au composant  graphique (donc la vue) :</p>
+  <div>
+    <ul>
+      <li>
+        <p>le nombre de colonnes à afficher  grâce à la méthode <strong>getColumnCount()</strong>.</p>
+      </li>
+      <li>
+        <p>le nom des colonnes à afficher  avec la méthode <strong>getColumnName</strong>(int colonne), le paramètre étant  l’index de la colonne (commençant par 0).</p>
+      </li>
+      <li>
+        <p>le nombre de lignes grâce à la  méthode <strong>getRowCount()</strong>.</p>
+      </li>
+      <li>
+        <p>la valeur de la cellule avec la  méthode <strong>getValueAt</strong>(int ligne, int colonne), le premier paramètre étant  l’index de la ligne, le second étant l’index de la colonne.</p>
+      </li>
+      <li>
+        <p>un moyen pour ajouter des écouteurs à ce  modèle grâce à deux méthodes : <strong>addTableModelListener</strong> et <strong>removeTableModelListener</strong>.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Il fournit également un moyen pour éditer  directement une cellule de la table depuis l’interface graphique  grâce aux méthodes <strong>isCellEditable</strong> et <strong>setValueAt</strong>. Ces méthodes ne seront pas utilisées  dans l’application.</p>
+  <p>Créons un modèle de table  pour les clients dans le package <strong>controle.modele</strong>.</p>
+  <div>
+    <p> Créez une nouvelle classe nommée <strong>ModeleClients</strong> dans le package <strong>controle.modele</strong>. Cette classe hérite de la classe <strong>AbstractTableModel</strong> qui fait partie du package <strong>javax.swing.table</strong>. </p>
+  </div>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pour accélérer la  découverte de la classe AbstractTableModel dans la boîte de  dialogue de création de classe, vous pouvez utiliser l’astuce  suivante : dans le champ Superclass, tapez les capitales  de la classe à trouver, soit ATM puis effectuez la combinaison  de touches [Ctrl][Espace]. Eclipse  proposera alors la liste des classes qu’il connaît relativement à ce  qui vient d’être saisi.</p>
+    </div>
+  </div>
+  <div>
+    <div><img alt="images/12-03.png" src="images/images_12-03.png"></div>
+  </div>
+  <p>La classe <strong>AbstractTableModel</strong> fournit un début d’implémentation  de l’interface <strong>TableModel</strong>, avec un code pour gérer l’enregistrement des  vues auprès du modèle (les méthodes <strong>addTableModelListener</strong> et <strong>removeTableModelListener</strong> sont donc créées) et des méthodes  pour notifier la vue que le modèle a changé.</p>
+  <p>Eclipse a procédé à l’importation  suivante dans la classe <strong>ModeleClients</strong>.</p>
+  <pre>import javax.swing.table.AbstractTableModel;  </pre>
+  <p>La classe <strong>ModeleClients</strong> doit néanmoins obligatoirement redéfinir  plusieurs méthodes de l’interface <strong>TableModel</strong>. C’est pour cela qu’Eclipse a créé ces méthodes en  leur mettant des valeurs par défaut (0 et null).</p>
+  <pre>package controle.modele;      import javax.swing.table.AbstractTableModel;      public class ModeleClients extends AbstractTableModel {          @Override       public int getRowCount() {           // TODO Auto-generated method stub           return 0;       }          @Override       public int getColumnCount() {           // TODO Auto-generated method stub           return 0;       }          @Override       public Object getValueAt(int rowIndex, int columnIndex) {           // TODO Auto-generated method stub           return null;       }      }  </pre>
+  <p>Complétons cette classe en commençant  par les colonnes.</p>
+  <p>Les colonnes sont fixes : elles ne  changeront pas dans l’application, et correspondent au code, au  nom, au prénom, à la présence de la carte  de fidélité et à la date de création.</p>
+  <div>
+    <p> Rajoutez un attribut <strong>TITRES</strong> dans la classe <strong>ModeleClients</strong>.</p>
+  </div>
+  <pre><strong>private static final</strong> String[] TITRES =          {"Code", "Nom", "Prénom", "Carte Fidélité", "Date Création"};  </pre>
+  <div>
+    <p>Les méthodes <strong>getColumnCount</strong> et <strong>getColumnName</strong> sont alors triviales à écrire :</p>
+  </div>
+  <pre>    public int getColumnCount() {           return TITRES<strong>.length</strong>;       }          public String getColumnName(int columnIndex) {           return TITRES<strong>[columnIndex]</strong>;       }  </pre>
+  <p>L’étape suivante est de récupérer  le nombre de clients. Le plus simple est de construire le modèle  de table avec une liste de clients en paramètre du constructeur.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il aurait été possible  de récupérer les colonnes depuis la base de données, mais  cela complexifie le modèle.</p>
+    </div>
+  </div>
+  <div>
+    <p> Modifiez le constructeur avec le code suivant  et rajoutez l’attribut <strong>lesDonnees</strong>.</p>
+  </div>
+  <pre>    private final List&lt;Client&gt; lesDonnees;          public ModeleClients(List&lt;Client&gt; lesClients) {           lesDonnees = new ArrayList&lt;&gt;(lesClients);       }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le fait de créer une nouvelle  liste à partir d’une liste existante permet de garder un  contrôle absolu sur cette nouvelle liste.</p>
+    </div>
+  </div>
+  <p>Les méthodes <strong>getRowCount()</strong> et <strong>getValueAt()</strong> peuvent alors s’écrire de la manière  suivante :</p>
+  <pre>    public int getRowCount() {           return lesDonnees.size();       }          public Object getValueAt(int rowIndex, int columnIndex) {           Client client = getClient(rowIndex);           switch(columnIndex){           case 0:               return client.getCode();           case 1:               return client.getNom();           case 2:               return client.getPrenom();           case 3:               return client.isCarteFidele();           case 4:               return client.getDateCreation();           default:               return null;           }       }  </pre>
+  <p>À ce stade, un modèle de  table permettant d’afficher les clients est disponible.</p>
+  <div>
+    <p> Ajoutez une petite méthode pour retrouver  un client à partir de son numéro de ligne. Elle  sera utile par la suite.</p>
+  </div>
+  <pre>    public Client getClient(int numeroLigne) {           return lesDonnees.get(numeroLigne);       }  </pre>
+  <p>Il faut ensuite s’occuper du lien avec la  classe <strong>ClientCrud</strong>. Ce lien se fera dans une classe « Contrôleur » qui  ne contrôlera pas la table graphique, mais liera la récupération  des données en base et leur déversement dans le  modèle graphique.</p>
+  <div>
+    <p> Créez une classe <strong>ControleClient</strong> dans le package <strong>controle</strong>.</p>
+  </div>
+  <pre>public class ControleClient {          private final ClientCrud crud;       private final ModeleClients leModeleClients;          public ControleClient(Connexion connexion) {           crud = new ClientCrud(connexion);           List&lt;Client&gt; clients = crud.lire();           leModeleClients = new ModeleClients(clients);       }          public ModeleClients getModele() {           return leModeleClients;       }   }  </pre>
+  <p>Cette classe instancie comme attributs finaux  un nouvel objet de type ClientCrud pour accéder aux données  en base, elle lit les clients et les place dans le modèle  graphique pour la table à afficher. Ce modèle  graphique est ensuite récupérable grâce à la  méthode <strong>getModele()</strong>.</p>
+  <div>
+    <p> Créez une classe de test unitaire  et ajoutez la méthode suivante :</p>
+  </div>
+  <pre>@Test   public void test() {       Connexion connexion = Connexion.getConnexion();          ClientCrud crud = new ClientCrud(connexion);       Client unClient = new Client("code",                           "Nom", "Prenom",                           true, Instant.now());       crud.creer(unClient);                  ControleClient controle = new ControleClient(connexion);       ModeleClients modele = controle.getModele();          Client client = modele.getClient(0);          System.out.println("Nom du premier client " + client.getNom());      connexion.fermeture();   }  </pre>
+  <p>Comme vous pouvez le constater, la classe <strong>ControleClient</strong> a besoin d’un objet <strong>Connexion</strong> comme paramètre de constructeur.</p>
+  <p>D’où provient cet objet ?  Il serait tentant d’utiliser la méthode statique <strong>getConnexion()</strong> de la classe <strong>Connexion</strong> pour le récupérer, mais cette manière de  faire n’est pas très testable.</p>
+  <p>Cet objet est en fait créé une  seule fois dans l’application au moment de la validation de  l’utilisateur. Il est ensuite passé à l’instance  de la classe <strong>FAccueil</strong> qui le stocke dans un attribut privé. Quand  l’utilisateur clique sur le bouton d’affichage des clients, cet  attribut de connexion est passé au panneau correspondant.</p>
+  <p>Il s’agit donc de créer une chaîne  de passage de l’objet <strong>Connexion</strong> de la fenêtre de connexion à la fenêtre  des clients.</p>
+  <div>
+    <p> Allez dans la méthode <strong>valider()</strong> de la classe <strong>FConnexion</strong>, et rajoutez l’objet connexion en paramètre  du constructeur de la classe <strong>FAccueil</strong>.</p>
+  </div>
+  <pre>if (valide) {       Connexion <strong>connexion</strong> = Connexion.getConnexion();       FConnexion.this.dispose();       FAccueil laFenetreMenu = new FAccueil(<strong>connexion</strong>);                              laFenetreMenu.setVisible(true);   }  </pre>
+  <p>Eclipse avertit d’une erreur. Des solutions  sont proposées en survolant la ligne en erreur avec le  curseur de la souris.</p>
+  <div>
+    <div><img alt="images/re12-02.png" src="images/images_12-02.png"></div>
+  </div>
+  <div>
+    <p> Choisissez l’option <strong>Change constructor ’FAccueil()’: Add parameter ’Connexion’</strong>.</p>
+  </div>
+  <div>
+    <p> Stockez ensuite le paramètre de connexion  dans la classe <strong>FAccueil</strong> en tant qu’attribut <strong>privé et final</strong>.</p>
+  </div>
+  <pre><strong>private final Connexion connexion;</strong>      ...      public FAccueil(Connexion connexion) {<strong>        this.connexion</strong> = connexion;       ...   }</pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Rappelez-vous que le mot-clé <strong>this</strong> correspond à l’objet courant. Préfixer  un attribut ou une méthode avec « this. » permet  d’éviter les ambiguïtés quand des noms  de variables et d’attributs sont identiques.</p>
+    </div>
+  </div>
+  <div>
+    <p> Passez ensuite cet attribut en paramètre  du panneau de type <strong>PClients</strong>, dans la méthode <strong>afficherClients()</strong>.</p>
+  </div>
+  <pre>protected void afficherClients() {       JDialog dialog = new JDialog(this);       PClients clients = new PClients();<strong>       clients.setConnexion(connexion);</strong>        clients.setFenetre(dialog);       dialog.setContentPane(clients);       ...    }  </pre>
+  <p>Cela implique de créer une méthode <strong>setConnexion</strong> dans la classe <strong>PClients</strong>.</p>
+  <div>
+    <p> Créez la méthode <strong>setConnexion</strong> dans la classe <strong>PClients</strong>.</p>
+  </div>
+  <pre>public void setConnexion(Connexion connexion) {       this.connexion = connexion;       this.controleClient = new ControleClient(connexion);<strong>           this.table.setModel(controleClient.getModele());</strong>      }  </pre>
+  <p>La connexion est stockée comme attribut  de la classe, ainsi que le contrôle client.</p>
+  <p>Le modèle de la table est ensuite  initialisé grâce à l’appel de la méthode <strong>getModele()</strong> de la classe <strong>ControleClient</strong>.</p>
+  <p>À partir de cet instant, les données  clients de la base sont affichées dans la JTable du module  des clients.</p>
+  <div>
+    <div><img alt="images/12-05.png" src="images/images_12-05.png"></div>
+  </div>
+  <p>Il faut maintenant améliorer la présentation  de ces données.</p>
+</div>
+<div>
+  <h2>3. Personnalisation de l’affichage de la table</h2>
+  <p>Chaque ligne de la table correspond à un  client.</p>
+  <p>Dans cette ligne, chaque cellule correspond à une  propriété de ce client, la valeur de  cette propriété étant un objet.</p>
+  <p>Par défaut, chaque cellule d’une  ligne est formatée avec la méthode <strong>toString()</strong> de l’objet correspondant.</p>
+  <p>C’est pour cela que la colonne « Carte  Fidélité » affiche true ou false,  et que la date de création a ce format si particulier.</p>
+  <p>La classe <strong>JTable</strong> propose deux manières pour personnaliser le  rendu, qui seront explorées l’une après  l’autre.</p>
+  <div>
+    <p> Ouvrez la classe <strong>ModeleClients</strong> et rajoutez la méthode suivante :</p>
+  </div>
+  <pre>    @Override       public Class&lt;?&gt; getColumnClass(int columnIndex){           Class&lt;?&gt; classe = null;           switch(columnIndex){           case 3:               classe = Boolean.class;               break;           case 4:               classe = Instant.class;               break;           default:               classe = <strong>super.getColumnClass(columnIndex);</strong>               break;           }           return classe;       }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>En Java, les index commencent à 0. </p>
+    </div>
+  </div>
+  <p>Cette méthode permet de donner des  indices à la JTable concernant le type de données à afficher,  en retournant la classe de l’objet dont le rendu doit être effectué. </p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Cette méthode est redéfinie,  la méthode existant déjà dans la classe  mère <strong>AbstractTableModel</strong>. Pour appeler l’implémentation de cette classe  mère, le mot-clé <strong>super</strong> est utilisé.</p>
+    </div>
+  </div>
+  <p>Si vous relancez l’application, vous obtenez  l’affichage suivant.</p>
+  <div>
+    <div><img alt="images/12-06.png" src="images/images_12-06.png"></div>
+  </div>
+  <p>L’affichage des valeurs booléennes  est amélioré : des cases à cocher  remplacent les textes true ou false.</p>
+  <p>Il est possible d’améliorer un peu  plus cet affichage :</p>
+  <div>
+    <ul>
+      <li>
+        <p>les noms de famille  seront en gras.</p>
+      </li>
+      <li>
+        <p>une carte centrée sera  affichée pour ceux qui ont une carte de fidélité à la place  d’une case à cocher.</p>
+      </li>
+      <li>
+        <p>les dates comprendront le jour,  le mois et l’année au format français (jj/MM/aaaa)</p>
+      </li>
+    </ul>
+  </div>
+  <p>Pour parvenir à ce résultat,  les classes seront modifiées en faisant appel à une classe  spécialisée dans le rendu des cellules des tables : <strong>DefaultTableCellRenderer</strong>.</p>
+  <p>Cette classe hérite de JLabel et  peut donc afficher un texte et/ou une image. </p>
+  <p>Elle implémente également  l’interface <strong>TableCellRenderer</strong> et peut donc permettre de spécifier ce qu’il  faut afficher à l’intérieur d’une cellule ;  pour cela il faut redéfinir la méthode <strong>getTableCellRendererComponent</strong>.</p>
+  <p>Cette méthode comprend six paramètres :</p>
+  <pre>public Component getTableCellRendererComponent(                               JTable table,                               Object value,                               boolean isSelected,                               boolean hasFocus,                               int row,                               int column)  </pre>
+  <div>
+    <ul>
+      <li>
+        <p>table : est  l’objet du composant graphique.</p>
+      </li>
+      <li>
+        <p>value : l’objet qui est  la valeur à afficher dans la cellule.</p>
+      </li>
+      <li>
+        <p>isSelected : true si la  cellule est sélectionnée, sinon false.</p>
+      </li>
+      <li>
+        <p>hasFocus : true si la cellule  a le focus graphique, sinon false.</p>
+      </li>
+      <li>
+        <p>row : le numéro  (l’index) de la ligne à laquelle la cellule appartient.</p>
+      </li>
+      <li>
+        <p>column : le numéro  (l’index) de la colonne à laquelle la cellule appartient.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Cette méthode comprend également  un résultat à retourner de type JComponent. Il  s’agit du composant graphique qui sera utilisé pour l’affichage  dans la cellule.</p>
+  <p>Pour la classe <strong>DefaultTableCellRenderer</strong>, il suffit en général de retourner  le renderer lui-même, c’est-à-dire de terminer  la méthode par la ligne suivante :</p>
+  <pre>    return this;  </pre>
+  <div>
+    <p> Créez dans le package <strong>dialogue.rendu</strong> la classe <strong>GrasRenderer</strong>.</p>
+  </div>
+  <pre>package dialogue.rendu;      import java.awt.Component;   import java.awt.Font;   import javax.swing.JTable;   import javax.swing.table.DefaultTableCellRenderer;      public class GrasRenderer <strong>extends DefaultTableCellRenderer</strong> {       private static final long serialVersionUID = 1L;          public Component getTableCellRendererComponent(                       JTable table, Object value,                       boolean isSelected,                       boolean hasFocus,                       int row, int column) {<strong>            super.getTableCellRendererComponent(table, value,                                isSelected, hasFocus,                                row, column);              setFont(getFont().deriveFont(Font.BOLD));              return this;</strong>       }   }  </pre>
+  <p>Cette classe est très simple et se  charge juste de mettre l’affichage en gras.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>N’oubliez pas d’appeler la méthode <strong>getTableCellRendererComponent</strong> de la classe mère grâce à l’instruction <strong>super</strong>. Cela permet d’initialiser plein de petits détails  graphiques (la couleur du fond si la ligne est sélectionnée  par exemple) qui sont fastidieux à faire soi-même.</p>
+    </div>
+  </div>
+  <p>Cette classe est si simple qu’elle ne se préoccupe  même pas de la valeur à afficher.</p>
+  <p>Voici comment rendre graphiquement une valeur  booléenne avec une image.</p>
+  <div>
+    <p> Créez la classe <strong>BooleenRenderer</strong> toujours dans le même package <strong>dialogue.rendu</strong>.</p>
+  </div>
+  <pre>package dialogue.rendu;      import java.awt.Component;   import javax.swing.Icon;   import javax.swing.ImageIcon;   import javax.swing.JTable;   import javax.swing.table.DefaultTableCellRenderer;      public class BooleenRenderer extends DefaultTableCellRenderer {       private static final long serialVersionUID = 1L;          private final Icon carte;          public BooleenRenderer() {           super();<strong>            carte = new ImageIcon(                   getClass().getResource(                   "/images/gestion/Pending-Invoice-32.png"));</strong>       }          public Component getTableCellRendererComponent(JTable table,               Object value,               boolean isSelected, boolean hasFocus,               int row, int column) {              super.getTableCellRendererComponent(table,                   value,                   isSelected, hasFocus, row, column);<strong>                  Boolean carteFidelite = (Boolean)value;           setText("");              if(carteFidelite){                 setIcon(carte);           } else {                 setIcon(null);           }           setHorizontalAlignment(CENTER);</strong>           return this;       }   }  </pre>
+  <p>Cette classe crée un objet de type <strong>Icon</strong> qui sera affiché si le client a une carte de  fidélité.</p>
+  <p>La valeur à afficher est ensuite  récupérée. Comme il s’agit avec certitude  d’un booléen, cette valeur est directement castée  et l’icône est mise en place si le booléen est  vrai. S’il est faux, une icône nulle est affectée,  ce qui équivaut à « ne pas afficher  d’image ».</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Un renderer est conçu pour  optimiser le rendu graphique. En particulier, un seul composant  graphique est créé avec l’opérateur new  pour <strong>toutes les cellules de la colonne</strong>. Si vous oubliez de mettre l’icône à null,  les affichages seront incohérents au bout d’un moment.  Et il n’y a rien de pire qu’un bug aléatoire !</p>
+    </div>
+  </div>
+  <div>
+    <p> Créez la classe <strong>InstantRenderer</strong> toujours dans le même package <strong>dialogue.rendu</strong>.</p>
+  </div>
+  <pre>package dialogue.rendu;      import java.awt.Component;   import java.time.Instant;      import javax.swing.JTable;   import javax.swing.table.DefaultTableCellRenderer;      import controle.utilitaires.GestionDates;      public class InstantRenderer extends DefaultTableCellRenderer {       private static final long serialVersionUID = 1L;          public Component getTableCellRendererComponent(JTable table,               Object value,               boolean isSelected,  boolean hasFocus,               int row,   int column) {           Instant instant = (Instant) value;              String texte = GestionDates.dateEnChaineFR(instant);              this.setText(texte);           this.setHorizontalAlignment(CENTER);              return this;       }   }  </pre>
+  <div>
+    <p> Créez ensuite la classe <strong>GestionDates</strong> dans le package <strong>controle.utilitaires</strong>.</p>
+  </div>
+  <pre>package controle.utilitaires;      import java.text.ParseException;   import java.time.Instant;   import java.time.LocalDate;   import java.time.ZoneId;   import java.time.ZonedDateTime;   import java.time.format.DateTimeFormatter;   import java.util.Locale;      public class GestionDates {          private static final String MATRICE_FR = "dd/MM/yyyy";          public static String dateEnChaineFR(Instant date) {           ZoneId fuseau = ZoneId.systemDefault();           Locale locale = Locale.FRANCE;           DateTimeFormatter format =               DateTimeFormatter.ofPattern(MATRICE_FR, locale);           ZonedDateTime dateSurFuseau = date.atZone(fuseau);           return format.format(dateSurFuseau);       }   }  </pre>
+  <p>Cette classe convertit un objet de type Instant  en une chaîne de caractères au format français.</p>
+  <p>Le composant JTable va dès lors pouvoir  bénéficier de toute cette présentation personnalisée.</p>
+  <div>
+    <p> Ouvrez la classe <strong>PClients</strong> et allez dans la méthode <strong>setConnexion()</strong>.</p>
+  </div>
+  <div>
+    <p> Rajoutez le code suivant à la fin  de cette méthode.</p>
+  </div>
+  <pre>    TableColumnModel modeleColonne = table.<strong>getColumnModel</strong>();          TableColumn noms = modeleColonne.<strong>getColumn(1)</strong>;       noms.<strong>setCellRenderer</strong>(new GrasRenderer());          TableColumn cartes = modeleColonne.getColumn(3);       cartes.setCellRenderer(<strong>new BooleenRenderer()</strong>);          TableColumn dates = modeleColonne.getColumn(4);       dates.setCellRenderer(new InstantRenderer());  </pre>
+  <div>
+    <p>L’application affiche dorénavant  la table de la manière désirée.</p>
+  </div>
+  <div>
+    <div><img alt="images/12-07.png" src="images/images_12-07.png"></div>
+  </div>
+  <p>L’affichage de la date est encore un peu petit  par rapport au reste de la table, et quand une ligne est sélectionnée,  il n’y a pas de changement de la couleur d’arrière-plan.  Cela est dû au fait que la méthode <strong>super.getTableCellRendererComponent</strong> n’a pas été appelée dans  l’InstantRenderer.</p>
+  <div>
+    <p> Rajoutez l’appel suivant dans la méthode <strong>getTableCellRendererComponent</strong> de la classe <strong>InstantRenderer</strong>.</p>
+  </div>
+  <pre><strong>super</strong>.getTableCellRendererComponent(table,                            value,                           isSelected, hasFocus,                           row, column);   </pre>
+  <div>
+    <p> Placez cet appel en fin de méthode. Évaluez  son rendu.</p>
+  </div>
+  <div>
+    <p> Déplacez ensuite cet appel en début  de méthode. Quelle différence pouvez-vous observer ?</p>
+  </div>
+</div>
+<div>
+  <h2>4. Gestion du simple clic</h2>
+  <p>Il s’agit ici de reporter les valeurs de la  ligne sélectionnée dans les champs situés  au-dessus de la table. Le but est d’offrir un confort de lecture  permettant en un coup d’œil de lire l’ensemble  des données concernant le client.</p>
+  <div>
+    <p> Rajoutez le code suivant à la fin  de la méthode <strong>setConnexion()</strong>.</p>
+  </div>
+  <pre>table.addMouseListener(new MouseAdapter() {       public void mouseClicked(MouseEvent evt) {           // gestion du simple clic sur une ligne de la table           // pour un report des données           // dans les champs correspondants           int numLigne = table.getSelectedRow();           if (numLigne &gt;= 0) {                  ModeleClients modele = controleClient.getModele();               Client client = modele.getClient(numLigne);               txtCode.setText(client.getCode());               txtNom.setText(client.getNom());               txtPrenom.setText(client.getPrenom());               cartefidelite.setSelected(client.isCarteFidele());               // on met la date de création au format français               String date = GestionDates.dateEnChaineFR(                           client.getDateCreation());               txtDateCreation.setText(strDate);           }       }   });  </pre>
+</div>
+<div>
+  <h2>5. Opérations sur le modèle</h2>
+  <p>Les classes suivantes ont d’ores et déjà été créées :</p>
+  <div>
+    <ul>
+      <li>
+        <p>La classe de type  entité <strong>Client</strong> représente les données d’un client  en base.</p>
+      </li>
+      <li>
+        <p>La classe <strong>ClientCrud</strong> effectue des opérations basiques sur ces données : création  d’un client, lecture d’un client ou de tous les clients, modification et  suppression d’un client et recherche parmi ceux-ci.</p>
+      </li>
+      <li>
+        <p>La classe de modèle graphique  pour la JTable <strong>ModeleClients</strong> se charge de gérer la liste des clients affichés  dans la table. </p>
+      </li>
+      <li>
+        <p>La classe <strong>ControleClient</strong> se charge d’appeler le CRUD du client et a connaissance  du modèle de la table.</p>
+      </li>
+      <li>
+        <p>La classe graphique de type panneau <strong>PClients</strong>, qui contient la JTable, est en charge d’afficher le  modèle de table.</p>
+      </li>
+      <li>
+        <p>La classe graphique de type panneau <strong>PClient</strong> est en charge d’afficher un client donné. Elle  a également pour vocation de servir à créer  un nouveau client et à modifier un client existant.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Il s’agit maintenant d’effectuer les opérations  suivantes : ajout, modification, recherche et suppression,  les données devant être enregistrées  en base.</p>
+  <div>
+    <h3>a. Ajout d’un client</h3>
+    <p>La chaîne générale  des opérations pour un ajout est alors :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Ouverture du panneau <strong>PClients</strong> pour obtenir la liste des clients.</p>
+        </li>
+        <li>
+          <p>Clic sur le bouton <strong>Ajouter</strong> pour afficher le panneau <strong>PClient</strong> de création d’un client.</p>
+        </li>
+        <li>
+          <p>Édition des informations  du client.</p>
+        </li>
+        <li>
+          <p>Clic sur le bouton de sauvegarde.</p>
+        </li>
+        <li>
+          <p>Le ControleClient est appelé pour  sauvegarder le client à l’aide de la classe <strong>ClientCrud</strong>, et il met à jour le modèle de table.</p>
+        </li>
+        <li>
+          <p>La JTable rattachée au  modèle est alors rafraîchie pour afficher le nouveau client.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Dans cette chaîne de traitements,  un point important est à noter : pour que tout  fonctionne de la manière souhaitée, l’instance  de <strong>PClient</strong> doit obtenir le même <strong>ControleClient</strong> de l’instance <strong>PClients</strong>. Le plus simple est de le passer par une méthode.</p>
+    <div>
+      <p> Ajoutez la ligne suivante dans la méthode <strong>actionPerformed</strong> de l’écouteur des actions du bouton <strong>Ajouter</strong> de la classe <strong>PClients</strong>.</p>
+    </div>
+    <pre>private class ActionAjouter extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionAjouter() {           putValue(NAME, "Ajouter");           putValue(SHORT_DESCRIPTION,"Ajouter un nouveau client");       }          public void actionPerformed(ActionEvent e) {                  PClient ajout = new PClient();           ajout.setActionAnnuler(actionAnnuler);<strong>               ajout.setControleClient(controleClient);</strong>           ...                          changerPanneau(ajout ,"Ajouter un nouveau client");       }   }  </pre>
+    <div>
+      <p> Créez une méthode <strong>setControleClient</strong> dans la classe <strong>PClient</strong>. Elle implique de créer dans la classe un attribut  privé non final de type <strong>ControleClient</strong>.</p>
+    </div>
+    <pre>    void setControleClient(ControleClient controleClient) {           <strong>this.</strong>controleClient = controleClient;       }  </pre>
+    <div>
+      <p> Créez la même méthode  dans la classe <strong>PClientRecherche</strong>.</p>
+    </div>
+    <div>
+      <p> Ajoutez une action sur le bouton <strong>Ajouter</strong>, dont la classe héritant de AbstractAction  sera nommée <strong>ActionPrincipale</strong>.</p>
+    </div>
+    <pre>private class ActionPrincipale extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionPrincipale() {<strong>            configurerAction(this)</strong>;       }          public void actionPerformed(ActionEvent e) {           String code = txtCode.<strong>getText</strong>();           String nom = txtNom.getText();           String prenom = txtPrenom.getText();           boolean carte = cartefidelite.<strong>isSelected</strong>();<strong>            Instant crééLe = (Instant) dateCreation.getValue();</strong>              actionPrincipale(code,                        nom, prenom,                        carteFidelite, crééLe);       }   }      protected void configurerAction(AbstractAction action) {       action.putValue(AbstractAction.NAME, "Sauvegarder");       action.putValue(AbstractAction.SHORT_DESCRIPTION,                       "Sauvegarder le nouveau client");   }      protected void actionPrincipale(String code,                         String nom, String prenom,                         boolean fidelite, Instant crééLe){   }  </pre>
+    <p>La classe <strong>PClient</strong> proposera un code dans la méthode <strong>actionPrincipale()</strong> permettant la création d’un nouveau client.  Ce code sera redéfini dans une sous-classe, par exemple  pour la modification. La méthode <strong>configurerAction()</strong> a le même objectif.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Le principal avantage de la méthode <strong>actionPrincipale</strong> est que les paramètres sont déjà remplis  avec les valeurs saisies par l’utilisateur, les composants graphiques  ayant déjà été sollicités  pour récupérer leur valeur : la méthode  est plus simple à tester.</p>
+      </div>
+    </div>
+    <p>Il reste un point à terminer avant  de coder la logique de création : il s’agit de la  récupération de la date de création.</p>
+    <p>Dans le chapitre Maquettes, un composant <strong>JFormattedTextField</strong> a été proposé pour afficher  la date de création d’un client. La classe <strong>JFormattedTextField</strong> a besoin d’une instance d’une classe spécifique  pour formater la date du client en chaîne de caractères  et convertir la valeur saisie par l’utilisateur en objet de type  Instant.</p>
+    <p>Rajoutez le code suivant dans le constructeur  de la classe <strong>PClient</strong>, un peu avant la création de l’attribut <strong>dateCreation</strong>.</p>
+    <pre>JFormattedTextField.AbstractFormatter formatter =                new JFormattedTextField.<strong>AbstractFormatter</strong>() {                      private static final long serialVersionUID = 1L;          @Override       public String <strong>valueToString</strong>(Object value)                                throws ParseException {           String text = "";           if (value instanceof Instant) {               Instant instant = (Instant) value;                             text = <strong>GestionDates.dateEnChaineFR</strong>(instant);           }           return text;       }                      @Override       public Object <strong>stringToValue</strong>(String text)                               throws ParseException {           try {               return <strong>GestionDates.chaineFRenDate</strong>(text);           } catch (ParseException e) {               return null;           }       }   };   dateCreation = new JFormattedTextField(formatter);  </pre>
+    <p><strong>AbstractFormatter</strong> permet de transformer un objet quelconque en chaîne  de caractères pour être affiché dans  le JFormattedTextField. Il permet réciproquement de convertir  une chaîne de caractères en un objet.</p>
+    <p>Pour l’utiliser dans ce cas précis,  il suffit d’utiliser le code suivant :</p>
+    <pre>    dateCreation.<strong>setValue</strong>(client.getDateCreation());       Instant crééLe = <strong>(Instant)</strong> dateCreation.<strong>getValue</strong>();  </pre>
+    <div>
+      <p> Créez la méthode <strong>chaineFRenDate</strong> dans la classe <strong>GestionDates</strong>.</p>
+    </div>
+    <pre>public static Instant chaineFRenDate(String laDateChaine)                               throws ParseException {       DateTimeFormatter format =                    DateTimeFormatter.ofPattern(MATRICE_FR);       LocalDate date = LocalDate.parse(laDateChaine, format);       LocalDateTime minuit = date.atStartOfDay();       ZoneId fuseau = ZoneId.systemDefault();       ZonedDateTime ici = minuit.atZone(fuseau);       return ici.toInstant();   }  </pre>
+    <div>
+      <p> Complétez enfin la méthode <strong>actionPrincipale</strong> de la classe <strong>PClient</strong>.</p>
+    </div>
+    <pre>protected void actionPrincipale(String code,                         String nom, String prenom,                         boolean fidelite, Instant crééLe){       if (!code.equals("")) {<strong>            controleClient.creer</strong>(code, nom, prenom,                        fidelite, crééLe);              // remise à vide des champs pour un nouvel ajout           txtCode.setText("");           txtNom.setText("");           txtPrenom.setText("");           // on remet la date du jour par défaut           dateCreation.<strong>setValue</strong>(Instant.now());           cartefidelite.setSelected(false);              txtCode.requestFocus();       } else {           JOptionPane.showMessageDialog(null,                           "La saisie du code client"                           + " est obligatoire",                           "Vérifiez votre saisie",                           JOptionPane.ERROR_MESSAGE);       }   }  </pre>
+    <p>Cette méthode délègue  l’opération de création au contrôle client.  Le <strong>ControleClient</strong> utilise le <strong>ClientCrud</strong> pour sauvegarder en base de données, et le  modèle de table est mis à jour par le <strong>ControleClient</strong> par la suite. Toutes ces opérations sont masquées  par le fait que l’action graphique d’ajout ne s’adresse qu’à un  objet « simple ».</p>
+    <p>Afin de faciliter l’ajout de nouveaux clients,  les champs saisis sont ensuite réinitialisés,  avec le champ date de création remis à l’instant  présent.</p>
+    <p>Il faut également coder la méthode <strong>creer()</strong> de la classe <strong>ControleClient</strong>.</p>
+    <div>
+      <p> Ouvrez la classe <strong>ControleClient</strong> et ajoutez la méthode <strong>creer()</strong>.</p>
+    </div>
+    <pre>public Client creer(    String code,                    String nom, String prenom,                   boolean carte, Instant crééLe) {       if (crééLe == null ) {           crééLe = Instant.now();       }       // création d’une instance client pour obtenir le CRUD       Client leClient = new Client(code, nom, prenom,                         carte, crééLe);       try {<strong>            // 1. sauvegarde d’abord dans la BD           crud.creer(leClient);              return leClient;</strong>       } catch (Exception e) {           JOptionPane.showMessageDialog(                   null,                   "Aucune création effectuée dans la BD.\n\n"                   + e.getMessage(), "Problème rencontré",                   JOptionPane.ERROR_MESSAGE);       }       return null;   }  </pre>
+    <p>La prochaine étape est de s’occuper  de la modification d’un client.</p>
+  </div>
+  <div>
+    <h3>b. Modification d’un client</h3>
+    <p>La modification s’effectue depuis la classe <strong>PClients</strong>. Après avoir sélectionné une  ligne de la table des clients, l’accès à sa modification  peut se faire soit en cliquant sur le bouton Modifier, soit par  un double clic sur cette ligne.</p>
+    <p>Quel que soit le mode d’accès choisi,  le traitement est le même. Pour cette raison, une méthode <strong>modification()</strong> est créée, cette méthode  ayant pour objectif de vérifier qu’une ligne est bien sélectionnée,  et si oui en extraire les données à passer au  panneau PClient.</p>
+    <div>
+      <p> Modifiez l’action du bouton <strong>Modifier</strong> comme suit :</p>
+    </div>
+    <pre>    private class ActionModifier extends AbstractAction {           private static final long serialVersionUID = 1L;           public ActionModifier() {               putValue(NAME, "Modifier");               putValue(SHORT_DESCRIPTION,                        "Modifier le client sélectionné");           }              public void actionPerformed(ActionEvent e) {<strong>                modification();</strong>           }       }  </pre>
+    <div>
+      <p> Créez la méthode <strong>modification()</strong> dans la classe <strong>PClients</strong>.</p>
+    </div>
+    <p>Voici ce qui est attendu plus précisément  de cette méthode :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Obligation pour l’utilisateur  de sélectionner auparavant une ligne de la table.</p>
+        </li>
+        <li>
+          <p>Récupération des  données de la ligne.</p>
+        </li>
+        <li>
+          <p>Passage de ces données à une  nouvelle instance de la classe PClient.</p>
+        </li>
+        <li>
+          <p>Changement des informations du panneau  PClient pour refléter l’opération de modification :  son texte et son icône.</p>
+        </li>
+        <li>
+          <p>Changement de l’action du bouton  principal.</p>
+        </li>
+        <li>
+          <p>Changement des informations de la  fenêtre : son titre notamment.</p>
+        </li>
+        <li>
+          <p>Affichage du panneau de modification.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p> Ajoutez dans cette méthode le code  concernant le test de sélection d’une ligne :</p>
+    </div>
+    <pre>int numeroLigne = table.getSelectedRow();   if (numeroLigne &lt; 0) {       // si aucune ligne sélectionnée       JOptionPane.showMessageDialog(null, "Sélectionnez auparavant"               + " la ligne à modifier" + ’\n’               + "ou effectuez un double clic sur la ligne",               "MODIFICATION", JOptionPane.INFORMATION_MESSAGE);   } else {       // une ligne est bien sélectionnée   }  </pre>
+    <p>Les numéros des lignes commencent à zéro.  Si aucune ligne n’est sélectionnée, la méthode <strong>getSelectedRow()</strong> retourne -1.</p>
+    <p>À partir du moment où la  ligne est obtenue, il est possible de récupérer  le client depuis le modèle :</p>
+    <pre>Client client = controleClient.getModele().getClient(numeroLigne);  </pre>
+    <p>Il s’agit maintenant de faire en sorte que  le panneau PClient connaisse le client sélectionné.  L’option choisie est de le passer en paramètre du constructeur.</p>
+    <div>
+      <p> Créez un nouveau constructeur dans  la classe <strong>PClient</strong>, prenant en paramètre un objet Client. Le constructeur  existant appellera le nouveau constructeur créé avec  un paramètre null.</p>
+    </div>
+    <pre>PClient() {       this(null);   }      PClient(<strong>Client client</strong>) {       createContents();<strong>        if (client != null) {</strong>           txtCode.setText(client.getCode());              dateCreation.<strong>setValue</strong>(client.getDateCreation());              txtNom.setText(client.getNom());           txtPrenom.setText(client.getPrenom());           cartefidelite.setSelected(client.isCarteFidele());<strong>        }</strong>   }  </pre>
+    <p>Ce constructeur met à jour les widgets  graphiques du panneau avec les informations du client <strong>après</strong> que les widgets ont été créés.</p>
+    <p>En cas de modification d’un client, il est  rigoureusement interdit de changer le code identifiant. Celui-ci  sert à établir les relations avec les commandes  du client en base ! De même toute modification  de la date de création est interdite, grâce à la  méthode <strong>setEditable</strong> du composant graphique.</p>
+    <pre>        // on empêche la modification            // des champs code et date de création           txtCode.<strong>setEditable(false);</strong>           dateCreation.<strong>setEditable(false);</strong></pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Le même panneau utilisé pour  l’ajout utilisera le constructeur par défaut, sans client  en paramètre, et n’aura donc pas d’initialisation de widgets.</p>
+      </div>
+    </div>
+    <p>Afin de pouvoir modifier les labels du panneau  et l’action du bouton principal, ajoutez les accesseurs de ces widgets  graphiques dans la classe <strong>PClient</strong>.</p>
+    <div>
+      <p> Convertissez la variable du label de titre  en attribut, si ce n’est déjà fait. Pour cela,  sélectionnez la ligne de la déclaration et faites  la combinaison de touches [Ctrl] <strong>1</strong>, puis choisissez l’option <strong>Convert local variable to field</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/12-08.png" src="images/images_12-08.png"></div>
+    </div>
+    <div>
+      <p> Allez ensuite à la déclaration  de la propriété du label titre, tapez [Ctrl] <strong>1</strong> et choisissez l’option <strong>Create getter and setter for ’lblTitre’</strong>. Effacez ensuite le setter (c’est-à-dire le  mutateur) : il ne servira pas.</p>
+    </div>
+    <div>
+      <div><img alt="images/12-09.png" src="images/images_12-09.png"></div>
+    </div>
+    <div>
+      <p> Retournez dans la méthode <strong>modification()</strong> de la classe <strong>PClients</strong> et ajoutez le code suivant après la création  du panneau.</p>
+    </div>
+    <pre>PClient edition = new PClient(client);   edition.<strong>getLblTitre()</strong>.<strong>setText</strong>("Edition");   edition.getLblTitre().<strong>setIcon</strong>(new ImageIcon(            getClass().getResource(               "/images/gestion/client/User-Modify-64.png")));  </pre>
+    <div>
+      <p>Le titre du panneau est dès  lors correct lors de la modification.</p>
+    </div>
+    <div>
+      <p>Il reste à s’occuper du bouton  principal. Celui-ci doit afficher une icône et un texte  correct, et bien sûr modifier le client au lieu d’en créer  un nouveau !</p>
+    </div>
+    <div>
+      <p> Modifiez le code de la méthode <strong>modification()</strong> comme suit :</p>
+    </div>
+    <pre>PClient edition = new PClient(client) {                          private static final long serialVersionUID = 1L;          @Override       protected void configurerAction(AbstractAction action) {           action.putValue(Action.NAME, "Modifier");           action.putValue(Action.LARGE_ICON_KEY,                   new ImageIcon(               getClass().getResource(                   "/images/gestion/Save-48.png")));       }                          @Override       protected void actionPrincipale(String code,                    String nom, String prenom,                    boolean fidelite, Instant crééLe) {           try {               boolean modifié = <strong>controleClient.modifier</strong>(code,                                nom, prenom,                                fidelite, crééLe);               if (modifié) {                   actionAnnuler.actionPerformed(null);               }           } catch (ParseException e) {               e.printStackTrace();           }       }   };  </pre>
+    <p>Ce code crée une classe interne anonyme  dérivant de PClient, dans laquelle les opérations  critiques sont redéfinies. Ici, les opérations  critiques sont la configuration de l’action du bouton et le code  de l’action principale.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il existe plusieurs manières  de faire, dont certaines évitant l’héritage. Celle-ci  a surtout un but didactique !</p>
+      </div>
+    </div>
+    <div>
+      <p> Codez la méthode <strong>modifier()</strong> de la classe <strong>ControleClient</strong>.</p>
+    </div>
+    <pre>public boolean modifier(String code, String nom, String prenom,                   boolean carteFidelite, Instant creation)               throws ParseException {          // création d’une instance client pour        // abriter les données à modifier par le CRUD       Client leClient = new Client(code, nom, prenom,                       carteFidelite, creation);       // 1. sauvegarde d’abord dans la BD       try {           leClient = crud.modifier(leClient);       } catch (Exception e) {           JOptionPane.showMessageDialog(                   null,               "Aucune modification effectuée dans la BD.\n\n"               + e.getMessage(), "Problème rencontré",               JOptionPane.ERROR_MESSAGE);       }       return false;   }  </pre>
+    <p>Le bouton <strong>Modifier</strong> remplit dès lors son rôle, avec les  contraintes qui lui ont été fournies.</p>
+    <p>La prochaine étape est d’afficher  le panneau de modification client lors du double clic dans une des  lignes de la table.</p>
+    <div>
+      <p> Rajoutez les lignes suivantes dans l’écouteur  de la table qui a été codé lors de la  gestion du simple clic.</p>
+    </div>
+    <pre>    // gestion du double clic sur une ligne de la table       if (evt.<strong>getClickCount</strong>() == 2) {           modification();       }  </pre>
+    <p>L’événement de clic dans  la table fournit des informations supplémentaires, dont  le nombre de clics consécutifs, accessibles par la méthode <strong>getClickCount()</strong> de la classe <strong>MouseEvent</strong>.</p>
+    <p>Il est dorénavant possible d’ajouter  et de modifier un client depuis l’interface graphique. Il faut ensuite  s’occuper de sa suppression éventuelle.</p>
+  </div>
+  <div>
+    <h3>c. Suppression d’un client</h3>
+    <p>Cette suppression se fait grâce au  bouton présent dans la classe <strong>PClients</strong>.</p>
+    <div>
+      <p> Ouvrez la classe <strong>PClients</strong>, et naviguez dans le code jusqu’à l’action  de suppression, à la méthode <strong>actionPerformed()</strong>.</p>
+    </div>
+    <pre>private class ActionSupprimer extends AbstractAction {       private static final long serialVersionUID = 1L;       public ActionSupprimer() {           putValue(NAME, "Supprimer");           putValue(SHORT_DESCRIPTION,                        "Supprimer le client sélectionné");           }          public void actionPerformed(ActionEvent e) {           // code exécuté lors du clic du bouton Supprimer       }   }  </pre>
+    <div>
+      <p> Modifiez la méthode <strong>actionPerformed</strong> de la manière suivante :</p>
+    </div>
+    <pre>public void actionPerformed(ActionEvent e) {       int numeroLigne = table.getSelectedRow();       if (numeroLigne &lt; 0) {           // si aucune ligne sélectionnée           JOptionPane.showMessageDialog(null,                   "Sélectionnez une ligne avant.",                   "Suppression",                   JOptionPane.INFORMATION_MESSAGE);       } else {           // demander à l’utilisateur de confirmer       }   }  </pre>
+    <div>
+      <p>De la même manière  que pour la modification, ce code teste qu’une ligne est bien sélectionnée.  Sinon, il affiche une boîte de dialogue d’information à l’utilisateur  lui indiquant quoi faire.</p>
+    </div>
+    <div>
+      <p> Complétez la méthode avec  le code suivant :</p>
+    </div>
+    <pre>if (numeroLigne &lt; 0) {       // l’utilisateur n’a pas sélectionné de ligne   } else {       int choix = JOptionPane.<strong>showConfirmDialog</strong>(                       null,       String.format("Voulez-vous supprimer la fiche du client ?"               + "\ncode : %s"               + "\nnom  : %s",               table.getValueAt(numeroLigne, 0),                   table.getValueAt(numeroLigne, 1)),               "SUPPRESSION", JOptionPane.YES_NO_OPTION);          // 0 : oui 1 : non       if (choix == <strong>JOptionPane.YES_OPTION</strong>) {           controleClient.<strong>supprimer</strong>(numeroLigne);       }   }  </pre>
+    <p>Ce code ouvre une boîte de dialogue  de confirmation à destination de l’utilisateur, lui laissant  le choix entre répondre oui ou non à la question  posée, grâce à la méthode statique <strong>showConfirmDialog</strong> de la classe <strong>JOptionPane</strong>.</p>
+    <p>Cette méthode retourne un code spécifique à la  réponse de l’utilisateur. S’il a répondu  OUI, le contrôle client supprime effectivement la ligne.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Dans le traitement des codes de retour, évitez  d’utiliser les valeurs littérales (0 ou 1). Préférez  toujours les constantes définies dans les classes.</p>
+      </div>
+    </div>
+    <div>
+      <p> Codez la méthode <strong>supprimer()</strong> dans la classe <strong>ControleClient</strong>.</p>
+    </div>
+    <pre>public void supprimer(int numLigne) {       Client client = leModeleClients.getClient(numLigne);       try {           crud.<strong>supprimer</strong>(client.getCode());          } catch (Exception e) {           JOptionPane.showMessageDialog(                   null,               "Aucune suppression effectuée dans la BD.\n\n"               + e.getMessage(), "Problème rencontré",               JOptionPane.ERROR_MESSAGE);       }   }  </pre>
+  </div>
+  <div>
+    <h3>d. Recherche d’un client</h3>
+    <p>Finissons cette première partie des  traitements par les recherches. Les impressions et les exportations  seront détaillées au chapitre Application finale.</p>
+    <div>
+      <p> Complétez la méthode de l’écouteur  d’action du bouton <strong>Rechercher</strong>.</p>
+    </div>
+    <pre>private class ActionRechercher extends AbstractAction {       private static final long serialVersionUID = 1L;       public ActionRechercher() {           putValue(NAME, "Rechercher");           putValue(SHORT_DESCRIPTION,                        "Rechercher parmi les clients");       }          public void actionPerformed(ActionEvent e) {              // création de la fenêtre           PClientRecherche recherche = new PClientRecherche();           recherche.setActionAnnuler(actionAnnuler);<strong>            recherche.setControleClient(controleClient);</strong>           ...            changerPanneau(recherche, "Recherche de client(s)");       }   }  </pre>
+    <p>À la différence des autres  actions, il ne faut pas partager le contrôle client avec la  recherche. La recherche filtrera dans la table les clients trouvés  et à la fin de la recherche l’objectif est de retrouver  tous les clients, non filtrés.</p>
+    <div>
+      <p> Ajoutez ensuite une action sur le bouton <strong>Rechercher</strong> de la classe <strong>PClientRecherche</strong>.</p>
+    </div>
+    <pre>private class ActionPrincipale extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionPrincipale() {           putValue(NAME, "Rechercher");           putValue(SHORT_DESCRIPTION,                    "Rechercher parmi les clients existants");       }          public void actionPerformed(ActionEvent e) {           String code = txtCode.getText();           String nom = txtNom.getText();           String prenom = txtPrenom.getText();                   controleClient.<strong>rechercher</strong>(code, nom, prenom);       }   }  </pre>
+    <p>Codez la méthode <strong>rechercher</strong> de la classe <strong>ControleClient</strong>.</p>
+    <pre>public void rechercher(String code, String nom, String prenom) {       try {           List&lt;Client&gt; lus = crud.chercher(code, nom, prenom);           // les clients lus seront utilisés un peu plus tard       } catch (Exception e) {           JOptionPane.showMessageDialog(                   null,               "Aucune recherche effectuée dans la BD.\n\n"               + e.getMessage(), "Problème rencontré",               JOptionPane.ERROR_MESSAGE);       }   }  </pre>
+  </div>
+</div>
+<div>
+  <h2>6. Mise à jour de la table</h2>
+  <div>
+    <h3>a. Notification</h3>
+    <p>Rappelez-vous que dans le modèle  MVC, il y a une stricte séparation des vues et des données.  Donc pour que la vue, en l’occurrence ici le composant JTable, mette à jour  l’affichage graphique des données il faut qu’elle soit  informée du changement d’état du modèle  de table. Il ne s’agit ni plus ni moins que de l’application du  concept de notification.</p>
+    <p>Pour que le modèle puisse notifier  aux vues ses changements d’état, il doit disposer de méthodes  particulières, l’idéal étant d’avoir  une méthode pour l’ajout, une pour la modification, une  pour la suppression, etc. La classe <strong>AbstractTableModel</strong> dispose déjà de ces méthodes,  et cerise sur le gâteau, ne nécessite même  pas de les redéfinir. Elles peuvent être utilisées  telles quelles.</p>
+    <div>
+      <p> Ouvrez la classe <strong>ModeleClients</strong>, et naviguez dans une méthode, par exemple  le constructeur.</p>
+    </div>
+    <div>
+      <p> Saisissez les lettres « fire » et  appuyez sur [Ctrl][Espace].</p>
+    </div>
+    <div>
+      <div><img alt="images/12-10.png" src="images/images_12-10.png"></div>
+    </div>
+    <div>
+      <p>Ce raccourci vous montre toutes les méthodes  utilisables de la classe commençant par les lettres « fire ».</p>
+    </div>
+    <div>
+      <p>Il ne reste plus alors qu’à choisir  la méthode correspondante.</p>
+    </div>
+    <div>
+      <p> Créez les méthodes que le  reste du code pourra appeler afin de notifier le modèle  de changements.</p>
+    </div>
+    <pre>public void <strong>créé</strong>(Client leClient) {       lesDonnees.add(leClient);       int index = lesDonnees.size() -1;<strong>        fireTableRowsInserted</strong>(index, index);   }      public void <strong>supprimé</strong>(int rowIndex) {       lesDonnees.remove(rowIndex);<strong>        fireTableRowsDeleted</strong>(rowIndex, rowIndex);   }      // ===========================================================   // permet de mettre à jour le modèle    // suite à de nouvelles recherches   // et d’informer les vues affichant ce modèle   public void <strong>lu</strong>(List&lt;Client&gt; nouvellesDonnees){       lesDonnees.clear();       lesDonnees.addAll(nouvellesDonnees);<strong>        fireTableDataChanged</strong>();   }  </pre>
+    <p>La méthode <strong>créé()</strong> ajoute le client en paramètre dans la liste  des clients. Elle récupère ensuite le  dernier index de cette liste, et utilise la méthode <strong>fireTableRowsInserted</strong> avec cet index. La méthode <strong>fireTableRowsInserted</strong> va notifier le composant graphique qu’une ligne a été insérée,  et donc mettre à jour le rendu graphique pour tenir compte  de ce nouveau client.</p>
+    <p>La méthode <strong>supprimé()</strong> enlève un client par rapport à son  index dans la liste. La méthode <strong>fireTableRowsDeleted()</strong> est ensuite appelée pour demander au composant  graphique de se rafraîchir en prenant en compte le fait  qu’une ligne particulière a été effacée.</p>
+    <p>La méthode <strong>lu()</strong> considère que toutes les lignes ont été modifiées,  et efface donc toutes les lignes présentes avec la méthode <strong>clear()</strong> de la liste, et ajoute dans cette liste tous les clients  lus. Comme il s’agit d’une modification globale des données,  le composant graphique est notifié par <strong>fireTableDataChanged()</strong> qu’il faut effectuer un rafraîchissement global  de la vue.</p>
+    <p>Dans le cas où un client est modifié,  il est pratique de créer une petite méthode retournant  le numéro de ligne du client à modifier.</p>
+    <pre><strong>private</strong> int getNumeroLigne(String unCode) {       int numLigne = -1;          for (int idx = 0; idx &lt; lesDonnees.size(); ++idx) {           String code = lesDonnees.get(idx).getCode();           if(code.equals(unCode)) {               numLigne = idx;               break;           }       }                   return numLigne;   }          public void <strong>modifié</strong>(Client leClient) {       int numeroLigne = <strong>getNumeroLigne</strong>(leClient.getCode());       if (numeroLigne &gt;= 0) {           <strong>            lesDonnees.set(numeroLigne, leClient);           fireTableRowsUpdated(numeroLigne, numeroLigne);</strong>       }   }  </pre>
+    <p>La méthode <strong>modifié()</strong> récupère le numéro de ligne  du client, et s’il est trouvé, met à jour ce client  dans la liste. La table est ensuite notifiée de ce changement par  l’appel de la méthode <strong>fireTableRowsUpdated()</strong>.</p>
+    <p>La classe <strong>ModeleClients</strong> est de plus en plus douée. Elle est maintenant capable de :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Transformer un ensemble  de données clients en tableau à double entrée (lignes  et colonnes).</p>
+        </li>
+        <li>
+          <p>Gérer par elle-même  tout ce qui concerne ce modèle.</p>
+        </li>
+        <li>
+          <p>Notifier, donc informer, les vues  concernées de tout changement du modèle.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Appelons les méthodes <strong>créé()</strong>, <strong>modifié()</strong>, <strong>supprimé()</strong> et <strong>lu()</strong> de ce modèle de table depuis le ControleClient.</p>
+    <div>
+      <p> Ajoutez l’appel des méthodes dans  la classe <strong>ControleClient</strong>.</p>
+    </div>
+    <pre>public Client <strong>creer</strong>(    String code,                            String nom, String prenom,                           boolean carte, Instant crééLe) {       ...        try {           // 1. sauvegarde d’abord dans la BD           crud.creer(leClient);<strong>               // 2. puis ajout dans le modèle           leModeleClients.créé(leClient);</strong>              return leClient;       } catch (Exception e) {           ...        }       return null;   }  </pre>
+    <pre>public boolean <strong>modifier</strong>(String code, String nom, String prenom,                   boolean carteFidelite, Instant creation)               throws ParseException {          ...        // 1. sauvegarde d’abord dans la BD       try {           leClient = crud.modifier(leClient);<strong>               if (leClient != null) {               leModeleClients.modifié(leClient);               return true;           }</strong>          } catch (Exception e) {           ...        }       return false;   }  </pre>
+    <pre>public void <strong>supprimer</strong>(int numLigne) {       Client client = leModeleClients.getClient(numLigne);       try {           crud.supprimer(client.getCode());<strong>               // suppression de la ligne dans le modèle           leModeleClients.supprimé(numLigne);</strong>       } catch (Exception e) {           ...        }   }  </pre>
+    <pre>public void <strong>rechercher</strong>(String code, String nom, String prenom) {       try {            List&lt;Client&gt; lus = crud.chercher(code, nom, prenom);<strong>           leModeleClients.lu(lus);</strong>          } catch (Exception e) {           ...        }   }  </pre>
+  </div>
+  <div>
+    <h3>b. Événements</h3>
+    <p>Il ne s’agit pas ici de s’intéresser  aux événements classiques tels que clic de souris  ou touche clavier activée, mais aux événements  qui concernent la modification de l’état du modèle  de données : ajout, suppression, etc. Cela concerne à la  fois les données et la structure d’accueil.</p>
+  </div>
+  <div>
+    <h3>c. Écouteur d’événements</h3>
+    <p>À ce stade, il est possible d’aborder  un autre concept utilisé dans le patron de conception MVC,  celui d’écouteur d’événements.</p>
+    <p>Effectivement, si la classe <strong>ModeleClients</strong> est capable d’informer ses vues, encore faut-il  que celles-ci l’écoutent ! À ceci s’ajoute  une autre contrainte : les vues n’ont pas le droit d’écouter  n’importe qui ! Elles sont en relation uniquement avec  certains objets privilégiés, placés dans  un ensemble de données spécial, prévu à cet  effet.</p>
+    <p>Abordons le premier point, celui de l’écoute.</p>
+    <p>Des méthodes du type « fireXXX »  ont été ajoutées à la  classe <strong>ModeleClients</strong> pour que le modèle puisse s’exprimer. Que va-t-il  falloir rajouter comme code pour que le composant <strong>JTable</strong> entende les notifications du modèle ?  En fait, <strong>rien</strong>. La plupart des composants sophistiqués de  Java comme JTable, JList ou JTree sont dotés d’une « bonne  ouïe » pour la simple raison qu’ils sont construits  par nature selon l’architecture MVC.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>En toute rigueur, JTable, JList et  JTree ne sont pas construits selon MVC mais selon <strong>MV*</strong>. Les développeurs Java ont décidé historiquement  de fusionner les contrôleurs et les vues de ces composants  graphiques pour des raisons de simplicité.</p>
+      </div>
+    </div>
+    <p>Ils font partie de ces composants privilégiés  qui disposent de modèles pour contenir leurs données  (TableModel pour JTable, ListModel pour JList, TreeModel pour  JTree…). Le composant JTable va donc se rafraîchir  automatiquement dès que le modèle de données  appellera les méthodes « fireXXX ».</p>
+    <div>
+      <p> Testez l’application pour les opérations  d’ajout, de modification et de suppression. Vous devez  constater que la JTable modifie ses données.</p>
+    </div>
+    <p>Voyons maintenant le deuxième point  portant sur la restriction.</p>
+    <p>En dehors des privilégiés  comme le composant JTable, comment le modèle peut-il informer  un autre interlocuteur s’il ne le connaît pas ?  Tout simplement en ajoutant un écouteur dans la liste des écouteurs à notifier,  ceci grâce à la méthode <strong>addTableModelListener</strong>.</p>
+    <div>
+      <p> Dans la méthode <strong>setConnexion</strong> de la classe <strong>PClients</strong>, ajoutez la ligne suivante :</p>
+    </div>
+    <pre>    controleClient.getModele().<strong>addTableModelListener(this)</strong>;  </pre>
+    <div>
+      <p>Eclipse vous informe d’une erreur sur  cette ligne. C’est normal, cette méthode doit passer en  paramètre un objet implémentant l’interface <strong>TableModelListener</strong>.</p>
+    </div>
+    <div>
+      <p> Cliquez sur la ligne en erreur et faites la  combinaison de touches [Ctrl] <strong>1</strong> pour faire apparaître les Quick Fix d’Eclipse.</p>
+    </div>
+    <div>
+      <div><img alt="images/12-11.png" src="images/images_12-11.png"></div>
+    </div>
+    <div>
+      <p> Choisissez l’option <strong>Let ’PClients’ implement ’TableModelListener’</strong>.</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Le tooltip sur fond jaune (dans Windows)  donne un avant-goût des modifications qui seront effectuées.</p>
+      </div>
+    </div>
+    <p>La classe <strong>PClients</strong> est en erreur car elle implémente l’interface  TableModelListener alors que les méthodes de l’interface  n’existent pas encore.</p>
+    <p>Cette interface est un écouteur d’événements,  plus précisément d’objets événements  concernant les données ou les métadonnées  du modèle de table. Elle ne possède qu’une seule  méthode <strong>tableChanged</strong>(TableModelEvent e), qui va être redéfinie  (c’est bien sûr une obligation) et complétée  en fonction des besoins de l’application.</p>
+    <div>
+      <p> Survolez le nom de la classe avec la souris.  Un tooltip apparaît, décrivant l’erreur et suggérant  des solutions. Choisissez la première, <strong>Add unimplemented methods</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/12-12.png" src="images/images_12-12.png"></div>
+    </div>
+    <div>
+      <p>Eclipse a créé pour  vous dans la classe <strong>PClients</strong> la méthode importante de l’interface <strong>TableModelListener</strong>.</p>
+    </div>
+    <pre>    @Override       public void <strong>tableChanged</strong>(TableModelEvent e) {           // TODO Auto-generated method stub                  }  </pre>
+    <div>
+      <p> Renommez le paramètre « e » par « unEvenement ».</p>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Une bonne pratique de codage est de  fournir aux moins trois caractères pour toute variable,  attribut ou méthode, même locale. Nommer une variable avec  une seule lettre comme e ne rendra pas votre code plus rapide, mais  le rendra très certainement moins lisible !</p>
+      </div>
+    </div>
+    <p>Les événements de la classe <strong>TableModelEvent</strong> ont tous un type, accessible par la méthode <strong>getType()</strong>. Ces types d’événements sont listés  dans la classe TableModelEvent elle-même comme attributs  statiques.</p>
+    <div>
+      <p> Ajoutez de simples traces avec <strong>System.out.println</strong> pour tester le comportement de cette méthode.</p>
+    </div>
+    <pre>public void tableChanged(TableModelEvent unEvenement) {       switch (unEvenement.<strong>getType</strong>()) {       case TableModelEvent.<strong>INSERT</strong>:           System.out.println("La table a été mise à jour, "                       + "il y a eu une insertion !!!");           break;       case TableModelEvent.<strong>DELETE</strong>:           System.out.println("La table a été mise à jour, "                       + "il y a eu une suppression !!!");           break;       case TableModelEvent.<strong>UPDATE</strong>:           System.out.println("La table a été mise à jour,"                   + " il y a eu une modification !!!");           break;       default:           break;       }   }  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Une application professionnelle ne  devrait <strong>jamais</strong> utiliser les méthodes print de System.out mais  plutôt utiliser les mécanismes de trace de Java  du package <strong>java.util.logging</strong> ou des librairies de traçage comme SLF4J (<a href="http://www.slf4j.org/" target="_blank">http://www.slf4j.org/</a>), Log4j 2 (<a href="http://logging.apache.org/log4j/2.x/" target="_blank">http://logging.apache.org/log4j/2.x/</a>), ou Logback (<a href="http://logback.qos.ch/" target="_blank">http://logback.qos.ch/</a>).</p>
+      </div>
+    </div>
+    <p>Grâce à ce mécanisme  somme toute simple, il est possible de disposer de notifications  sur toute modification du modèle de données.</p>
+    <p>Le point principal à ne pas oublier  est d’enregistrer ces écouteurs auprès du modèle  avec la méthode <strong>addTableModelListener</strong>.</p>
+    <p>Il reste un point à aborder :  le cas spécifique de la recherche.</p>
+  </div>
+</div>
+<div>
+  <h2>7. Nouveau modèle de table</h2>
+  <p>En effet, si un client est recherché,  les données de la table sont filtrées pour n’afficher  que les résultats de la recherche. Dans l’état  actuel du code, une fois la recherche terminée, le panneau  général des clients est réaffiché… avec  la recherche ! Il manque des clients.</p>
+  <p>Pour remédier à ce petit  problème, le panneau de recherche devrait disposer de son  propre modèle de table. Il suffit pour cela de lui assigner  un nouvel objet ControleClient. Ainsi, ces deux parties du module :  la recherche et l’affichage général seront indépendants.</p>
+  <div>
+    <p> Modifiez la méthode <strong>actionPerformed</strong> de l’action du bouton <strong>Recherche</strong> de la classe <strong>PClients</strong>.</p>
+  </div>
+  <pre>public void actionPerformed(ActionEvent e) {          // --- RECHERCHE EN MODE FICHE ---       // création de la fenêtre       PClientRecherche recherche = new PClientRecherche();       recherche.setActionAnnuler(actionAnnuler);<strong>        ControleClient controle = new ControleClient(connexion);       recherche.setControleClient(controle);</strong>          changerPanneau(recherche, "Recherche de client(s)"); </pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_1b0503fb-2e14-4591-9a88-34210e5e1168" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Fonctionnement interne et branches distantes</h1>
+  <p>L’utilisation des branches locales et distantes  est simple grâce aux commandes git  pull et git push. Ces commandes  masquent le système interne de Git qui permet de gérer  ces branches sans difficulté.</p>
+  <div>
+    <h2>1. Les dépôts distants liés</h2>
+    <p>Un dépôt local peut être  lié à plusieurs dépôts distants.  Pour avoir la liste des dépôts distants liés  au dépôt local, il faut utiliser la commande suivante :</p>
+    <pre>git remote</pre>
+    <p>Lors de l’utilisation de la commande git clone, un dépôt  distant nommé origin est automatiquement renseigné dans le fichier .git/config dont voici un extrait de la partie contenant les dépôts  distants :</p>
+    <pre>[remote "origin"]        url = /Volumes/JedemaKey/Livre/Git/Repo/07/test_echange/distant       fetch = +refs/heads/*:refs/remotes/origin/*  </pre>
+    <p>Dans cet exemple, la première ligne  définit le nom du dépôt distant tel qu’il sera  utilisé par Git.</p>
+    <p>La ligne suivante définit l’URL  permettant de communiquer avec le dépôt distant. </p>
+    <p>La ligne suivante permet de spécifier  l’endroit où sont stockées les branches locales et  les branches distantes suivies.</p>
+  </div>
+  <div>
+    <h2>2. Les branches distantes suivies</h2>
+    <p>Le chapitre précédent explique  le fonctionnement des branches. Les branches sont un système  très efficace pour gérer les développements  divergents au sein d’un même projet. Pour pouvoir proposer  un système aussi souple de dépôt distant,  Git utilise des branches cachées liées au serveur  distant. </p>
+    <p>Ces branches se nomment remote tracking branches en anglais, ce terme sera traduit par branches distantes suivies. Ces branches vont en réalité servir  d’intermédiaire entre les branches du dépôt  local et celles du dépôt distant.</p>
+    <p>Lorsque le développeur va envoyer  ses nouveaux commits contenus dans la branche master vers le dépôt distant, Git va effectuer  les deux actions suivantes : </p>
+    <div>
+      <ul>
+        <li>
+          <p>Les commits de la  branche locale sont réappliqués à la  branche distante suivie, très certainement nommée origin/master.</p>
+        </li>
+        <li>
+          <p>Git envoie les nouveaux commits  de la branche distante suivie au dépôt distant qui  va les intégrer à sa branche locale master.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="AU_1b0503fb-2e14-4591-9a88-34210e5e1168" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <div>
+      <ul>
+        <li> </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

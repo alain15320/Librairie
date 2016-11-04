@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_ab597f4d-00af-4cdf-b01b-24608ea78df4" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Héritage</h1>
+  <p>Les habitudes de la pensée humaine  utilisent très souvent les notions de hiérarchies et  de classification, comme par exemple pour la zoologie ou un arbre  généalogique.</p>
+  <p>La POO essaye de restituer cette manière  de penser grâce à la notion d’héritage, grâce à laquelle  des classes « enfants » récupèrent  des propriétés et des comportements de leur classe « parente »,  en se gardant la possibilité de pouvoir les compléter  et/ou les modifier.</p>
+  <p>En reprenant l’exemple de Filou, un Mammifère  est un concept plus général à celui de  Félin qui est un concept plus général  de Chat, dont Filou est une instance particulière.  En termes de programmation objet, il est possible de créer  une hiérarchie de classes transposant cette manière  de penser. Il existera donc un objet Filou construit depuis une  classe Chat héritant de la classe Félin qui héritera  de la classe Mammifère.</p>
+  <div>
+    <div><img alt="images/03-01-heritage.png" src="images/images_03-01-heritage.png"></div>
+  </div>
+  <p>D’une manière plus générale,  tous les félins, canidés et cétacés  héritent des caractéristiques communes  de la classe <strong>Mammifere</strong> : animaux à sang chaud, la femelle  allaite ses petits, etc. Filou fait partie d’une grande  famille. Il va hériter de toutes les propriétés  et méthodes de ses classes ancêtres, en laissant de  côté les éléments spécifiques  des canidés et des cétacés. Pour en tenir compte,  il faut revoir la définition de la classe <strong>Chat</strong> et ajouter celles des classes parentes. Pour faire simple,  voici un exemple d’héritage limité aux  classes <strong>Felin</strong> et <strong>Chat</strong>.</p>
+  <pre>public class Chat <strong>extends</strong> Felin {      private String nom;      private long dateDeNaissance;          public Chat(String lEspece, String laCouleur,               String leNom, long laDateDeNaissance) {<strong>       super(lEspece, laCouleur);</strong>        nom = leNom;        dateDeNaissance = laDateDeNaissance;      }      // les mutateurs et accesseurs      ...        // les autres méthodes      ...    }   public class Felin {      private String espece;      private String couleur;      public Felin(String espece, String couleur) {        this.espece = espece;        this.couleur = couleur;      }      // les mutateurs et accesseurs      public String getCouleur() {        return couleur;      }      public void setCouleur(String couleur) {        this.couleur = couleur;      }      public String getEspece() {        return espece;      }    }  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le fait de généraliser  la propriété dateDeNaissance est laissé à votre  libre initiative.</p>
+    </div>
+  </div>
+  <p>Le mot-clé <strong>extends</strong> indique que la classe dérivée (fille,  ou sous-classe) Chat étend la classe de base (mère,  ou super-classe) Felin. L’appel du constructeur de la classe  mère s’effectue avec le mot-clé <strong>super()</strong>.</p>
+  <p>Cela permet de créer des espaces  dans l’application pour pouvoir implémenter des caractéristiques  et des comportements communs à la modélisation. Quand  l’évolution de l’application le demandera, il sera possible  de créer une classe Tigre qui héritera elle aussi  de la classe Felin, et aura donc dès sa naissance tout  ce qui caractérise un félin : le code  est réutilisé, des comportements communs sont  factorisés, et plus globalement la structure de l’application  est améliorée. Si le code de la classe Felin est  modifié, tous les félins de l’application bénéficieront  immédiatement de cette modification par ricochet.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il est tentant de surutiliser la technique  d’héritage dans une application, surtout pour  des développeurs découvrant cette notion. Les  maîtres à penser du Gang Of Four (Gamma, Helm,  Johnson et Vlissides) recommandent cependant de favoriser  la composition d’objets (c’est-à-dire de combiner des objets  simples pour en créer de plus complexes à l’aide  d’attributs) par rapport à l’héritage de classe,  car cette dernière technique a tendance à briser l’encapsulation et à créer  des systèmes plus difficilement modifiables.</p>
+    </div>
+  </div>
+  <p>Ici, la classe Chat hérite des méthodes <strong>getCouleur()</strong>, <strong>setCouleur()</strong> et <strong>getEspece()</strong> de sa classe parente sans avoir besoin de les  réécrire.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Le concept d’héritage est  lié aux comportements externes et non à une représentation  interne. Un pingouin qui ne peut pas voler ne devrait pas hériter d’une  classe Oiseau définissant le vol comme un comportement.</p>
+    </div>
+  </div>
+  <p>Il est parfois utile de préciser  qu’une classe ne peut pas créer directement d’objets, lorsque  l’on désire créer une « simple » classe  de base qui sera enrichie par les classes filles. Dans ce cas, il  faut ajouter le mot-clé <strong>abstract</strong>. La classe <strong>Mammifere</strong> ci-après est définie comme abstraite.  Aucune instance de cette classe ne pourra être créée,  il faudra étendre la classe <strong>Mammifere</strong> pour pouvoir en créer des objets.</p>
+  <pre>public <strong>abstract</strong> class Mammifere {     }    </pre>
+  <p>Ceci est cohérent avec la modélisation.  Même si tous les chats sont des mammifères, « juste  un mammifère » n’existe pas, et ne devrait  pas avoir la possibilité d’exister dans l’application.</p>
+  <p>Pour affiner le concept d’héritage,  il est possible de préciser que certaines propriétés  et méthodes peuvent être déclarées <strong>protected</strong>.</p>
+  <pre>public abstract class Mammifere { <strong>       protected</strong> boolean sangChaud = true; <strong>       protected</strong> void allaiter() {       }    }  </pre>
+  <p>Maintenant, seules les classes filles de <strong>Mammifere</strong> peuvent hériter de ses membres et les utiliser.  Seules les classes appartenant au même package peuvent utiliser  ces mêmes membres.</p>
+  <pre>public class Felin extends Mammifere {         protected String espece;       ...        protected String getCouleur() {            return couleur;       }         protected void setCouleur(String couleur) {           this.couleur = couleur;       }       ...    }  </pre>
+  <p>Seules les classes filles de Felin peuvent  hériter de ses membres déclarés <strong>protected</strong>. </p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il serait aussi possible de déclarer  abstract la classe Felin.</p>
+    </div>
+  </div>
+  <p>La classe Chat ne subit quant à elle  aucune modification.</p>
+  <pre>public class Chat extends Felin {       ...    }  </pre>
+  <p>Voici un exemple d’utilisation :</p>
+  <pre>public class LanceHeritage {          public static void main(String[] args) { <strong>          Mammifere</strong> unChat = <strong>new Chat</strong>("angora","gris","nana",1);          unChat.allaiter();          System.out.println(unChat.sangChaud);       }    }</pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pour fonctionner, cette classe doit  se situer dans le même package que les autres classes.</p>
+    </div>
+  </div>
+  <p>Tout ceci est très intéressant  pour la modélisation, mais ce code n’est pas forcément très  robuste. Si la classe précédente est légèrement  modifiée par :</p>
+  <pre>public class LanceHeritage {          public static void main(String[] args) {          Mammifere unChat = new Chat("angora","gris","nana",1);<strong>         unChat.shangChaud = false ;</strong>         System.out.println(unChat.sangChaud);       }    }  </pre>
+  <p>un mammifère à sang froid  est obtenu ! Ce qui n’est pas forcément le but recherché... </p>
+  <p>Afin de sécuriser davantage la modélisation  vis-à-vis de ce problème, il est possible d’utiliser  le mot-clé <strong>final</strong>. Ceci empêchera toute modification de la valeur  de l’attribut sangChaud, tout en permettant de continuer à l’utiliser.</p>
+  <pre>public abstract class Mammifere {       protected <strong>final</strong> boolean sangChaud = true;       }    }  </pre>
+  <p>Le mot-clé <strong>final</strong> peut aussi être utilisé avec les classes.  En supposant que la classe Chat ne puisse pas être dérivée  et afin de formaliser ce fait, le mot-clé <strong>final</strong> est ajouté à la définition  de la classe comme ceci :</p>
+  <pre>public <strong>final</strong> class Chat extends Felin {    ...   }  </pre>
+  <p>La classe Chat pourra toujours être  utilisée comme précédemment, mais est maintenant  un point final dans la hiérarchie de classe :  le concept de cas particulier de Chat ne peut plus être  formalisé dans l’application.</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Un bonus est également obtenu  par l’utilisation du mot-clé <strong>final</strong> : le compilateur sachant que cette valeur ou  cette classe ne peut pas être modifiée, le bytecode  généré sera (un peu) plus optimisé.</p>
+    </div>
+  </div>
+  <p>Contrairement à d’autres langages  de POO, la notion d’héritage multiple n’existe pas en Java :  une classe fille ne peut pas être dérivée  de plusieurs classes parentes. Pour pallier cette limitation, le  langage Java a introduit la notion d’interface.</p>
+</div>
+</body>
+</html>

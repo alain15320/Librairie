@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Une branche, ça sert à quoi ?</h1>
+<p>Les branches représentent l’une des  fonctionnalités les plus intéressantes de Git.  Dans chaque dépôt Git, une branche est présente  par défaut : la branche master. Cette branche master correspond généralement à la  branche principale du projet.</p>
+<p>Les branches correspondent à la déviation  d’une autre branche (comme peut l’être une branche d’arbre  vis-à-vis du tronc qui la porte). En d’autres termes, une  branche est utilisée pour maintenir une version particulière  du projet dans un but précis et fixé à l’avance.</p>
+<p>Elles peuvent servir à :</p>
+<div>
+  <ul>
+    <li>
+      <p>développer  une nouvelle fonctionnalité sans polluer la branche supérieure avec  des modifications non validées,</p>
+    </li>
+    <li>
+      <p>garder une branche correspondant à une  version stable définie. Par exemple, un développeur  a créé une version 1.0 d’un logiciel et il ne  souhaite pas y intégrer les dernières  modifications.</p>
+    </li>
+  </ul>
+</div>
+<p>Raphaël a envie de proposer une nouvelle  fonctionnalité à son client, à savoir une  proposition des couleurs utilisées. C’est-à-dire  qu’en dessous du champ texte permettant de définir la couleur,  Raphaël va ajouter des boutons correspondant aux couleurs  déjà utilisées sur le site. Lorsque l’utilisateur  cliquera sur l’un de ces boutons, le champ <strong>couleur</strong> sera rempli avec la valeur choisie. Il va tout d’abord  créer sa nouvelle branche (dans son dépôt anniversaireVacances) :</p>
+<pre>git branch color_buttons    git checkout color_buttons  </pre>
+<p>Cette commande va indiquer à Git  que Raphaël souhaite travailler dans une nouvelle branche.  En réalité, la branche ne sera réellement  créée qu’à partir du premier commit réalisé dans  celle-ci.</p>
+<p>Ensuite, il va positionner la balise div qui contiendra les boutons en  dessous du champ couleur :</p>
+<pre>&lt;div id="couleurs_proposees"&gt;&lt;/div&gt;  </pre>
+<p>Raphaël va ajouter une nouvelle bibliothèque à son  projet : jQuery. En effet, jQuery est un framework JavaScript qui  permet de simplifier un certain nombre d’actions, par exemple écouter  un certain nombre d’événements. jQuery sera utilisé pour  surveiller les clics effectués sur les boutons. Pour ajouter  la bibliothèque, il faut la télécharger  sur le site de jQuery (<a href="https://jquery.com/download/" target="_blank">https://jquery.com/download/</a>), la placer dans le dossier static/lib/js/jquery.1.13.min.js et, pour finir, il faut ajouter la ligne d’import de  jQuery juste avant la ligne d’import de anniversaire.js :</p>
+<pre>&lt;script type="text/javascript"   src="static/lib/js/ jquery.1.13.min.js"&gt;&lt;/script&gt;  </pre>
+<p>Il faut ensuite créer la fonction  qui va générer les boutons dans le fichier anniversaire.js :</p>
+<pre>function charge_couleurs() {        nb_anniv = anniv_get_nb_anniv();        // On vide la div contenant les couleurs si elle en contient       // pour recréer les couleurs.        couleur_div = document.querySelector(’#couleurs_proposees’);       couleur_div.innerHTML = ’’;            couleur_list = Array();        for (i=0;i&lt;nb_anniv;i++) {            anniversaire = JSON.parse(localStorage.getItem(i.toString()));           couleur_list.push(anniversaire.couleur);        }        couleur_list_unique = couleur_list.filter(function(elem, pos) {           return couleur_list.indexOf(elem) == pos;        })        // Génération et affichage des boutons        couleur_list.filter(function(elem, pos) {            couleur_div.innerHTML = couleur_div.innerHTML +                ’&lt;button style="color:#’+elem+’"&gt;’+elem+’&lt;/button&gt;’;       })        // Écouteurs de boutons pour remplir la couleur choisie        $("#couleurs_proposees button").bind("click", function() {            $(’#couleur’).val($(this).text());        });    }  </pre>
+<p>La fonction est créée, mais  pour l’instant elle n’est jamais exécutée. Raphaël décide  donc de charger les couleurs lors du chargement de la page en ajoutant le  code suivant dans le fichier JavaScript :</p>
+<pre>$(document).ready(function() {        charge_couleurs();    });  </pre>
+<p>Pour que la page soit plus dynamique, Raphaël  va également appeler la fonction charge_couleurs() à la  fin de la fonction anniv_ajout().</p>
+<p>Après avoir testé ses modifications,  Raphaël peut créer un nouveau commit avec le message <strong>Proposition des couleurs déjà utilisées</strong>. C’est avec ce commit que la branche aura une réelle  existence dans Git car il faut un commit pour qu’une branche soit  réellement intégrée à l’historique.  Pour créer le commit, il utilisera les commandes  suivantes : </p>
+<pre>git add anniversaire.html    git add static/js/anniversaire.js    git commit -m "Proposition des couleurs déjà utilisées"  </pre>
+<p>Raphaël va alors passer à la  deuxième partie de sa modification : lorsque l’utilisateur  commencera à entrer le code d’une couleur, les boutons  des couleurs qui ne correspondent pas à ce qu’il entre  dans le champ seront masqués.</p>
+<p>Raphaël va ajouter un écouteur  sur le champ couleur_proposees dans  son fichier anniversaire.js :</p>
+<pre>$("#couleur").bind( "keyup", function() {        masque_couleur($(this).val());    });  </pre>
+<p>Il va ensuite créer la fonction qui  va lui permettre de cacher les boutons des couleurs ne correspondant  pas au texte du champ et l’ajouter au même fichier :</p>
+<pre>function masque_couleur(color) {        $(’#couleurs_proposees button’).each(function( index ) {            if ($(this).html().indexOf(color) &gt; -1) {                $(this).show();            }            else {                $(this).hide();            }        });    }  </pre>
+<p>Une fois qu’il a terminé ses modifications,  Raphaël va tester le code avant de commiter.</p>
+<pre>git add static/js/anniversaire.js    git commit -m "Suggestions des boutons couleurs"  </pre>
+<p>Raphaël va vérifier que  ses commits ont bien été pris en compte avec la  commande git log puis il peut mettre à jour  le dépôt distant avec la commande suivante : </p>
+<div id="AU_4a692378-66e8-4367-b0cb-a34c0f7e4016" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <pre>git push --set-upstream origin color_buttons  </pre>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

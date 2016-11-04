@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_bcc4d599-ab38-4912-a76d-b5340893ba04" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Enums</h1>
+  <p>Un <strong>enum</strong> est un type spécial de données qui  fournit un jeu de constantes prédéfinies.</p>
+  <p>Il est tout à fait possible de créer  un enum personnalisé : il se définit  comme une classe ou une interface dans son propre fichier, avec  le mot-clé <strong>enum</strong>.</p>
+  <p>Par exemple :</p>
+  <pre>public <strong>enum</strong> Direction {        NORD, SUD, EST, OUEST   }  </pre>
+  <p>On peut également lui donner des  attributs, des méthodes et un constructeur. La contrainte  principale est alors que le constructeur doit être privé ou package privé :  il est impossible de créer une valeur d’enum directement,  ces valeurs ne peuvent être que celles déclarées  dans l’enum. Cette contrainte interdit aussi tout héritage  de l’enum.</p>
+  <pre>public enum Direction {        NORD("septentrion"),       SUD("midi"),       EST("levant"),       OUEST("ponant"); // le point-virgule est maintenant nécessaire                       // car des membres existent dans l’enum       private String ancienNom;           private Direction(String nom) {             this.ancienNom = nom;       }          //    public Direction(String nom) { // ne compilera pas   //          this.ancienNom = nom;   //    }              public String getAncienNom() {             return this.ancienNom;       }   }  </pre>
+  <p>Cela permet de limiter les valeurs possibles  d’une variable avec un vocabulaire contrôlé et  de pouvoir utiliser cette variable dans un switch-case par exemple.</p>
+  <pre>Direction direction = ...       for(Direction uneDirection : Direction.<strong>values</strong>()) {       System.out.println(uneDirection +" "                                        +uneDirection.getAncienNom());   } <strong>    switch</strong> (direction) {<strong>        case NORD</strong>:             ...                     break;          default:             break;   }  </pre>
+  <p>Java fournit plusieurs enums dont par exemple <strong>DayOfWeek</strong> et <strong>Month</strong> du package <strong>java.time</strong>. Ces enums permettent de formaliser le concept de Lundi, Mardi… et  celui de Janvier, Février… et d’éviter  une gymnastique inutile (enlever 1 au numéro du  mois...).</p>
+</div>
+</body>
+</html>

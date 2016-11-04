@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_41e32436-d2f7-4480-9acc-e4feeefdc053" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Git-Flow intuitif grâce à Tower</h1>
+  <div>
+    <h2>1. Client Git et Git-Flow</h2>
+    <p>Tower est un client Git sous forme d’interface  graphique. Il est conçu pour être très  ergonomique et intègre des fonctionnalités très  intéressantes. Au moment où ces lignes  sont écrites, Tower est vendu 59 euros hors taxes et propose  une réduction pour les étudiants.</p>
+    <p>Il n’existe pas d’équivalent intégrant  Git-Flow de manière aussi complète sous Windows.  Il existe cependant des clients Git très efficaces compatibles  Windows comme TortoiseGit, SmartGit (qui intègre Git-Flow),  SourceTree et GitHub Desktop.</p>
+    <p>Le contenu du projet n’a aucune importance  ici. Le seul but est d’obtenir un historique composé de  différentes branches représentatives de la méthode  Git-Flow.</p>
+  </div>
+  <div>
+    <h2>2. Cas pratique d’utilisation</h2>
+    <p>Le dépôt résultant  de ce cas pratique se trouve dans les fichiers téléchargeables : <strong>08/git-flow</strong>.</p>
+    <p>Pour créer un nouveau dépôt  avec Tower, il faut cliquer sur le bouton <strong>Create</strong> à partir de la page listant les dépôts  utilisés :</p>
+    <div>
+      <div><img alt="images/08E02.png" src="images/08E02.png"></div>
+    </div>
+    <p>Une fois que le dépôt a été créé,  Tower propose de l’ouvrir avec le bouton <strong>Open</strong> de la fenêtre suivante : </p>
+    <div>
+      <div><img alt="images/08E03.png" src="images/08E03.png"></div>
+    </div>
+    <p>La fenêtre ci-dessus présente  des informations intéressantes sur le dépôt comme  le chemin du dépôt, la branche sur laquelle est  placée la référence HEAD ou encore le  statut des fichiers. Une fois que le dépôt est  ouvert dans Tower, il faut ajouter le premier commit qui va former  le début de la branche master.</p>
+    <p>Pour ajouter le premier commit, il faut créer  des fichiers dans un projet avec un autre logiciel que Tower (car  Tower est un client Git et non un éditeur de texte). Une  fois que les fichiers ont été ajoutés  dans le projet, il faut cliquer sur le bouton <strong>Working Copy</strong> à gauche dans l’interface de Tower :</p>
+    <div>
+      <div><img alt="images/08E04.png" src="images/08E04.png"></div>
+    </div>
+    <p>Cette interface permet d’effectuer  un commit. Le fichier README n’est pas encore suivi par Git, son statut  indique donc <strong>?</strong>. Appuyer sur la checkbox à gauche du point  d’exclamation permet d’ajouter le fichier à l’index.</p>
+    <div>
+      <div><img alt="images/08E05.png" src="images/08E05.png"></div>
+    </div>
+    <p>Pour terminer le commit, il faut spécifier  le message de commit, dans cet exemple <strong>C1 (master)</strong>, puis cliquer sur le bouton <strong>Commit</strong>. Il est possible d’afficher ce commit  en cliquant sur le bouton <strong>master</strong> à gauche.</p>
+    <div>
+      <div><img alt="images/08E06.png" src="images/08E06.png"></div>
+    </div>
+    <p>Cette interface permet d’afficher  les commits présents dans la branche master. Pour activer le mode Git-Flow dans Tower, il faut cliquer  sur le bouton <strong>Git-Flow</strong> en haut de la fenêtre :</p>
+    <div>
+      <div><img alt="images/08E07.png" src="images/08E07.png"></div>
+    </div>
+    <p>Il faut ensuite cliquer sur <strong>Enable Git-Flow</strong>. Après avoir cliqué sur ce bouton, Tower  affiche une liste d’options de configuration propres à Git-Flow : </p>
+    <div>
+      <div><img alt="images/08E08.png" src="images/08E08.png"></div>
+    </div>
+    <p>Cette fenêtre permet de configurer  les branches éternelles (branche de production et branche  de développement). Il est également possible de  configurer les préfixes des branches temporaires ainsi  que les préfixes des tags de version. Dans cet exemple,  toutes les options seront laissées avec leur choix par  défaut.</p>
+    <p>Pour créer le premier commit de la  branche develop, il faut se placer dessus. Pour cela, il faut faire  un clic droit sur le bouton <strong>develop</strong> à gauche puis cliquer sur <strong>Check Out "develop"</strong> :</p>
+    <div>
+      <div><img alt="images/08E09.png" src="images/08E09.png"></div>
+    </div>
+    <p>Pour confirmer le changement de branche, Tower  déplacera la référence HEAD à côté du  bouton <strong>develop</strong>. Pour démarrer une nouvelle branche de fonctionnalité,  il faut cliquer sur le bouton <strong>Git-Flow</strong> puis sur le bouton <strong>Start Feature</strong>.</p>
+    <div>
+      <div><img alt="images/08E10.png" src="images/08E10.png"></div>
+    </div>
+    <p>Tower créera alors une branche de  fonctionnalité et l’ajoutera à la liste  des branches dans le menu de gauche de Tower.</p>
+    <p>Il faut ensuite effectuer des modifications  dans le répertoire de travail et commiter pour que la branche  existe réellement. Dans cet exemple, une branche de correctif  et une branche de version sont également créées  via le bouton <strong>Git-Flow</strong> et contiennent un commit. Une fois que ces branches  ont été créées, l’affichage de  l’historique (bouton <strong>History</strong>) ressemble à la capture suivante :</p>
+    <div>
+      <div><img alt="images/08E11.png" src="images/08E11.png"></div>
+    </div>
+    <p>Pour terminer les branches éphémères,  il faut cliquer sur le bouton <strong>Git-Flow</strong> puis cliquer sur <strong>Finish Feature</strong>. La fenêtre suivante s’affiche : </p>
+    <div>
+      <div><img alt="images/08E12.png" src="images/08E12.png"></div>
+    </div>
+    <p>Plusieurs options s’offrent au développeur.  L’une d’elles (<strong>Always Create Merge Commit</strong>) permet de respecter Git-Flow à la lettre en  obligeant Git à créer un commit même  dans le cas où une avance rapide aurait suffi. En fermant  toutes les autres branches éphémères,  Tower affiche ensuite l’écran correspondant à la  capture suivante : </p>
+    <div>
+      <div><img alt="images/08E13.png" src="images/08E13.png"></div>
+    </div>
+    <p>Les merges des branches sont visibles et permettent  de bien suivre l’évolution de l’historique.  Par exemple, la branche hotfix a correctement été mergée  dans la branche master et dans la branche develop.</p>
+    <p>Cet exemple permet de mieux visualiser l’enchaînement  des branches. Avec sa gestion du Git-Flow, Tower permet de simplifier  son utilisation grâce à une interface intuitive. </p>
+  </div>
+</div>
+
+</body>
+</html>

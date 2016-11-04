@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Commiter ou enregistrer des modifications</h1>
+<div>
+  <h2>1. Effectuer un premier commit</h2>
+  <p>Le commit est l’élément  central de Git. C’est lui qui enregistre toutes les modifications  du projet. Un commit doit représenter un ensemble de modifications  cohérentes entre elles.</p>
+  <p>C’est-à-dire qu’un  commit ne doit pas servir à sauvegarder des données.  Un système de gestion de versions n’est pas un  système de sauvegarde. Beaucoup de développeurs  qui débutent voient le système de version comme  un système qui leur sert à sauvegarder des modifications.</p>
+  <p>Un exemple permettra de mieux comprendre la  philosophie du commit. Le développeur commence à travailler  sur une nouvelle fonctionnalité. S’il part en  vacances alors que son développement est en cours, il ne  va pas commiter ses modifications juste pour faire une sauvegarde. Éventuellement,  il aura séparé la nouvelle fonctionnalité en  plusieurs petites nouvelles fonctionnalités pour les commiter  séparément.</p>
+  <p>Plus simplement, un commit est un paquet virtuel  de modifications. Par exemple, en utilisant un dépôt  vierge dans lequel seraient ajoutés deux fichiers vides  :</p>
+  <div>
+    <ul>
+      <li>
+        <p>index.html </p>
+      </li>
+      <li>
+        <p>style.css</p>
+      </li>
+    </ul>
+  </div>
+  <p>Le développeur code dans ces fichiers  une page très simple pour un client désirant juste  avoir ses coordonnées sur un site web (le code d’exemple  est volontairement simpliste).</p>
+  <p>Après avoir ajouté ses fichiers à l’index,  le développeur commite les modifications avec :</p>
+  <pre>git commit -m "Page de coordonnées"</pre>
+  <p>Par la suite, le développeur ajoute  le numéro de téléphone à la  liste de coordonnées et commite ses modifications : </p>
+  <pre>git commit -m "Coordonnées : ajout téléphone"  </pre>
+  <p>Abordée plus longuement dans le chapitre  suivant, la commande git log permet  de lister les commits ajoutés au dépôt : </p>
+  <pre>git log   commit a2ab800   Author: Samuel DAUZON &lt;git@dauzon.com&gt;   Date:   Mon Jul 20 23:25:31 2015 +0200          Coordonnées : ajout téléphone      commit 1480de2   Author: Samuel DAUZON &lt;git@dauzon.com&gt;   Date:   Mon Jul 20 23:16:48 2015 +0200          Page de coordonnées  </pre>
+  <p>Cette sortie affiche les deux commits du dépôt.  Le but des commits est de suivre fidèlement la vie du projet.  Ici, il est possible d’imaginer que le client avait demandé une  page simpliste avec son adresse. Après avoir vu le résultat, il  s’est rendu compte qu’il voulait aussi afficher  son numéro de téléphone. Le développeur  a donc modifié la page et commité ses modifications.</p>
+</div>
+<div>
+  <h2>2. Rédiger un bon message de commit</h2>
+  <p>Dans Git, la partie visible d’un commit pour  les collaborateurs est le message de commit. Ce message est très  (mais vraiment très) important, car il doit résumer en  très peu de mots ce qui a été réalisé dans  le commit. C’est un exercice difficile de trouver le bon message.</p>
+  <p>Beaucoup trop de développeurs passent  quatre ou cinq heures à développer quelque chose  puis bâclent le message de commit en dix secondes (surtout  le titre), car pour eux "c’est secondaire". Non, non et non !</p>
+  <p>Ce message sera lu de nombreuses fois par  tous les collaborateurs du projet. Peut-être même  que dans six mois, le développeur cherchera (avec git blame, commande abordée  dans le chapitre Consultation et manipulation de l’historique, à la  section Identifier l’auteur d’une ligne de code)  les détails concernant une ligne de code qu’il  ne comprend pas. Il consultera donc les détails du  commit et la première chose qu’il verra est ce  message.</p>
+  <p>Ce message est primordial et ne coûte  presque rien au développeur. Il suffit de passer une ou  deux minutes (cela paraît court, mais finalement c’est  suffisamment long pour prendre son temps) pour rédiger  un message de qualité qui peut faire gagner plusieurs minutes  voire plusieurs heures à tous les développeurs  sur le long terme.</p>
+  <div>
+    <h3>a. Les règles d’un message de commit</h3>
+    <p>Un message de commit est divisé en  deux parties séparées par une ligne vide :</p>
+    <div>
+      <ul>
+        <li>
+          <p>le titre du message  de commit, qui ne doit pas dépasser 49 caractères,</p>
+        </li>
+        <li>
+          <p>le message du commit, qui peut être  plus complet.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Le titre du message est la partie la plus  compliquée, car il faut résumer en 49 caractères  ce qui a été fait. Le reste du message est plus  simple, mais doit tout même être rédigé avec  soin. Si un développeur reçoit des demandes d’un  client par mail, il ne doit pas copier/coller le mail du  client en tant que message de commit, car ce mail contient beaucoup  d’informations inutiles pour les autres développeurs.</p>
+    <p>En résumé, le titre du message  doit être très concis et le reste du message doit expliquer  de manière claire les modifications effectuées.</p>
+    <p>Dans la suite de ce livre, ces principes ne  seront pas suivis pour une bonne raison. Il est plus lisible  d’utiliser la syntaxe à une ligne pour enregistrer un commit.  Il faut cependant garder à l’esprit qu’un bon message du  commit simplifie la vie de tout le monde sur le long terme.</p>
+  </div>
+  <div>
+    <h3>b. Méthode pour le titre</h3>
+    <p>Lorsqu’on travaille sur un dépôt,  il s’agit d’accorder un grand soin à la rédaction  du titre du commit. Il convient tout d’abord de rédiger  le message du commit en expliquant les modifications qu’il contient,  puis de rédiger un premier titre sans chercher à être  concis, comme dans l’exemple suivant :</p>
+    <pre>Fonctionnalité : Je teste si l’élève a bien fait l’exercice pour   lui afficher le suivant.  </pre>
+    <p>C’est le cas typique d’un titre que beaucoup  de développeurs utilisent. Il fait 89 caractères,  soit 40 de trop. Il faut donc le raccourcir intelligemment.</p>
+    <p>Tout d’abord, il est déconseillé d’utiliser  des mots-clés comme correctif ou fonctionnalité. Par exemple, le mot-clé correctif peut facilement être remplacé par  le mot fix, qui signifie la même chose en seulement trois  caractères. Pour désigner les nouvelles fonctionnalités,  il est possible de n’utiliser aucun mot-clé, étant  donné que si le développement ne concerne pas  un correctif, il concerne de fait une nouvelle fonctionnalité.</p>
+    <p>Le chapitre Git-Flow : workflow d’entreprise  traitera plus longuement de la distinction entre les correctifs  et les nouvelles fonctionnalités où la séparation entre  ces deux types de modifications sera plus forte qu’un simple mot-clé.</p>
+    <p>Il convient ensuite de chercher les mots qui  définissent le contexte et ceux qui définissent  l’action. Ici, le contexte est défini par les mots élève et exercice. L’action est définie par les mots teste, fait, afficher, suivant.</p>
+    <p>Il faut ensuite modifier les termes vagues  : ici, le mot fait peut être remplacé par terminé. Le mot teste d’ailleurs possède une forte connotation en  développement, il faut donc le remplacer par le mot si qui permet d’avoir une phrase plus naturelle tout en étant  plus courte. </p>
+    <p>Il faut placer les mots de contexte au début  avec une hiérarchie qui dépend du projet. Voici  donc la partie contexte du titre :</p>
+    <pre>Elève -&gt; Exercice  </pre>
+    <p>Déjà 17 caractères  sont utilisés (même si nous aurions pu supprimer  les espaces si nous en avions réellement besoin) et pourtant  ces 17 caractères sont très utiles. Ce sont ces  caractères qui permettent à n’importe qui de savoir  où se situe l’action qui va suivre.</p>
+    <p>Pour la partie action, il faut rédiger  une phrase très concise à partir des mots restants.  Par exemple, dans ce cas-là :</p>
+    <pre>Si terminé, afficher suivant  </pre>
+    <p>On remarque bien que sans le contexte la partie  action ne signifie rien, d’où l’importance réelle  des deux parties. Je relie ensuite les deux parties de cette chaîne  avec le signe :. Voici  le message final :</p>
+    <pre>Elève -&gt; Exercice : Si terminé, afficher suivant  </pre>
+    <p>Ce titre, qui comprend 48 caractères,  est parfaitement compréhensible et lisible. Si  votre titre dépasse de quelques caractères, vous  pouvez en gagner quelques-uns. Par exemple, beaucoup de développeurs  préfèrent le slash pour définir le lien  hiérarchique, pour arriver à ce message de 45  caractères :</p>
+    <pre>Elève/Exercice : Si terminé, afficher suivant  </pre>
+    <p>Si vous souhaitez encourager l’utilisation  d’un modèle de commit, vous pouvez utiliser le paramètre  de configuration commit.template pour  donner un exemple aux développeurs. Vous trouverez plus  d’informations sur cette option de configuration dans le chapitre  Création d’un dépôt.</p>
+    <p>Si malgré cette méthode  le message est trop long, c’est que le commit contient peut-être  trop de modifications et aurait pu être partagé en  plusieurs développements plus petits. Il est préférable  de commiter de petites modifications au lieu de grouper ces modifications  en un gros commit monstrueux.</p>
+  </div>
+  <div>
+    <h3>c. En quelle langue ?</h3>
+    <p>Les bonnes pratiques nous demandent très  souvent de ne travailler qu’en anglais parce que même si  le projet est français, nous ne sommes jamais certains qu’il  ne sera pas internationalisé à un moment ou à un  autre.</p>
+    <p>Dans la pratique, si un développeur  n’est pas bilingue il est préférable qu’il écrive  un bon message français plutôt qu’un mauvais message  anglais.</p>
+    <p>Il est conseillé d’utiliser le français  dans toutes les entreprises, excepté :</p>
+    <div>
+      <ul>
+        <li>
+          <p>les entreprises qui  font appel à des prestataires étrangers qui peuvent être amenés à regarder  le dépôt,</p>
+        </li>
+        <li>
+          <p>les entreprises qui publient des  codes libres sur GitHub ou d’autres plateformes internationales,</p>
+        </li>
+        <li>
+          <p>les entreprises dont tous les développeurs  maîtrisent bien l’anglais et qui seront en mesure de former  leurs nouveaux collaborateurs à l’anglais si ceux-ci ont  des difficultés.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Les accents peuvent parfois poser problème  selon la configuration de votre système. Utiliser l’anglais  dans les messages de commit vous épargnera peut-être  des soucis d’encodage. </p>
+  </div>
+</div>
+
+</body>
+</html>

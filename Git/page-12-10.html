@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_3fa5c6b1-78a0-46f6-b461-ae31c258391b" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Commiter tous les fichiers ajoutés ou modifiés</h1>
+  <p>Depuis le début, Raphaël  ajoute les fichiers un à un dans l’index. C’est une opération  répétitive, surtout lorsqu’on doit ajouter tous  les fichiers ajoutés ou modifiés.</p>
+  <p>Il existe un argument à la commande git add qui permet d’ajouter tous  les fichiers ajoutés/modifiés à l’index  : -A.</p>
+  <p>Tout d’abord, Raphaël doit vérifier  tous les fichiers ajoutés/modifiés avec  la commande git status. La commande  lui indique que seul le fichier anniversaire.html a été modifié. En utilisant  la commande suivante, Git va ajouter les fichiers modifiés à l’index  (ici uniquement anniversaire.html) : </p>
+  <pre>git add -A  </pre>
+  <p>Avant de commiter, Raphaël va vérifier  que le fichier ne se trouve pas dans l’index avec la commande git status. Il commite alors la modification  qui permet de choisir la couleur avec la bibliothèque :</p>
+  <pre>git commit -m "Ajout fenetre choix couleur"  </pre>
+  <p>Cette commande permet de gagner beaucoup de  temps, mais elle ne doit pas empêcher de respecter deux  règles :</p>
+  <div>
+    <ul>
+      <li>
+        <p>Il y a des fichiers  qu’il ne faut pas versionner : si Raphaël avait utilisé la  commande git add -A avant de mettre  en place le fichier .gitignore, il aurait versionné tous les fichiers de la  bibliothèque. C’est grâce à .gitignore que le dernier commit contient uniquement les fichiers  nécessaires.</p>
+      </li>
+      <li>
+        <p>L’atomicité des commits  : les commits doivent représenter une modification indépendante  des autres. Avec la commande git add -A,  il ne faut pas commiter un ensemble de modifications là où plusieurs  commits seraient plus adaptés.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Il est également possible de ne pas  du tout passer par l’index pour commiter tous les fichiers déjà suivis.  En effet, en utilisant la commande suivante, tous les fichiers modifiés  déjà suivis seront ajoutés directement  dans le prochain commit.</p>
+  <pre>git commit -a -m "message de commit"  </pre>
+  <p>Après avoir vérifié que  son dernier commit a correctement été ajouté,  Raphaël vérifie alors sur Bitbucket si le commit  est présent en rafraîchissant la page <strong>Commits</strong>, et il se rend compte que le commit n’a pas été envoyé.  En effet, le dernier commit a été effectué en  local et n’est présent que sur le dépôt  local. Raphaël doit donc l’envoyer de manière  explicite à son dépôt distant chez Bitbucket.</p>
+</div>
+</body>
+</html>

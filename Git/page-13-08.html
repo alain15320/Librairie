@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Phase de développement</h1>
+<p>Pour la phase de développement, tous  les intervenants ont cloné le dépôt sur leur  machine. Ils ont également créé leur  fichier improllowup/settings/local.py.</p>
+<div>
+  <h2>1. Fonctionnalité graphique</h2>
+  <p>Suite à une proposition de Marion  lors d’une pause café de l’équipe, l’idée d’ajouter  des graphiques au logiciel est née. Cela permettrait de  visualiser rapidement la répartition des tâches  d’un développeur par projet. Dimitri doit créer  la branche graph_employee qui accueillera les développements liés à cette fonctionnalité.  Pour cela, il doit tout d’abord s’assurer de démarrer sa  branche à partir du commit le plus récent de la  branche develop. Il doit donc mettre à jour son dépôt  en récupérant le commit de la branche develop.</p>
+  <pre>git pull --all</pre>
+  <p>Après avoir récupéré les  commits, Raphaël vérifie les branches existantes  avec la commande git branch -a qui  affiche la sortie suivante :</p>
+  <pre>* master      remotes/origin/HEAD -&gt; origin/master      remotes/origin/develop      remotes/origin/master  </pre>
+  <p>La branche locale develop n’est pas automatiquement créée,  Dimitri doit la créer explicitement à partir de  la branche distante suivie avec la commande suivante :</p>
+  <pre>git checkout remotes/origin/develop    git checkout -b develop  </pre>
+  <p>Après avoir récupéré les  commits les plus récents et s’être placé sur  la branche develop, Dimitri peut créer sa base de données  avec les commandes suivantes : </p>
+  <pre>python3 manage.py migrate --settings=improllowup.settings.local  </pre>
+  <p>Dimitri doit ensuite initialiser les dépôts  intégrés : </p>
+  <pre>git submodule init    git submodule update  </pre>
+  <p>Pour utiliser jQuery, il faut générer  le fichier JavaScript qui sera importé dans le projet :</p>
+  <pre>cd improllowup/static/lib/js/jquery    sudo npm run build    cd -  </pre>
+  <div>
+    <div><img src="http://www.eni-training.com/download/a0ebc04d-1620-46fa-82db-78bccc486529/images/PUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GNxi1KUezTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>La commande cd  - permet de se replacer sur le précédent  dossier. Le raccourci - peut également être  utilisé avec la commande git checkout.</p>
+    </div>
+  </div>
+  <p>Dimitri crée ensuite un super-utilisateur  avec la commande suivante :</p>
+  <pre>python3 manage.py createsuperuser --username=root     --email=git@dauzon.com --settings=improllowup.settings.local  </pre>
+  <p>Après avoir exécuté ces  commandes, son projet devient fonctionnel. Il peut alors créer  sa branche à partir de la branche develop :</p>
+  <pre>git checkout -b graph_employee    git commit --allow-empty -m "C3 : Creation de la branche graph_employee"   git push -u origin graph_employee  </pre>
+  <p>Le commit est vide mais permet de donner une  existence réelle à la branche dans l’historique.  En envoyant ce commit (et donc la nouvelle branche) sur le dépôt  distant, les autres développeurs seront informés  qu’une branche existe pour ajouter cette nouvelle fonctionnalité.</p>
+</div>
+<div>
+  <h2>2. Correctif de temps négatif</h2>
+  <p>Lors d’une démonstration, un client  a fait remarquer à Noëllie qu’il était possible d’inscrire  une durée négative lors de l’enregistrement d’une  tâche. Le client qui a fait remarquer cette possibilité est  intéressé par le logiciel. Même si cette  possibilité n’est pas dramatique pour le fonctionnement  du logiciel, d’un point de vue commercial il est important qu’un  client potentiel voie que les bugs soulevés sont corrigés.</p>
+  <p>Noëllie décide donc de demander à Maxime  de s’occuper du problème. Pour cela, Maxime va  créer une branche de correctif nommée hotfix-time-negative à partir de la branche master :</p>
+  <pre>git pull --all    git checkout master    git checkout -b hotfix-time-negative  </pre>
+  <p>Maxime travaille alors à la résolution  du bug après avoir créé sa base de données et  initialisé les dépôts intégrés  (avec les mêmes commandes que celles utilisées  par Dimitri). Lorsqu’il a découvert le problème  et modifié le code, Raphaël doit vérifier  les fichiers ajoutés et modifiés avec la commande git status. Étant donné que  tous les fichiers ajoutés ou modifiés doivent être versionnés,  il les ajoute tous à l’index avant de commiter  ces modifications et de les envoyer au dépôt distant.</p>
+  <pre>git add --all    git commit -m "C4 : Fix : Temps negatif"    git push -u origin hotfix-time-negative  </pre>
+</div>
+<div>
+  <h2>3. Intégration du correctif</h2>
+  <p>Le correctif de Maxime était simple à coder  et Benoît était disponible pour faire la revue  de code (imposée par les règles de l’équipe)  et valider le correctif. Maxime sera donc chargé de mettre à jour  les branches master et develop.</p>
+  <p>Tout d’abord, Maxime se place sur la branche  de production et merge la branche de son correctif : </p>
+  <pre>git checkout master    git pull    git merge --no-ff hotfix-time-negativ    git push  </pre>
+  <p>Il est important de placer un tag sur cette  nouvelle version. Toujours sur la branche master, Maxime exécute la commande suivante : </p>
+  <pre>git tag v1.0.1    git push --tags  </pre>
+  <p>Il doit ensuite mettre à jour la  branche develop avec les commandes suivantes : </p>
+  <pre>git checkout remotes/origin/develop    git checkout -b develop    git merge --no-ff hotfix-time-negative    git push origin develop</pre>
+  <p>La branche de correctif a été mergée  dans les branches master et develop, elle n’est donc plus utile. Maxime la supprime alors  avec les commandes suivantes :</p>
+  <pre>git branch -d hotfix-time-negative    git push origin :hotfix-time-negative  </pre>
+  <p>Après cette commande, tout le workflow  correspondant à l’intégration d’un correctif est  terminé.</p>
+</div>
+<div>
+  <h2>4. Fonctionnalité type de tâche</h2>
+  <p>Des clients ont demandé la possibilité d’intégrer  une notion de type de tâche. Cela permettrait de trier  le temps passé à l’exploitation, aux nouveaux  projets, à la relation client, etc. Noëllie a  demandé à Benoît d’effectuer ce travail.</p>
+  <p>Il commence donc par créer la branche  qui recevra cette nouvelle fonctionnalité : </p>
+  <pre>git pull --all    git checkout remotes/origin/develop    git checkout -b develop    git checkout -b task_type    git commit -m "C7 : Branche task_type" --allow-empty    git push -u origin task_type  </pre>
+</div>
+<div>
+  <h2>5. Finalisation des graphiques</h2>
+  <p>Dimitri a travaillé ces derniers  jours sur la possibilité d’afficher des graphiques sur  un tableau de bord affiché sur la page de détail  d’un projet ou d’un utilisateur.</p>
+  <p>Une fois qu’il a terminé son développement,  il commite ses modifications dans la branche graph_employee.</p>
+  <pre>git pull    git commit -m "C8 : Graphiques : projet par utilisateur"    git push  </pre>
+  <p>Ce commit contient toutes les modifications  effectuées pour intégrer les graphiques. Selon  l’ampleur des modifications, Dimitri aurait tout à fait  pu effectuer plusieurs commits au fur et à mesure de son  développement.</p>
+  <p>Maxime a effectué la revue de code  de Dimitri et n’a rien relevé de particulier. Dimitri peut  donc intégrer ses modifications dans la branche develop.</p>
+  <pre>git checkout develop  </pre>
+  <p>Dans la branche graph_employee, Dimitri avait utilisé une ancienne branche  de jQuery. Lorsque le dépôt principal a été replacé sur  la branche develop, le pointeur du dépôt intégré a été rétabli  et est donc considéré comme une modification non  commitée. Il faut donc mettre à jour les dépôts  intégrés avec la commande suivante pour ensuite  effectuer le merge :</p>
+  <pre>git submodule update    git merge --no-ff graph_employee -m "C9 : Merge branche"     graph_employee -&gt; develop"    git push -u origin develop  </pre>
+  <p>Lorsque Dimitri tente de pusher ses modifications,  le dépôt distant l’en empêche, car  il n’a pas récupéré les commits  après s’être placé sur la branche develop. Il doit donc intégrer les modifications distantes  dans un commit de merge avant de pusher à nouveau ses modifications.</p>
+  <p>Ce commit de merge sera automatiquement effectué lorsque  Dimitri aura exécuté la commande suivante : </p>
+  <pre>git pull  </pre>
+  <p>Une fois ces actions effectuées,  Dimitri peut supprimer la branche graph_employee avec la commande suivante :</p>
+  <pre>git branch -d graph_employee    git push origin :graph_employee  </pre>
+</div>
+<div>
+  <h2>6. Finalisation des types de tâche</h2>
+  <p>Benoît vient de terminer ses développements  pour intégrer la notion de type de tâche. Il commite  ses modifications à l’intérieur de la branche task_type : </p>
+  <pre>git pull    git commit -m "C10 : Type task + admin"    git push  </pre>
+  <p>Après la revue de code effectuée  par Raphaël, le développement est validé et peut être  intégré dans la branche de développement  : </p>
+  <pre>git checkout develop    git pull origin develop    git merge --no-ff task_type -m "C11 : Type tache + admin"    git push -u origin develop  </pre>
+  <p>La branche task_type n’étant plus utile, Benoît  la supprime : </p>
+  <pre>git branch -d task_type    git push origin :task_type  </pre>
+</div>
+<div>
+  <h2>7. Création de la branche de version</h2>
+  <p>Les nouvelles fonctionnalités prévues  pour la version 1.1 du logiciel se trouvent toutes dans  la branche develop. Il est donc temps de créer la branche de version  qui permettra de tester la prochaine version et d’y intégrer  des correctifs avant sa publication. Raphaël,  après une demande de Noëllie, crée donc  cette branche avec les commandes suivantes : </p>
+  <pre>git checkout develop    git pull    git checkout -b release-v1.1    git commit --allow-empty -m "C12 : Debut branche de version 1.1"   git push -u origin release-v1.1  </pre>
+  <p>Une fois la branche créée,  Noëllie envoie un mail prévenant l’équipe  que la branche release-v1.1 a été créée et qu’elle  ne recevra que des correctifs avant d’être intégrée  dans la branche master pour produire la future version majeure.</p>
+</div>
+<div>
+  <h2>8. Export CSV</h2>
+  <p>Dans la version 1.2, il est prévu  d’ajouter un export des tâches d’un salarié au format  CSV sur une période donnée. Étant donné que  la branche de version release-v1.1 a été créée, la  branche develop peut commencer à recevoir les modifications  de la version 1.2. Raphaël est chargé de développer  cette nouvelle fonctionnalité. Il crée donc la  branche export_csv : </p>
+  <pre>git checkout develop    git checkout -b export-csv    git commit --allow-empty -m "C13 : Debut de branche export CSV"    git push -u origin export-csv  </pre>
+</div>
+<div>
+  <h2>9. Correctif de version</h2>
+  <p>Pour tester l’application, l’équipe  la déploie sur un serveur et l’utilise pour gérer ses  projets internes. C’est au cours de l’utilisation de cette version  que Bastien s’est rendu compte que lorsque le salarié n’avait  effectué aucune tâche, le graphique d’affichage  des tâches par projet était inutile. Après  avoir averti Noëllie de ce problème, celle-ci  a immédiatement demandé à Raphaël  de le résoudre.</p>
+  <p>Il s’est donc placé sur la branche  de version : </p>
+  <pre>git pull    git checkout release-v1.1  </pre>
+  <p>Il a corrigé le problème  et a commité ses modifications avec les commandes suivantes  : </p>
+  <pre>git commit -m "C14 : fix : hide graph if no data"    git push origin release-v1.1  </pre>
+</div>
+<div>
+  <h2>10. Nouvelle version stable</h2>
+  <p>Les tests ont été concluants,  la branche release-v1.1 est suffisamment stable pour devenir la nouvelle version  stable du logiciel.</p>
+  <p>Les développeurs et Raphaël  ont testé les nouvelles fonctionnalités. Bastien  a testé l’installation de la nouvelle version sur différentes  distributions Linux ainsi que sur Windows pour être sûr  qu’aucun élément n’est dépendant du système.</p>
+  <p>Raphaël se charge alors de créer  le commit de la version 1.1 :</p>
+  <pre>git checkout master    git merge --no-ff release-v1.1 -m "C15 : Nouvelle version 1.1"    git push  </pre>
+  <p>Il crée le nouveau tag :</p>
+  <pre>git tag v1.1    git push --tags  </pre>
+  <p>Et enfin, Raphaël met également à jour  la branche develop pour qu’elle reçoive les correctifs contenus  dans la branche de version :</p>
+  <pre>git checkout develop    git merge --no-ff release-v1.1 -m "C16 : Correctifs v1.1"    git push    git branch -d release-v1.1    git push origin :release-v1.1  </pre>
+  <p>Bastien met alors en ligne la nouvelle version  du logiciel sur le serveur FTP réservé au  client. Marion se charge de toute la communication autour de cette nouvelle  version (envoi d’e-mails, publicité en ligne, etc.).</p>
+</div>
+<div>
+  <h2>11. Finalisation de l’export CSV</h2>
+  <p>Raphaël a travaillé sur  l’export CSV des tâches d’un salarié. </p>
+  <pre>git pull    git commit -m "C17 : Finalisation de l’export des taches"    git push  </pre>
+  <p>Après que Benoît a effectué la  revue de code, Raphaël intègre la nouvelle fonctionnalité dans  la branche develop :</p>
+  <pre>git checkout develop    git pull    git merge --no-ff export-csv -m "C18 : Export CSV des taches"    git push  </pre>
+  <p>La branche export-csv n’étant plus utile, Raphaël  la supprime :</p>
+</div>
+<div id="AU_07829b16-9663-4c3a-a457-f5a438edc61f" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <pre>git branch -d export-csv    git push origin :export-csv  </pre>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

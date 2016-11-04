@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_b3f4e225-5f30-4880-aae0-3cd397237d15" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Classes associées</h1>
+  <p>Contrairement au module client, les modules  article et commande font intervenir des relations entre différents  objets.</p>
+  <p>Par exemple, une commande fait référence à des  lignes de commande, qui sont physiquement stockées dans  une table séparée. Cette référence  se fait grâce au système de clé primaire  - clé étrangère : pour chaque  ligne de commande dans la table correspondante, une colonne indiquant  la clé primaire de la table associée est  présente. Cette colonne stocke la clé étrangère  de la commande pour chaque ligne.</p>
+  <p>JPA permet directement de gérer ce  principe de clés, l’intégrité référentielle  de la base est alors préservée : la base  de données reste dans un état cohérent.</p>
+  <p>Il est néanmoins important de comprendre  ce principe car les requêtes utilisées pour interroger  la base doivent prendre en compte ce mécanisme.</p>
+  <p>Les classes associées sont de deux  types : entité et contrôle.</p>
+  <p>Le type entité fait référence à une  classe modélisant le métier, dans le package <strong>entite</strong>, et à une classe CRUD, listant les opérations  possibles, située dans le package <strong>entite.crud</strong>.</p>
+  <p>Le type contrôle fait référence à une  classe modélisant le modèle du composant graphique  associé, situé dans le package <strong>controle.modele</strong> et à une classe effectuant le lien entre le  CRUD et les modèles dans le package <strong>controle</strong>.</p>
+  <p>Pour ne pas alourdir ce chapitre, les classes  associées sont disponibles depuis la page Informations  générales.</p>
+</div>
+</body>
+</html>

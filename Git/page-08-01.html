@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Les tags</h1>
+<p>Un tag est un alias (un nom) défini  par un développeur, dont le rôle est de pointer  vers un commit. Il permet d’identifier facilement un commit. Les  tags sont utilisés pour nommer à des moments précis  l’état du dépôt. Les tags permettent  d’éviter l’utilisation des hashs SHA-1 qui sont ne sont  pas explicites et difficiles à retenir.</p>
+<p>Les tags sont notamment utilisés  pour marquer des numéros de version sur des commits.</p>
+<div>
+  <h2>1. Numérotation des versions</h2>
+  <p>Il existe plusieurs manières de noter  les versions d’un logiciel. Il n’y a pas de méthode  parfaite pour choisir les numéros de versions. Il faut  juste rester cohérent avec le système  choisi.</p>
+  <p>Le système SemVer (pour Semantic Versioning) est un système dont la philosophie est de  donner un numéro de version qui ait du sens dans le cycle  de vie du logiciel. Ce système est utilisé sur  des projets de grande envergure comme Python ou Django et est parfaitement  adapté à des projets de petite taille.</p>
+  <p>Le numéro de version se construit à partir  de trois nombres séparés de points : <strong>x.y.z</strong></p>
+  <p>Signification des trois nombres : </p>
+  <div>
+    <ul>
+      <li>
+        <p>Le <strong>x</strong> va marquer une version majeure. Une version majeure  est une version qui entraîne des modifications importantes  dans le fonctionnement de l’application ou encore  qui induit une incompatibilité avec une version précédente.</p>
+      </li>
+      <li>
+        <p>Le <strong>y</strong> va marquer une version mineure. Une version mineure  est une version qui ajoute des fonctionnalités tout en  conservant une compatibilité avec l’ancien système.</p>
+      </li>
+      <li>
+        <p>Le <strong>z</strong> va marquer un patch. Un patch correspond à des  corrections de bugs sans ajout de fonctionnalités.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Ainsi, on peut imaginer un extrait de liste  des modifications (changelog) d’un logiciel de conversion vidéo : </p>
+  <div>
+    <ul>
+      <li>
+        <p><strong>1.8.5</strong> : correction de divers bugs lors de la conversion  d’une vidéo HD.</p>
+      </li>
+      <li>
+        <p><strong>1.9</strong> : ajout de la prise en charge du format Matroska.</p>
+      </li>
+      <li>
+        <p><strong>2</strong> : modification de l’algorithme de  compression du fichier de sortie.</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div>
+  <h2>2. Différents types de tags</h2>
+  <p>Avec Git, il existe deux types de tags :  les tags légers et les tags annotés. Les tags  légers sont des tags qui stockent le nom du tag sur un  commit donné. Les tags annotés stockent davantage  d’informations en conservant également la date  de création et le créateur du tag.</p>
+  <p>Les tags annotés sont utiles lorsqu’on  a besoin de stocker les informations liées à la  personne qui a créé un tag. En utilisant un tag  annoté, il est nécessaire d’enregistrer  un message, ce qui permet de sauvegarder des détails complémentaires  sur le tag tels que la version définie par ce tag. Cela  dépend très souvent de l’organisation  et des méthodes de travail choisies dans le service informatique.</p>
+</div>
+<div>
+  <h2>3. Création des tags</h2>
+  <p>Pour créer un tag léger,  il faut se positionner sur le commit dont on veut créer un  alias (avec la commande git checkout hash_du_commit)  puis créer le tag avec la syntaxe suivante : </p>
+  <pre>git tag nom_du_tag</pre>
+  <p>Par exemple, pour créer le tag de  la version 1.8.5, il faut utiliser la commande suivante : </p>
+  <pre>git tag v1.8.5  </pre>
+  <p>Il est également possible de créer  un tag sans se positionner sur le commit en utilisant la commande git tag tout en spécifiant  le hash du commit : </p>
+  <pre>git tag nom_du_tag hash  </pre>
+  <p>Par exemple, pour définir le tag  de la version 1.8.6 sur le commit dont le hash commence par af31a4,  il faut utiliser la commande suivante :</p>
+  <pre>git tag v1.8.6 af31a4  </pre>
+</div>
+<div>
+  <h2>4. Création d’un tag annoté</h2>
+  <p>Il est possible de créer un tag annoté en  ajoutant le paramètre -a à la  commande git tag. </p>
+  <p>Syntaxe de création d’un  tag annoté :</p>
+  <pre>git tag -a nom_du_tag  </pre>
+  <p>Par exemple, pour créer le tag de  la version 1.9 sur le commit courant, il faut utiliser la commande  suivante :</p>
+  <pre>git tag -a v1.9  </pre>
+  <p>En exécutant cette commande, Git  va demander à l’utilisateur d’entrer  un message de tag dans l’éditeur de texte configuré.  Il est également possible de noter le message du tag directement  dans la commande en utilisant le paramètre -m. </p>
+  <p>Syntaxe permettant de définir le  tag annoté et le message dans une seule commande : </p>
+  <pre>git tag -a nom_du_tag -m "message_du_tag"  </pre>
+  <p>Par exemple, pour créer le tag correspondant à la  version 1.10 :</p>
+  <pre>git tag -a v1.10 -m "Webservices remplacés par l’API REST"  </pre>
+</div>
+<div>
+  <h2>5. Liste des tags</h2>
+  <p>Pour lister uniquement les noms des tags,  il faut utiliser la commande suivante : </p>
+  <pre>git tag --list  </pre>
+  <p>Il est aussi possible d’utiliser  le raccourci -l au lieu de --list. Pour afficher également  des lignes du message de tag, il faut utiliser le paramètre -n. Ce paramètre prend en  argument le nombre de lignes du message de tag à afficher. Si  aucun argument n’est défini, Git affichera uniquement  la première ligne du message. </p>
+  <p>Exemple listant les tags, leurs noms et les  trois premières lignes du message de tag :</p>
+  <pre>git tag --list -n3  </pre>
+</div>
+<div>
+  <h2>6. Détails d’un tag</h2>
+  <p>Afficher les détails d’un  tag va également afficher les détails du commit  auquel le tag est associé. Pour afficher les détails  d’un tag, il faut utiliser la commande suivante : </p>
+  <pre>git show v1.8.5</pre>
+  <p>Pour un tag simple, cette commande va simplement  afficher les détails du commit auquel il est attaché.  Pour un tag annoté, cette commande va afficher les détails  du tag puis les détails du commit. Voici par exemple les  détails de tag et de commit qu’on obtient en utilisant  cette commande :</p>
+  <pre>tag v2    Tagger: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Sun Apr 26 20:33:40 2015 +0200        Webservices remplacés par l’API REST        commit 2aa8afa6b79274f63b2f4331dcba05a85812904d    Author: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Sun Apr 26 20:30:25 2015 +0200            Intégration de l’API REST.        diff --git a/tag.txt b/tag.txt    index b6d93df..f3e4b24 100644    --- a/README    +++ b/README    @@ -1 +1,2 @@    +Nouveautés dans la version 2    + --- suite du contenu du commit ---  </pre>
+  <p>L’affichage de cette commande présente  les détails du tag, mais également ceux du commit.  Cet affichage est intéressant car le créateur  du commit n’est pas obligatoirement celui qui a défini  le tag. En effet, il est fréquent que le commit soit créé par  le développeur ayant effectué la modification  et que le tag soit apposé par un chef de projet pour valider  une nouvelle version.</p>
+</div>
+<div>
+  <h2>7. Envoi des tags vers le dépôt distant</h2>
+  <p>Pour envoyer les tags créés  sur le dépôt local vers le dépôt  distant, il faut utiliser la commande suivante (où origin est le nom du dépôt  distant) :</p>
+  <pre>git push origin -tags</pre>
+  <p>Il est également possible d’envoyer  les tags un à un vers le dépôt distant  en utilisant la syntaxe suivante (où origin est le nom du dépôt  distant) : </p>
+  <pre>git push origin nom_du_tag  </pre>
+  <p>Par exemple, lorsque la version 2 est validée,  le chef de projet qui a apposé le tag v2 pourra l’envoyer  au dépôt distant de cette manière : </p>
+  <pre>git push origin v2  </pre>
+  <p>De cette manière, lorsque les utilisateurs  du dépôt auront mis à jour leur dépôt local,  ils pourront utiliser le tag v2.</p>
+</div>
+<div>
+  <h2>8. Suppression d’un tag</h2>
+  <p>Supprimer un tag ne signifie pas supprimer  le commit auquel il se réfère, mais uniquement  l’alias qui se réfère à ce commit.  Supprimer un tag n’entraîne donc aucune perte  dans l’historique du projet.</p>
+  <p>Pour supprimer un tag, il faut utiliser la  commande suivante : </p>
+  <pre>git tag -d nom_du_tag  </pre>
+  <p>Par exemple, si le tag v2 a été défini  sur un mauvais commit, il est possible de supprimer le tag de cette  manière : </p>
+  <pre>git tag -d v2  </pre>
+  <p>Cette commande n’envoie rien au dépôt  distant, pour vos collaborateurs de dépôt le  tag existe toujours.</p>
+  <p>Pour faire savoir au dépôt  distant que le tag est supprimé, il faut lui envoyer l’objet  interne de Git avec la commande suivante : </p>
+  <pre>git push origin :refs/tags/nom_du_tag  </pre>
+  <p>Par exemple, si le chef de projet a envoyé le  tag v2 pointant vers un mauvais commit, il peut supprimer cette  référence dans le dépôt distant  de cette manière :</p>
+</div>
+<div id="AU_105d8c6d-b8e0-483c-91a3-67262503f25e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <div>
+    <pre>git push origin :refs/tags/v2  </pre>
+  </div>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

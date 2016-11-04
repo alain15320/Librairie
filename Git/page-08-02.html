@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Les branches</h1>
+<p>Le système de branches est l’une  des fonctionnalités les plus intéressantes de Git.  Les branches sont un concept que l’on retrouve dans quasiment  tous les autres systèmes de versionning.</p>
+<p>Une branche correspond en réalité à une  version parallèle de celle en cours de développement.  Une branche peut servir à développer de nouvelles  fonctionnalités ou encore à corriger d’éventuels  bugs sans pour autant intégrer ces modifications à la  version principale du logiciel. Les branches permettent de segmenter  différentes versions en cours de développement.</p>
+<p>Vous utilisez d’ailleurs déjà une  branche depuis le début de ce livre, sans forcément  y avoir fait attention. Par défaut, lorsqu’on  travaille sur un dépôt Git, une branche master est créée. C’est sur cette  branche qu’il faut effectuer toutes les manipulations.</p>
+<p>En réalité, et à l’instar  des tags, les branches sont des alias. C’est-à-dire  qu’un tag ou une branche définit un nom sur un  commit. La différence entre les deux, c’est que  le commit lié au tag est statique là où pour  une branche la référence est dynamique.</p>
+<p>Ci-dessous se trouve un exemple de système  de branches sous forme de graphique. Cet exemple se situe dans une  entreprise qui édite un logiciel de comptabilité avec  l’enregistrement des commandes clients. </p>
+<div>
+  <div><img alt="images/06E01.png" src="images/06E01.png"></div>
+</div>
+<p>Graphique généré à l’aide  de gitgraph.js disponible sur GitHub (<a href="https://github.com/nicoespeon/gitgraph.js" target="_blank">https://github.com/nicoespeon/gitgraph.js</a>)</p>
+<p>Dans cet exemple composé de cinq  commits, le premier représente la branche de développement.  C’est dans cette branche que toutes les nouvelles fonctionnalités  sont ajoutées.</p>
+<p>Le deuxième commit (hash 7ffc9a4)  correspond au premier commit après la création  d’une branche. De manière plus pragmatique, voici  le cheminement qui a permis d’arriver à ce commit : </p>
+<div>
+  <ul>
+    <li>
+      <p>Le développeur  a créé une branche (par exemple nommée tableau_bord_commandes) à partir du commit 892f8d4.</p>
+    </li>
+    <li>
+      <p>Le développeur a ensuite  développé la partie interface web de la nouvelle fonctionnalité et  a enregistré ses modifications dans un commit. C’est  après ce commit que la branche existe réellement  dans l’historique. À ce moment-là, l’alias tableau_bord_commandes pointe sur le commit 7ffc9a4.</p>
+    </li>
+  </ul>
+</div>
+<p>Pour le troisième commit, le développeur  a dû rapidement corriger une erreur sur l’enregistrement  des commandes. Il a fait la modification sur la branche de développement,  car cette modification devait rapidement être mise en production  pour corriger les problèmes des clients.</p>
+<p>Le quatrième commit correspond au  développement d’une partie de la nouvelle fonctionnalité,  il est donc réalisé sur la branche tableau_bord_commandes. À la fin de ce commit, l’alias tableau_bord_commandes pointe sur le commit b12c3c8.</p>
+<p>Le cinquième commit correspond à la  fusion de la branche tableau_bord_commandes dans la branche de développement. C’est-à-dire  que les modifications effectuées dans la branche de la  nouvelle fonctionnalité seront intégrées  dans la branche de développement. Le message est typique  des messages enregistrés par un éditeur de code.  De façon plus technique, voici ce qu’il se passe  lorsqu’on fusionne la branche tableau_bord_commandes dans la branche de développement :</p>
+<div>
+  <ul>
+    <li>
+      <p>Le développeur  indique à Git d’intégrer les modifications  de la branche tableau_bord_commandes dans la branche de développement.</p>
+    </li>
+    <li>
+      <p>Git compare les deux branches et  récupère les différences qu’il  va intégrer dans la branche de développement.</p>
+    </li>
+    <li>
+      <p>Une fois les modifications intégrées,  le développeur va commiter pour enregistrer le résultat  de la fusion. À ce moment-là, les branches de  développement et tableau_bord_commandes pointent vers le même commit (hash 4c91597).</p>
+    </li>
+  </ul>
+</div>
+<p>Dans cet exemple, un seul développeur  est intervenu sur le dépôt. En entreprise, il  peut avoir plusieurs possibilités d’organisation  regroupant le travail de plusieurs développeurs. Il est  possible qu’un développeur suive une ou plusieurs branches  où il travaille seul sur de nouvelles fonctionnalités.  Il est également possible que plusieurs développeurs  travaillent sur une même branche de nouvelles fonctionnalités.  Cette dernière situation est particulièrement  fréquente lorsque les développeurs sont fortement  spécialisés. Finalement, l’organisation  dépend fortement des spécificités de  l’entreprise et de l’équipe, mais également  du degré d’urgence d’une fonctionnalité.</p>
+<div>
+  <h2>1. Liste des branches existantes</h2>
+  <p>Par défaut, Git utilise une branche  nommée master pour servir notre dépôt. En effet,  il est nécessaire que Git travaille sur une branche, car  sinon il ne pourrait pas remplir son rôle. Cela ne veut  pas dire que la branche master soit absolument nécessaire ; en effet, après  avoir créé d’autres branches, il est  possible de supprimer la branche master sans nuire au fonctionnement de Git.</p>
+  <p>Pour afficher la liste des branches, il faut  utiliser la commande suivante : </p>
+  <pre>git branch </pre>
+  <p>Sur un dépôt où aucune  branche n’a été créée,  cette commande affichera ceci : </p>
+  <pre>* master  </pre>
+  <p>Comme prévu, le dépôt  contient une seule branche : master. Sur cette sortie de Git, la branche master est préfixée du signe étoile *. Cela signifie que master est la branche courante, c’est-à-dire  que si un commit est ajouté au dépôt,  la référence de la branche master avancera pour pointer vers le nouveau commit.</p>
+  <p>Pour afficher la liste des branches avec le  hash et le message du dernier commit de chaque branche, il faut  utiliser le paramètre -v :</p>
+  <pre>git branch -v        * dev    2d874c2 Stats Eleve -&gt; Graphiques de la classe      master 63a5e8f API Rest -&gt; Fix -&gt; Token expiration  </pre>
+</div>
+<div>
+  <h2>2. Création d’une branche</h2>
+  <p>Avant de créer une branche, il faut  tout d’abord chercher de quelle branche elle doit elle-même  dériver. Bien souvent, cette branche d’origine  sera également la branche qui va recevoir les modifications  de la nouvelle branche. Par exemple, si un développeur  a besoin de créer une nouvelle fonctionnalité,  il va créer une branche spéciale pour cette fonctionnalité.  Cette nouvelle branche devra dériver de la branche dev, c’est-à-dire de la branche destinée à recevoir toutes  les nouvelles fonctionnalités qui ne sont pas encore publiées.  Pour se placer sur la branche dont on veut hériter, il  faut utiliser la commande git checkout qui  sera abordée dans la suite du chapitre.</p>
+  <p>Il faut également définir  un nom pour cette nouvelle branche. Un nom de branche obéit à un  certain formalisme : </p>
+  <div>
+    <ul>
+      <li>
+        <p>Il ne doit contenir  que des caractères ASCII imprimables.</p>
+      </li>
+      <li>
+        <p>Il ne doit pas commencer par un  tiret.</p>
+      </li>
+      <li>
+        <p>Il ne doit pas contenir deux points  consécutifs.</p>
+      </li>
+      <li>
+        <p>Il ne doit pas terminer par un slash.</p>
+      </li>
+    </ul>
+  </div>
+  <p>En outre, vous pouvez utiliser les slashs,  points ou tirets pour définir une hiérarchie dans  vos noms de branches. Par exemple, les noms de branches suivants  sont tout à fait valides : 2.x/fix/ticket/3245 et 3.x/fonctionnalite/tableau_bord.</p>
+  <p>Pour vérifier si un nom de branche  est valide, vous pouvez utiliser l’outil check-ref-format avec la syntaxe suivante : </p>
+  <pre>git check-ref-format --branch nom_branche  </pre>
+  <p>Pour tester le nom de branche 2.x/fix/ticket/3245, il faut utiliser la commande :</p>
+  <pre>git check-ref-format --branch 2.x/fix/ticket/3245  </pre>
+  <p>Si le nom est valide, Git affiche en sortie  le nom entré en paramètre. Si le nom est invalide,  Git affiche une erreur de type fatal avec le nom entré en paramètre puis  le texte : is not a valid branch  name.</p>
+  <p>Ensuite pour créer la branche, il  faut utiliser la commande :</p>
+  <pre>git branch nom_branche  </pre>
+  <p>Pour créer une branche nommée tableau_bord_commandes, il faut utiliser la commande suivante :</p>
+  <pre>git branch tableau_bord_commandes  </pre>
+  <p>En exécutant cette commande depuis  la branche dev du dernier exemple de la partie précédente,  le développeur crée juste une référence équivalente à celle pointée  par dev comme cela est observable avec git  branch -v : </p>
+  <pre>git branch -v    * dev         2d874c2 Stats Commandes -&gt; Tableaux de statistiques     master      63a5e8f API Rest -&gt; Fix -&gt; Token expiration      tableau_bord_commandes 2d874c2 Stats Commandes -&gt; Tableaux de statistiques  </pre>
+  <p>La sortie de Git définit encore dev comme étant la branche courante. Cela signifie que  chaque nouveau commit mettra à jour le pointeur dev vers ce nouveau commit, ou autrement dit que chaque  nouveau commit sera effectué dans la branche dev. Pour que les nouveaux commits soient réalisés  dans la branche tableau_bord_commandes, il faut tout d’abord se positionner dessus.</p>
+</div>
+<div>
+  <h2>3. Positionnement sur une branche</h2>
+  <p>Les branches représentent le système  le plus simple à utiliser pour conserver et faire évoluer  plusieurs versions du même projet. Très régulièrement,  le développeur doit changer de branche pour plusieurs  raisons : </p>
+  <div>
+    <ul>
+      <li>
+        <p>corriger un bug prioritaire  sur sa tâche actuelle,</p>
+      </li>
+      <li>
+        <p>continuer à travailler  sur une nouvelle fonctionnalité (donc sur une autre branche),</p>
+      </li>
+      <li>
+        <p>fusionner deux branches pour mettre à jour  la version de développement avec une nouvelle fonctionnalité par  exemple.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Changer de branche (ou se placer sur une branche)  signifie plusieurs choses : </p>
+  <div>
+    <ul>
+      <li>
+        <p>Le répertoire  de travail est modifié.</p>
+      </li>
+      <li>
+        <p>L’index reste intact.</p>
+      </li>
+      <li>
+        <p>La référence HEAD  est mise à jour et correspond au commit le plus récent de  la branche sur laquelle le développeur s’est placé.  Le prochain commit aura pour commit parent le nouveau HEAD et sera  donc considéré comme un commit de la branche sur  laquelle le développeur s’est placé.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Avant de changer de branche, il faut veiller à n’avoir  aucune modification en cours dans le répertoire de travail  et dans l’index. Il est possible de vérifier les modifications  en attente avec la commande git status.  Si toutefois le développeur doit changer de branche  rapidement sans avoir le temps de finir le code en cours pour commiter,  il peut utiliser la commande git stash (cette  commande sera expliquée plus en détail dans le  chapitre Les outils de Git à la section Mettre de côté des  modifications avec git stash). En bref, git stash permet  de conserver des modifications de côté pour revenir à un état identique  entre le répertoire de travail et la branche HEAD. Le développeur peut  ensuite réimporter ses modifications facilement  sans avoir eu à créer de commit non terminé.</p>
+  <p>Se positionner dans une branche met à jour  le répertoire de travail pour correspondre à la  version la plus récente de la branche. Le pointeur HEAD  (qui pointe vers le commit le plus récent de la branche  courante) est d’ailleurs mis à jour pour pointer  sur le commit le plus récent de la branche à atteindre. </p>
+  <p>La syntaxe suivante permet de se positionner  sur une autre branche : </p>
+  <pre>git checkout nom_branche</pre>
+  <p>Pour se placer sur la branche tableau_bord_commandes, il faut utiliser la commande suivante : </p>
+  <pre>git checkout tableau_bord_commandes  </pre>
+  <p>La liste des branches affichera donc une étoile  devant la branche sur laquelle on vient de placer Git : </p>
+  <pre>git branch       dev      master    * tableau_bord_commandes  </pre>
+  <p>Il existe aussi un argument de la commande git checkout qui permet de créer  une nouvelle branche et de s’y placer directement :</p>
+  <pre>git checkout -b connexion_sociale  </pre>
+</div>
+<div>
+  <h2>4. Fusionner deux branches</h2>
+  <p>Les fusions, également appelées merges, correspondent à l’opération de récupération  des différences d’une branche vers une autre. Par exemple,  lorsqu’un développeur utilise git  pull pour récupérer les commits de la branche  suivie à distance, après avoir téléchargé les  commits sur le serveur distant, Git effectue une fusion entre la  branche courante et la branche suivie à distance. Une fusion  revient à intégrer les modifications d’une branche  dans une autre.</p>
+  <p>Par exemple, si un développeur a  utilisé une branche ajout_tarif pour ajouter la gestion des tarifs, cela signifie que  s’il souhaite fusionner la branche master avec la branche ajout_tarif qui hérite de master, il doit tout d’abord se poser la question suivante :  dans quelle branche dois-je intégrer les modifications  de l’autre branche ?</p>
+  <p>Dans le cas actuel, le développeur  souhaite ajouter dans la branche master les modifications apportées par la branche ajout_tarif. Pour cela, il va tout d’abord se positionner sur la  branche master puis va utiliser la commande git  merge pour fusionner les modifications de la branche ajout_tarif dans la branche master :</p>
+  <pre>git checkout master    git merge ajout_tarif</pre>
+  <p>Git va alors rechercher le dernier commit  que les deux branches ont en commun (ce commit est appelé « ancêtre  commun »), va créer un nouveau commit  et y apporter les modifications de la branche ajout_tarif. Ce commit est particulier car il hérite de  deux parents : c’est le commit de merge. Ces étapes  sont totalement transparentes pour le développeur.</p>
+  <p>Le schéma ci-dessous présente  le merge d’une branche dans une autre : </p>
+  <div>
+    <div><img alt="images/06E02.png" src="images/06E02.png"></div>
+  </div>
+  <p>Dans cet exemple :</p>
+  <div>
+    <ul>
+      <li>
+        <p>le développeur  utilise un projet existant et crée une branche nommée branche A à partir du commit C1 de la branche master. Le commit C2 est le premier commit de branche A. La vie de la branche principale (master) continue comme le montre le commit C3.</p>
+      </li>
+      <li>
+        <p>le commit C4 représente le deuxième et dernier  commit de branche A. C’est le commit pointé par la référence branche A.</p>
+      </li>
+      <li>
+        <p>le commit C5 représente le commit de merge. C’est  le commit qui va réunir les modifications de branche A pour les intégrer dans la branche master. </p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h3>a. L’avance rapide</h3>
+    <p>L’avance rapide est un système interne à Git  qui lui permet de gagner en performances lors de certaines actions  telles que des changements particuliers de branches. Un exemple  permet de mieux saisir l’intérêt de l’avance rapide.</p>
+    <p>Le développeur se situe sur la branche master et il doit effectuer rapidement une modification simple :  agrandir la largeur du menu du logiciel de l’entreprise  sur les écrans 16/9. Les normes dans l’entreprise  imposent de ne jamais commiter directement dans la branche master. Le développeur va donc créer une  branche dérivée de master qu’il va nommer menu_width.</p>
+    <pre>git checkout -b menu_width  </pre>
+    <p>Il va commiter sa modification et va ensuite  se placer dans sa branche master puis va fusionner menu_width dans master.</p>
+    <pre>git commit -am "Largeur du menu raccourcie. Demande numero 8462"   git checkout master    git merge menu_width  </pre>
+    <p>Cette commande affiche la sortie suivante :</p>
+    <pre>Updating a5aeded..9c70f97    Fast-forward    fichier_principal.txt | 2 +-    1 file changed, 1 insertion(+), 1 deletion(-)  </pre>
+    <p>Git indique au développeur qu’il  a procédé à l’avance rapide avec les  mots Fast-forward. Git ne va pas  alors réellement fusionner les deux versions puisqu’il  va avancer le pointeur de la branche master jusqu’à celui de la branche menu_width. En effet, Git sait qu’en fusionnant les deux versions  du projet, il obtiendrait exactement la même version que  celle pointée par la branche menu_width.</p>
+    <p>Cette action est totalement transparente pour  le développeur, mais cela permet à Git  d’être très rapide lors de ce type de fusion.</p>
+    <p>Le schéma ci-dessous présente  une branche nommée branche B qui dérive de branche A :</p>
+    <div>
+      <div><img alt="images/06E03.png" src="images/06E03.png"></div>
+    </div>
+    <p>Le commit C2 est le premier commit de branche B, son ancêtre direct est C1 qui représente le commit le plus récent  de branche A et, par conséquent, ce commit C1 est celui qui est pointé par la référence branche A. Le commit C3 est le dernier commit de branche B, c’est donc le commit pointé par la  référence branche B.</p>
+    <p>Le schéma ci-dessous présente  le merge de branche B dans la branche nommée branche A : </p>
+    <div>
+      <div><img alt="images/06E04.png" src="images/06E04.png"></div>
+    </div>
+    <p>Dans cet exemple, le commit C4 est grisé car il n’existe pas. Git  ne va pas le créer car C4 n’est pas nécessaire. En effet, le  commit C4 aurait exactement le même identifiant 271a que le commit C3, car ils correspondraient à la même version.  Git va donc placer la référence branche A sur le commit C3 et donc sur la même référence  que celle pointée par branche B. Cela ne signifie pas que les branches vont évoluer  dans le même sens. En effet, si le développeur  commite une nouvelle modification en étant placé sur branche A, seule la référence branche A pointera sur le nouveau commit et branche B restera sur le commit C3.</p>
+    <p>Le schéma ci-dessous présente  un merge effectué sans avance rapide : </p>
+    <div>
+      <div><img alt="images/06E05.png" src="images/06E05.png"></div>
+    </div>
+    <p>En effet, Git ne pouvait pas effectuer cette  avance rapide, car le commit C5 porte également les modifications contenues  dans le commit C4. </p>
+  </div>
+  <div>
+    <h3>b. Nettoyer votre dépôt</h3>
+    <p>Généralement, après  la fusion d’une branche avec la branche master, la branche fusionnée n’est plus utile (à moins  que d’autres modifications ne soient prévues dans celle-ci)  et il est nécessaire de la supprimer. Le chapitre Git-Flow  : workflow d’entreprise aborde les bonnes pratiques dans  la gestion des branches en entreprise avec notamment les branches  temporaires et les branches permanentes.</p>
+  </div>
+  <div>
+    <h3>c. Les conflits de fusion</h3>
+    <p>Cette partie est très importante  parce qu’il est nécessaire de bien appréhender les  conflits de fusion pour ne pas être bloqué lorsqu’un  tel conflit surviendra. C’est une des difficultés les plus  délicates à aborder pour un développeur débutant parce  que pour une fois Git ne peut pas se débrouiller tout seul  et a besoin d’aide.</p>
+    <p>Qu’est-ce qu’un conflit ?</p>
+    <p>Les conflits de fusion sont rares avec Git  (cela dépend de la taille du projet et du nombre d’intervenants).</p>
+    <p>Ce chapitre a évoqué le  fait que lorsque Git fusionne, il repère le dernier commit  commun aux deux branches et qu’il utilise les modifications des  deux branches. Cela signifie donc que Git analyse trois versions  différentes :</p>
+    <div>
+      <ul>
+        <li>
+          <p>la version du dernier  commit que les branches ont en commun,</p>
+        </li>
+        <li>
+          <p>la version de la première  branche à fusionner,</p>
+        </li>
+        <li>
+          <p>la version de la deuxième  branche à fusionner.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Le schéma ci-dessous présente  le commit que les branches ont en commun en haut (commit C1) : </p>
+    <div>
+      <div><img alt="images/06E06.png" src="images/06E06.png"></div>
+    </div>
+    <p>Les encadrés pointillés  qui représentent les zones de fichiers sont en réalité des lignes  du fichier. Tous ces commits concernent uniquement le fichier index.html. </p>
+    <p>L’encadré se trouvant sous  le commit C3 et au-dessus du commit C4 représente le premier résultat du  merge de branche A dans branche B. </p>
+    <p>Dans ce résultat, la zone 1 a présenté un  conflit. En effet, le contenu initial (celui du premier  ancêtre commun) est le mot <strong>parler</strong>. Le commit de branche A a modifié le mot en <strong>crier</strong>. Le commit de branche B a modifié le mot en <strong>chuchoter</strong>. Lorsque le développeur demande à effectuer  le merge, Git ne sait pas quel mot choisir entre les deux nouveaux.  C’est dans ce genre de cas qu’un conflit survient.  La résolution du conflit sera manuelle, car seule une intervention  humaine saura utiliser la version qui correspond le mieux au projet.</p>
+    <p>La zone 2 ne présente pas de conflit.  En effet, les versions des branches master et branche B sont identiques pour cette zone avec le mot <strong>marcher</strong>. La version de branche A ayant été modifiée, c’est  elle qui sera sélectionnée pour le merge. La zone  2 portera donc le mot <strong>courir</strong> dans le résultat du merge.</p>
+    <p>La zone 1 sera donc à modifier manuellement  par le développeur et la zone 2 sera automatiquement renseignée  par Git avec le mot <strong>courir</strong>. Une fois que le conflit aura été résolu,  le développeur validera le merge en commitant C4.</p>
+    <p>Exemple de conflit</p>
+    <p>La fusion n’est pas toujours évidente à appréhender,  c’est la raison pour laquelle il vaut mieux l’aborder  au travers d’un cas pratique simple.</p>
+    <p>Le dépôt résultant  de cet exemple se trouve dans les fichiers en téléchargement : <strong>06/merge_test</strong>.</p>
+    <p>Pour cela, il faut créer un nouveau  dépôt :</p>
+    <pre>git init merge_test  </pre>
+    <p>Il faut ensuite créer le fichier index.html avec le contenu suivant :</p>
+    <pre>&lt;html&gt;    &lt;head&gt;&lt;title&gt;Mon serpent préféré&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;        Le python est un serpent bien et majestueux.    &lt;/body&gt;    &lt;/html&gt;  </pre>
+    <p>Pour terminer le projet de base, il faut commiter  le fichier index.html :</p>
+    <pre>git add index.html    git commit -m "Page sur les pythons"  </pre>
+    <p>Le projet tel qu’il est créé ici  correspond au projet initial à partir duquel des modifications  seront effectuées par deux développeurs. Les deux  développeurs (nommés Pierre et Paul) copient le  projet en même temps à un instant t.</p>
+    <p>Il est possible d’imaginer que Pierre cherche à modifier  le terme « bien », qu’il trouve  inapproprié. Il est actuellement déjà placé sur  la branche master puis crée une nouvelle branche (nommée branch1) pour effectuer sa modification :</p>
+    <pre>git checkout -b branch1  </pre>
+    <p>Pour vérifier que la branche a correctement été créée,  il est possible d’utiliser la commande suivante :</p>
+    <pre>git branch --list  </pre>
+    <p>La sortie suivante indique que la branche  a correctement été créée : </p>
+    <pre>* branch1      master  </pre>
+    <p>Il modifie ensuite le fichier index.html avec le contenu suivant :</p>
+    <pre>&lt;html&gt;    &lt;head&gt;&lt;title&gt;Mon serpent préféré&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;        Le python est un serpent merveilleux et majestueux.    &lt;/body&gt;    &lt;/html&gt;  </pre>
+    <p>Pierre commite donc cette modification et  se replace sur la branche master pour continuer ses autres tâches :</p>
+    <pre>git add index.html    git commit -m "Correction terme peu esthétique"    git checkout master  </pre>
+    <p>Il est possible d’imaginer que Paul trouvait également  que le titre n’était pas explicite et le terme « bien » peu  adapté à la phrase. Étant donné qu’il  a récupéré le projet en même  temps que Pierre, il n’a pas reçu la modification  effectuée par Pierre. Il va créer une nouvelle  branche pour effectuer ses modifications et s’y placer avec la commande  suivante :</p>
+    <pre>git checkout -b branch2  </pre>
+    <p>Paul modifie le fichier pour y appliquer ses  corrections. Le contenu du fichier devient :</p>
+    <pre>&lt;html&gt;    &lt;head&gt;&lt;title&gt;Le meilleur serpent du monde&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;        Le python est un serpent formidable et majestueux.    &lt;/body&gt;    &lt;/html&gt;  </pre>
+    <p>Pour terminer sa modification, il commite  ses modifications et se replace sur la branche master pour continuer ses autres tâches :</p>
+    <pre>git add index.html   git commit -m "Titre et mot ’bien’ inadaptés"   git checkout master  </pre>
+    <p>À présent, le chef de projet  souhaite ajouter dans la branche master les modifications présentes dans la branche branch1. Étant donné qu’il se trouve actuellement  sur la branche master, il a juste besoin de lancer la commande suivante :</p>
+    <pre>git merge branch1  </pre>
+    <p>Cette commande affiche la sortie suivante  :</p>
+    <pre>Updating c0f01c0..87636df    Fast-forward     index.html | 2 +-     1 file changed, 1 insertion(+), 1 deletion(-)  </pre>
+    <p>Cette sortie indique que le merge s’est correctement  effectué.</p>
+    <p>Après avoir intégré la branch1, le chef de projet veut faire la même chose  avec la branch2. Il exécute alors la commande suivante :</p>
+    <pre>git merge branch2  </pre>
+    <p>Cette commande affiche la sortie suivante  :</p>
+    <pre>Auto-merging index.html    CONFLICT (content): Merge conflict in index.html    Automatic merge failed; fix conflicts and then commit the result.  </pre>
+    <p>Cette sortie indique que Git n’a pas réussi  la fusion à cause d’un conflit dans le fichier index.html. </p>
+    <p>Dans ce cas-là, Git met la fusion  en pause et demande à l’utilisateur de résoudre le  conflit manuellement. Parfois lors des fusions, il est possible d’avoir  plusieurs fichiers en conflit. Pour obtenir la liste des fichiers à fusionner manuellement  après un conflit, il faut utiliser la commande git status :</p>
+    <pre>git status  </pre>
+    <p>Cette commande affiche la sortie suivante  :</p>
+    <pre>On branch master    You have unmerged paths.      (fix conflicts and run "git commit")        Unmerged paths:      (use "git add &lt;file&gt;..." to mark resolution)            both modified:   index.html        no changes added to commit (use "git add" and/or "git commit -a")  </pre>
+    <p>Cette sortie indique que le fichier index.html présente un conflit et n’a pas été mergé.  Cette commande indique également que rien n’a été ajouté dans l’index et,  par conséquent, rien n’est prêt à être  commité.</p>
+    <p>Le chef de projet doit alors ouvrir le fichier index.html. Il remarquera rapidement que le contenu du fichier  a été modifié par Git. En effet, le contenu  du fichier index.html est devenu :</p>
+    <pre>&lt;html&gt;    &lt;head&gt;&lt;title&gt;Le meilleur serpent du monde&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;    &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD        Le python est un serpent merveilleux et majestueux.    =======        Le python est un serpent formidable et majestueux.    &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch2    &lt;/body&gt;    &lt;/html&gt;  </pre>
+    <p>Dans ce fichier, Git a ajouté des  séparateurs :</p>
+    <div>
+      <ul>
+        <li>
+          <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; définit  le début du contenu de la branche de base (ici HEAD qui correspond à notre  branche master après le merge avec la branche branch1). Ce qui se trouvera après ce séparateur  et avant le séparateur suivant correspond à la  version de notre branche master.</p>
+        </li>
+        <li>
+          <p>======= définit  la séparation du contenu des deux branches.</p>
+        </li>
+        <li>
+          <p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; définit  la fin du contenu de la branche à fusionner (ici branch2). Ce qui se trouve avant ce séparateur et après  le séparateur ======== correspond au  contenu de la branche branch2.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Il est également possible d’activer  le mode diff3 du style de conflit en utilisant la commande suivante : </p>
+    <pre>git config --global merge.conflictstyle diff3  </pre>
+    <p>Cette commande a pour effet d’afficher  non seulement la version courante et la version à merger  dans le fichier, mais également la version de l’ancêtre  commun. En activant cette option de configuration et en effectuant  un nouveau merge, le fichier index.html devient :</p>
+    <pre>&lt;html&gt;    &lt;head&gt;&lt;title&gt;Le meilleur serpent du monde&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;    &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD        Le python est un serpent merveilleux et majestueux.    ||||||| merged common ancestors        Le python est un serpent bien et majestueux.    =======        Le python est un serpent formidable et majestueux.    &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch2    &lt;/body&gt;    &lt;/html&gt;  </pre>
+    <p>Le nouveau séparateur ||||||| précède  la version de l’ancêtre commun des deux commits.  Pour retrouver l’affichage dépourvu de la version  de l’ancêtre commun, il faut utiliser la commande  suivante : </p>
+    <pre>git config --global merge.conflictstyle merge  </pre>
+    <p>Pour résoudre ce conflit, il est  nécessaire de remplacer tout ce qui se trouve entre les  séparateurs &lt;&lt;&lt;&lt;&lt;&lt; et &gt;&gt;&gt;&gt;&gt;&gt; (séparateurs compris)  par la version que le chef de projet veut obtenir. Trois options  s’offrent à lui :</p>
+    <div>
+      <ul>
+        <li>
+          <p>conserver la première  version,</p>
+        </li>
+        <li>
+          <p>conserver la deuxième version,</p>
+        </li>
+        <li>
+          <p>imaginer une troisième  version.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Le chef de projet va donc imaginer une troisième  version car il n’arrive pas à choisir la version d’un des  deux développeurs. La phrase deviendra donc :</p>
+    <pre>Le python est un serpent formidable, merveilleux et majestueux.  </pre>
+    <p>Le fichier index.html final du chef de projet se présente alors de  la sorte :</p>
+    <pre>&lt;html&gt;    &lt;head&gt;&lt;title&gt;Le meilleur serpent du monde&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;        Le python est un serpent formidable, merveilleux et majestueux.   &lt;/body&gt;    &lt;/html&gt;  </pre>
+    <p>Pour avertir Git qu’il a correctement résolu  le conflit sur ce fichier, le chef de projet doit utiliser git add de la manière suivante  :</p>
+    <pre>git add index.html  </pre>
+    <p>Il peut ensuite vérifier que le conflit  a bien été résolu pour Git :</p>
+    <pre>git status  </pre>
+    <p>Cette commande affiche la sortie suivante :</p>
+    <pre>On branch master    All conflicts fixed but you are still merging.      (use "git commit" to conclude merge)        Changes to be committed:            modified:   index.html  </pre>
+    <p>Cette sortie indique que le fichier index.html a bien été intégré à l’index  de Git et qu’il est prêt à être  commité.</p>
+    <p>Il faut ensuite demander à Git de  valider le commit de la fusion :</p>
+    <pre>git commit  </pre>
+    <p>Git propose un message de commit prédéfini,  le chef de projet le laisse tel quel et finalise le commit.</p>
+    <p>La phase de résolution d’un conflit  n’est pas évidente. Selon la complexité des développements à fusionner,  cette phase demande à la personne qui effectue le merge  de comprendre le code des différentes versions.</p>
+    <p>Une fois que deux branches ont été fusionnées,  il ne faut pas oublier de supprimer celle qui devient superflue.  Toutes les branches ne deviennent pas superflues, cela dépend  beaucoup de vos méthodes de travail et du workflow choisi  pour utiliser Git.</p>
+  </div>
+</div>
+<div>
+  <h2>5. Supprimer une branche</h2>
+  <p>Pour supprimer une branche, il suffit d’utiliser  la commande suivante :</p>
+  <pre>git branch -d menu_width  </pre>
+  <p>Attention car cette commande supprime réellement  le pointeur de la branche. Il n’y a normalement que deux cas qui  nécessitent la suppression d’une branche :</p>
+  <div>
+    <ul>
+      <li>
+        <p>La branche a été fusionnée  dans master et aucune autre modification n’est prévue dans  cette branche.</p>
+      </li>
+      <li>
+        <p>Les modifications dans cette branche  ne sont plus à l’ordre du jour et elles ne seront jamais  intégrées. Attention, il ne faut supprimer une  branche non mergée que lorsqu’on est sûr et certain  que les modifications qu’elle apporte n’ont et n’auront plus aucune  valeur.</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div>
+  <h2>6. Rebaser une branche dans une autre</h2>
+  <p>Il existe un autre moyen d’intégrer  les modifications d’une branche dans une autre branche  : git rebase. C’est une  fonctionnalité fondamentalement différente du  merge. Un merge a pour but d’intégrer plusieurs  commits cohérents entre eux dans un commit unique représentant  tous les commits mergés. Un rebase correspond à une  réécriture d’historique, par exemple  pour intégrer les commits d’une branche dans une  autre. Au lieu d’intégrer toutes les modifications  d’une branche dans un unique commit, il est possible de  modifier la base d’une branche en incluant les commits  d’une autre branche.</p>
+  <p>Pour expliquer de façon plus pragmatique  la différence entre un merge et un rebase, il convient  d’analyser les résultats des deux fonctionnalités.  Le schéma ci-dessous présente la situation initiale  qui permettra d’effectuer la comparaison : </p>
+  <div>
+    <div><img alt="images/06E07.png" src="images/06E07.png"></div>
+  </div>
+  <p>Le schéma qui se trouve précédemment  dans ce chapitre et qui explique le principe du merge présente  l’exemple du merge de la branche nommée branche A dans la branche master. Dans cet exemple, le commit C5 implémente les modifications de branche A (représentée par les commits C2 et C4) dans la branche master.</p>
+  <p>Pour rebaser les modifications de branche A dans la branche master il faut tout d’abord se positionner sur la  branche master (de la même manière que lors du merge),  puis il faut utiliser la commande git rebase :</p>
+  <pre>git rebase branche-A  </pre>
+  <p>Le schéma ci-dessous présente  le résultat du rebase de branche A dans la branche master. Les commits de branche A sont réintroduits dans la branche master.</p>
+  <div>
+    <div><img alt="images/06E08.png" src="images/06E08.png"></div>
+  </div>
+  <p>En réalité, rebaser branche A dans la branche master va effectuer les actions suivantes : </p>
+  <div>
+    <ul>
+      <li>
+        <p>Git va identifier  le dernier ancêtre commun des deux branches, dans ce cas-là C1.</p>
+      </li>
+      <li>
+        <p>Git va ensuite mettre de côté les  modifications contenues sur la branche master qui n’existent pas dans branche A.</p>
+      </li>
+      <li>
+        <p>Git va appliquer les commits de branche A (commits C1 et C2) dans la branche master.</p>
+      </li>
+      <li>
+        <p>Pour finir, Git va réappliquer  les commits mis de côté au début du rebase  de la branche master.</p>
+      </li>
+    </ul>
+  </div>
+  <p>En bref, les commits de branche A sont ajoutés juste après le dernier  ancêtre commun des deux branches, soit avant toutes les  modifications spécifiques à la branche master.</p>
+  <div>
+    <div><img src="images/PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il ne faut pas rebaser des commits  envoyés sur un dépôt distant. En effet,  un rebase revient à transformer des commits de la même  manière que s’ils étaient supprimés  pour être recréés, or dans Git (et d’une  manière générale dans les CVS) il n’est  pas cohérent de supprimer un commit.</p>
+    </div>
+  </div>
+  <p>Le logiciel Tower, qui permet de gérer  des dépôts Git, permet également de mieux  comprendre les différences entre le merge et le rebase.</p>
+  <p>La capture ci-dessous permet de visualiser  un merge : </p>
+  <div>
+    <div><img alt="images/06E09.png" src="images/06E09.png"></div>
+  </div>
+  <p>Lorsque la branche nommée brancheA est mergée dans la branche master, les modifications contenues dans les commits C2 et C4 sont assemblées dans le commit de merge tout  en haut.</p>
+  <p>La capture ci-dessous permet de visualiser  un rebase : </p>
+  <div>
+    <div><img alt="images/06E10.png" src="images/06E10.png"></div>
+  </div>
+  <p>Les branches d’origine sont exactement  les mêmes que dans l’exemple précédent,  c’est-à-dire une branche master composée des commits C1 et C3 et une branche brancheA composée des commits C2 et C4. La capture présente la branche master telle qu’elle est après le rebase.  Comme il est possible de l’observer, les commits C2 et C4 de brancheA ont été intégrés  directement après l’ancêtre commun des  deux branches : le commit C1.</p>
+</div>
+</body>
+</html>

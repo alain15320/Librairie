@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Classe ModeReglements</h1>
+<p>Commençons par la classe <strong>ModeReglements</strong>. Il s’agit d’une des plus simples de notre modélisation,  et elle est au cœur de l’application. Après tout,  il s’agit d’une application de gestion des commandes, et sans règlement  cette application ne servirait pas à grand-chose dans une  entreprise commerciale !</p>
+<p>Voici le code de cette classe, présente  dans le package <strong>entite</strong> :</p>
+<pre>package entite;      import java.io.Serializable;      import javax.persistence.Basic;   import javax.persistence.Entity;   import javax.persistence.GeneratedValue;   import javax.persistence.Id;   import javax.persistence.Transient;<strong>       @Entity</strong>   public class ModeReglements <strong>implements Serializable</strong> {              private static final long serialVersionUID = 1L; <strong>          @Id       @GeneratedValue</strong>       private int code;<strong>               @Basic</strong>       private String type;<strong>               @Transient</strong>       private <strong>transient</strong> boolean ignoré;              /*        * Constructeur 1.        * Utilisé par JPA.        */       public ModeReglements(){           super();       }              /*        * Constructeur 2        * Pour la gestion des commandes        */       public ModeReglements(String type){           this();           this.type = type;       }          /*        * Accesseurs        */       public int getCode() {           return code;       }       public String getType() {           return type;       }              /*        * Mutateur        */       public void setType(String type) {           this.type = type;       }          /**        * Décrit le mode de règlement        * de manière textuelle.        */       @Override       public String toString() {           return type;       }   }  </pre>
+<p>Une annotation est présente au niveau  de la classe : <strong>@Entity</strong>. Elle permet à JPA de se rendre compte que  les instances de cette classe correspondent à des lignes  dans la base de données pour la table dont le nom est celui  de la classe par défaut.</p>
+<p>Cette classe comprend un code, qui est l’identifiant  technique permettant de créer des relations (cet identifiant  est également appelé <strong>clé primaire</strong>), et un type qui est la description textuelle du mode  de règlement.</p>
+<p>JPA permet de lier ces deux propriétés à des  colonnes en base.</p>
+<div>
+  <ul>
+    <li>
+      <p>La propriété <strong>code</strong> possède une annotation <strong>@Id</strong>. Celle-ci permet de dire que la clé primaire  de la ligne sera stockée dans cette propriété.  Elle correspondra à la valeur présente dans la  colonne CODE, c’est-à-dire le nom de la propriété par  défaut.</p>
+      <p>Elle possède également  une annotation <strong>@GeneratedValue</strong>, pour indiquer que c’est à la base de données  de fournir cette valeur lors de l’insertion d’une ligne dans la  table.</p>
+    </li>
+  </ul>
+</div>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>La propriété <strong>code</strong> n’a pas de mutateur, car la valeur de cette propriété est fixée  par la base de données.</p>
+  </div>
+</div>
+<div>
+  <ul>
+    <li>
+      <p>La propriété <strong>type</strong> est également marquée par une annotation : <strong>@Basic</strong>. Cette annotation est optionnelle (par défaut  toutes les propriétés sont considérées  comme ayant un équivalent en base).</p>
+      <p>Ces deux propriétés  sont privées à l’intérieur de la classe  et des accesseurs et mutateurs permettent d’accéder à leurs  valeurs et de les modifier.</p>
+    </li>
+  </ul>
+</div>
+<div>
+  <ul>
+    <li>
+      <p>La propriété <strong>ignoré</strong> est annotée avec <strong>@Transient</strong>. Cet attribut ne sera donc pas mappé par JPA  et n’aura pas d’équivalent en base de données.</p>
+    </li>
+    <li>
+      <p>La classe est marquée avec  l’interface <strong>Serializable</strong>. Ce marquage permet à l’application de transformer  les instances de ModeReglements en format binaire et de les envoyer  dans d’autres applications.</p>
+      <p>Ce mécanisme ne sert pas dans  l’application actuellement, mais il est considéré comme  une bonne pratique de marquer les classes entités comme  implémentant l’interface Serializable.</p>
+    </li>
+  </ul>
+</div>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Afin de conserver la même  sémantique pour le mécanisme de sérialisation,  le mot-clé <strong>transient</strong> est également ajouté à la  propriété <strong>ignoré</strong>.</p>
+  </div>
+</div>
+<div>
+  <ul>
+    <li>
+      <p>Enfin, un constructeur  par défaut est créé. Il est obligatoire  d’avoir ce constructeur car JPA s’en sert pour créer les  objets métier récupérés lors  des lectures en base.</p>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

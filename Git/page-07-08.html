@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_064aed9d-a7ec-40c9-a5e9-6b0424f6787e" uri="ImagesUri_../download/a0ebc04d-1620-46fa-82db-78bccc486529/images\">
+  <h1>Modifier le dernier commit</h1>
+  <p>Lorsqu’on suit les versions d’un logiciel,  il est normalement rare de vouloir modifier l’historique, mais il  arrive malgré tout des moments où un développeur se  rend compte qu’il a commité un peu trop vite.</p>
+  <p>Pour pouvoir modifier le dernier commit, il  faut tout d’abord avoir rempli un impératif : le commit  ne doit pas avoir été pushé (envoyé)  sur un dépôt distant (pour plus de détails  sur les dépôts distants, il convient de se référer  au chapitre Partager un dépôt). En effet, si le  commit précipité a été pushé et  que le développeur le modifie, son identifiant (sous forme  de hash) sera différent de celui du serveur et l’ancien  commit aura disparu. Le serveur ne pourra pas savoir ce  qui se sera réellement passé. En revanche, si  le commit n’a pas été envoyé sur un dépôt  distant, il est possible de corriger les erreurs sans problème.</p>
+  <p>Il arrive à chaque développeur, à un  moment ou à un autre, de se précipiter pour commiter  une modification. Plein de confiance, le développeur commite ses  modifications avant de se rendre compte qu’il a laissé de  nombreuses lignes de debug dans le code.</p>
+  <p>Il veut donc modifier le contenu de son dernier  commit ainsi que le message de commit qui n’était pas clair  du tout.</p>
+  <p>Pour cela, il doit utiliser la commande suivante  : </p>
+  <pre>git commit --amend</pre>
+  <p>Expliquer le fonctionnement de l’option --amend de git  commit est plus simple avec un exemple. Pour l’exemple,  il faut imaginer un développeur qui crée un nouveau  dossier, y initialise un dépôt, et ajoute un commit  avec des modifications dans un fichier : </p>
+  <pre>mkdir commitamend    cd commitamend    git init    vi fichier.txt    git add fichier.txt    git commit -m "Commit fichier"  </pre>
+  <p>Ensuite, le développeur se rend compte  qu’il n’a pas effectué le commit qu’il voulait,  tant au niveau du contenu que dans le message de commit. Il désire donc  remplacer le dernier commit par un nouveau : </p>
+  <pre>vi fichier.txt    git commit -m "Doc sur commit amend" --amend  </pre>
+  <p>Pour vérifier que le premier commit  a correctement été modifié, il va utiliser la  commande git log qui va lui afficher  la sortie suivante : </p>
+  <pre>commit 6f8035f    Author: Samuel DAUZON &lt;git@dauzon.com&gt;    Date:   Thu Jul 30 21:44:13 2015 +0200            Doc sur commit amend  </pre>
+  <p>Si le développeur veut uniquement  modifier le contenu de son commit sans modifier le message de commit  qui est correct, pour éviter que Git demande un nouveau  message, il est possible d’utiliser l’argument --no-edit comme ci-dessous  :</p>
+  <pre>git commit --amend --no-edit  </pre>
+</div>
+
+</body>
+</html>

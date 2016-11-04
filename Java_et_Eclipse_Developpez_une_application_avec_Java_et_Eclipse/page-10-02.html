@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_07000943-b16b-4a5b-92f5-d81cc5d7fd8c" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>SQL et les bases de données relationnelles</h1>
+  <div>
+    <h2>1. Les bases de données relationnelles</h2>
+    <p>Une base de données permet de stocker  des informations de manière persistante dans des structures  dédiées à cet effet. Ces structures s’appellent  des tables. Chaque table d’une base de données a pour vocation  de stocker des informations similaires entre elles, comme par exemple  la liste des clients d’une entreprise. Les commandes seront, elles,  stockées dans une table différente.</p>
+    <p>Une table définit un certain nombre  de colonnes, une pour chaque information à stocker. Par  exemple la table des clients contiendra une colonne avec le nom  du client, une autre colonne stockant son prénom, une autre  colonne contenant son e-mail, une autre contenant la date de création  du client dans le système… Ces colonnes ont toutes  un nom, unique à l’intérieur de la table.</p>
+    <p>Chaque table contiendra des données.  Ces données seront stockées dans une ligne. Par  exemple la table des clients contiendra autant de lignes qu’il y  a de clients, chacune des lignes stockant les informations du client  dans la colonne appropriée.</p>
+    <p>Afin d’identifier de manière unique  un client, une colonne sera dédiée au stockage de  cet identifiant. On parle de cet identifiant comme d’une clé primaire. Une  clé primaire doit obligatoirement être unique à l’intérieur  des valeurs de cette colonne pour une table donnée.</p>
+    <p>Le plus souvent, il existe plusieurs tables  dans une base, liées entre elles : il doit être  possible dans un système de pouvoir retrouver toutes les  commandes d’un client donné. On parle communément  d’une relation entre les données (d’où le terme  de base de données relationnelles). Cette relation se crée  en ajoutant une colonne supplémentaire dans une des tables,  stockant la clé primaire d’une ligne d’une autre table.  Cette colonne est communément appelée clé étrangère.  Ainsi, la table des factures aura une colonne nommée « cle_client », chaque  ligne représentant une commande stockant dans cette colonne  la clé primaire du client associé.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Une telle relation est appelée <strong>Many To One</strong> : un client peut être lié à plusieurs commandes,  mais il ne peut y avoir qu’un seul client pour une commande donnée.  D’autres relations de type <strong>One To One</strong> ou <strong>Many To Many</strong> existent.</p>
+      </div>
+    </div>
+    <p>Ce système de stockage permet d’obtenir  des données structurées et organisées  entre elles. Un autre point important est que si le nom du client  doit être modifié, cette modification ne se fera  qu’à un seul endroit des données, car une base  de données bien conçue minimise les informations  stockées.</p>
+    <p>Un système de gestion de bases de  données relationnelles (SGBDR ou SGBD) est un logiciel  permettant d’accéder et de manipuler toutes ces données  depuis et vers différentes bases. MySQL est un SGBD, tout  comme Oracle, PostgreSQL, SQLite…</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il existe d’autres types de SGBD,  par exemple du type NoSQL comme MongoDB. MongoDB stocke  les données non pas dans des tables mais dans des collections,  non pas dans des lignes mais dans des documents, non pas dans des  colonnes mais dans des champs...</p>
+      </div>
+    </div>
+    <p>Organiser une base et avoir un jeu de données  cohérent est très bien, mais il est nécessaire  de pouvoir « jouer » avec, d’interroger  la base pour en récupérer les données,  demander à la base d’ajouter, modifier ou supprimer des données... Pour  atteindre cet objectif, un langage de requêtes est nécessaire :  il s’agit de SQL.</p>
+  </div>
+  <div>
+    <h2>2. SQL</h2>
+    <p>SQL est un langage, donc avec une syntaxe,  permettant d’interroger une base pour en retrouver des données,  de manipuler ces données (les stocker, les modifier, les  supprimer). Il permet d’effectuer ce que l’on appelle des opérations <strong>CRUD</strong> (pour Create, Read, Update, Delete) et bien d’autres opérations (comptage...).</p>
+    <p>Pour insérer (créer) une  ligne de données dans la table client, il sera possible d’écrire</p>
+    <pre><strong>INSERT INTO</strong> client(id, nom, prenom, email)<strong>
+    VALUES</strong> (1, "Dupont", "Eric", "eric.dupont@compagnie.com")  </pre>
+    <p>Pour modifier un client existant, la syntaxe  suivante pourra être utilisée.</p>
+    <pre><strong>UPDATE</strong> client <strong>SET</strong> email = "edupont@autre.com" <strong>WHERE</strong> id = 1  </pre>
+    <p>Pour retrouver tous les clients, on pourra  utiliser :</p>
+    <pre><strong>SELECT</strong> * <strong>FROM</strong> client  </pre>
+    <p>Afin de pouvoir retrouver les commandes d’un  client, il sera nécessaire d’effectuer une jointure entre  les deux tables. Une jointure consiste généralement à associer  les lignes de deux tables avec une contrainte d’égalité entre  les valeurs d’une colonne de la première table et les valeurs  d’une colonne de la deuxième table.</p>
+    <pre>SELECT * FROM commande<strong>
+    JOIN</strong> client <strong>ON</strong> client.id = commande.cle_client
+<strong>    WHERE</strong> client.nom = "Dupont"  </pre>
+    <p>Cette jointure retourne des lignes représentant  toutes les commandes faites par les clients dont le nom est « Dupont »,  chaque ligne étant complétée avec les  détails du client.</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il existe plusieurs types de jointures :  jointure <strong>interne</strong> (la plus répandue, comme celle qui se trouve  dans l’exemple ci-dessus), jointure <strong>externe</strong> à <strong>gauche</strong>, jointure externe à <strong>droite</strong>, jointure externe <strong>complète</strong>… Ces différents types ne seront pas  plus évoqués dans ce livre.</p>
+      </div>
+    </div>
+    <p>L’instruction <strong>EXPLAIN</strong> placée devant une requête permet d’évaluer  la complexité de cette requête et de pouvoir chercher  des optimisations possibles.</p>
+    <pre><strong>EXPLAIN</strong> SELECT * FROM commande
+     JOIN client ON client.id = commande.cle_client
+     WHERE client.nom = "Dupont"  </pre>
+  </div>
+  <div>
+    <h2>3. Transactions</h2>
+    <p>Les manipulations (les écritures)  des données en base se font à l’intérieur  d’une <strong>transaction</strong>. </p>
+    <p>Supposons que vous êtes en charge  d’une base de données gérant les comptes bancaires  de différents clients et qu’une opération de gestion  consiste à transférer de l’argent d’un  compte à un autre. Concrètement, il s’agira de  débiter (enlever) une somme d’argent d’un compte et ajouter  (créditer) la même somme sur l’autre compte. Techniquement,  cela consistera à faire deux opérations d’UPDATE,  une pour chaque compte. </p>
+    <p>Supposons maintenant qu’une erreur intervienne  juste entre ces deux opérations d’UPDATE (quelqu’un débranche  la prise du serveur, la connexion réseau tombe…).  Ce n’est pas de chance, mais cela veut dire que de l’argent a disparu :  c’est le drame pour un des clients et pour la banque !</p>
+    <p>Une transaction permet de grouper des opérations élémentaires  en une seule grande opération. Si toutes les opérations élémentaires  ont réussi, la transaction est validée (on dit <strong>commitée</strong>). Si une des opérations élémentaires  est en échec, la transaction considérera que l’opération  globale n’a pas pu être réalisée, et  annulera toutes les opérations élémentaires  (on parle de <strong>rollback</strong>).</p>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>MySQL propose deux moteurs de stockage :  MyISAM et InnoDB. Seul InnoDB gère les transactions (et  le mécanisme des clés étrangères).  En contrepartie, InnoDB est plus lent et plus gourmand en espace  de stockage.</p>
+      </div>
+    </div>
+    <p>Une transaction présente traditionnellement  des propriétés, rassemblées sous l’acronyme <strong>ACID</strong>. Suivant cet acronyme, une transaction doit être :</p>
+    <div>
+      <ul>
+        <li>
+          <p><strong>Atomique</strong> : une transaction est réalisée  totalement ou pas du tout. Si une des opérations de la  transaction échoue, l’ensemble des opérations  précédentes est effacé et les données  modifiées retournent aux valeurs présentes avant  le début de la transaction.</p>
+        </li>
+        <li>
+          <p><strong>Cohérente</strong> : chaque transaction transforme des données  valides en données valides. La notion de donnée  valide est définie par des règles fonctionnelles propres  au métier de l’application qui sont souvent implémentées  comme des contraintes ou des triggers dans la base.</p>
+        </li>
+        <li>
+          <p><strong>Isolée</strong> : chaque transaction s’exécute comme  si elle est la seule en cours : si des transactions s’exécutent  simultanément, chacune demeure indépendante des  autres.</p>
+        </li>
+        <li>
+          <p><strong>Durable</strong> : lorsqu’une transaction a été effectuée  avec succès, les résultats de la transaction sont  enregistrés de manière persistante :  si une panne quelconque arrive juste après la  complétion de la transaction, les données modifiées  peuvent être récupérées après  redémarrage de la base de données.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Il existe un ensemble de propriétés  alternatives aux propriétés ACID : il  s’agit des propriétés <strong>BASE</strong> (Basically Available, Soft state, Eventual consistency) qui permettent des construire des systèmes  distribués de stockage de données. Les chimistes  doseront la force ou la faiblesse du jeu de mots lié.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

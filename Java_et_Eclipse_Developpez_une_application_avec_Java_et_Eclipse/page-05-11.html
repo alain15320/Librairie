@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_d20f2cb7-9f4b-400b-a8f6-56c8385ede1a" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Interfaces</h1>
+  <p>Une interface est un moyen de créer  un contrat pour les classes et donc les objets, contrat  qui permettra de définir des comportements obligatoires  pour toutes les classes <strong>implémentant</strong> cette interface.</p>
+  <p>L’intérêt principal d’une  interface est de factoriser des comportements communs pour une utilisation  standardisée. Si, au cours du cycle de développement  de votre application, vous vous apercevez qu’un de vos objets peut  avoir une meilleure implémentation (comme une voiture avec  un meilleur moteur), et si vous utilisez une interface pour communiquer  avec cet objet, vous pourrez modifier votre code beaucoup plus facilement  en substituant votre ancienne classe avec la nouvelle qui  possédera exactement la même interface.</p>
+  <p>Reprenons l’exemple de la voiture :  chaque modèle de voiture est unique. Chaque modèle  est construit suivant un schéma différent, avec  des technologies différentes. Néanmoins, l’interface  de chaque modèle de voiture est toujours plus ou moins  la même : un volant, des pédales pour  le frein et l’accélérateur, les commandes de clignotants...  Le volant est toujours devant vous, les pédales sont à la  même place quelle que soit la voiture que vous utilisez,  comme les commandes de clignotants... Félicitations !  Vous connaissez bien l’interface pour conduire une voiture et n’avez  pas à repasser votre permis de conduire à chaque  fois que vous vous asseyez dans une voiture différente de  la vôtre, comme une voiture anglaise.</p>
+  <p>Vous avez donc déjà appris à maîtriser  une interface et pas une implémentation particulière,  et ce dans le monde réel. Il est possible de transposer  cette maîtrise dans une application Java à l’aide  d’interfaces que l’on déclare comme ceci :</p>
+  <pre><strong>interface</strong> Animal {        void manger(Object deLaNourriture) ;    }  </pre>
+  <p>Une interface ne peut habituellement contenir  que des signatures de méthodes publiques et abstraites,  donc sans aucune implémentation (pas de crochets), et des  propriétés publiques, statiques ou finales.</p>
+  <p>Le fait que le concept d’héritage  multiple n’existe pas en Java a déjà été souligné.  Chat ne peut ainsi hériter simultanément des comportements  et caractéristiques de plusieurs classes.</p>
+  <p>Par contre, Chat peut implémenter  autant d’interfaces que nécessaire.</p>
+  <pre>public final class Chat extends Felin <strong>implements</strong> Animal,                                               EtreVivant, Mobile {   }  </pre>
+  <p>L’interface peut être étendue  (dérivée) par d’autres interfaces au  moyen du mot-clé <strong>extends</strong>, comme avec une classe. La différence majeure  avec une classe réside dans le fait qu’une interface  peut elle-même hériter de plusieurs autres interfaces.  Les interfaces permettent en outre de structurer le code de manière  plus sûre. En effet, lorsqu’une classe implémente  une interface avec le mot-clé <strong>implements</strong>, elle doit obligatoirement redéfinir toutes  les méthodes de celle-ci. Ceci peut paraître  contraignant mais l’application a ainsi l’assurance que  les services ou contrats attendus de l’interface implémentée seront  respectés.</p>
+  <pre><strong>interface</strong> Animal <strong>extends</strong> EtreVivant, Mobile {        void manger(Object deLaNourriture) ;   }</pre>
+  <p>Ici, toute classe voulant implémenter  l’interface Animal devra obligatoirement créer une méthode  publique <strong>void manger(Object deLaNourriture)</strong>, en plus des méthodes présentes dans  les interfaces EtreVivant et Mobile.</p>
+  <p>Le mécanisme des interfaces est très  utilisé à l’intérieur de Java lui-même.  Il y permet de créer de la modularité et des facilités  de substitution de code. Et Java permet d’utiliser et de créer  cette modularité et cette facilité dans <strong>votre</strong> application !</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Il est conseillé d’éviter  de créer des interfaces avec trop de méthodes  et donc de contrats. Cela nuit globalement à la modélisation  et au cycle de vie de l’application.</p>
+    </div>
+  </div>
+  <p>Enfin, Java 8 permet de définir des  implémentations par défaut dans les interfaces, à l’aide  du mot-clé <strong>default</strong>.</p>
+  <pre>interface Animal {<strong>        default</strong> void manger(Object deLaNourriture) {               System.out.println(this + " mange " + deLaNourriture);       }   }  </pre>
+  <p>Si une méthode d’une interface a  une implémentation par défaut, il n’est pas nécessaire  d’implémenter cette méthode : l’implémentation  par défaut est utilisée.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Tests unitaires</h1>
+<p>Dans tout développement logiciel,  une étape à ne jamais négliger est la  phase de tests : aucun développeur, même  le plus aguerri, n’est à l’abri d’erreurs de développements.</p>
+<p>Qu’est-ce qui différencie ces développeurs  experts des autres ? Ils ont tout simplement bâti  leur confiance autour de leur travail en le testant et le retestant  continuellement.</p>
+<p>Il est hors de question de repasser manuellement  tous les tests d’une application. Au-delà d’un certain  volume de code, cela est tout simplement impossible.</p>
+<p>Il est largement préférable  de confier ces tests à un système automatique  qui les passera tous les jours.</p>
+<p>Toute une culture s’est même créée  autour de cette manière de développer qui est  de placer les tests au centre de l’activité de création  logicielle, ou dit autrement le développement piloté par  les tests (Test-Driven Development ou TDD en anglais).</p>
+<p>Ce livre n’est pas une introduction à cette  culture, mais quelques principes de bases peuvent d’ores et déjà en être  empruntés : par exemple le <strong>Red/Green/Refactor</strong> ou en français : Rouge, Vert, Refaire.</p>
+<p>L’idée est de commencer tout d’abord  par créer des tests, qui ne passeront pas, et à travailler  l’implémentation et le codage jusqu’à ce que ces  tests soient corrects. Une fois arrivé à ce  point, il faut ensuite retravailler le code produit jusqu’à ce  qu’il ait une forme correcte.</p>
+<p>Eclipse propose des outils pour créer  des tests de bas niveau, dits <strong>unitaires.</strong></p>
+<div>
+  <p> Revenez au projet <strong>MonPremierProgramme</strong> en faisant un clic droit dessus dans l’explorateur de  packages, et choisissez l’option <strong>New - Source Folder</strong>.</p>
+</div>
+<div>
+  <p> Nommez le nouveau dossier <strong>src/test/java</strong>. Cliquez sur <strong>Finish</strong>.</p>
+</div>
+<div>
+  <p>Les classes de tests seront destinées à aller  dans ce dossier. Créer ce dossier permet de faire une séparation  claire entre les classes de tests unitaires et les classes qui seront  utilisées lors du déploiement de l’application.</p>
+</div>
+<div>
+  <p> Refaites un clic droit sur le projet dans l’explorateur  de packages et choisissez l’option <strong>New - JUnit Test Case</strong>.</p>
+</div>
+<div>
+  <div><img alt="images/05-03.png" src="images/images_05-03.png"></div>
+</div>
+<div>
+  <p>Une boîte de dialogue s’ouvre  permettant de configurer le test.</p>
+</div>
+<div>
+  <p> Choisissez les options suivantes :</p>
+</div>
+<div>
+  <div><img alt="images/05-04.png" src="images/images_05-04.png"></div>
+</div>
+<p>Cette classe teste la classe <strong>MonPremierProgramme</strong>. Elle est située dans le dossier <strong>src/test/java</strong>, et elle a comme package celui de la classe à tester,  c’est-à-dire <strong>priseEnMain.premier</strong>.</p>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Une bonne pratique est de terminer  le nom des classes de test par <strong>Test</strong>, comme MonPremierProgramme<strong>Test</strong>.</p>
+  </div>
+</div>
+<div>
+  <p> Cliquez sur <strong>Next</strong>.</p>
+</div>
+<p>Une boîte de dialogue supplémentaire  s’ouvre permettant de choisir les méthodes à tester.</p>
+<div>
+  <p> Sélectionnez par exemple le constructeur  de la classe <strong>MonPremierProgramme</strong> et cliquez sur <strong>Finish</strong>.</p>
+</div>
+<div>
+  <div><img alt="images/05-05-2.png" src="images/images_05-05-2.png"></div>
+</div>
+<p>Eclipse propose ensuite de rajouter la librairie <strong>JUnit</strong> dans le chemin des librairies du projet, pour que la  classe compile.</p>
+<div>
+  <p> Cliquez sur <strong>OK</strong>.</p>
+</div>
+<div>
+  <div><img alt="images/05-05-1.png" src="images/images_05-05-1.png"></div>
+</div>
+<p>Une nouvelle classe s’ouvre dans l’éditeur.</p>
+<pre>package priseEnMain.premier;      import static org.junit.Assert.*;      import org.junit.Test;      public class MonPremierProgrammeTest {<strong>          @Test</strong>       public void testMonPremierProgramme() {<strong>               fail</strong>("Not yet implemented");       }   }  </pre>
+<p>Ceci fournit le squelette sur lequel bâtir  les tests. Les méthodes publiques annotées <strong>@Test</strong> seront exécutées lors de la phase  de tests.</p>
+<div>
+  <p> Effacez la ligne commençant par fail( … )  et rajoutez la ligne suivante :</p>
+</div>
+<pre>    @Test       public void testMonPremierProgramme() {<strong>              MonPremierProgramme.main(null);</strong>       }   </pre>
+<div>
+  <p>Il s’agit ensuite de lancer ce test. </p>
+</div>
+<div>
+  <p> Faites un clic droit dans l’éditeur  ou dans l’explorateur de packages en ayant pris soin de sélectionner  la classe <strong>MonPremierProgrammeTest</strong> auparavant. Sélectionnez ensuite l’option <strong>Run As - JUnit Test</strong>.</p>
+</div>
+<div>
+  <div><img alt="images/05-07.png" src="images/images_05-07.png"></div>
+</div>
+<div>
+  <p>Vous devriez alors obtenir l’écran  suivant avec votre test en vert.</p>
+</div>
+<div>
+  <div><img alt="images/05-08.png" src="images/images_05-08.png"></div>
+</div>
+<p>Une bonne règle de base est de limiter  le nombre de méthodes <strong>main()</strong> dans une application.</p>
+<div>
+  <p> Renommez la méthode <strong>main()</strong> en <strong>moi()</strong>, et enlevez le mot-clé <strong>static</strong>.</p>
+</div>
+<pre>public void moi() {       MonPremierProgramme programme = new MonPremierProgramme("Moi");       System.out.println("C’est " +programme.prenom +"!");   }  </pre>
+<p>Le programme de test ne compile alors plus :  des icônes rouges apparaissent à différents  endroits, notamment celui où a lieu l’erreur. C’est normal à ce  stade.</p>
+<div>
+  <div><img alt="images/05-09.png" src="images/images_05-09.png"></div>
+</div>
+<div>
+  <p> Changez le test avec le code suivant :</p>
+</div>
+<pre>import <strong>org.junit</strong>.Assert;    import org.junit.Test;       public class MonPremierProgrammeTest {          @Test       public void testMonPremierProgramme() {<strong>          MonPremierProgramme test = new MonPremierProgramme("Fred");                     test.moi();                     Assert.assertEquals("Ce n’est pas Fred!",                        "Fred", test.getPrenom());</strong>       }   }  </pre>
+<p>La méthode statique <strong>assertEquals</strong> de la classe <strong>org.junit.Assert</strong> vérifie que le prénom de la classe à tester  est bien égal à la chaîne de caractères « Fred ».  Si ce n’est pas le cas, elle donne un message d’erreur avec la chaîne  en premier paramètre. </p>
+<div>
+  <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+  <div>
+    <p>Le package à utiliser est  bien <strong>org.junit</strong>. Une classe avec le même nom existe dans le  package <strong>junit.framework</strong>, mais elle est dépréciée  et ne devrait pas être utilisée.</p>
+  </div>
+</div>
+<div>
+  <p> Relancez le test, par exemple en cliquant sur  le bouton <strong>Rerun Test</strong>.</p>
+</div>
+<div>
+  <div><img alt="images/05-10.png" src="images/images_05-10.png"></div>
+</div>
+<p>Le test passe bien, mais il affiche toujours « Cest  Moi ! ». Il devrait en toute logique  afficher « C’est Fred ! ».</p>
+<p>Ce n’est pas normal, mais c’est effectivement  ce que fait le code de la méthode <strong>moi()</strong> :</p>
+<pre>public void moi() {       MonPremierProgramme programme = new MonPremierProgramme("Moi");       System.out.println("C’est " +programme.prenom +"!");   }  </pre>
+<p>Ce code instancie un nouvel objet <strong>MonPremierProgramme</strong> et l’utilise au lieu de prendre en compte les attributs  de l’objet.</p>
+<div>
+  <p> Modifiez la méthode <strong>moi()</strong> par le code :</p>
+</div>
+<pre>    public void moi() {              System.out.println("C’est " +prenom +"!");       }  </pre>
+<div>
+  <p> Relancez le test. Le programme affiche le résultat  voulu.</p>
+</div>
+<p>Le travail n’est pas tout à fait  terminé. La méthode <strong>moi()</strong> n’est pas vraiment testable : il faut que quelqu’un  d’humain lise la sortie, elle ne peut pas encore être confiée à un  système automatisé.</p>
+<p>Il faut donc retravailler la méthode,  en lui ajoutant par exemple une valeur de retour qui sera la chaîne à afficher,  et une méthode pour l’afficher effectivement sur la sortie  console.</p>
+<div>
+  <p> Retravaillez le code de la classe <strong>MonPremierProgramme</strong> en :</p>
+</div>
+<pre>    public <strong>String</strong> moi() {<strong>              return</strong> "C’est " +prenom +"!";       }              public void afficher() {              System.out.println(moi());       }  </pre>
+<pre>@Test   public void testMonPremierProgramme() {       MonPremierProgramme test = new MonPremierProgramme("Fred");<strong>                  String affichage = test.moi();</strong>                  Assert.assertEquals("Ce n’est pas Fred!",                                 "Fred", test.getPrenom());<strong>           Assert.assertEquals("L’affichage est mauvais",                                 "C’est Fred!", affichage);</strong>              test.afficher();   }  </pre>
+<div>
+  <p> Relancez le test. </p>
+</div>
+<div id="AU_8b67e344-081a-4658-829f-35c81f73f94e" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <p>L’affichage est toujours correct et sa sortie  a bien été vérifiée unitairement.</p>
+</div>
+<div id="CFooter"> </div>
+</body>
+</html>

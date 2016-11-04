@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_649e64fb-598d-49b6-9f4f-40dd914b5cc1" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Première fenêtre</h1>
+  <p>Une petite application avec une interface  graphique (GUI pour Graphical User Interface en anglais, IHM pour interface homme-machine en français)  va maintenant être créée.</p>
+  <p>Une des nouveautés d’Eclipse depuis  la version Indigo est de fournir un éditeur d’interface  graphique issu du monde Google, <strong>WindowBuilder</strong>. Il en existe d’autres mais compte tenu de la qualité de  WindowBuilder ce dernier sera utilisé pour le projet. Quant  au plug-in Visual Editor, il est abandonné.</p>
+  <p>WindowBuilder est configurable via le menu <strong>Window - Preferences.</strong> Les options par défaut sont utilisées  pour le projet.</p>
+  <p>WindowBuilder est un plug-in d’Eclipse qui  permet de créer rapidement des interfaces graphiques en <strong>WYSIWYG</strong> (What You See Is What You Get : Ce que vous voyez est ce que vous obtenez).</p>
+  <p>Si vous voulez que le code généré automatiquement  ait une forme différente, vous pouvez paramétrer  WindowBuilder en naviguant à partir du menu <strong>Window - Préférences - WindowBuilder</strong>.</p>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Tous les créateurs d’interfaces  graphiques ont la même caractéristique :  ils permettent de créer rapidement des composants graphiques.  Par contre, ils ne fourniront quasiment jamais directement ce que  vous voulez : il sera donc nécessaire d’intervenir  ensuite sur le code généré.</p>
+    </div>
+  </div>
+  <div>
+    <h2>1. Création de la fenêtre</h2>
+    <p>L’objectif est de créer une fenêtre  très simple en s’aidant de WindowBuilder.</p>
+    <p>Cette fenêtre comportera un champ  de saisie textuelle dans lequel l’utilisateur pourra saisir des  mots. Un clic sur le bouton <strong>OK</strong> de la fenêtre présentera ce qui aura été saisi  dans une autre fenêtre.</p>
+    <div>
+      <div><img alt="images/02-86.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-86.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p> Faites un clic droit sur le projet dans l’explorateur  de packages et choisissez <strong>New - Other</strong>.</p>
+    </div>
+    <div>
+      <p> Ouvrez les dossiers <strong>WindowBuilder</strong> et <strong>Swing Designer</strong> puis sélectionnez <strong>JFrame</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-19.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-19.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA" alt="" width="20px"></div>
+      <div>
+        <p>Une JFrame est une fenêtre  graphique autonome, susceptible de contenir d’autres éléments  graphiques. Il s’agit du conteneur graphique de cette application. </p>
+      </div>
+    </div>
+    <p>Il est possible de créer d’autres  conteneurs graphiques, notamment JDialog qui est utilisé pour  créer des boîtes de dialogues et JPanel qui est  un conteneur d’éléments graphiques qui n’a pas  de fenêtrage.</p>
+    <div>
+      <p> Nommez la classe <strong>PremiereFenetre</strong> et choisissez le package <strong>priseEnMain.graphique</strong> comme package de destination. </p>
+    </div>
+    <div>
+      <div><img alt="images/02-20.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-20.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <p>Comme pour la classe <strong>PremierProgramme</strong>, le code est généré automatiquement  et apparaît dans la fenêtre de l’éditeur.</p>
+    <p>En dessous du code de l’éditeur,  deux onglets apparaissent : <strong>Source</strong> et <strong>Design</strong>. <strong>Source</strong> sert à visualiser et modifier le code source  en mode textuel, <strong>Design</strong> sert à visualiser et modifier la fenêtre  en mode graphique.</p>
+    <p>Si les onglets n’apparaissent pas, il est  possible de forcer l’ouverture de la classe avec l’éditeur  de WindowBuilder de la manière suivante :</p>
+    <div>
+      <p> Sélectionnez la classe <strong>PremiereFenetre</strong> dans l’explorateur de packages, faites un clic droit  et sélectionnez <strong>Open With - WindowBuilder Editor</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-21.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-21.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p> Cliquez ensuite sur l’onglet <strong>Design</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-22.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-22.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p>Voici une vue d’ensemble de l’environnement  de développement :</p>
+    </div>
+    <div>
+      <div><img alt="images/02-23.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-23.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <p>La fenêtre créée  contient un composant particulier de type <strong>JPanel</strong>, qui est un conteneur dans lequel il est possible de  placer d’autres composants graphiques, tels que des boutons, des  champs de saisie, des tables, des listes ou d’autres JPanel. </p>
+    <p>Ce composant JPanel est la base graphique  de l’application, la fenêtre se chargeant avant tout de  l’inclure dans le système de fenêtrage du système  d’exploitation et permettant à l’application d’avoir une  icône, un titre, des boutons de maximisation, minimisation,  fermeture, et lui procurant une position et une taille sur l’écran  de l’ordinateur.</p>
+    <div>
+      <p> Cliquez dans le centre de la petite fenêtre  de l’éditeur. Cela sélectionne le panneau principal.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-24.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-24.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p> Pour accéder au code du composant  sélectionné, cliquez alors sur l’onglet <strong>Source</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-25.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-25.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p> Lancez la fenêtre avec [Ctrl][F11].</p>
+    </div>
+  </div>
+  <div>
+    <h2>2. Ajout de composants</h2>
+    <p>Une fenêtre vide n’est pas très  utile, ni très attrayante. Des composants graphiques (appelés également  widgets) vont lui être ajoutés, ainsi que quelques petits éléments  d’habillage, dont :</p>
+    <div>
+      <ul>
+        <li>
+          <p>un titre,</p>
+        </li>
+        <li>
+          <p>une icône,</p>
+        </li>
+        <li>
+          <p>une zone de saisie,</p>
+        </li>
+        <li>
+          <p>un bouton de validation.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p> Choisissez dans votre disque dur une image,  si possible faisant 32 pixels par 32 pixels.</p>
+    </div>
+    <div>
+      <p> Créez un dossier contenant vos ressources  graphiques, en faisant un clic droit puis en sélectionnant <strong>New - Source Folder</strong>. Saisissez <strong>src/main/resources</strong> comme nom de dossier.</p>
+    </div>
+    <div>
+      <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA" alt="" width="20px"></div>
+      <div>
+        <p>Le caractère / sera  automatiquement reconnu par Eclipse (et par Java) comme un séparateur  de nom de dossier, et cela sur toutes les plateformes !</p>
+      </div>
+    </div>
+    <div>
+      <p> Créez un package <strong>priseEnMain.graphique</strong> dans ce nouveau dossier. Il doit avoir le même  nom que le package de la classe graphique.</p>
+    </div>
+    <div>
+      <p> Copiez votre image dans le package <strong>priseEnMain.graphique</strong> de ce dossier <strong>src/main/resources</strong>.</p>
+    </div>
+    <div>
+      <p> Dans l’arbre des widgets à la section <strong>Components</strong>, cliquez sur <strong>(javax.swing.JFrame)</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-26.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-26.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p>La section <strong>Properties</strong> située en dessous se met à jour pour  afficher les propriétés de la fenêtre.</p>
+    </div>
+    <div>
+      <p> Cliquez sur le petit bouton avec trois points  en face de la propriété <strong>iconImage</strong>. </p>
+    </div>
+    <div>
+      <div><img alt="images/02-27.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-27.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <p>Une boîte de dialogue permettant  de choisir l’image apparaît.</p>
+    <div>
+      <p> Cliquez sur le bouton radio <strong>Classpath resources</strong>, et ouvrez le dossier <strong>resources</strong> dans la section <strong>Parameters</strong> jusqu’à faire apparaître votre image. Double  cliquez dessus.</p>
+    </div>
+    <div>
+      <p>La fenêtre a dorénavant  une icône dans sa barre de titre.</p>
+    </div>
+    <div>
+      <p> Dans la section <strong>Properties</strong>, faites défiler verticalement les propriétés  jusqu’à voir la propriété <strong>title</strong>. Cliquez en face du nom de la propriété pour changer  sa valeur.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-28.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-28.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <p>La fenêtre a maintenant un titre.</p>
+    <p>L’étape suivante consiste à s’intéresser à l’intérieur  de la fenêtre.</p>
+    <div>
+      <p> Cliquez sur le composant <strong>JPanel</strong> soit dans la section <strong>Components</strong>, soit dans la prévisualisation à droite.</p>
+    </div>
+    <p>La section <strong>Properties</strong> affiche les propriétés du panneau.</p>
+    <p>Le panneau est un conteneur graphique, et  tout conteneur doit savoir comment placer ce qui est contenu à l’intérieur.</p>
+    <p>Java permet de spécifier les règles  de ce placement à l’aide d’un layout, ou disposition. Le  layout par défaut d’un Panel est le BorderLayout.</p>
+    <div>
+      <p> Changez ce layout par un <strong>Absolute layout</strong> à l’aide de la propriété du panneau <strong>Properties</strong>.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-29.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-29.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <p>Ce layout permet de positionner les éléments  du panneau au pixel près. </p>
+    <div>
+      <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA" alt="" width="20px"></div>
+      <div>
+        <p>Ce layout est utile mais devrait être  réservé à quelques cas très  particuliers, car il ne gère pas bien le redimensionnement  des fenêtres.</p>
+      </div>
+    </div>
+    <div>
+      <p> Dans la palette, cliquez sur le composant <strong>JButton</strong>. Déplacez ensuite la souris sur la  prévisualisation et déposez-le plutôt  vers le bas de la fenêtre. Redimensionnez-le et changez  sa propriété <strong>text</strong> dans la section <strong>Properties</strong>. </p>
+    </div>
+    <div>
+      <div><img alt="images/02-30.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-30.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p> De la même manière, sélectionnez,  déposez et redimensionnez un composant <strong>JTextField</strong> pour ajouter un champ de saisie à la fenêtre.</p>
+    </div>
+    <div>
+      <div><img alt="images/02-31.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-31.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+    <div>
+      <p> Sélectionnez, déposez et  redimensionnez un composant <strong>JLabel</strong>. Ce composant permet d’afficher des textes non éditables  et des images.</p>
+    </div>
+    <div>
+      <p> Changez ses propriétés :  police, taille de caractères, alignement (par exemple centré),  couleur...</p>
+    </div>
+    <div>
+      <div><img alt="images/02-32.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-32.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2FeIrwA4xXTiAsA"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_26e36d43-9ea4-419d-9999-15667ac1af66" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Action d’un bouton</h1>
+  <p>Le but de cette première fenêtre  est d’afficher dans une boîte de dialogue le message que  l’utilisateur de l’application aura saisi.</p>
+  <p>Pour l’instant, la construction de la fenêtre  permet à l’utilisateur de saisir ce message à l’aide  du <strong>JTextField</strong>. Le <strong>JLabel</strong> donne des indications sur ce que l’utilisateur peut  faire. Le <strong>JButton</strong> permet de valider cette saisie et d’afficher cette boîte  de dialogue.</p>
+  <p>Or, si vous cliquez sur le bouton, rien ne  se passe. À ce stade, c’est tout à fait normal.  Il faut maintenant coder l’action exécutée lors  du clic du bouton.</p>
+  <div>
+    <p> En mode <strong>Design</strong>, sélectionnez et faites un clic droit sur le  bouton <strong>Valider</strong> dans la prévisualisation. Sélectionnez  ensuite l’option suivante <strong>Add event handler - action - actionPerformed</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-33.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-33.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GGWJ4s4xXTiAsA"></div>
+  </div>
+  <div>
+    <p>WindowBuilder génère  alors automatiquement le code suivant :</p>
+  </div>
+  <pre>        JButton btnValider = new Jbutton("Valider");<strong>            btnValider.addActionListener(new ActionListener() {                  public void actionPerformed(ActionEvent e) {                  }           });</strong></pre>
+  <div>
+    <p> Dans le bloc de la méthode <strong>actionPerformed(ActionEvent e)</strong>, donc à l’intérieur des crochets,  ajoutez la ligne suivante :</p>
+  </div>
+  <pre>JoptionPane.showMessageDialog(btnValider,    <strong>               </strong>"Vous avez saisi \"" +textField.getText() +"\"");  </pre>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GGWJ4s4xXTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Comment rajouter un double guillemet  dans une chaîne de caractères ? Il faut  faire précéder celui-ci du caractère  d’échappement backslash (ou barre oblique inverse : \).</p>
+    </div>
+  </div>
+  <p>Voici le code obtenu après l’ajout :</p>
+  <pre>btnValider.addActionListener(new ActionListener() {        public void actionPerformed(ActionEvent e) {<strong>             JoptionPane.showMessageDialog(btnValider,                    "Vous avez saisi \"" +textField.getText() +"\"");</strong>       }   });  </pre>
+  <p>Une erreur apparaît alors dans Eclipse,  matérialisée par une petite icône rouge à gauche  de la ligne.</p>
+  <p>Cela indique que la classe <strong>PremiereFenetre</strong> ne connaît pas pour l’instant de classe <strong>JOptionPane</strong>. JOptionPane est une classe permettant de créer  facilement des boîtes de dialogue.</p>
+  <div>
+    <p> Pour corriger rapidement l’erreur, cliquez  sur l’icône rouge. Un menu contextuel s’affiche alors,  proposant des solutions. Chaque solution affiche la prévisualisation  de son résultat par un tooltip sur fond jaune.</p>
+  </div>
+  <div>
+    <p> Cliquez sur la première solution <strong>Import ’JOptionPane’ (javax.swing)</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/02-34.png" src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5C02-34.png?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GGWJ4s4xXTiAsA"></div>
+  </div>
+  <div>
+    <div><img src="http://www.eni-training.com/download/d7372f46-d115-41d3-a503-a3b7f321295f/images%5CPUCE.PNG?id=AAEAAAD%2f%2f%2f%2f%2fAQAAAAAAAAAMAgAAAE1FbmkuRWRpdGlvbnMuTWVkaWFwbHVzLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJ0VuaS5FZGl0aW9ucy5NZWRpYXBsdXMuQ29tbW9uLldhdGVybWFyawIAAAAHcGlzVGV4dAlwaWR0ZURhdGUBAA0CAAAABgMAAAAyT0RPVUwgQWxhaW4gLSA1NDJhM2ZhMC1kYTJkLTQzMzctOTE5Zi05OGQ1MmM5ZjhiN2GGWJ4s4xXTiAsA" alt="" width="20px"></div>
+    <div>
+      <p>Les numéros de ligne ne sont  pas forcément les mêmes dans la classe que vous êtes  en train de modifier.</p>
+    </div>
+  </div>
+  <div>
+    <p> Sauvegardez vos modifications avec le raccourci-clavier [Ctrl] <strong>S</strong> et testez le programme avec le raccourci-clavier [Ctrl][F11].</p>
+  </div>
+  <p>Avec les manipulations précédentes,  un <strong>écouteur</strong> a été créé (un <strong>listener</strong> dans la terminologie Java) pour un événement  de type particulier <strong>Action</strong>. Cet écouteur a un code qui est exécuté à chaque  fois qu’une action est effectuée sur le bouton <strong>Valider</strong>, c’est-à-dire à chaque fois qu’un  utilisateur clique dessus. </p>
+  <p>Ce processus sera revu plus en détail  dans les chapitres suivants. </p>
+</div>
+</body>
+</html>

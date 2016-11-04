@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_62fb388a-5d38-4bd3-8992-acd82620932e" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Notifications non graphiques</h1>
+  <p>Le concept de notifications, d’événements  et d’écouteurs n’est pas réservé aux classes  graphiques. Il est possible d’utiliser ce mécanisme pour  toute partie d’une application en quelques lignes.</p>
+  <p>Mettons en place cette technique dans la classe <strong>ControleClient</strong>, pour notifier des objets quelconques qu’un client a été modifié.</p>
+  <div>
+    <p> Ouvrez la classe <strong>ControleClient</strong> et rajoutez un attribut appelé <strong>notifications</strong>, de type <strong>java.beans.PropertyChangeSupport</strong> :</p>
+  </div>
+  <pre>...    import java.beans.PropertyChangeSupport;   ...    public class ControleClient {          private final ClientCrud crud;       private final ModeleClients leModeleClients;<strong>           private final PropertyChangeSupport notifications =                        new PropertyChangeSupport(this);</strong>   ...   </pre>
+  <p><strong>PropertyChangeSupport</strong> est une classe utilitaire de Java qui possède  déjà le code nécessaire pour y ajouter  et enlever des écouteurs et générer des événements à destination  de ces écouteurs.</p>
+  <div>
+    <p> Utilisez l’option <strong>Source</strong> - <strong>Generate Delegate Methods…</strong> du menu clic droit pour rajouter les méthodes <strong>addPropertyChangeListener</strong> et <strong>removePropertyChangeListener</strong> dans la classe <strong>ControleClient</strong>.</p>
+  </div>
+  <div>
+    <div><img alt="images/12-13.png" src="images/images_12-13.png"></div>
+  </div>
+  <div>
+    <div><img alt="images/12-14.png" src="images/images_12-14.png"></div>
+  </div>
+  <div>
+    <p>Le code suivant est alors obtenu :</p>
+  </div>
+  <pre>private final PropertyChangeSupport notifications                        = new PropertyChangeSupport(this);          public void addPropertyChangeListener(                       PropertyChangeListener listener) {       this.notifications.addPropertyChangeListener(listener);   }      public void removePropertyChangeListener(                       PropertyChangeListener listener) {       this.notifications.removePropertyChangeListener(listener);   }  </pre>
+  <p>Ces méthodes permettront d’enregistrer  des écouteurs sur les événements que la  classe <strong>ControleClient</strong> générera. Ces écouteurs ont  pour seule contrainte d’implémenter l’interface <strong>PropertyChangeListener</strong>.</p>
+  <p>L’étape suivante est de générer  un événement quand la classe <strong>ControleClient</strong> modifie un client. Cela se fait en appelant la méthode <strong>firePropertyChange</strong> de l’instance <strong>notifications</strong> de la classe <strong>PropertyChangeSupport</strong>. Cette méthode prend en paramètre  une chaîne de caractères arbitraire, l’ancienne valeur  et la nouvelle valeur. Hormis le premier paramètre, les  valeurs peuvent être nulles.</p>
+  <div>
+    <p> Changez la méthode <strong>modifier()</strong> de la classe <strong>ControleClient</strong>.</p>
+  </div>
+  <pre>public boolean modifier(String code, String nom, String prenom,               boolean carteFidelite, Instant creation) throws    ParseException {          ...<strong>            Client ancienClient = crud.lire(code);</strong>       ...           // 1. sauvegarde d’abord dans la BD           leClient = crud.modifier(leClient);<strong>            notifications.firePropertyChange("client",                               ancienClient,                               leClient);</strong>           // 2. puis ajout dans le modèle --&gt; MAJ du JTable auto       ...       } catch           ...       }   }  </pre>
+  <div>
+    <p> Dans la classe <strong>Client</strong>, utilisez l’option <strong>Source</strong> - <strong>Generate toString()</strong> du menu clic droit. Cela va générer  automatiquement la méthode <strong>toString()</strong>, permettant un affichage explicite des objets de type  Client dans la console.</p>
+  </div>
+  <pre>    @Override       public String toString() {           return "Client [code=" + this.code                    + ", nom=" + this.nom                   + ", prenom=" + this.prenom                   + ", carte_fidele=" + this.carte_fidele                   + ", date=" + this.date + "]";       }  </pre>
+  <div>
+    <p> Enfin, ajoutez un écouteur, par exemple  dans la méthode <strong>setConnexion</strong> de la classe <strong>PClients</strong>.</p>
+  </div>
+  <pre>controleClient.addPropertyChangeListener(evt -&gt; {       System.out.println("Changement " +evt.<strong>getPropertyName</strong>());       System.out.println("Ancienne valeur " +evt.<strong>getOldValue</strong>());       System.out.println("Nouvelle valeur " +evt.<strong>getNewValue</strong>());   });  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Dans toute application digne de ce  nom, il ne faudrait jamais oublier d’enlever les écouteurs  (de se désabonner) !</p>
+    </div>
+  </div>
+  <div>
+    <p> Testez ce code en lançant l’application  et en modifiant un client. Vous devez voir dans la console  les traces de cette modification.</p>
+  </div>
+  <div>
+    <p>Pour se faire plaisir et fournir un petit  exemple d’autres utilisations de Java, ce code va être  modifié pour ouvrir en plus une page web.</p>
+  </div>
+  <div>
+    <p> Ajoutez une méthode <strong>ouvrirPageWeb</strong> dans la classe <strong>PClients</strong>.</p>
+  </div>
+  <pre>private void ouvrirPageWeb(String adresse) {       if(<strong>Desktop.isDesktopSupported()</strong>) {           Desktop lanceur = <strong>Desktop.getDesktop()</strong>;           if(lanceur.<strong>isSupported(Desktop.Action.BROWSE)</strong>) {               try {                   lanceur.<strong>browse</strong>(new URI(adresse));               } catch (IOException e) {                   e.printStackTrace();               } catch (URISyntaxException e) {                   e.printStackTrace();               }           } else {               System.out.println("Pas de navigateur web");           }       } else {           System.out.println("Pas de lanceur");       }   }  </pre>
+  <div>
+    <p>Ceci est un code très simple :  aucune gestion des erreurs n’est effectuée.</p>
+  </div>
+  <div>
+    <p> Modifiez l’écouteur avec le code :</p>
+  </div>
+  <pre>controleClient.addPropertyChangeListener(evt -&gt; {       System.out.println("Changement " +evt.getPropertyName());       System.out.println("Ancienne valeur " +evt.getOldValue());       System.out.println("Nouvelle valeur " +evt.getNewValue());<strong>        ouvrirPageWeb("www.google.fr");</strong>   });  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Pensez à supprimer ces méthodes  après vous être amusé ! Ou mieux,  déplacez-les dans une classe de test.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

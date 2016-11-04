@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_74dce138-db66-4172-88cb-cd396dd3103c" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Boxing/Unboxing</h1>
+  <p>À l’intérieur de Java, tout  est objet… ou presque : il existe ce que l’on  appelle les types primitifs, tels que int, double, float, char,  boolean.</p>
+  <p>Chacun de ces types primitifs a un équivalent  objet : Integer, Double, Float, Character, Boolean.</p>
+  <p>Afin de faciliter le codage, le langage Java  peut faire une conversion automatique du type primitif en son équivalent  objet : il s’agit du mécanisme de <strong>boxing</strong>.</p>
+  <pre>private Integer transformer(int entier) {        return entier;      // convertit le type primitif int                           // en objet de type Integer    }  </pre>
+  <p>Pour le faire à la main, utilisez  la méthode statique <strong>valueOf()</strong> des classes Boolean, Integer, Double, Float  ou Character.</p>
+  <pre>private Boolean transformer(boolean booleen) {        // convertit le type primitif boolean       // en objet de type Boolean       return Boolean.<strong>valueOf</strong>(booleen);   }  </pre>
+  <p>L’opération inverse, dite d’<strong>unboxing</strong>, permet quant à elle de transformer les objets  Java en leur type primitif.</p>
+  <pre>private double convertir(Double decimal) {        return decimal;    // convertit l’objet de type Double                          // en valeur de type primitif.   }  </pre>
+  <p>Pour le faire à la main, utilisez  les méthodes d’instance xxxValue() :</p>
+  <pre>Boolean objetBooleen = Boolean.TRUE ;    boolean booleen = objetBooleen.<strong>booleanValue</strong>();   System.out.println(booleean);       int entier = Integer.valueOf(1).<strong>intValue</strong>();    double decimal = Integer.valueOf(2).<strong>doubleValue</strong>();    float flottant = Integer.valueOf(3).<strong>floatValue</strong>();        System.out.println(entier);    System.out.println(decimal);    System.out.println(flottant);        // résultat   true    1   2.0   3.0  </pre>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>Un piège existe avec cette  facilité du langage Java : si le mécanisme d’unboxing est  utilisé avec une valeur non initialisée (le célèbre  mot-clé <strong>null</strong>), une exception sera levée, qui ne sera pas  très explicite, et qui peut être difficile à localiser.</p>
+    </div>
+  </div>
+  <pre>Double attention = <strong>null</strong>;   double conversion = convertir(attention);   ...   private double convertir(Double decimal) {        return decimal;     <strong>// erreur ici !</strong>   }  </pre>
+</div>
+</body>
+</html>

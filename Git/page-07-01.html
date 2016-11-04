@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Lister les commits avec git log</h1>
+<p>L’une des fonctionnalités les plus  importantes d’un VCS est de retrouver rapidement un certain nombre  d’informations, par exemple les modifications qui ont été effectuées  depuis une date précise ou encore les modifications en  cours dans le répertoire de travail.</p>
+<p>La commande git log va  nous permettre d’afficher beaucoup d’informations sur les commits.  Cette commande est très puissante et possède de  nombreuses options. Il suffit de consulter l’aide de cette commande  pour mesurer les possibilités qu’elle offre.</p>
+<p>Par défaut, git  log affiche la liste des commits du dépôt  en ordre chronologique décroissant. La sortie peut être  très importante (voire monstrueuse selon la taille  du projet) car tous les commits effectués pendant toute  la vie du dépôt sont affichés.</p>
+<p>Pour tester les commandes permettant de naviguer  dans un dépôt facilement sans devoir créer  un dépôt et y ajouter beaucoup de contenu, il  peut être opportun de cloner un dépôt  accessible sur GitHub. La commande suivante va télécharger  le dépôt du framework web Django et le placer  dans le dossier django :</p>
+<pre>git clone https://github.com/django/django.git  </pre>
+<p>Cette commande sera expliquée plus  en détail dans le chapitre Partager un dépôt, à la  section Cloner un dépôt distant. Pour faire simple,  cette commande ne va pas uniquement télécharger  le code, mais tout le dépôt avec tout l’historique  et donc avec tous les commits.</p>
+<p>La commande nous affiche une sortie nous confirmant  la bonne exécution du clone : </p>
+<pre>Cloning into ’django’...    remote: Counting objects: 324353, done.    remote: Compressing objects: 100% (4/4), done.    remote: Total 324353 (delta 0), reused 0 (delta 0), pack-reused 324349   Receiving objects: 100% (324353/324353), 138.51 MiB | 1.01 MiB/s, done.   Resolving deltas: 100% (228976/228976), done.    Checking connectivity... done.    Checking out files: 100% (5199/5199), done.  </pre>
+<p>Cette sortie indique que tous les objets Git  ont correctement été téléchargés et  que les fichiers ont correctement été insérés  dans le répertoire de travail.</p>
+<p>Les exemples présents dans ce dépôt  seront des exemples anglophones. En effet, tous les dépôts  de projets libres importants (ou presque) sont anglophones pour  permettre à un maximum de personnes de participer. Les messages de  commit seront donc en anglais, mais cela ne sera pas dérangeant pour  comprendre les fonctionnalités des commandes abordées.</p>
+<p>Pour pouvoir tester toutes les commandes sur  le dépôt cloné, il faut tout d’abord être  positionné dessus : </p>
+<pre>cd django  </pre>
+<p>Il est à présent possible  de tester la commande git log dans  un cas réel :</p>
+<pre>git log  </pre>
+<p>Cette commande affiche toute la liste des  commits du dépôt en ordre chronologique décroissant.  Pour chaque commit, la commande renvoie les informations suivantes  :</p>
+<div>
+  <ul>
+    <li>
+      <p>l’identifiant du commit  sous forme de hash (abrégé ou non selon la configuration),</p>
+    </li>
+    <li>
+      <p>les informations concernant l’auteur  du commit,</p>
+    </li>
+    <li>
+      <p>la date du commit,</p>
+    </li>
+    <li>
+      <p>le message de commit.</p>
+    </li>
+  </ul>
+</div>
+<p>Voici un exemple de commit affiché par  la commande git log :</p>
+<pre>commit d508326   Author: bphillips &lt;bphillips@caktusgroup.com&gt;   Date:   Wed Nov 25 11:25:21 2015 -0500       Fixed #25672 -- Clarified why related ManyToManyFields with   a custom intermediate model disable the remove() method.  </pre>
+<div>
+  <h2>1. Limiter le nombre de commits affichés</h2>
+  <p>Cette commande va afficher tellement de commits  que l’affichage va être lent et peu exploitable. C’est  la raison pour laquelle cette commande est rarement utilisée  sans paramètres. Par exemple, il est possible d’afficher  uniquement un certain nombre de commits.</p>
+  <p>La syntaxe qui permet de limiter le nombre  de commits affichés est la suivante :</p>
+  <pre>git log -n  </pre>
+  <p>Dans cette syntaxe, le n définit  le nombre de commits à afficher. Par exemple, la commande  suivante va afficher le commit le plus récent : </p>
+  <pre>git log -1  </pre>
+  <p>Il existe d’autres syntaxes pour limiter le  nombre de commits à afficher. Voici par exemple d’autres  commandes permettant d’afficher le commit le plus récent : </p>
+  <pre>git log -n 1  </pre>
+  <p>Ou encore la commande suivante :</p>
+  <pre>git log --max-count=1  </pre>
+  <p>Voici la sortie que ces commandes affichent  :</p>
+  <pre>commit e25ba6e    Author: Tim Graham &lt;timograham@gmail.com&gt;    Date:   Fri Jul 17 13:45:20 2015 -0400            Refs #25073 -- Copied recently added verbose_names to migrations.  </pre>
+  <p>Un seul commit est affiché. Cette  restriction d’affichage est massivement utilisée, car elle  permet à la commande d’être plus rapide à l’exécution  et également parce que la lisibilité de la sortie  est améliorée.</p>
+</div>
+<div>
+  <h2>2. Afficher les statistiques</h2>
+  <p>La commande git log permet également  d’afficher des statistiques sur le nombre de lignes ajoutées  et supprimées dans les modifications du commit.</p>
+  <pre>git log -1 --stat  </pre>
+  <p>Cette commande affiche la sortie standard  du commit et la sortie suivante à sa suite : </p>
+  <pre>#### Sortie standard de git log -1 ####         django/contrib/admin/migrations/0001_initial.py     | 4 ++--     django/contrib/auth/migrations/0001_initial.py      | 2 +-     django/contrib/flatpages/migrations/0001_initial.py | 2 +-     django/contrib/redirects/migrations/0001_initial.py | 2 +-     4 files changed, 5 insertions(+), 5 deletions(-)  </pre>
+  <p>Cette sortie nous indique que quatre fichiers  ont été modifiés. À la suite  du premier chemin de fichier se trouve une chaîne de type 4 ++--. Le premier nombre  de la chaîne indique le nombre de lignes qui ont été modifiées  ; dans cet exemple, quatre lignes ont été modifiées.  Concernant le reste de la chaîne, le nombre de signes positifs  indique le nombre de lignes ajoutées, et le nombre de signes  négatifs indique le nombre de lignes supprimées.  Enfin, la dernière ligne résume le nombre de fichiers  modifiés, le nombre de lignes ajoutées et le nombre  de lignes supprimées.</p>
+  <p>Il est possible d’obtenir uniquement  la dernière ligne en utilisant l’argument --shortstat au lieu de --stat.</p>
+</div>
+<div>
+  <h2>3. Afficher chaque commit sur une seule ligne</h2>
+  <p>Lorsque les détails des commits n’intéressent  pas le développeur et qu’il souhaite avoir une  vision rapide et plus globale du projet, il est possible d’afficher  chaque commit sur une seule ligne grâce à l’argument --oneline. Par exemple, pour afficher  les cinq commits les plus récents du projet Django sur cinq  lignes uniquement, il faut utiliser la commande suivante : </p>
+  <pre>git log --oneline -5  </pre>
+  <p>Cette commande renvoie la sortie suivante : </p>
+  <pre>e25ba6e Refs #25073 -- Copied recently added verbose_names to migrations.   f8cc464 Fixed #16501 -- Added an allow_unicode parameter to SlugField.   adffff7 Allowed installing closure with pip for admin JavaScript compression.   28ee511 Fixed db.utils.load_backend() on non-ASCII paths.    2f6bdab Fixed #25125 -- Updated docs on cookie naming conventions.  </pre>
+  <p>Cette sortie est plus concise que sans l’argument --oneline. Cette commande a été lancée  avec l’option de configuration qui permet d’abréger les hashs  de commit à sept caractères. Si le développeur  souhaite ne pas activer cette option de configuration mais tout  de même afficher les hashs abrégés, il peut  utiliser la commande suivante : </p>
+  <pre>git log --oneline -5 --abbrev=7  </pre>
+  <p>L’argument --abbrev peut être  utilisé avec tous les arguments de la commande git log et simplifie efficacement  la lecture de la sortie.</p>
+</div>
+<div>
+  <h2>4. Filtrer les commits chronologiquement</h2>
+  <p>La commande git log possède également  des arguments permettant de filtrer les commits selon les  dates. Par exemple, pour afficher les commits qui ont été ajoutés  avant le 9 février 2015, il faut utiliser la commande suivante  : </p>
+  <pre>git log --before="2015-02-09"  </pre>
+  <p>De la même manière pour  afficher les commits qui ont été ajoutés  après le 9 février 2015, il faut utiliser  la commande suivante : </p>
+  <pre>git log --after="2015-02-09"  </pre>
+  <p>Bien évidemment, il est également  possible de combiner ces arguments pour afficher les commits ayant  eu lieu pendant une période précise :</p>
+  <pre>git log --after="2015-02-09" --before="2015-02-13"  </pre>
+  <p>Il existe également un argument plus  intuitif qui permet de lister les commits sur une certaine durée  :</p>
+  <pre>git log --since=1.weeks  </pre>
+  <p>Cette commande permet de lister tous les commits  ayant été effectués depuis une semaine.  Pour rechercher sur des périodes différentes,  il est possible d’utiliser les périodes suivantes : </p>
+  <div>
+    <ul>
+      <li>
+        <p>days :  jours.</p>
+      </li>
+      <li>
+        <p>months :  mois.</p>
+      </li>
+      <li>
+        <p>years :  années.</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div>
+  <h2>5. Filtrer les commits selon les intervenants</h2>
+  <p>Il est également possible de consulter  les commits d’un ou de plusieurs contributeurs (ou collègues  dans le cas d’une équipe salariale) en utilisant les arguments --author ou --committer.  Voici par exemple une commande permettant de consulter les trois  derniers commits effectués par Tim Graham : </p>
+  <pre>git log -3 --author "Tim Graham"  </pre>
+  <p>Il est également possible de rechercher  les commits de plusieurs développeurs. Par exemple, la  commande suivante permet d’afficher les trois commits les plus  récents effectués par Tim Graham et Edward Henderson : </p>
+  <pre>git log -3 --author "Edward Henderson\|Tim Graham"  </pre>
+  <p>Le caractère pipe | sert à définir  une condition OU dans la chaîne de caractères pour  sélectionner les commits correspondant aux deux auteurs.  Ce caractère est échappé par un antislash  pour qu’il soit bien interprété comme un métacaractère  et non comme un caractère à rechercher.</p>
+  <p>La différence entre les arguments --author et --committer s’explique  par exemple lorsque les modifications ne sont pas envoyées  vers un dépôt central (ce type de dépôt  est abordé en détail dans le chapitre Partager  un dépôt), mais lorsqu’elles sont envoyées  par patch. Un patch correspond à un diff (affichage  des modifications apportées par un développement),  il peut être envoyé par mail ou tout autre moyen  possible. Dans ce cas-là, l’auteur du commit est la personne  qui a réalisé le développement et l’a  envoyé au mainteneur du projet. Quant au commiteur, il  correspond à la personne qui va recevoir, valider et intégrer le  patch au dépôt.</p>
+</div>
+<div>
+  <h2>6. Afficher le graphique des branches</h2>
+  <p>Une autre fonctionnalité très  pratique de git log est de pouvoir  afficher un graphique (via l’interface en ligne de commande) des  différentes branches où ont été effectués  les commits.</p>
+  <pre>git log --graph --oneline -8  </pre>
+  <p>Cette commande est beaucoup utilisée  avec l’option --oneline car sans  cet argument l’affichage est moins condensé et plus compliqué à lire.</p>
+  <p>Dans un dépôt contenant  un projet, cette commande peut afficher la sortie suivante :</p>
+  <pre> *   28fca76 README : add link book   |\    | * cf6fb8c README : add link book   |/    * 9c1b958 Syntax README : code separator   *   5dde9db Merge branch ’hotfix-readme’   |\    | * 7256c50 Fix README : syntax and completion   |/    *   81419ef Merge develop 1.2   |\    | *   4d7b8bc Add chart task type   | |\    | | * 8e29bec Graph : task type + settings days period   | |/    </pre>
+</div>
+<div>
+  <h2>7. Spécifier un format de sortie</h2>
+  <p>Pour aller plus loin dans la présentation  des commits, il est parfois utile de spécifier un format  d’affichage pour ceux-ci. Ce format paramétrable va être  défini par le développeur pour correspondre au  maximum à ses besoins.</p>
+  <p>Il est possible de définir un format  personnalisé en utilisant avec la commande git log l’argument --pretty=format. Ci-dessous,  se trouve un exemple d’utilisation : </p>
+  <pre>git log --graph --pretty=format:’%Cred%h%Creset :%Cgreen%d%Creset   %s %C(yellow)(%cr) %C(bold blue)&lt;%an&gt;%Creset’  </pre>
+  <p>En ajoutant l’argument -2 pour limiter le nombre de commits  affichés, la commande précédente affiche  la sortie suivante : </p>
+  <pre>* e25ba6e : (HEAD, origin/master, origin/HEAD, master)     Refs #25073 -- Copied recently added verbose_names to migrations.   (9 days ago) &lt;Tim Graham&gt;    * f8cc464 : Fixed #16501 -- Added an allow_unicode parameter     to SlugField. (9 days ago) &lt;Edward Henderson&gt;  </pre>
+  <p>Cette sortie sera encore plus élégante  sur votre interface en ligne de commande (selon votre configuration),  car certains éléments sont colorés pour être  plus facilement discernables. Dans la commande utilisée,  après l’argument --pretty=format se  trouve une chaîne contenant un patron. Ce patron est composé de  mots-clés correspondant à des éléments à afficher  ou encore à des couleurs définies pour certains  types d’éléments.</p>
+  <p>Il existe de nombreux mots-clés pour  définir un format, la liste suivante est non exhaustive  :</p>
+  <div>
+    <ul>
+      <li>
+        <p>%n :  saut de ligne.</p>
+      </li>
+      <li>
+        <p>%h :  hash abrégé du commit.</p>
+      </li>
+      <li>
+        <p>%H :  hash du commit.</p>
+      </li>
+      <li>
+        <p>%an :  nom de l’auteur du commit.</p>
+      </li>
+      <li>
+        <p>%ae :  e-mail de l’auteur du commit.</p>
+      </li>
+      <li>
+        <p>%cr :  date du commit.</p>
+      </li>
+      <li>
+        <p>%d :  nom des refs, c’est-à-dire que ce mot-clé va afficher  une liste de noms pointant sur le commit. Dans l’exemple précédent,  la chaîne (HEAD, origin/master,  origin/HEAD, master) représente les objets  pointant vers le commit. Cette chaîne prendra plus de sens  après avoir lu le chapitre suivant sur les branches.</p>
+      </li>
+      <li>
+        <p>%s :  titre du commit.</p>
+      </li>
+      <li>
+        <p>%P :  hash du commit parent.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Ensuite, pour changer de couleur il est possible  d’utiliser les mots-clés suivants :</p>
+  <div>
+    <ul>
+      <li>
+        <p>%Cred :  couleur rouge.</p>
+      </li>
+      <li>
+        <p>%Cgreen :  couleur verte.</p>
+      </li>
+      <li>
+        <p>%Cblue :  couleur bleue.</p>
+      </li>
+      <li>
+        <p>%Creset :  active la couleur par défaut.</p>
+      </li>
+    </ul>
+  </div>
+  <p>La documentation officielle liste tous les  mots-clés possibles et beaucoup d’autres informations pour  personnaliser de manière avancée le format de  sortie des commits : <a href="http://git-scm.com/docs/pretty-formats" target="_blank">http://git-scm.com/docs/pretty-formats</a>.</p>
+  <p>Les alias (raccourcis de commande), abordés  au chapitre Création d’un dépôt, dans  la section Définition d’alias Git, prennent tout  leur sens, car lorsque le développeur crée un  ou plusieurs formats il est utile de les ajouter dans des alias  pour les utiliser rapidement sans devoir les réécrire.</p>
+  <p>Il existe un certain nombre de formats prédéfinis  intégrés dans Git. Ces formats sont utilisés  avec l’argument --pretty.  Ces formats sont expliqués sur la documentation officielle  (<a href="http://git-scm.com/docs/pretty-formats" target="_blank">http://git-scm.com/docs/pretty-formats</a>). Ci-dessous une liste non exhaustive de ces formats  triés de la sortie la plus brève à la  sortie la plus verbeuse :</p>
+  <div>
+    <ul>
+      <li>
+        <p>oneline :  ce format permet d’afficher chaque commit sur une seule ligne en  affichant uniquement le hash du commit et son message.</p>
+      </li>
+      <li>
+        <p>short :  ce format est un condensé du format standard (sans la date).</p>
+      </li>
+      <li>
+        <p>medium :  ce format est le format par défaut.</p>
+      </li>
+      <li>
+        <p>full :  ce format affiche les mêmes informations que le format  medium en remplaçant la date affichée par le commiteur.</p>
+      </li>
+      <li>
+        <p>fuller :  ce format affiche le maximum d’informations avec notamment les dates  où l’auteur et le commiteur ont effectué leurs  commits.</p>
+      </li>
+    </ul>
+  </div>
+  <p>Par exemple, pour utiliser le format fuller pour afficher le commit le  plus récent il faut utiliser la commande suivante : </p>
+  <pre>git log --pretty=fuller -1  </pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>commit e25ba6e    Author:     Tim Graham &lt;timograham@gmail.com&gt;    AuthorDate: Fri Jul 17 13:45:20 2015 -0400    Commit:     Tim Graham &lt;timograham@gmail.com&gt;    CommitDate: Fri Jul 17 14:07:18 2015 -0400            Refs #25073 -- Copied recently added verbose_names to migrations.  </pre>
+  <p>L’argument --pretty permet  d’adapter l’affichage selon les convenances de chacun  et se révèle très utile lorsque le développeur  consulte l’historique.</p>
+</div>
+<div>
+  <h2>8. Prendre en compte les merges</h2>
+  <p>Les merges sont des fusions de plusieurs versions  différentes du projet (ce concept est expliqué dans  le chapitre Les branches et les tags à la section Fusionner deux  branches). Ils indiquent souvent une intégration de nouvelles fonctionnalités  ou de correctifs. Il est parfois utile de les prendre en compte  ou non lors de l’utilisation de git log.</p>
+  <p>La commande suivante permet d’afficher les  deux merges les plus récents : </p>
+  <pre>git log --merges -2  </pre>
+  <p>Cette commande affiche la sortie suivante : </p>
+  <pre>f46a774 Merge pull request #4982 from django/alex-patch-1   74402a5 Merge pull request #4877 from shaib/oracle-maindb-connection  </pre>
+  <p>Si le développeur ne veut pas consulter  les commits issus des merges, il peut utiliser la commande suivante  : </p>
+  <pre>git log --no-merge  </pre>
+  <p>Ces commandes sont très utiles lorsque  le développeur recherche des informations relatives à un  merge.</p>
+</div>
+<div>
+  <h2>9. Lister les commits impactant un fichier</h2>
+  <p>Il est également possible de filtrer  les commits qui ont modifié un fichier particulier. Ce  type de recherche est très utile lorsqu’on cherche à savoir  pour quelles raisons un fichier a été modifié.</p>
+  <p>Par exemple, pour vérifier les commits  qui portent des modifications sur le fichier README.rst il faut utiliser la commande suivante : </p>
+  <pre>git log -2 -- README.rst  </pre>
+  <p>Dans la commande précédente,  les doubles tirets servent à séparer la commande  des noms de fichiers. Cette commande produit la sortie suivante : </p>
+  <pre>commit f7bf135    Author: Brent O’Connor &lt;epicserve@gmail.com&gt;    Date:   Fri Feb 27 09:31:14 2015 -0600            Updated contributing link in the README.        commit 7d7b27d    Author: Aymeric Augustin &lt;aymeric.augustin@m4x.org&gt;    Date:   Sun Dec 29 22:35:37 2013 +0100           Converted links to HTTPS and linked to stable docs.  </pre>
+  <p>Il est également possible de définir  plusieurs fichiers comme dans la commande suivante : </p>
+
+
+    <pre>git log -2 -- README.rst Gruntfile.js  </pre>
+</div>
+</body>
+</html>

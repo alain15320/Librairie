@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_e6e04137-7a2d-4b5f-94f9-d9d959da1ada" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Classe Commande</h1>
+  <p>Il est maintenant temps de coder les classes <strong>Commande</strong> et <strong>Ligne</strong> : chaque instance de la classe <strong>Ligne</strong> correspond à une ligne d’achat dans une commande.</p>
+  <div>
+    <p> Créez une classe <strong>Ligne</strong> dans le package <strong>entite</strong>.</p>
+  </div>
+  <pre>package entite;      import java.io.Serializable;      import javax.persistence.Entity;   import javax.persistence.GeneratedValue;   import javax.persistence.Id;   import javax.persistence.ManyToOne;<strong>       @Entity(name="LignesCommandes")</strong>   public class Ligne implements Serializable {          private static final long serialVersionUID = 1L;          @Id       @GeneratedValue       private String id;          @ManyToOne(<strong>optional=false</strong>)       private Article article;          private int quantite;          /*        * Constructeur 1        */       public Ligne(Article unArticle, int quantite) {           this();           this.article = unArticle;           this.quantite = quantite;       }          public Ligne() {           super();       }          public Article getArticle() {           return article;       }          public void setArticle(Article unArticle) {           this.article = unArticle;       }          public int getQuantite() {           return quantite;       }          public void setQuantite(int quantite) {           this.quantite = quantite;       }   }  </pre>
+  <p>L’annotation <strong>@Entity</strong> est paramétrée avec un nom, ce qui  permet de changer le nommage par défaut de la table :  au lieu de s’appeler LIGNE, elle s’appellera LIGNESCOMMANDES.</p>
+  <p>L’annotation <strong>@ManyToOne</strong> est paramétrée avec <strong>optional=false</strong>, pour lancer une erreur si l’article n’est  pas spécifié lors de la sauvegarde.</p>
+  <div>
+    <p> Rajoutez les méthodes suivantes dans  la classe :</p>
+  </div>
+  <pre>    public double getPrixUnitaire() {           return article.getPrixUnitaire();       }          public double getTotal() {           return quantite * getPrixUnitaire();       }  </pre>
+  <p>Ces méthodes permettent de formaliser  l’attribut dérivé du total d’une ligne de commande,  obtenu à partir des informations de l’article.</p>
+  <div>
+    <p> Créez ensuite une classe <strong>Commande</strong> dans le package <strong>entite</strong>.</p>
+  </div>
+  <pre>package entite;      import java.io.Serializable;   import java.time.Instant;   import java.util.ArrayList;   import java.util.Date;   import java.util.List;      import javax.persistence.CascadeType;   import javax.persistence.Entity;   import javax.persistence.Id;   import javax.persistence.JoinColumn;   import javax.persistence.ManyToOne;   import javax.persistence.NamedQuery;   import javax.persistence.OneToMany;   import javax.persistence.Temporal;   import javax.persistence.TemporalType;      @Entity   @NamedQuery(name = "chercherCommande", query =            "SELECT com FROM Commande com, "           + "Client cli, "           + "ModeReglements mode "           + "WHERE com.modeReglement.code = mode.code "           + "AND com.client.code = cli.code "           + "AND ("               + "com.code LIKE :recherche "               + "OR cli.nom LIKE :recherche "               + "OR cli.prenom LIKE :recherche "               + "OR mode.type LIKE :recherche"           + ")"   )   public class Commande implements Serializable {          private static final long serialVersionUID = 1L;          @Id       private String code;          @ManyToOne       private Client client;          @ManyToOne       @JoinColumn(name = "mode_reglement_code")       private ModeReglements modeReglement;          @Temporal(TemporalType.<strong>TIMESTAMP</strong>)       private Date date;<strong>           @OneToMany(cascade = { CascadeType.ALL })</strong>       private List&lt;Ligne&gt; lignes = new ArrayList&lt;&gt;();          /*        * Constructeur 1        */       public Commande(String code) {           this.code = code;       }          /*        * Constructeur 2        */       public Commande() {           super();       }          /*        * Accesseurs        */       public String getCode() {           return code;       }          public Client getClient() {           return client;       }          public ModeReglements getReglement() {           return modeReglement;       }          public Instant getInstant() {           return date.toInstant();       }          public void setClient(Client client) {           this.client = client;       }          public void setReglement(ModeReglements leReglement) {           this.modeReglement = leReglement;       }          public void setDate(Instant date) {           this.date = Date.from(date);       }          public List&lt;Ligne&gt; getLignes() {           return lignes;       }   }  </pre>
+  <p>Cette classe possède un attribut <strong>date</strong>, qui est défini comme un horodatage (<strong>timestamp</strong>) dans la base de données, et non une date comme  précédemment. Car il est important de dater précisément  le moment où une commande a été créée  dans notre application !</p>
+  <p>La classe <strong>Commande</strong> possède également une propriété <strong>lignes</strong> annotée avec <strong>@OneToMany</strong>. Il s’agit de la relation inverse de la relation précédente <strong>@ManyToOne</strong>. La relation <strong>@OneToMany</strong> signifie qu’une commande peut avoir plusieurs lignes,  mais qu’une ligne ne peut être liée qu’à une  seule commande (et là tous les clients achetant des produits  et le patron de l’entreprise vous disent merci !).</p>
+  <p>Détaillons un instant cette relation :  elle contient quelques subtilités.</p>
+  <p>Si l’on reste dans cette configuration, la  situation est celle d’une navigation <strong>unidirectionnelle</strong>.</p>
+  <p>Comme il s’agit d’une relation <strong>@OneToMany</strong>, JPA crée par défaut une table d’association  appelée COMMANDE_LIGNESCOMMANDES, comprenant deux  colonnes, l’une nommée COMMANDE_CODE, l’autre LIGNESCOMMANDES_CODE.</p>
+  <p>Il s’agit en fait d’une structure de table  utilisée par la relation <strong>@ManyToMany</strong>, et techniquement rien n’interdira dans la base qu’une  ligne soit liée à plusieurs commandes !</p>
+  <div>
+    <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+    <div>
+      <p>DON’T PANIC ! Tout se passera  bien, mais vos recherches et vos requêtes seront moins  performantes, puisqu’il faudra faire des jointures.</p>
+    </div>
+  </div>
+  <p>En termes de direction de navigation, il est  important dans l’application de retrouver facilement les lignes  d’une commande particulière. Mais il est tout aussi important  de retrouver une commande à partir d’une de ses lignes.  On parle alors de navigation <strong>bidirectionnelle</strong>. </p>
+  <p>Cela veut dire qu’un attribut <strong>commande</strong> se trouvera dans la classe <strong>Ligne</strong>, qui sera lui annoté avec <strong>@ManyToOne</strong>.</p>
+  <p>Il a été vu précédemment  qu’une classe annotée avec @ManyToOne porte l’information  de la relation dans sa table.</p>
+  <p>Un des principes des bases de données  relationnelles étant de minimiser l’information stockée,  il s’agit de faire comprendre à l’annotation @OneToMany où est  située cette information afin d’éviter de créer  une table d’association.</p>
+  <p>Cela s’effectue par l’attribut <strong>mappedBy</strong> de l’annotation <strong>@OneToMany</strong>.</p>
+  <div>
+    <p> Modifiez l’annotation <strong>@ManyToOne</strong> de l’attribut <strong>lignes</strong> de la classe <strong>Commande</strong> de la manière suivante :</p>
+  </div>
+  <pre><strong>@OneToMany</strong>(cascade={CascadeType.ALL}, <strong>mappedBy="commande"</strong>)       private List&lt;Ligne&gt; lignes = new ArrayList<strong>&lt;&gt;</strong>();  </pre>
+  <div>
+    <p> Dans la classe <strong>Ligne</strong>, introduisez l’attribut <strong>commande</strong> ainsi que son accesseur et son mutateur.</p>
+  </div>
+  <pre>    @ManyToOne       private Commande commande;          public Commande getCommande() {           return commande;       }                 public void setCommande(Commande commande) {           this.commande = commande;       }  </pre>
+  <p>Cette méthode permet donc de créer  des relations <strong>@OneToMany</strong> bidirectionnelles sans créer de table d’association  intermédiaire.</p>
+  <p>Dans ce mécanisme, il est de la responsabilité du  développeur de maintenir correctement les relations lors  de l’insertion en base. Il suffit pour cela d’initialiser la propriété <strong>commande</strong> de la classe <strong>Ligne</strong> lors de tout ajout d’une ligne dans la commande en cours.</p>
+  <div>
+    <p> Créez la méthode suivante  dans la classe <strong>Commande</strong> :</p>
+  </div>
+  <pre>    public void ajouter(Ligne uneLigne) {           uneLigne.setCommande(this);           lignes.add(uneLigne);       }  </pre>
+  <p>Cette méthode devra être  utilisée à chaque fois qu’une ligne d’achat sera  ajoutée dans une commande en cours de création.</p>
+  <div>
+    <p> Rajoutez enfin la méthode suivante  dans la classe <strong>Commande</strong> :</p>
+  </div>
+  <pre>    public double getTotalTTC() {           double total = 0;           for (Ligne ligne : lignes) {               total += ligne.getTotal();           }           return total;       }  </pre>
+  <p>Cette méthode permet de calculer  le total de la commande en parcourant ses différentes lignes,  sans avoir besoin de stocker cette information en base.</p>
+  <p>Une alternative à cette méthode  est d’utiliser les API Stream de Java 8 :</p>
+  <pre>    public double getTotalTTC() {           return lignes                   .stream()                   .mapToDouble(Ligne::getTotal)                   .sum();       }  </pre>
+</div>
+</body>
+</html>

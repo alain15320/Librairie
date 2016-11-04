@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="AU_03e90c93-29ad-435f-b750-afae43151e01" uri="ImagesUri_../download/d7372f46-d115-41d3-a503-a3b7f321295f/images\">
+  <h1>Gestion des articles</h1>
+  <p>Faisons le point sur les articles. L’application  dispose déjà de :</p>
+  <div>
+    <ul>
+      <li>
+        <p>la classe <strong>Article</strong>,</p>
+      </li>
+      <li>
+        <p>la classe <strong>ArticleCrud</strong>,</p>
+      </li>
+      <li>
+        <p>la classe <strong>FArticles</strong> actuellement au stade de maquette.</p>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2>1. Affichage</h2>
+    <p>Pour afficher les données des articles  dans le JTable de la classe <strong>FArticles</strong>, la démarche est identique à celle  de la classe <strong>PClients</strong> vue au chapitre Modèle MVC :</p>
+    <div>
+      <ul>
+        <li>
+          <p>Création  de la classe qui représente le modèle de données  graphiques.</p>
+        </li>
+        <li>
+          <p>Ajout du modèle au JTable  pour affichage.</p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>a. Création du modèle graphique</h3>
+      <div>
+        <p> Créez une nouvelle classe <strong>ModeleArticles</strong> et rangez-la dans le package <strong>controle.modele</strong>.</p>
+      </div>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Le code est très similaire à celui  de la classe <strong>ModeleClients</strong>.</p>
+        </div>
+      </div>
+      <pre>package controle.modele;      import java.util.ArrayList;   import java.util.List;      import javax.swing.table.AbstractTableModel;      import entite.Article;      public class ModeleArticles extends AbstractTableModel {       private static final long serialVersionUID = 1L;       private final List&lt;Article&gt; lesDonnees;       private final String[] lesTitres =                    {"Code", "Code Catégorie", "Désignation",                    "Quantité", "Prix unitaire"};          public ModeleArticles(List&lt;Article&gt; lesArticles) {           lesDonnees = new ArrayList&lt;&gt;(lesArticles);       }              public int getRowCount() {           return lesDonnees.size();       }       public int getColumnCount() {           return lesTitres.length;       }       public String getColumnName(int columnIndex) {           return lesTitres[columnIndex];       }              public Object getValueAt(int rowIndex, int columnIndex) {           Article unArticle = <strong>getArticle</strong>(rowIndex);           switch(columnIndex){               case 0:                   return unArticle.getCode();               case 1:                   return unArticle.getCategorie().getCode();               case 2:                   return unArticle.getDesignation();               case 3:                   return unArticle.getQuantite();               case 4:                   return unArticle.getPrixUnitaire();               default:                   return null;           }       }          public void créé(Article unArticle) {           lesDonnees.add(unArticle);           int ligne = lesDonnees.size() -1;           fireTableRowsInserted(ligne, ligne);       }          public void supprimé(int rowIndex) {           lesDonnees.remove(rowIndex);           fireTableRowsDeleted(rowIndex, rowIndex);       }          public void modifié(int numeroLigne, Article unArticle) {           lesDonnees.set(numeroLigne, unArticle);           fireTableRowsUpdated(numeroLigne, numeroLigne);       }          public void lu(List&lt;Article&gt; nouvellesDonnees){           lesDonnees.clear();           lesDonnees.addAll(nouvellesDonnees);           fireTableDataChanged();       }          public Article <strong>getArticle</strong>(int ligne) {           return lesDonnees.get(ligne);       }   }  </pre>
+    </div>
+    <div>
+      <h3>b. Création du contrôle</h3>
+      <p>Le contrôle des articles se fait  grâce à une classe spécifique. La classe  graphique ne connaîtra que ce type, et n’aura donc pas à gérer  directement les accès à la base.</p>
+      <p>Cette manière de faire permet de  rendre le code modulaire et d’affecter des fonctionnalités  bien identifiées aux différentes classes de l’application.</p>
+      <div>
+        <p> Créez une classe <strong>ControleArticle</strong> dans le package <strong>controle</strong>.</p>
+      </div>
+      <pre>package controle;      import java.awt.Window;   import java.time.Instant;   import java.util.Collections;   import java.util.List;      import controle.connection.Connexion;   import controle.etat.JasperFacade;   import controle.modele.ModeleArticles;   import dialogue.FExport;   import entite.Article;   import entite.crud.ArticleCrud;      public class ControleArticle {          private final ArticleCrud crud;       private final ModeleArticles leModeleArticle;          public ControleArticle(Connexion laConnexion) {           crud = new ArticleCrud(laConnexion);           List&lt;Article&gt; vide = <strong>Collections.emptyList()</strong>;           leModeleArticle = new ModeleArticles(vide);       }              public void init() {           List&lt;Article&gt; articles = crud.lire();           leModeleArticle.lu(articles);       }          public boolean creer(String code, String reference,                    String designation,                    int quantite, double prixUnitaire) {           Instant maintenant = Instant.now();              Article unArticle = new Article(code, reference,                               designation,                               quantite, prixUnitaire,                               maintenant);              crud.creer(unArticle);           leModeleArticle.créé(unArticle);           return true;       }          public boolean modifier(int numeroLigne,                        String code, String reference,                       String designation,                       int quantite, double prixUnitaire) {           Instant maintenant = Instant.now();              Article unArticle = new Article(code, reference,                               designation,                               quantite, prixUnitaire,                               maintenant);           boolean modif = crud.modifier(code, reference,                            designation,                           quantite, prixUnitaire);           if (modif) {               leModeleArticle.modifié(numeroLigne, unArticle);           }           return modif;       }          public void supprimer(int numeroLigne, String code) {           crud.supprimer(code);           leModeleArticle.supprimé(numeroLigne);       }          public void rechercher(String recherche) {           List&lt;Article&gt; resultat = crud.chercherTous(recherche);           leModeleArticle.lu(resultat);       }          public void rafraichir() {           leModeleArticle.lu(crud.lire());       }          public ModeleArticles <strong>getModele</strong>() {           return leModeleArticle;       }   }  </pre>
+      <p>Contrairement à la classe <strong>ControleClient</strong>, il n’y a pas de gestion des exceptions à ce  niveau. En effet, l’affichage d’une boîte de dialogue en  cas d’erreur ne devrait pas être réalisé ici :  les affichages graphiques ne sont normalement pas de la responsabilité du  contrôle.</p>
+      <p>Afin de simplifier le développement,  une classe utilisant un objet <strong>ControleArticle</strong> est créée, qui effectuera ces opérations  d’affichage en cas d’erreur.</p>
+      <p>Pour cela, le design pattern <strong>Décorateur</strong> est une source d’inspiration : la nouvelle  classe prend en paramètre un objet de type <strong>ControleArticle</strong> et a exactement les mêmes méthodes  que celle-ci.</p>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Afin de respecter l’esprit du patron  de conception Décorateur, une interface formalisant les  fonctionnalités d’un contrôle d’article devrait être  créée, implémentée par les classes <strong>ControleArticle</strong> et <strong>ControleArticleDecore</strong>.</p>
+        </div>
+      </div>
+      <div>
+        <p> Créez une classe <strong>ControleArticleDecore</strong>.</p>
+      </div>
+      <pre>package controle;      import java.awt.Window;   import java.util.function.Function;      import javax.swing.JOptionPane;      import controle.connection.Connexion;   import controle.modele.ModeleArticles;      public class ControleArticleDecore {          private final <strong>ControleArticle controle</strong>;          public ControleArticleDecore(Connexion laConnexion) {           this(<strong>new ControleArticle(laConnexion)</strong>);       }              public ControleArticleDecore(ControleArticle controle) {           this.controle = controle;       }              public void init() {           try {<strong>                controle.init</strong>();           } catch (Exception e){               JOptionPane.showMessageDialog(null,                    "Aucune lecture effectuée dans la BD.\n\n"                   +e.getMessage(),                   "Problème rencontré",                    JOptionPane.ERROR_MESSAGE);                   }       }          public ModeleArticles <strong>getModele</strong>() {           return this.<strong>controle.getModele</strong>();       }          public boolean creer(String code, String reference,               String designation,               int quantite, double prixUnitaire) {           try {               return controle.creer(code, reference,                           designation,                            quantite, prixUnitaire);           } catch (Exception e) {               JOptionPane.showMessageDialog(null,                   "Aucun ajout effectué dans la BD.\n\n"                   + e.getMessage(),                   "Problème rencontré",                   JOptionPane.ERROR_MESSAGE);               return false;           }       }          public boolean modifier(int numeroLigne, String code,                       String reference,                       String designation,                       int quantite, double prixUnitaire) {           try {               return controle.modifier(numeroLigne, code,                           reference, designation,                           quantite, prixUnitaire);           } catch (Exception e) {               JOptionPane.showMessageDialog(null,               "Aucune modification effectuée dans la BD.\n\n"                   + e.getMessage(),               "Problème rencontré", JOptionPane.ERROR_MESSAGE);               return false;           }       }          private void operation(Runnable operation,                      Function&lt;Exception, String&gt; message) {           try {               operation.run();           } catch (Exception exception) {               JOptionPane.showMessageDialog(null,                       message.apply(exception),                       "Problème rencontré",                       JOptionPane.ERROR_MESSAGE);           }       }          public void supprimer(int numLigne, String code) {           operation(() -&gt; controle.supprimer(numLigne, code),               e -&gt; "Aucune suppression effectuée dans la BD.\n\n"               + e.getMessage());       }          public void rechercher(String recherche) {           operation(() -&gt; controle.rechercher(recherche),               e -&gt; "Aucune recherche effectuée dans la BD.\n\n"               + e.getMessage());       }          public void rafraichir() {           operation(() -&gt; controle.rafraichir(),               e -&gt; "Aucune lecture effectuée dans la BD.\n\n"               + e.getMessage());       }   }  </pre>
+      <p>La seule responsabilité de cette  classe est d’afficher une boîte de dialogue en cas d’erreur.</p>
+      <p>Afin d’obtenir une meilleure lisibilité,  une méthode privée <strong>operation</strong> est créée.</p>
+      <pre>private void operation(Runnable operation,                    Function&lt;Exception, String&gt; message) {       try {           operation.<strong>run</strong>();       } catch (Exception exception) {           JOptionPane.showMessageDialog(null,                       message.<strong>apply</strong>(exception),               "Problème rencontré", JOptionPane.ERROR_MESSAGE);       }   }  </pre>
+      <p>Cette méthode prend deux paramètres :  un objet implémentant l’interface <strong>Runnable</strong> qui possède une seule méthode appelée <strong>run()</strong>, et un objet implémentant l’interface <strong>Function</strong> qui possède une seule méthode <strong>apply</strong> prenant en paramètre l’exception éventuelle  et retournant une chaîne de caractères décrivant l’erreur.</p>
+      <p>Ces deux interfaces ont une seule méthode  et sont donc des interfaces fonctionnelles. Il est alors  possible de créer des <strong>expressions lambdas</strong> pour simplifier la lisibilité du code.</p>
+      <pre>public void supprimer(int numLigne, String code) {       operation(() -&gt; super.supprimer(numLigne, code),               e -&gt; "Aucune suppression effectuée dans la BD.\n\n"               + e.getMessage());   }  </pre>
+      <p>Ce code est équivalent à :</p>
+      <pre>public void supprimer(int numLigne, String code) {       operation(new <strong>Runnable</strong>() {           public void run() {               controle.supprimer(numLigne, code);           }       }, new <strong>Function&lt;Exception, String&gt;</strong>() {              @Override           public <strong>String apply</strong>(<strong>Exception</strong> e) {               return "Aucune suppression effectuée "                   + "dans la BD.\n\n"                   + e.getMessage();           }       });   }  </pre>
+      <p>Il reste maintenant à faire en sorte  que la fenêtre graphique utilise un objet de type <strong>ControleArticleDecore</strong>.</p>
+      <div>
+        <p> Complétez le code de la méthode <strong>setConnexion</strong> de la classe <strong>FArticles</strong>.</p>
+      </div>
+      <pre>// propriété de contrôle de la classe graphique   private ControleArticleDecore controleArticle;      ...       public FArticles setConnexion(Connexion connexion) {       controleArticle = <strong>new ControleArticleDecore(connexion);</strong>       controleArticle.<strong>init</strong>();<strong>           table.setModel(controleArticle.getModele());</strong>          // gestion du rendu des colonnes du JTable       // ----------------------------------------       TableColumnModel colonnes = table.getColumnModel();       TableColumn colonne = colonnes.getColumn(1);       colonne.setCellRenderer(new GrasRenderer());   }  </pre>
+    </div>
+  </div>
+  <div>
+    <h2>2. Ajout</h2>
+    <p>Une variation par rapport au code du module  client est introduite : l’ajout (et toutes les autres opérations  sur les articles) se fait directement à partir de la fenêtre <strong>FArticles</strong>.</p>
+    <div>
+      <div><img alt="images/13-01.png" src="images/images_13-01.png"></div>
+    </div>
+    <div>
+      <p> Ouvrez la classe <strong>FArticles</strong>.</p>
+    </div>
+    <div>
+      <p> Sélectionnez le bouton <strong>Ajouter</strong> et ajoutez-lui une action qui sera exécutée en  cas de clic.</p>
+    </div>
+    <pre>private class ActionAjouter extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionAjouter() {           putValue(NAME, "Ajouter");           putValue(SHORT_DESCRIPTION,                    "Ajouter un nouvel article");       }          public void actionPerformed(ActionEvent e) {           String code = txtCode.<strong>getText</strong>();           if (code.equals("")) {               JOptionPane.showMessageDialog(null,                   "Le code article est obligatoire",                   "Avertissement",                   JOptionPane.WARNING_MESSAGE);           } else {               String reference = txtCategorie.getText();               String designation = txtDesignation.getText();               int quantite = (Integer)                        sliderQuantite.<strong>getValue()</strong>;               double prix = ((Number)                        txtPrixUnitaire.<strong>getValue())                       .doubleValue()</strong>;               boolean creation =                    controleArticle.creer(code, reference,                                   designation,                                   quantite, prix);               if (creation) {                   effacerSaisie();               }           }       }   }  </pre>
+    <p>Le code de la méthode <strong>actionPerformed</strong> se décompose comme suit :</p>
+    <p>Premièrement le texte correspondant  au code de l’article, saisi par l’utilisateur, est récupéré.</p>
+    <p>Un test est ensuite effectué :  si le code est vide, il est impossible de créer l’article :  un message d’erreur est alors affiché.</p>
+    <div>
+      <div><img alt="images/13-02.png" src="images/images_13-02.png"></div>
+    </div>
+    <p>Si le test passe, les autres données  saisies par l’utilisateur sont récupérées,  et le <strong>ControleArticleDecore</strong> crée un nouvel article à partir de  ces informations. S’il est impossible de créer un nouvel  article, le code de la classe <strong>ControleArticleDecore</strong> est exécuté et une boîte  de dialogue d’erreur s’affiche.</p>
+    <p>Si l’article est bien créé,  la saisie effectuée par l’utilisateur est effacée  grâce à la méthode <strong>effacerSaisie</strong>.</p>
+    <div>
+      <p> Créez la méthode <strong>effacerSaisie()</strong>.</p>
+    </div>
+    <pre>    private void effacerSaisie() {           txtCode.setText("");           txtCategorie.setText("");           txtDesignation.setText("");           sliderQuantite.setValue(Integer.valueOf(1));           txtPrixUnitaire.setValue(Double.valueOf(0));           txtCode.<strong>requestFocus</strong>();       }  </pre>
+    <div>
+      <p>Le bouton <strong>Effacer</strong> ne supprime pas l’article. Il a pour vocation d’effacer toutes  les données saisies par l’utilisateur.</p>
+    </div>
+    <div>
+      <p> Sélectionnez le bouton <strong>Effacer</strong> en mode <strong>Design</strong> et ajoutez-lui une nouvelle action.</p>
+    </div>
+    <pre>private class ActionEffacer extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionEffacer() {           putValue(NAME, "Effacer");           putValue(SHORT_DESCRIPTION,                    "Effacer la saisie en cours");           }<strong>           public void actionPerformed(ActionEvent e) {           effacerSaisie();       }</strong>   }  </pre>
+  </div>
+  <div>
+    <h2>3. Modification</h2>
+    <p>Pour activer le bouton <strong>Modifier</strong>, il faut auparavant effectuer un double clic sur une  des lignes du JTable pour la sélectionner. Les valeurs  apparaissent alors dans les champs de la zone de saisie.</p>
+    <div>
+      <h3>a. Sélection d’un article</h3>
+      <div>
+        <p> Sélectionnez le composant graphique  de type <strong>JTable</strong> en mode <strong>Design</strong>. Ajoutez un écouteur d’événement  de clic de souris grâce à l’option <strong>Add Event Handler</strong> - <strong>mouse</strong> - <strong>mousePressed</strong> du menu clic droit.</p>
+      </div>
+      <div>
+        <p> Ajoutez le code suivant dans la méthode <strong>mousePressed</strong> qui vient d’être créée par  WindowBuilder.</p>
+      </div>
+      <pre>table.addMouseListener(new MouseAdapter() {       public void mousePressed(MouseEvent e) {           if (e.getClickCount() == 2) {               int ligne = table.<strong>getSelectedRow</strong>();               txtCode.setText(String.valueOf(                           table.<strong>getValueAt</strong>(ligne, 0)));               txtCategorie.<strong>setText</strong>(String.valueOf(                           table.getValueAt(ligne, 1)));               txtDesignation.setText(<strong>String.valueOf</strong>(                           table.getValueAt(ligne, 2)));                                  sliderQuantite.<strong>setValue</strong>(                           table.getValueAt(ligne,3));               txtPrixUnitaire.setValue(                           table.getValueAt(ligne,4));               bouton_mode_ajout_ou_edition(false);           }       }   });  </pre>
+      <p>Cette méthode récupère  les valeurs de l’article depuis les cellules de la JTable.</p>
+      <p>La version alternative suivante utilise directement  l’article sélectionné :</p>
+      <pre>table.addMouseListener(new MouseAdapter() {       public void mousePressed(MouseEvent e) {           if (<strong>e.getClickCount() == 2</strong>) {               int numeroLigne = table.<strong>getSelectedRow</strong>();<strong>                Article article =                        controleArticle.getModele()                           .getArticle(numeroLigne);</strong>               txtCode.setText(article.getCode());               txtCategorie.setText(                       article.getCategorie().getCode());               txtDesignation.setText(article.getDesignation());                                  sliderQuantite.setValue(article.getQuantite());               txtPrixUnitaire.setValue(                           article.getPrixUnitaire());               bouton_mode_ajout_ou_edition(false);           }       }   });  </pre>
+      <div>
+        <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+        <div>
+          <p>Quelle manière de coder préférez-vous ?</p>
+        </div>
+      </div>
+      <p>Les boutons <strong>Ajouter</strong> et <strong>Effacer</strong> sont désactivés grâce à la  méthode  <strong>bouton_mode_ajout_ou_edition()</strong> pour gagner en clarté.</p>
+      <pre>    private void bouton_mode_ajout_ou_edition(boolean ajout) {           if (ajout) {               actionAjouter.<strong>setEnabled</strong>(true);               actionSupprimer.setEnabled(false);               actionModifier.setEnabled(false);               actionEffacer.setEnabled(true);           } else {               actionAjouter.setEnabled(true);               actionSupprimer.setEnabled(true);               actionModifier.setEnabled(true);               actionEffacer.setEnabled(true);           }       }  </pre>
+    </div>
+    <div>
+      <h3>b. Sauvegarde de la modification</h3>
+      <div>
+        <p> Sélectionnez le bouton <strong>Modifier</strong> et ajoutez-lui une action.</p>
+      </div>
+      <pre>private class ActionModifier extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionModifier() {           putValue(NAME, "Modifier");           putValue(SHORT_DESCRIPTION,                    "Modifier l’article sélectionné");       }          public void actionPerformed(ActionEvent e) {           String code = txtCode.getText();           if (<strong>"".equals(code)</strong>) {               JOptionPane.showMessageDialog(null,                   "Le code article est obligatoire",                   "Avertissement",                   JOptionPane.WARNING_MESSAGE);           } else {               String categorie = txtCategorie.<strong>getText</strong>();               String designation = txtDesignation.getText();               int quantite = (Integer)                           sliderQuantite.<strong>getValue</strong>();               double prix = ((Number)                           txtPrixUnitaire.<strong>getValue())                           .doubleValue()</strong>;               int numeroLigne = table.<strong>getSelectedRow</strong>();               if (numeroLigne &lt; 0) {                   JOptionPane.showMessageDialog(null,                       "Sélectionnez un article",                       "Avertissement",                       JOptionPane.WARNING_MESSAGE);               } else {                   boolean modif =                        controleArticle.modifier(                               numeroLigne,                               code, categorie,                               designation,                               quantite, prix);                   if (modif) {                       effacerSaisie();                                                  bouton_mode_ajout_ou_edition(true);                   }               }           }       }   }  </pre>
+      <p>Comme précédemment, deux  tests sont effectués pour valider la saisie de l’utilisateur.  Si tout s’est bien passé, les boutons <strong>Ajouter</strong> et <strong>Effacer</strong> sont réactivés pour un nouvel ajout. </p>
+    </div>
+  </div>
+  <div>
+    <h2>4. Suppression</h2>
+    <p>Comme pour le module des clients, le bouton <strong>Supprimer</strong> se trouvant dans le volet de gauche est utilisé pour  la suppression.</p>
+    <div>
+      <p> Sélectionnez le bouton <strong>Supprimer</strong> en mode <strong>Design</strong> et ajoutez-lui une action. </p>
+    </div>
+    <pre>private class ActionSupprimer extends AbstractAction {       private static final long serialVersionUID = 1L;          public ActionSupprimer() {           putValue(NAME, "Supprimer");           putValue(SHORT_DESCRIPTION,                     "Supprimer l’article sélectionné");       }          public void actionPerformed(ActionEvent e) {           int ligne = table.getSelectedRow();           if (<strong>ligne &lt; 0</strong>) {               // si aucune ligne sélectionnée               JOptionPane.showMessageDialog(null,                   "Vous devez sélectionner "                   + "une ligne pour la supprimer",                   "Avertissement",                   JOptionPane.WARNING_MESSAGE);           } else {               int choix = <strong>JOptionPane.showConfirmDialog</strong>(                               null,                       "Voulez-vous vraiment supprimer"                       + " l’article sélectionné ?",                       "Confirmation",                       JOptionPane.YES_NO_OPTION);               if (<strong>choix == JOptionPane.YES_OPTION</strong>) {                   Article article =                           controleArticle.getModele()                           .getArticle(ligne);                                          String code = article.getCode();                   controleArticle.supprimer(ligne,                                   code);               }           }       }   }  </pre>
+  </div>
+  <div>
+    <h2>5. Recherche</h2>
+    <p>Contrairement au module client, une recherche  assistée pour les articles est mise en place directement  dans la fenêtre.</p>
+    <p>La frappe de chaque caractère provoque à chaque  fois une mise à jour de la liste des articles visibles  dans le tableau.</p>
+    <p>La recherche proposée concerne les  champs <strong>Code</strong>, <strong>Code Catégorie</strong> et <strong>Désignation</strong> des articles.</p>
+    <p>Voici un exemple en saisissant la lettre « b » :</p>
+    <div>
+      <div><img alt="images/13-03.png" src="images/images_13-03.png"></div>
+    </div>
+    <p>En saisissant une deuxième lettre,  comme « u », la liste se rétracte  et seule la ligne correspondante est affichée :</p>
+    <div>
+      <div><img alt="images/13-04.png" src="images/images_13-04.png"></div>
+    </div>
+    <div>
+      <p> Sélectionnez le <strong>JTextField</strong> de recherche en mode <strong>Design</strong> et ajoutez-lui un gestionnaire d’événement  de type <strong>keyReleased</strong> avec l’option <strong>Add event handler</strong> - <strong>key</strong> - <strong>keyReleased</strong>.</p>
+    </div>
+    <pre>    txtRecherche.addKeyListener(new KeyAdapter() {           public void keyReleased(KeyEvent event) {               String recherche = txtRecherche.getText();               controleArticle.rechercher(recherche);           }       });  </pre>
+    <p>Ce code arrive à ses fins, mais il  n’est pas exempt de problèmes : </p>
+    <div>
+      <ul>
+        <li>
+          <p>Si l’utilisateur appuie  sur plusieurs lettres, cela va déclencher des requêtes inutiles.</p>
+        </li>
+        <li>
+          <p>Et surtout, SURTOUT, la recherche  se passe dans le <strong>thread graphique</strong> !</p>
+        </li>
+      </ul>
+    </div>
+    <p>Une version un peu plus évoluée  fait appel à des classes spécialisées  dans la gestion d’exécution de code parallèle :  les classes du package <strong>java.util.concurrent</strong>. </p>
+    <div>
+      <p> Ajoutez ce code dans la classe <strong>FArticles</strong>, et organisez les imports avec [Ctrl][Shift] <strong>O</strong> pour que la classe compile.</p>
+    </div>
+    <pre>private final ScheduledExecutorService executeur =<strong>                Executors.newSingleThreadScheduledExecutor</strong>();      private final Chercheur chercheur = new Chercheur();      private final class Chercheur <strong>implements Runnable</strong> {          private <strong>Future&lt;?&gt;</strong> future;       private String recherche;          @Override       public void <strong>run</strong>() {           System.out.println("Recherche de " +recherche );<strong>            controleArticle.rechercher</strong>(recherche);           this.future = null;       }                  public void planifier(String recherche) {           if (this.future != null) {               System.out.println(                       "Annule la recherche planifiée de "                        +this.recherche                        +" pour " +recherche);               this.future.<strong>cancel</strong>(false);           } else {               System.out.println("Recherche planifiée pour "                           +recherche);           }           this.recherche = recherche;           Future&lt;?&gt; future = executor.<strong>schedule</strong>(this,                            300,                            <strong>TimeUnit.MILLISECONDS</strong>);           this.future = future;       }   }  </pre>
+    <div>
+      <p> Modifiez ensuite l’écouteur de touches  comme suit :</p>
+    </div>
+    <pre>txtRecherche.addKeyListener(new KeyAdapter() {       public void keyReleased(KeyEvent event) {           String recherche = txtRecherche.getText();           chercheur.<strong>planifier</strong>(recherche);       }   });  </pre>
+    <p>Ce code planifie une recherche au bout de  300 millisecondes, dans une file d’exécution dédiée,  obtenue par l’objet de type <strong>ScheduledExecutorService</strong>.</p>
+    <p>Si une recherche est déjà planifiée,  elle est annulée. Cela évite les recherches inutiles.</p>
+    <p>Il reste à stopper l’exécuteur  quand la fenêtre se ferme.</p>
+    <pre>@Override   public void dispose() {       executeur.<strong>shutdown</strong>();       super.dispose();   }  </pre>
+    <div>
+      <div><img src="images/images_PUCE.PNG" alt="" width="20"></div>
+      <div>
+        <p>Ce n’est assurément pas la  seule manière d’arriver à ce comportement !</p>
+      </div>
+    </div>
+    <p>La gestion des actions d’aperçu,  d’impression et d’exportation sera abordée au dernier chapitre  Application finale.</p>
+  </div>
+</div>
+</body>
+</html>
